@@ -177,7 +177,7 @@ cython_debug/
 Thumbs.db
 
 # Exclude local databases and protected material
-database/
+data/
 
 # Exclude configuration files with sensitive keys
 app/config/settings.py
