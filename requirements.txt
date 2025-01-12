@@ -1,0 +1,6 @@
+PyPDF2
+docx
+yt_dlp
+whisper
+mutagen
+moviepy
