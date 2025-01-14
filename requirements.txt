@@ -1,6 +1,11 @@
-PyPDF2
-docx
-yt_dlp
-whisper
-mutagen
-moviepy
+docx==0.2.4
+EbookLib==0.18
+langchain==0.3.14
+langchain_community==0.3.14
+langchain_openai==0.3.0
+moviepy==2.1.2
+mutagen==1.47.0
+PyPDF2==3.0.1
+python_docx==1.1.2
+whisper==1.1.10
+yt_dlp==2025.1.12
