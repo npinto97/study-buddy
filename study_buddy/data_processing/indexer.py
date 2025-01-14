@@ -3,6 +3,7 @@ from langchain_openai import OpenAIEmbeddings
 from langchain.schema import Document
 import json
 from pathlib import Path
+from study_buddy.config import EXTRACTED_TEXT_DIR, FAISS_INDEX_DIR
 
 
 class Indexer:
@@ -72,8 +73,8 @@ class Indexer:
 
 
 if __name__ == "__main__":
-    json_dir = "./processed_data"
-    index_path = "./faiss_index"
+    json_dir = EXTRACTED_TEXT_DIR
+    index_path = FAISS_INDEX_DIR / "index.faiss"
 
     indexer = Indexer(json_dir, index_path, batch_size=10)
     indexer.index_documents()
