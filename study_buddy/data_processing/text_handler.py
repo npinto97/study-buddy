@@ -5,7 +5,7 @@ import docx
 import ebooklib
 from ebooklib import epub
 from PyPDF2 import PdfReader
-from study_buddy.config import RAW_DATA_DIR, PROCESSED_DATA_DIR, METADATA_DIR
+from study_buddy.config import RAW_DATA_DIR, EXTRACTED_TEXT_DIR, METADATA_DIR
 
 
 class TextExtractor:
@@ -180,7 +180,7 @@ class TextExtractor:
 
 if __name__ == "__main__":
     data_directory = RAW_DATA_DIR
-    output_directory = PROCESSED_DATA_DIR
+    output_directory = EXTRACTED_TEXT_DIR
     metadata_dir = METADATA_DIR
 
     extractor = TextExtractor(data_directory, output_directory, metadata_dir)
