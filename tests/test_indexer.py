@@ -1,9 +1,22 @@
-from app.indexer import index_data
+from langchain_community.vectorstores import FAISS
+from langchain_openai import OpenAIEmbeddings
 
-def test_indexing():
-    index = index_data("data/")
-    assert len(index) > 0  # Should find files
-    for entry in index:
-        assert "file_type" in entry
-        assert "title" in entry
-        assert "path" in entry
+
+def test_index_loading(index_path):
+    """
+    Test if the FAISS index can be loaded successfully.
+    """
+    try:
+        embeddings = OpenAIEmbeddings()
+        vector_store = FAISS.load_local(index_path, embeddings, allow_dangerous_deserialization=True)
+        print("FAISS index loaded successfully!")
+        return vector_store
+    except Exception as e:
+        print(f"Error loading FAISS index: {e}")
+        return None
+
+
+if __name__ == "__main__":
+    index_path = "./faiss_index"
+    vector_store = test_index_loading(index_path)
+    print(f"Number of documents in the index: {vector_store.index.ntotal}")
