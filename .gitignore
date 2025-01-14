@@ -178,6 +178,3 @@ Thumbs.db
 
 # Exclude local databases and protected material
 data/
-
-# Exclude configuration files with sensitive keys
-app/config/settings.py
