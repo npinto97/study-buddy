@@ -11,19 +11,13 @@ PROJ_ROOT = Path(__file__).resolve().parents[1]
 logger.info(f"Project root path resolved to: {PROJ_ROOT}")
 
 DATA_DIR = PROJ_ROOT / "data"
-logger.info(f"Data directory path resolved to: {DATA_DIR}")
-
 RAW_DATA_DIR = DATA_DIR / "raw"
-logger.info(f"Raw data directory path resolved to: {RAW_DATA_DIR}")
-
 PROCESSED_DATA_DIR = DATA_DIR / "processed"
-logger.info(f"Processed data directory path resolved to: {PROCESSED_DATA_DIR}")
-
 EXTERNAL_DATA_DIR = DATA_DIR / "external"
-logger.info(f"External data directory path resolved to: {EXTERNAL_DATA_DIR}")
-
 METADATA_DIR = DATA_DIR / "metadata"
-logger.info(f"Metadata directory path resolved to: {METADATA_DIR}")
+
+EXTRACTED_TEXT_DIR = PROCESSED_DATA_DIR / "extracted_text"
+FAISS_INDEX_DIR = PROCESSED_DATA_DIR / "faiss_index"
 
 # If tqdm is installed, configure loguru with tqdm.write
 # https://github.com/Delgan/loguru/issues/135
