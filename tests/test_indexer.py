@@ -1,5 +1,6 @@
 from langchain_community.vectorstores import FAISS
 from langchain_openai import OpenAIEmbeddings
+from study_buddy.config import FAISS_INDEX_DIR
 
 
 def test_index_loading(index_path):
@@ -17,6 +18,6 @@ def test_index_loading(index_path):
 
 
 if __name__ == "__main__":
-    index_path = "./faiss_index"
+    index_path = FAISS_INDEX_DIR
     vector_store = test_index_loading(index_path)
     print(f"Number of documents in the index: {vector_store.index.ntotal}")
