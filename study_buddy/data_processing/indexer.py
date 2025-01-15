@@ -4,6 +4,7 @@ from pathlib import Path
 from langchain_community.vectorstores import FAISS
 from langchain_openai import OpenAIEmbeddings
 from langchain.schema import Document
+from study_buddy.config import EXTRACTED_TEXT_DIR, FAISS_INDEX_DIR
 
 
 class Indexer:
@@ -16,8 +17,8 @@ class Indexer:
             index_path (str): Path to save the FAISS index.
             batch_size (int): Number of documents per batch for indexing.
         """
-        self.json_dir = Path(json_dir)
-        self.index_path = index_path
+        self.json_dir = json_dir  # Use the json_dir from config
+        self.index_path = index_path  # Use the index_path from config
         self.batch_size = batch_size
 
     def _batch_documents(self, documents):
@@ -137,8 +138,8 @@ class Indexer:
 
 
 if __name__ == "__main__":
-    json_dir = "./processed_data"
-    index_path = "./faiss_index"
+    json_dir = EXTRACTED_TEXT_DIR  # Use the path from config
+    index_path = FAISS_INDEX_DIR  # Use the path from config
 
     # Set batch size to a reasonable number to prevent rate limits
     indexer = Indexer(json_dir, index_path, batch_size=10)
