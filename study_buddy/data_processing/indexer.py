@@ -1,40 +1,47 @@
 import json
 import hashlib
+import logging
 from pathlib import Path
+from typing import List, Generator, Optional, Set
 from langchain_community.vectorstores import FAISS
 from langchain_openai import OpenAIEmbeddings
 from langchain.schema import Document
 from study_buddy.config import EXTRACTED_TEXT_DIR, FAISS_INDEX_DIR
 
+# Configure logging
+logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
+
 
 class Indexer:
-    def __init__(self, json_dir, index_path, batch_size=10):
+    def __init__(self, json_dir: Path, index_path: Path, batch_size: int = 10, model: str = "text-embedding-3-small"):
         """
         Initialize the Indexer module.
 
         Args:
-            json_dir (str): Path to the directory containing JSON files.
-            index_path (str): Path to save the FAISS index.
+            json_dir (Path): Path to the directory containing JSON files.
+            index_path (Path): Path to save the FAISS index.
             batch_size (int): Number of documents per batch for indexing.
+            model (str): Name of the embedding model to use.
         """
-        self.json_dir = json_dir  # Use the json_dir from config
-        self.index_path = index_path  # Use the index_path from config
+        self.json_dir = json_dir
+        self.index_path = index_path
         self.batch_size = batch_size
+        self.model = model
 
-    def _batch_documents(self, documents):
+    def _batch_documents(self, documents: List[Document]) -> Generator[List[Document], None, None]:
         """
         Divide documents into smaller batches.
 
         Args:
-            documents (list): List of Document objects.
+            documents (List[Document]): List of Document objects.
 
-        Returns:
-            list: A list of batches, each containing a subset of documents.
+        Yields:
+            List[Document]: A batch of documents.
         """
         for i in range(0, len(documents), self.batch_size):
             yield documents[i:i + self.batch_size]
 
-    def _load_existing_index(self, embeddings):
+    def _load_existing_index(self, embeddings: OpenAIEmbeddings) -> Optional[FAISS]:
         """
         Load the existing FAISS index if it exists, otherwise return None.
 
@@ -42,14 +49,14 @@ class Indexer:
             embeddings (OpenAIEmbeddings): Embedding model to use with the FAISS index.
 
         Returns:
-            FAISS: Loaded FAISS index or None if it doesn't exist.
+            Optional[FAISS]: Loaded FAISS index or None if it doesn't exist.
         """
-        if Path(self.index_path).exists():
-            print("Loading existing index...")
-            return FAISS.load_local(self.index_path, embeddings, allow_dangerous_deserialization=True)
+        if self.index_path.exists():
+            logging.info("Loading existing index...")
+            return FAISS.load_local(str(self.index_path), embeddings, allow_dangerous_deserialization=True)
         return None
 
-    def _calculate_hash(self, document):
+    def _calculate_hash(self, document: Document) -> str:
         """
         Calculate a SHA256 hash of the document's content and metadata.
 
@@ -63,25 +70,24 @@ class Indexer:
         metadata = str(document.metadata)
         return hashlib.sha256((content + metadata).encode("utf-8")).hexdigest()
 
-    def _filter_duplicates(self, documents, vector_store):
+    def _filter_duplicates(self, documents: List[Document], vector_store: Optional[FAISS]) -> List[Document]:
         """
         Filter out duplicate documents based on their hash, including those already in the vector_store.
 
         Args:
-            documents (list): List of Document objects.
-            vector_store (FAISS): Existing FAISS vector store.
+            documents (List[Document]): List of Document objects.
+            vector_store (Optional[FAISS]): Existing FAISS vector store.
 
         Returns:
-            list: List of unique Document objects.
+            List[Document]: List of unique Document objects.
         """
-        seen_hashes = set()
+        seen_hashes: Set[str] = set()
 
         # Check hashes of documents already in the vector_store
         if vector_store:
-            print("Fetching existing hashes from vector store...")
+            logging.info("Fetching existing hashes from vector store...")
             for doc in vector_store.similarity_search("", k=vector_store.index.ntotal):
-                doc_hash = self._calculate_hash(doc)
-                seen_hashes.add(doc_hash)
+                seen_hashes.add(self._calculate_hash(doc))
 
         # Filter out duplicates in the new documents
         unique_documents = []
@@ -93,54 +99,57 @@ class Indexer:
 
         return unique_documents
 
-    def index_documents(self):
+    def _load_documents(self) -> List[Document]:
         """
-        Load JSON files, extract text and metadata, and create a FAISS index with batching.
+        Load JSON files and extract text and metadata as Document objects.
+
+        Returns:
+            List[Document]: List of Document objects loaded from JSON files.
         """
         documents = []
         for json_file in self.json_dir.rglob("*.json"):
             try:
-                with open(json_file, "r", encoding="utf-8") as f:
+                with json_file.open("r", encoding="utf-8") as f:
                     data = json.load(f)
-                    documents.append(
-                        Document(
-                            page_content=data["content"],
-                            metadata=data["metadata"]
-                        )
-                    )
+                    documents.append(Document(page_content=data["content"], metadata=data["metadata"]))
             except Exception as e:
-                print(f"Error processing file {json_file}: {e}")
-                continue  # Skip problematic files
+                logging.error(f"Error processing file {json_file}: {e}")
+        return documents
+
+    def index_documents(self):
+        """
+        Load JSON files, extract text and metadata, and create a FAISS index with batching.
+        """
+        logging.info("Loading documents...")
+        documents = self._load_documents()
 
         # Create embeddings and load or initialize FAISS index
-        embeddings = OpenAIEmbeddings()  # model="text-embedding-3-small"
+        embeddings = OpenAIEmbeddings(model=self.model)
         vector_store = self._load_existing_index(embeddings)
 
         # Filter duplicates, including those already in the vector_store
         documents = self._filter_duplicates(documents, vector_store)
-        print(f"Filtered down to {len(documents)} unique documents.")
+        logging.info(f"Filtered down to {len(documents)} unique documents.")
 
-        for batch_idx, batch in enumerate(self._batch_documents(documents)):
-            print(f"Processing batch {batch_idx + 1} with {len(batch)} documents...")
+        for batch_idx, batch in enumerate(self._batch_documents(documents), start=1):
+            logging.info(f"Processing batch {batch_idx} with {len(batch)} documents...")
 
             if vector_store:
-                # Add documents to existing index
                 vector_store.add_documents(batch)
             else:
-                # Create a new index
                 vector_store = FAISS.from_documents(batch, embeddings)
 
             # Save the updated index
-            vector_store.save_local(self.index_path)
-            print(f"Batch {batch_idx + 1} indexed and saved to {self.index_path}")
+            vector_store.save_local(str(self.index_path))
+            logging.info(f"Batch {batch_idx} indexed and saved to {self.index_path}")
 
-        print("Indexing completed successfully!")
+        logging.info("Indexing completed successfully!")
 
 
 if __name__ == "__main__":
-    json_dir = EXTRACTED_TEXT_DIR  # Use the path from config
-    index_path = FAISS_INDEX_DIR  # Use the path from config
+    json_dir = Path(EXTRACTED_TEXT_DIR)
+    index_path = Path(FAISS_INDEX_DIR)
 
     # Set batch size to a reasonable number to prevent rate limits
-    indexer = Indexer(json_dir, index_path, batch_size=10)
+    indexer = Indexer(json_dir=json_dir, index_path=index_path, batch_size=10)
     indexer.index_documents()
