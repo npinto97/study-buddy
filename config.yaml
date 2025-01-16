@@ -1,0 +1,8 @@
+llm:
+  model: "gpt-4o-mini"
+
+embeddings:
+  model: "text-embedding-3-small"
+
+vector_store:
+  type: "in_memory"  # Opzioni: "in_memory", "faiss"
