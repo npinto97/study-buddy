@@ -2,8 +2,8 @@ import os
 from yt_dlp import YoutubeDL
 from moviepy.video.io.VideoFileClip import VideoFileClip
 from pytubefix import YouTube
-from audio_handler import transcribe_audio
-from config import EXTERNAL_DATA_DIR
+from study_buddy.data_processing.audio_handler import transcribe_audio
+from study_buddy.config import EXTERNAL_DATA_DIR
 
 
 def extract_metadata_local(file_path):
