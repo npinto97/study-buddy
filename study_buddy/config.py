@@ -14,7 +14,7 @@ load_dotenv()
 logger.add(sys.stderr, level="INFO", format="{time} {level} {message}")
 logger.add("logs/study_buddy.log", level="DEBUG", rotation="10 MB", compression="zip")
 
-logger.info("Logging initialized.")
+# logger.info("Logging initialized.")
 
 # Main paths
 PROJ_ROOT = Path(__file__).resolve().parents[1]
@@ -82,7 +82,5 @@ LANGSMITH_TRACING = os.getenv("LANGSMITH_TRACING", "false") == "true"
 LANGSMITH_ENDPOINT = os.getenv("LANGSMITH_ENDPOINT")
 LANGSMITH_API_KEY = os.getenv("LANGSMITH_API_KEY")
 
-# Logga la configurazione di LangSmith
-from loguru import logger
 logger.info(f"LangSmith Tracing: {LANGSMITH_TRACING}")
 logger.info(f"LangSmith Endpoint: {LANGSMITH_ENDPOINT}")
