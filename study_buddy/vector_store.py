@@ -14,6 +14,9 @@ else:
 
 
 def add_documents_to_store(docs):
-    logger.info(f"Adding {len(docs)} documents to vector store.")
-    vector_store.add_documents(docs)
-    logger.info("Documents successfully indexed.")
+    if vector_store.similarity_search("", int=1) == []:
+        logger.info(f"Adding {len(docs)} documents to vector store.")
+        vector_store.add_documents(docs)
+        logger.info("Documents successfully indexed.")
+    else:
+        logger.info("Vector store already contains documents. Skipping indexing.")
