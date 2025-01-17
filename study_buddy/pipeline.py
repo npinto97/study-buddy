@@ -1,5 +1,3 @@
-from study_buddy.document_loader import all_splits
-from study_buddy.vector_store import add_documents_to_store
 from study_buddy.vector_store import vector_store
 from study_buddy.llm import generate_response
 from langchain import hub
@@ -7,9 +5,6 @@ from typing import List, TypedDict
 from langchain_core.documents import Document
 from langgraph.graph import StateGraph, START
 from study_buddy.config import logger
-
-
-add_documents_to_store(all_splits)
 
 logger.info("Loading prompt from LangChain Hub...")
 prompt = hub.pull("rlm/rag-prompt")
