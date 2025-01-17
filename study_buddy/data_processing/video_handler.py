@@ -1,8 +1,8 @@
 import os
+from pathlib import Path
 from yt_dlp import YoutubeDL
 from moviepy.video.io.VideoFileClip import VideoFileClip
-from pytubefix import YouTube
-from study_buddy.data_processing.audio_handler import transcribe_audio
+from study_buddy.data_processing.utils import transcribe
 from study_buddy.config import EXTERNAL_DATA_DIR
 
 
@@ -10,6 +10,7 @@ def extract_metadata_local(file_path):
     """
     Extracts metadata from a local video file.
     """
+    file_path = Path(file_path)
     metadata = {"filename": file_path.name, "filepath": str(file_path)}
     try:
         if file_path.suffix.lower() in ['.mp4', '.mkv', '.webm']:
@@ -68,7 +69,7 @@ def transcribe_video(file_path, output_text_path):
         audio_path = os.path.join(EXTERNAL_DATA_DIR, "temp_audio.mp3")
         clip.audio.write_audiofile(audio_path)
 
-        transcribe_audio(audio_path, output_text_path)
+        transcribe(audio_path, output_text_path)
 
     except Exception as e:
         print(f"Error during {file_path} transcription: {e}")
@@ -78,28 +79,41 @@ def transcribe_video(file_path, output_text_path):
             os.remove(audio_path)
 
 
-# TODO: audio_path must be modified
 def transcribe_youtube_video(url_link, output_text_path):
     """
     Creates a .txt file with transcription of a YouTube video.
     """
     audio_dir = EXTERNAL_DATA_DIR
     audio_filename = "temp_audio.mp3"
-    audio_path = os.path.join(audio_dir, audio_filename)
+    audio_path = audio_dir / audio_filename
 
-    if not os.path.exists(audio_dir):
-        os.makedirs(audio_dir)
+    if not audio_dir.exists():
+        audio_dir.mkdir(parents=True)
 
     try:
-        yt = YouTube(url_link)
-        video = yt.streams.filter(only_audio=True).first()
-        video.download(output_path=audio_dir, filename=audio_filename)
+        # Download audio using yt-dlp
+        ydl_opts = {
+            'format': 'bestaudio/best',
+            'postprocessors': [{
+                'key': 'FFmpegExtractAudio',
+                'preferredcodec': 'mp3',
+                'preferredquality': '192',
+            }],
+            'outtmpl': str(audio_path),
+        }
+        with YoutubeDL(ydl_opts) as ydl:
+            ydl.download([url_link])
 
-        transcribe_audio(audio_path, output_text_path)
+        if not audio_path.exists():
+            print(f"Error: audio file not created in {audio_path}")
+            return
+
+        # Transcribe the audio
+        transcribe(str(audio_path), output_text_path)
 
     except Exception as e:
         print(f"Error during {audio_path} transcription: {e}")
 
     finally:
-        if os.path.exists(audio_path):
+        if audio_path.exists():
             os.remove(audio_path)
