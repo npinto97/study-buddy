@@ -5,6 +5,7 @@ logger.info(f"Initializing LLM with model: {CONFIG.llm.model}")
 
 llm = ChatOpenAI(model=CONFIG.llm.model)
 
+
 def generate_response(messages):
     logger.debug(f"LLM invoked with messages: {messages}")
     response = llm.invoke(messages)
