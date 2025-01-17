@@ -1,4 +1,6 @@
 # import nltk
+# nltk.download('it_core_news_sm')
+# nltk.download('averaged_perceptron_tagger_eng')
 from langchain_community.document_loaders import DirectoryLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from study_buddy.config import RAW_DATA_DIR, logger
