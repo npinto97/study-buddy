@@ -7,13 +7,14 @@ from loguru import logger
 from pydantic import BaseModel
 import sys
 
+
+# Load environment variables from .env
+load_dotenv()
+
 logger.add(sys.stderr, level="INFO", format="{time} {level} {message}")
 logger.add("logs/study_buddy.log", level="DEBUG", rotation="10 MB", compression="zip")
 
 logger.info("Logging initialized.")
-
-# Load environment variables from .env, if it exists
-load_dotenv()
 
 # Main paths
 PROJ_ROOT = Path(__file__).resolve().parents[1]
@@ -25,8 +26,9 @@ PROCESSED_DATA_DIR = DATA_DIR / "processed"
 EXTERNAL_DATA_DIR = DATA_DIR / "external"
 METADATA_DIR = DATA_DIR / "metadata"
 
-EXTRACTED_TEXT_DIR = PROCESSED_DATA_DIR / "extracted_text"
 FAISS_INDEX_DIR = PROCESSED_DATA_DIR / "faiss_index"
+
+IMAGES_DIR = PROJ_ROOT / "images"
 
 
 # Definition of configuration models
@@ -75,3 +77,12 @@ try:
     )
 except ModuleNotFoundError as e:
     logger.warning(f"tqdm is not installed: {e}")
+
+LANGSMITH_TRACING = os.getenv("LANGSMITH_TRACING", "false") == "true"
+LANGSMITH_ENDPOINT = os.getenv("LANGSMITH_ENDPOINT")
+LANGSMITH_API_KEY = os.getenv("LANGSMITH_API_KEY")
+
+# Logga la configurazione di LangSmith
+from loguru import logger
+logger.info(f"LangSmith Tracing: {LANGSMITH_TRACING}")
+logger.info(f"LangSmith Endpoint: {LANGSMITH_ENDPOINT}")
