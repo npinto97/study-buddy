@@ -2,6 +2,9 @@ import os
 import json
 import requests
 from bs4 import BeautifulSoup
+from study_buddy.config import EXTERNAL_DATA_DIR
+from study_buddy.data_processing.utils import create_content_metadata
+from study_buddy.data_processing.video_handler import transcribe_youtube_video
 
 
 # Function for extracting metadata from a URL
@@ -124,3 +127,52 @@ def extract_metadata_json(url_path, output_path, folder_path):
 
     except Exception as e:
         print(f"Error during the operation: {e}")
+
+
+# Writes the .json file representing metadata of the content of a lesson
+def extract_external_video_from_lesson(video_url, lesson_path):
+    """
+    Returns JSON variable containing video transcription and lesson metadata.
+    """
+    temp_output_path = os.path.join(EXTERNAL_DATA_DIR, "temp_output.txt")
+    transcribe_youtube_video(video_url, temp_output_path)
+
+    combined_content = create_content_metadata(lesson_path, temp_output_path)
+
+    return combined_content
+
+
+def extract_external_text_from_lesson(url_path, lesson_path):
+    """
+    Returns JSON variable containing text content and lesson metadata.
+    """
+    temp_output_path = os.path.join(EXTERNAL_DATA_DIR, "temp_output.txt")
+    extract_text_content(url_path, temp_output_path)
+
+    combined_content = create_content_metadata(lesson_path, temp_output_path)
+
+    return combined_content
+
+
+def extract_external_repo_from_lesson(url_path, lesson_path):
+    """
+    Returns JSON variable containing repo content and lesson metadata.
+    """
+    temp_output_path = os.path.join(EXTERNAL_DATA_DIR, "temp_output.txt")
+    extract_readme_from_repo(url_path, temp_output_path)
+
+    combined_content = create_content_metadata(lesson_path, temp_output_path)
+
+    return combined_content
+
+
+def extract_external_webinfo_from_lesson(url_path, lesson_path):
+    """
+    Returns JSON variable containing web content and lesson metadata.
+    """
+    temp_output_path = os.path.join(EXTERNAL_DATA_DIR, "temp_output.txt")
+    extract_metadata_json(url_path, temp_output_path)
+
+    combined_content = create_content_metadata(lesson_path, temp_output_path)
+
+    return combined_content

@@ -12,7 +12,7 @@ logger.info(f"Project root path resolved to: {PROJ_ROOT}")
 
 DATA_DIR = PROJ_ROOT / "data"
 RAW_DATA_DIR = DATA_DIR / "raw"
-PROCESSED_DATA_DIR = DATA_DIR / "processed"
+PROCESSED_DATA_DIR = DATA_DIR / "processed_media"
 EXTERNAL_DATA_DIR = DATA_DIR / "external"
 METADATA_DIR = DATA_DIR / "metadata"
 

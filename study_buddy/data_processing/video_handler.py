@@ -99,7 +99,7 @@ def transcribe_youtube_video(url_link, output_text_path):
                 'preferredcodec': 'mp3',
                 'preferredquality': '192',
             }],
-            'outtmpl': str(audio_path),
+            'outtmpl': str(audio_path).replace('.mp3', ''),
         }
         with YoutubeDL(ydl_opts) as ydl:
             ydl.download([url_link])
