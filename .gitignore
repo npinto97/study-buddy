@@ -178,3 +178,5 @@ Thumbs.db
 
 # Exclude local databases and protected material
 data/
+
+notebooks/
