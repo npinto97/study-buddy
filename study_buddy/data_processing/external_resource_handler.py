@@ -170,8 +170,11 @@ def extract_external_webinfo_from_lesson(url_path, lesson_path):
     """
     Returns JSON variable containing web content and lesson metadata.
     """
+    # from lesson_path obtain course_path
+    course_path = os.path.dirname(lesson_path)
+
     temp_output_path = os.path.join(EXTERNAL_DATA_DIR, "temp_output.txt")
-    extract_metadata_json(url_path, temp_output_path)
+    extract_metadata_json(url_path, temp_output_path, course_path)
 
     combined_content = create_content_metadata(lesson_path, temp_output_path)
 

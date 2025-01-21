@@ -1,7 +1,7 @@
 import json
 from pathlib import Path
 from typing import Union, Dict
-import docx
+from docx import Document
 import ebooklib
 from ebooklib import epub
 from PyPDF2 import PdfReader
@@ -56,7 +56,7 @@ class TextExtractor:
 
     def _extract_text_from_docx(self, file_path: Path) -> str:
         """Extract text from a .docx file."""
-        doc = docx.Document(file_path)
+        doc = Document(file_path)
         return "\n".join(paragraph.text for paragraph in doc.paragraphs)
 
     def _extract_text_from_epub(self, file_path: Path) -> str:
