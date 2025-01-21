@@ -99,7 +99,7 @@ def create_content_metadata(folder_path, text_path):
 
 
 def remove_non_json_files(folder_path):
-    foder_path = Path(folder_path)
+    folder_path = Path(folder_path)
 
     if not folder_path.is_dir():
         print(f"Error: {folder_path} is not a directory.")
