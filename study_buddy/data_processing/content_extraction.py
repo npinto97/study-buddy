@@ -52,24 +52,6 @@ def extract_videos_from_lesson(lesson_path):
                 output_json_path = PROCESSED_DATA_DIR / output_dir / (f"{video.split('.')[0]}.json")
                 with open(output_json_path, 'w', encoding='utf-8') as output_file:
                     json.dump(combined_content, output_file, indent=4, ensure_ascii=False)
-                
-
-def extract_videos_from_course(course_path):
-    """
-    Extracts videos from all lessons in a given course.
-    This function takes the path to a course directory, extracts the list of lessons,
-    and then processes each lesson to extract videos.
-    Args:
-        course_path (Path): The path to the course directory.
-    Returns:
-        None
-    """
-
-    lesson_list = extract_lesson_list(course_path)
-
-    for lesson in lesson_list:
-        lesson_path = course_path / lesson
-        extract_videos_from_lesson(lesson_path)
     
 
 def extract_external_resource_from_lesson(lesson_path):
@@ -128,22 +110,6 @@ def extract_external_resource_from_lesson(lesson_path):
             output_file.close()
         else:
             print(f"Failed to process resource {count}. Skipping...")
-
-
-def extract_external_resource_from_course(course_path):
-    """
-    Extracts external resources from all lessons within a given course.
-    Args:
-        course_path (Path): The file path to the course directory.
-    Returns:
-        None
-    """
-
-    lesson_list = extract_lesson_list(course_path)
-
-    for lesson in lesson_list:
-        lesson_path = course_path / lesson
-        extract_external_resource_from_lesson(lesson_path)
 
 
 def extract_references_from_lesson(lesson_path: Path, extractor: TextExtractor):
@@ -214,25 +180,6 @@ def extract_references_from_lesson(lesson_path: Path, extractor: TextExtractor):
 
     except Exception as e:
         print(f"Error processing references in {lesson_path}: {e}")
-
-
-def extract_references_from_course(course_path: Path):
-    """
-    Extracts references from all lessons in a given course.
-    This function processes each lesson in the specified course directory,
-    extracting references using a TextExtractor instance.
-    Args:
-        course_path (Path): The path to the course directory containing lesson files.
-    Returns:
-        None
-    """
-    
-    lesson_list = extract_lesson_list(course_path)
-
-    for lesson in lesson_list:
-        lesson_path = course_path / lesson
-        extractor = TextExtractor(data_dir=lesson_path, output_dir=PROCESSED_DATA_DIR, metadata_dir=lesson_path)
-        extract_references_from_lesson(lesson_path, extractor)
 
 
 def extract_slides_from_lesson(lesson_path: Path, extractor: TextExtractor):
@@ -306,25 +253,6 @@ def extract_slides_from_lesson(lesson_path: Path, extractor: TextExtractor):
         print(f"Error processing slides in {lesson_path}: {e}")
 
 
-def extract_slides_from_course(course_path: Path):
-    """
-    Extracts slides from all lessons in a given course.
-    This function takes the path to a course directory, extracts a list of lessons,
-    and processes each lesson to extract slides using a TextExtractor.
-    Args:
-        course_path (Path): The path to the course directory containing lesson subdirectories.
-    Returns:
-        None
-    """
-    
-    lesson_list = extract_lesson_list(course_path)
-
-    for lesson in lesson_list:
-        lesson_path = course_path / lesson
-        extractor = TextExtractor(data_dir=lesson_path, output_dir=PROCESSED_DATA_DIR, metadata_dir=lesson_path)
-        extract_slides_from_lesson(lesson_path, extractor)
-
-
 def extract_supplementary_materials_from_lesson(lesson_path: Path, extractor: TextExtractor):
     """
     Extracts supplementary materials from a lesson directory and processes them.
@@ -393,26 +321,6 @@ def extract_supplementary_materials_from_lesson(lesson_path: Path, extractor: Te
 
     except Exception as e:
         print(f"Error processing supplementary materials in {lesson_path}: {e}")
-
-
-def extract_supplementary_materials_from_course(course_path: Path):
-    """
-    Extracts supplementary materials from all lessons within a given course directory.
-    This function processes each lesson in the specified course directory by extracting
-    supplementary materials using a TextExtractor instance. The extracted materials are
-    saved in the specified output directory.
-    Args:
-        course_path (Path): The path to the course directory containing lesson subdirectories.
-    Returns:
-        None
-    """
-    
-    lesson_list = extract_lesson_list(course_path)
-
-    for lesson in lesson_list:
-        lesson_path = course_path / lesson
-        extractor = TextExtractor(data_dir=lesson_path, output_dir=PROCESSED_DATA_DIR, metadata_dir=lesson_path)
-        extract_supplementary_materials_from_lesson(lesson_path, extractor)
 
 
 def extract_content_from_course(course_path):
