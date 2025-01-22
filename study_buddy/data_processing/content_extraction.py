@@ -13,6 +13,17 @@ temp_output_path = os.path.join(EXTERNAL_DATA_DIR, "temp.txt")
 
 
 def extract_videos_from_lesson(lesson_path):
+    """
+    Extracts video metadata from a lesson directory, transcribes the videos, and saves the combined content metadata.
+    Args:
+        lesson_path (Path): The path to the lesson directory containing the metadata and multimedia files.
+    Raises:
+        json.JSONDecodeError: If there is an error reading the metadata JSON file.
+    Notes:
+        - The function expects the lesson directory to contain a "metadata.json" file with video information.
+        - The function transcribes each video found in the metadata and creates combined content metadata.
+        - The combined content metadata is saved as a JSON file in the processed data directory.
+    """
     
     metadata_path = lesson_path / "metadata.json"
     
@@ -44,6 +55,15 @@ def extract_videos_from_lesson(lesson_path):
                 
 
 def extract_videos_from_course(course_path):
+    """
+    Extracts videos from all lessons in a given course.
+    This function takes the path to a course directory, extracts the list of lessons,
+    and then processes each lesson to extract videos.
+    Args:
+        course_path (Path): The path to the course directory.
+    Returns:
+        None
+    """
 
     lesson_list = extract_lesson_list(course_path)
 
@@ -53,6 +73,21 @@ def extract_videos_from_course(course_path):
     
 
 def extract_external_resource_from_lesson(lesson_path):
+    """
+    Extracts external resources from a lesson's metadata file and processes them based on their type.
+    Args:
+        lesson_path (Path): The path to the lesson directory containing the metadata.json file.
+    Returns:
+        None
+    The function reads the metadata.json file from the given lesson path, extracts external resources,
+    and processes each resource based on its type. Supported resource types include:
+    - "video": Processes the resource as a video.
+    - "article", "articles", "model", "blog", "paper", "announcement": Processes the resource as text.
+    - "repository": Processes the resource as a repository.
+    - "dataset", "website": Processes the resource as web information.
+    Processed resources are saved as JSON files in the "external_resources" directory within the lesson path.
+    If a resource type is not recognized or processing fails, the function skips that resource.
+    """
     count = 0
     metadata_path = lesson_path / "metadata.json"
 
@@ -96,6 +131,13 @@ def extract_external_resource_from_lesson(lesson_path):
 
 
 def extract_external_resource_from_course(course_path):
+    """
+    Extracts external resources from all lessons within a given course.
+    Args:
+        course_path (Path): The file path to the course directory.
+    Returns:
+        None
+    """
 
     lesson_list = extract_lesson_list(course_path)
 
@@ -105,6 +147,20 @@ def extract_external_resource_from_course(course_path):
 
 
 def extract_references_from_lesson(lesson_path: Path, extractor: TextExtractor):
+    """
+    Extracts references from a lesson's metadata and processes them.
+    This function reads the metadata file from the given lesson path to extract references.
+    It then processes each reference by extracting its text content using the provided
+    TextExtractor, and saves the extracted content along with additional metadata to a JSON file.
+    Args:
+        lesson_path (Path): The path to the lesson directory containing the metadata and references.
+        extractor (TextExtractor): An instance of TextExtractor used to extract text from reference files.
+    Raises:
+        FileNotFoundError: If the metadata file is not found in the lesson path.
+        Exception: If there is an error during the extraction or processing of references.
+    Returns:
+        None
+    """
     
     try:
         metadata_path = lesson_path / "metadata.json"
@@ -161,6 +217,15 @@ def extract_references_from_lesson(lesson_path: Path, extractor: TextExtractor):
 
 
 def extract_references_from_course(course_path: Path):
+    """
+    Extracts references from all lessons in a given course.
+    This function processes each lesson in the specified course directory,
+    extracting references using a TextExtractor instance.
+    Args:
+        course_path (Path): The path to the course directory containing lesson files.
+    Returns:
+        None
+    """
     
     lesson_list = extract_lesson_list(course_path)
 
@@ -171,6 +236,21 @@ def extract_references_from_course(course_path: Path):
 
 
 def extract_slides_from_lesson(lesson_path: Path, extractor: TextExtractor):
+    """
+    Extracts text from slides in a lesson and saves the content to JSON files.
+    Args:
+        lesson_path (Path): The path to the lesson directory containing the metadata and slides.
+        extractor (TextExtractor): An instance of TextExtractor used to extract text from slide files.
+    Raises:
+        FileNotFoundError: If the metadata file is not found in the lesson directory.
+        Exception: If there is an error processing the slides or extracting text.
+    The function performs the following steps:
+        1. Reads the metadata file from the lesson directory.
+        2. Extracts the list of slides from the metadata.
+        3. Creates an output directory for the processed slides.
+        4. Iterates through each slide, extracts text using the provided extractor, and saves the content to a JSON file.
+        5. Handles errors gracefully and prints appropriate error messages.
+    """
 
     try:
         metadata_path = lesson_path / "metadata.json"
@@ -227,6 +307,15 @@ def extract_slides_from_lesson(lesson_path: Path, extractor: TextExtractor):
 
 
 def extract_slides_from_course(course_path: Path):
+    """
+    Extracts slides from all lessons in a given course.
+    This function takes the path to a course directory, extracts a list of lessons,
+    and processes each lesson to extract slides using a TextExtractor.
+    Args:
+        course_path (Path): The path to the course directory containing lesson subdirectories.
+    Returns:
+        None
+    """
     
     lesson_list = extract_lesson_list(course_path)
 
@@ -234,4 +323,3 @@ def extract_slides_from_course(course_path: Path):
         lesson_path = course_path / lesson
         extractor = TextExtractor(data_dir=lesson_path, output_dir=PROCESSED_DATA_DIR, metadata_dir=lesson_path)
         extract_slides_from_lesson(lesson_path, extractor)
-
