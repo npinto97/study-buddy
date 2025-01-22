@@ -323,3 +323,93 @@ def extract_slides_from_course(course_path: Path):
         lesson_path = course_path / lesson
         extractor = TextExtractor(data_dir=lesson_path, output_dir=PROCESSED_DATA_DIR, metadata_dir=lesson_path)
         extract_slides_from_lesson(lesson_path, extractor)
+
+
+def extract_supplementary_materials_from_lesson(lesson_path: Path, extractor: TextExtractor):
+    """
+    Extracts supplementary materials from a lesson directory and processes them.
+    This function reads the metadata file from the given lesson directory to find supplementary materials.
+    It then extracts text from each supplementary material file using the provided text extractor,
+    saves the extracted content to a text file, and then creates a JSON file with combined metadata and content.
+    Args:
+        lesson_path (Path): The path to the lesson directory containing the metadata and supplementary materials.
+        extractor (TextExtractor): An instance of a text extractor used to extract text from supplementary material files.
+    Raises:
+        FileNotFoundError: If the metadata file is not found in the lesson directory.
+        Exception: If there is an error during the extraction or processing of supplementary materials.
+    Returns:
+        None
+    """
+
+    try:
+        metadata_path = lesson_path / "metadata.json"
+        if not metadata_path.exists():
+            raise FileNotFoundError(f"Metadata file not found in {lesson_path}.")
+        
+        with metadata_path.open('r', encoding='utf-8') as metadata_file:
+            metadata = json.load(metadata_file)
+
+        supp_materials = metadata.get("supplementary_materials", [])
+        if not supp_materials:
+            print(f"No supplementary materials found in {lesson_path}.")
+            return
+
+        output_dir = PROCESSED_DATA_DIR / lesson_path.name / "supplementary_materials" 
+        output_dir.mkdir(parents=True, exist_ok=True)
+
+        for supp_material in supp_materials:
+            supp_title = supp_material.get("title", "unknown").replace(" ", "_")
+            supp_filename = supp_material.get("filename")
+
+            if not supp_filename:
+                print("No filename found in supplementary material. Skip ...")
+                continue
+
+            supp_file_path = lesson_path / "supplementary_materials" / supp_filename
+            if not supp_file_path.exists():
+                print(f"File {supp_filename} not found in {lesson_path}. Skip ...")
+                continue
+
+            try:
+                print(f"Extracting text from {supp_file_path} ...")
+                supp_content = extractor.extract_text(file_path=Path(supp_file_path))
+
+                # create a txt file containing supplementary material content
+                supp_output_path = output_dir / (supp_title + ".txt")
+                with supp_output_path.open('w', encoding='utf-8') as supp_output_file:
+                    supp_output_file.write(supp_content)
+            except Exception as e:
+                print(f"Error extracting text from {supp_file_path}: {e}")
+                continue
+
+            combined_data = create_content_metadata(lesson_path, supp_output_path)
+            os.remove(supp_output_path)
+
+            output_file_path = output_dir / (supp_title + ".json")
+            with output_file_path.open('w', encoding='utf-8') as output_file:
+                json.dump(combined_data, output_file, indent=4, ensure_ascii=False)
+
+            print(f"Content correctly saved to {output_file_path}.")
+
+    except Exception as e:
+        print(f"Error processing supplementary materials in {lesson_path}: {e}")
+
+
+def extract_supplementary_materials_from_course(course_path: Path):
+    """
+    Extracts supplementary materials from all lessons within a given course directory.
+    This function processes each lesson in the specified course directory by extracting
+    supplementary materials using a TextExtractor instance. The extracted materials are
+    saved in the specified output directory.
+    Args:
+        course_path (Path): The path to the course directory containing lesson subdirectories.
+    Returns:
+        None
+    """
+    
+    lesson_list = extract_lesson_list(course_path)
+
+    for lesson in lesson_list:
+        lesson_path = course_path / lesson
+        extractor = TextExtractor(data_dir=lesson_path, output_dir=PROCESSED_DATA_DIR, metadata_dir=lesson_path)
+        extract_supplementary_materials_from_lesson(lesson_path, extractor)
