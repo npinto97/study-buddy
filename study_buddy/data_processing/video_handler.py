@@ -6,9 +6,26 @@ from study_buddy.data_processing.utils import transcribe
 from study_buddy.config import EXTERNAL_DATA_DIR
 
 
-def extract_metadata_local(file_path):
+def extract_metadata_local(file_path):        
     """
     Extracts metadata from a local video file.
+
+    Parameters:
+        file_path (str): The path to the local video file.
+
+        Returns:
+        dict: A dictionary containing metadata of the video file, including:
+            - filename (str): The name of the video file.
+            - filepath (str): The full path to the video file.
+            - duration (float): The duration of the video in seconds (if applicable).
+            - resolution (tuple): The resolution of the video as (width, height) (if applicable).
+            - fps (float): The frames per second of the video (if applicable).
+            - type (str): The type of the file, which is "video" for recognized video formats.
+        
+        Note:
+        - Recognized video formats are .mp4, .mkv, and .webm.
+        - If the file format is not recognized as a video, a message will be printed.
+        - In case of an error during metadata extraction, an error message will be printed.
     """
     file_path = Path(file_path)
     metadata = {"filename": file_path.name, "filepath": str(file_path)}
@@ -31,8 +48,21 @@ def extract_metadata_local(file_path):
 
 def extract_metadata_youtube(video_url):
     """
-    Extracts metadata from a youtube video.
+    Extract metadata from a YouTube video URL using youtube-dl.
+    Args:
+        video_url (str): The URL of the YouTube video.
+    Returns:
+        dict: A dictionary containing the video's metadata, including:
+            - title (str): The title of the video.
+            - description (str): The description of the video.
+            - duration (int): The duration of the video in seconds.
+            - upload_date (str): The upload date of the video in YYYYMMDD format.
+            - channel (str): The name of the channel that uploaded the video.
+            - tags (list): A list of tags associated with the video.
+            - url (str): The URL of the video.
+        None: If an error occurs during metadata extraction.
     """
+    
     ydl_opts = {
         'quiet': True,
         'no_warnings': True,
@@ -59,11 +89,18 @@ def extract_metadata_youtube(video_url):
         return None
 
 
-# TODO: audio_path must be modified
 def transcribe_video(file_path, output_text_path):
     """
-    Creates a .txt file with transcription of a video file.
+    Transcribes the audio from a video file and saves the transcription to a text file.
+    Args:
+        file_path (str): The path to the video file to be transcribed.
+        output_text_path (str): The path where the transcribed text will be saved.
+    Raises:
+        Exception: If an error occurs during the transcription process, it will be caught and printed.
+    Notes:
+        A temporary audio file will be created during the process and deleted afterwards.
     """
+    
     try:
         clip = VideoFileClip(file_path)
         audio_path = os.path.join(EXTERNAL_DATA_DIR, "temp_audio.mp3")
@@ -81,8 +118,18 @@ def transcribe_video(file_path, output_text_path):
 
 def transcribe_youtube_video(url_link, output_text_path):
     """
-    Creates a .txt file with transcription of a YouTube video.
+    Downloads the audio from a YouTube video, transcribes it, and saves the transcription to a file.
+    Args:
+        url_link (str): The URL of the YouTube video to transcribe.
+        output_text_path (str): The file path where the transcription text will be saved.
+    Raises:
+        Exception: If there is an error during the audio download or transcription process.
+    Notes:
+        - This function uses yt-dlp to download the audio from the YouTube video.
+        - The audio is temporarily saved as an MP3 file in the EXTERNAL_DATA_DIR directory.
+        - The audio file is deleted after transcription is completed.
     """
+    
     audio_dir = EXTERNAL_DATA_DIR
     audio_filename = "temp_audio.mp3"
     audio_path = audio_dir / audio_filename
