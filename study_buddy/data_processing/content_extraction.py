@@ -413,3 +413,22 @@ def extract_supplementary_materials_from_course(course_path: Path):
         lesson_path = course_path / lesson
         extractor = TextExtractor(data_dir=lesson_path, output_dir=PROCESSED_DATA_DIR, metadata_dir=lesson_path)
         extract_supplementary_materials_from_lesson(lesson_path, extractor)
+
+
+def extract_content_from_course(course_path):
+    """
+    Extracts content from all lessons in a given course.
+    Args:
+        course_path (str): The path to the course directory.
+    Returns:
+        None
+    """
+    lesson_list = extract_lesson_list(course_path)
+    for lesson in lesson_list:
+        lesson_path = course_path / lesson
+        extractor = TextExtractor(data_dir=lesson_path, output_dir=PROCESSED_DATA_DIR, metadata_dir=lesson_path)
+        extract_references_from_lesson(lesson_path, extractor)
+        extract_slides_from_lesson(lesson_path, extractor)
+        extract_supplementary_materials_from_lesson(lesson_path, extractor)
+        extract_external_resource_from_lesson(lesson_path)
+        extract_videos_from_lesson(lesson_path)
