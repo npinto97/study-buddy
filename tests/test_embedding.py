@@ -1,4 +1,4 @@
-from study_buddy.embeddings import embeddings
+from study_buddy.modules.embeddings import embeddings
 
 
 def test_embeddings():
