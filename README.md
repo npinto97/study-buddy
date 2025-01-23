@@ -3,23 +3,26 @@
 SIIA-RS project
 
 ```plaintext
-study-buddy/                   # Root del progetto
-├── images/                     # Cartella per i grafici generati
-│   └── pipeline_graph.png      # Grafico salvato dalla pipeline
-├── pipeline/                   # Logica principale della pipeline
-│   ├── __init__.py
-│   ├── graph.py                # Codice che definisce il grafo e la logica della pipeline
-│   └── pipeline.py             # Codice per gestire la logica della pipeline
-├── config/                     # Configurazioni del progetto
-│   └── config.py               # Configurazione del progetto, variabili di ambiente, etc.
-├── utils/                      # Strumenti ausiliari per il progetto
-│   └── graph_generator.py      # Script per generare il grafo e salvarlo in 'images'
-├── tests/                      # Test del progetto
-│   ├── __init__.py
-│   └── test_graph.py           # Test per verificare che il grafo venga generato correttamente
-├── .env                        # File per variabili di ambiente sensibili (e.g., API keys)
-├── .gitignore                  # File per ignorare file/directory durante il controllo di versione
-├── main.py                     # Punto di ingresso principale per eseguire la pipeline
-└── README.md                   # Documentazione del progetto
-└── README.md                   # Documentazione del progetto
+project/
+├── main.py                # Entry point
+├── config.py              # Common configurations
+├── agents/
+│   ├── base_agent.py      # Base class for all agents
+│   ├── supervisor.py      # Class for supervisor agents
+│   ├── top_level.py       # Top-Level Supervisor
+│   ├── planners.py        # Planner Supervisor & Team
+│   ├── learners.py        # Learning Supervisor & Team
+│   ├── multimodal.py      # Multimodal Supervisor & Team
+│   ├── collaboration.py   # Collaboration Supervisor & Team
+│   ├── motivation.py      # Motivation Supervisor & Team
+│   ├── phd_research.py    # PhD Supervisor & Team
+│   ├── tech_integration.py # Tech Supervisor & Team
+├── modules/
+│   ├── tools.py           # Shared tools
+│   ├── graph_builder.py   # Graph building for interactions
+│   ├── memory.py          # Memory management
+├── tests/                 # Functionality tests
+├── requirements.txt       # Dependencies
+└── README.md              # Project documentation
+
 ```
