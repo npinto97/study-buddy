@@ -22,6 +22,7 @@ logger.info(f"Project root path resolved to: {PROJ_ROOT}")
 
 DATA_DIR = PROJ_ROOT / "data"
 RAW_DATA_DIR = DATA_DIR / "raw"
+# RAW_DATA_DIR = PROJ_ROOT / "notebooks" / "demo_material"
 PROCESSED_DATA_DIR = DATA_DIR / "processed"
 EXTERNAL_DATA_DIR = DATA_DIR / "external"
 METADATA_DIR = DATA_DIR / "metadata"
@@ -29,7 +30,9 @@ METADATA_DIR = DATA_DIR / "metadata"
 FAISS_INDEX_DIR = PROCESSED_DATA_DIR / "faiss_index"
 
 PROCESSED_DOCS_FILE = PROCESSED_DATA_DIR / "processed_docs.json"
-logger.info(f"Processed documents file set to: {PROCESSED_DOCS_FILE}")
+# PROCESSED_STATUS_FILE = PROCESSED_DATA_DIR / "processed_status.json"
+# logger.info(f"Processed documents file set to: {PROCESSED_DOCS_FILE}")
+
 
 IMAGES_DIR = PROJ_ROOT / "images"
 
