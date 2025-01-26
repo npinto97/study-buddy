@@ -12,3 +12,5 @@ PyYAML==6.0.2
 PyYAML==6.0.2
 tqdm==4.67.1
 typing_extensions==4.12.2
+pdfplumber
+faiss-cpu
