@@ -27,7 +27,7 @@ PROCESSED_DATA_DIR = DATA_DIR / "processed"
 EXTERNAL_DATA_DIR = DATA_DIR / "external"
 METADATA_DIR = DATA_DIR / "metadata"
 
-FAISS_INDEX_DIR = PROCESSED_DATA_DIR / "faiss_index"
+FAISS_INDEX_DIR = DATA_DIR / "faiss_index"
 
 PROCESSED_DOCS_FILE = PROCESSED_DATA_DIR / "processed_docs.json"
 # PROCESSED_STATUS_FILE = PROCESSED_DATA_DIR / "processed_status.json"
