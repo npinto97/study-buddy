@@ -1,4 +1,4 @@
-from study_buddy.modules.vector_store import get_vector_store
+from study_buddy.utils.vector_store import get_vector_store
 
 import os
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
