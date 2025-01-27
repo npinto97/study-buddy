@@ -1,0 +1,7 @@
+{
+    "dependencies": ["./study_buddy"],
+    "graphs": {
+      "agent": "./study_buddy/agent.py:compiled_graph"
+    },
+    "env": ".env"
+  }
