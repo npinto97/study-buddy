@@ -1,0 +1,16 @@
+langchain
+langchain_community
+langchain_core
+langchain_docling
+langchain_openai
+langchain_text_splitters
+langgraph
+loguru
+pydantic
+python-dotenv
+PyYAML
+PyYAML
+tqdm
+typing_extensions
+pdfplumber
+faiss-cpu
