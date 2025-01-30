@@ -78,7 +78,8 @@ with col2:
         else:
             config = {"configurable": {"thread_id": config_thread_id}}
 
-            messages = st.session_state.chat_history + [{"role": "user", "content": user_input}]
+            if not st.session_state.chat_history or st.session_state.chat_history[-1]["content"] != user_input:
+                st.session_state.chat_history.append({"role": "user", "content": user_input})
 
             try:
                 events = compiled_graph.stream(
@@ -89,22 +90,17 @@ with col2:
                 st.success("Response received:")
 
                 for event in events:
-                    # Filtra solo i messaggi di tipo AIMessage
                     ai_messages = [
                         msg.content for msg in event.get("messages", []) if type(msg).__name__ == "AIMessage"
                     ]
 
-                    if ai_messages:
-                        for ai_message in ai_messages:
+                    for ai_message in ai_messages:
+                        if not st.session_state.chat_history or st.session_state.chat_history[-1]["content"] != ai_message:
                             st.write(ai_message)
                             st.session_state.chat_history.append({"role": "bot", "content": ai_message})
-                    else:
-                        st.warning("No AI messages found in this response.")
 
-                    st.session_state.chat_history.append({"role": "user", "content": user_input})
             except Exception as e:
                 st.error(f"An error occurred: {str(e)}")
-
 
 # Footer
 st.markdown("---")
