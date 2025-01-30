@@ -89,15 +89,20 @@ with col2:
                 )
                 st.success("Response received:")
 
+                last_ai_message = None
+
                 for event in events:
                     ai_messages = [
                         msg.content for msg in event.get("messages", []) if type(msg).__name__ == "AIMessage"
                     ]
 
                     for ai_message in ai_messages:
-                        if not st.session_state.chat_history or st.session_state.chat_history[-1]["content"] != ai_message:
+                        if ai_message != last_ai_message and (
+                            len(st.session_state.chat_history) < 2 or ai_message != st.session_state.chat_history[-2]["content"]
+                        ):
                             st.write(ai_message)
                             st.session_state.chat_history.append({"role": "bot", "content": ai_message})
+                            last_ai_message = ai_message 
 
             except Exception as e:
                 st.error(f"An error occurred: {str(e)}")
