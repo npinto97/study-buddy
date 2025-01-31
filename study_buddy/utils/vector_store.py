@@ -13,7 +13,7 @@ CHUNK_OVERLAP = 200
 
 def initialize_faiss_store() -> Optional[FAISS]:
     """
-    Initialize the FAISS vector store.
+    Initialize the FAISS vector store or update an existing one.
 
     Returns:
         FAISS instance or None if initialization fails.
@@ -86,13 +86,13 @@ def save_processed_hashes(file_path: Path, hashes: Set[str]):
         logger.error(f"Error saving processed hashes: {e}")
 
 
-def is_vector_store_empty(vector_store: FAISS) -> bool:
-    """Check if the vector store is empty."""
-    try:
-        return not vector_store.similarity_search("", k=1)
-    except Exception as e:
-        logger.error(f"Error checking vector store: {e}")
-        return True
+# def is_vector_store_empty(vector_store: FAISS) -> bool:
+#     """Check if the vector store is empty."""
+#     try:
+#         return not vector_store.similarity_search("", k=1)
+#     except Exception as e:
+#         logger.error(f"Error checking vector store: {e}")
+#         return True
 
 
 def add_documents_to_store(vector_store: FAISS, docs):
@@ -151,46 +151,10 @@ def index_documents(new_docs: list, new_hashes: set, processed_hashes: set, vect
     return vector_store
 
 
-# def update_vector_store(vector_store: FAISS, processed_hashes: set) -> Optional[FAISS]:
-#     """
-#     Check for new documents and add them to the existing vector store without overwriting.
-
-#     Args:
-#         vector_store: The existing FAISS vector store.
-#         processed_hashes: A set of hashes that have already been processed.
-
-#     Returns:
-#         The updated vector store, or None if no new documents were found.
-#     """
-#     # Scansione della directory per nuovi documenti
-#     new_docs, new_hashes = scan_directory_for_new_documents(RAW_DATA_DIR, SUPPORTED_EXTENSIONS, processed_hashes)
-
-#     if not new_docs:
-#         logger.info("No new documents found to update the vector store.")
-#         return vector_store  # Nessun nuovo documento, ritorniamo il vector store senza modifiche
-
-#     logger.info(f"Found {len(new_docs)} new documents to add to the vector store.")
-
-#     text_splitter = RecursiveCharacterTextSplitter(chunk_size=CHUNK_SIZE, chunk_overlap=CHUNK_OVERLAP)
-#     all_splits = text_splitter.split_documents(new_docs)
-
-#     if all_splits:
-#         # Aggiungiamo i documenti al vector store esistente
-#         add_documents_to_store(vector_store, all_splits)
-#         # Salviamo gli hash dei nuovi documenti processati
-#         save_processed_hashes(PROCESSED_DOCS_FILE, processed_hashes.update(new_hashes))
-#         logger.info("New documents have been added to the vector store.")
-#     else:
-#         logger.info("No document chunks generated from the new documents.")
-
-#     return vector_store
-
-
-def get_vector_store() -> Optional[FAISS]:
+def get_vector_store(faiss_file_path) -> Optional[FAISS]:
     """Retrieve the initialized and populated FAISS vector store."""
-    global vector_store
-
-    vector_store = initialize_faiss_store()
+    vector_store = FAISS.load_local(str(faiss_file_path), embeddings, allow_dangerous_deserialization=True)
+    logger.info("FAISS vector store loaded successfully.")
 
     return vector_store
 
