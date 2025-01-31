@@ -2,47 +2,10 @@ import streamlit as st
 from PIL import Image
 import os
 
-# Import your LangGraph application logic
-from langgraph.graph import StateGraph
-from langgraph.prebuilt import tools_condition
-from study_buddy.utils.memory import MemorySaver
-from study_buddy.utils.state import AgentState
-from study_buddy.utils.nodes import call_model, tool_node
-from study_buddy.config import IMAGES_DIR
+from study_buddy.agent import compiled_graph
 
 # Set up the environment
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
-
-
-def build_graph():
-    """Builds and compiles the LangGraph state graph."""
-    graph_builder = StateGraph(AgentState)
-    graph_builder.add_node("agent", call_model)
-    graph_builder.add_node("tools", tool_node)
-    graph_builder.set_entry_point("agent")
-    graph_builder.add_conditional_edges("agent", tools_condition)
-    graph_builder.add_edge("tools", "agent")
-
-    # memory = MemorySaver()
-    # compiled_graph = graph_builder.compile(checkpointer=memory)
-
-    if "memory" not in st.session_state:
-        st.session_state.memory = MemorySaver()
-
-    compiled_graph = graph_builder.compile(checkpointer=st.session_state.memory)
-
-    if not os.path.exists(IMAGES_DIR):
-        os.makedirs(IMAGES_DIR)
-
-    output_file_path = os.path.join(IMAGES_DIR, "agents_graph.png")
-    compiled_graph.get_graph().draw_mermaid_png(output_file_path=output_file_path)
-
-    return compiled_graph, output_file_path
-
-
-# Build the graph and generate the visualization
-compiled_graph, graph_image_path = build_graph()
-
 
 # Streamlit app layout
 st.set_page_config(page_title="LangGraph Interface", layout="wide")
@@ -60,8 +23,8 @@ col1, col2 = st.columns([1, 2])
 
 with col1:
     st.header("Graph Visualization")
-    if os.path.exists(graph_image_path):
-        graph_image = Image.open(graph_image_path)
+    if os.path.exists("images/agents_graph.png"):
+        graph_image = Image.open("images/agents_graph.png")
         st.image(graph_image, caption="Compiled LangGraph", use_container_width=True)
     else:
         st.error("Graph image not found. Please check the path.")
