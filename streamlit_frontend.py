@@ -33,7 +33,7 @@ with col2:
     st.header("Chatbot Response")
 
     if "chat_history" not in st.session_state:
-        st.session_state.chat_history = []
+        st.session_state.chat_history = []  
 
     if submit_button:
         if not user_input.strip():
@@ -41,7 +41,8 @@ with col2:
         else:
             config = {"configurable": {"thread_id": config_thread_id}}
 
-            if not st.session_state.chat_history or st.session_state.chat_history[-1]["content"] != user_input:
+            # Save user message if not already present as the last message
+            if not st.session_state.chat_history or st.session_state.chat_history[-1]["role"] != "user" or st.session_state.chat_history[-1]["content"] != user_input:
                 st.session_state.chat_history.append({"role": "user", "content": user_input})
 
             try:
@@ -52,23 +53,41 @@ with col2:
                 )
                 st.success("Response received:")
 
-                last_ai_message = None
+                last_event = None
+                count = 0
 
+                # iterate over the events, considering the last one as the final response
                 for event in events:
-                    ai_messages = [
-                        msg.content for msg in event.get("messages", []) if type(msg).__name__ == "AIMessage"
-                    ]
+                    count += 1
+                    print(f"event {count}: {event}\n")
+                    last_event = event
 
-                    for ai_message in ai_messages:
-                        if ai_message != last_ai_message and (
-                            len(st.session_state.chat_history) < 2 or ai_message != st.session_state.chat_history[-2]["content"]
-                        ):
-                            st.write(ai_message)
-                            st.session_state.chat_history.append({"role": "bot", "content": ai_message})
-                            last_ai_message = ai_message 
+                # After processing all events, extract the last AI message
+                if last_event is not None:
+                    ai_messages = [
+                        msg.content for msg in last_event.get("messages", [])
+                        if type(msg).__name__ == "AIMessage"
+                    ]
+                    if ai_messages:
+                        final_ai_message = ai_messages[-1]
+                        st.session_state.chat_history.append({"role": "bot", "content": final_ai_message})
+                    else: 
+                        st.write("No AI message found.")
+                else:
+                    st.write("No stream events received.")
 
             except Exception as e:
                 st.error(f"An error occurred: {str(e)}")
+
+    # Show conversation history
+    st.markdown("---")
+    st.markdown("### Conversation")
+    for chat in st.session_state.chat_history:
+        if chat["role"] == "user":
+            st.markdown(f"**Utente:** {chat['content']}")
+        else:
+            st.markdown(f"**Bot:** {chat['content']}")
+
 
 # Footer
 st.markdown("---")
