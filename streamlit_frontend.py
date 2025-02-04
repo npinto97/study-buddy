@@ -10,10 +10,20 @@ os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
 # Streamlit app layout
 st.set_page_config(page_title="LangGraph Interface", layout="wide")
 
+
 def initialize_session():
-    """Initialize session state variables."""
-    if "chat_history" not in st.session_state:
-        st.session_state.chat_history = []
+    """If not exists, initialize chat histories dictionary."""
+    if "chat_histories" not in st.session_state:
+        st.session_state.chat_histories = {}
+
+
+def get_chat_history(thread_id):
+    """Retrieves the chat history associated to a specific thread_id.
+    If not exists, it is initialized as an empty list"""
+    if thread_id not in st.session_state.chat_histories:
+        st.session_state.chat_histories[thread_id] = []
+    return st.session_state.chat_histories[thread_id]
+
 
 def sidebar_configuration():
     """Render the sidebar for user input and configuration."""
@@ -24,6 +34,7 @@ def sidebar_configuration():
         submit_button = st.button("Submit")
     
     return user_input, config_thread_id, submit_button
+
 
 def display_graph():
     """Display the compiled LangGraph image."""
@@ -36,17 +47,19 @@ def display_graph():
     else:
         st.error("Graph image not found. Please check the path.")
 
-def handle_chatbot_response(user_input, config_thread_id):
+
+def handle_chatbot_response(user_input, thread_id):
     """Handle chatbot response and update conversation history."""
     if not user_input.strip():
         st.warning("Please enter a valid input.")
         return
 
-    config = {"configurable": {"thread_id": config_thread_id}}
+    config = {"configurable": {"thread_id": thread_id}}
+    chat_history = get_chat_history(thread_id)
 
     # Save user message if not already the last one
-    if not st.session_state.chat_history or st.session_state.chat_history[-1]["role"] != "user" or st.session_state.chat_history[-1]["content"] != user_input:
-        st.session_state.chat_history.append({"role": "user", "content": user_input})
+    if not chat_history or chat_history[-1]["role"] != "user" or chat_history[-1]["content"] != user_input:
+        chat_history.append({"role": "user", "content": user_input})
 
     try:
         events = compiled_graph.stream(
@@ -70,7 +83,7 @@ def handle_chatbot_response(user_input, config_thread_id):
                 if type(msg).__name__ == "AIMessage"
             ]
             if ai_messages:
-                st.session_state.chat_history.append({"role": "bot", "content": ai_messages[-1]})
+                chat_history.append({"role": "bot", "content": ai_messages[-1]})
             else:
                 st.write("No AI message found.")
         else:
@@ -79,15 +92,18 @@ def handle_chatbot_response(user_input, config_thread_id):
     except Exception as e:
         st.error(f"An error occurred: {str(e)}")
 
-def display_chat_history():
+
+def display_chat_history(thread_id):
     """Display the conversation history."""
     st.markdown("---")
     st.markdown("### Conversation")
-    for chat in st.session_state.chat_history:
+    chat_history = get_chat_history(thread_id)
+    for chat in chat_history:
         if chat["role"] == "user":
             st.markdown(f"**Utente:** {chat['content']}")
         else:
             st.markdown(f"**Bot:** {chat['content']}")
+
 
 def main():
     """Main function to render the Streamlit app."""
@@ -113,7 +129,7 @@ def main():
         if submit_button:
             handle_chatbot_response(user_input, config_thread_id)
 
-        display_chat_history()
+        display_chat_history(config_thread_id)
 
     # Footer
     st.markdown("---")
