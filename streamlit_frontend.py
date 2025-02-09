@@ -15,6 +15,8 @@ def initialize_session():
     """If not exists, initialize chat histories dictionary."""
     if "chat_histories" not in st.session_state:
         st.session_state.chat_histories = {}
+    if "chat_list" not in st.session_state:
+        st.session_state.chat_list = []
 
 
 def get_chat_history(thread_id):
@@ -30,11 +32,31 @@ def sidebar_configuration():
     with st.sidebar:
         st.header("Configuration")
         user_input = st.text_area("Enter your input:", placeholder="Type your message here...")
-        config_thread_id = st.text_input("Thread ID:", value="7", help="Specify the thread ID for the configuration.")
-        submit_button = st.button("Submit")
+        
+        #config_thread_id = st.text_input("Thread ID:", value="7", help="Specify the thread ID for the configuration.")
+        
+        new_thread_id = st.text_input(
+            "Thread ID:",
+            value = "7",
+            help = "Specify the thread ID for the configuration"
+        )
+
+        if new_thread_id and new_thread_id not in st.session_state.chat_list:
+            st.session_state.chat_list.append(new_thread_id)
+
+        # submit_button = st.button("Submit")
+        select_thread_id = st.selectbox(
+            "Existing chats",
+            st.session_state.chat_list,
+            key="select_thread_id",
+            help="Configure one of the following by selecting the corresponding Thread ID"
+        )
+
+        config_thread_id = select_thread_id if select_thread_id and select_thread_id == new_thread_id else new_thread_id
+
         config_complexity_level = st.selectbox(
             "Level of complexity of responses",
-            ('Base', 'Intermediate', 'Advanced')
+            ('None', 'Base', 'Intermediate', 'Advanced')
         )
         config_language = st.selectbox(
             "Responses language",
@@ -44,6 +66,8 @@ def sidebar_configuration():
             "Which course do you want to delve in?",
             ("None", "Semantics in Intelligent Information Access")
         )
+
+        submit_button = st.button("Submit")
     
     return user_input, config_thread_id, submit_button, config_complexity_level, config_language, config_course
 
@@ -60,26 +84,21 @@ def display_graph():
         st.error("Graph image not found. Please check the path.")
 
 
-#TODO è una funzione per provare, ha il problema di dipendere dalla lingua
 def enhance_user_input(config_complexity_level, config_language, config_course, user_input):
 
-    select_complexity_string = f"Answer with a response with {config_complexity_level} level of complexity.\n"
+    if config_complexity_level == "None":
+        select_complexity_string = ""
+    else:
+        select_complexity_string =  f"Answer with a response with {config_complexity_level} level of complexity.\n"
+
     select_language_string = f"The answer must be in {config_language}.\n"
+
     if config_course == "None":
         select_course_string = ""
     else:
         select_course_string = f"The question is about the course of {config_course}.\n"
 
     enhanced_user_input = select_complexity_string + select_language_string + select_course_string + user_input
-
-    # if config_complexity_level == "Base":
-    #     enhanced_user_input = "Se è una domanda inerente al contenuto del corso, risponi in maniera basilare.\n" + user_input
-    # elif config_complexity_level == "Intermediate":
-    #     enhanced_user_input = "Se è una domanda inerente al contenuto del corso, rispondi in maniera intermedia.\n" + user_input
-    # elif config_complexity_level == "Advanced":
-    #     enhanced_user_input = "Se è una domanda inerente al contenuto del corso, rispondi in maniera dettagliata.\n" + user_input
-    # else:
-    #     raise ValueError('Selected complexity level not recognized')
 
     return enhanced_user_input
 
