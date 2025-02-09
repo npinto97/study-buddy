@@ -32,8 +32,20 @@ def sidebar_configuration():
         user_input = st.text_area("Enter your input:", placeholder="Type your message here...")
         config_thread_id = st.text_input("Thread ID:", value="7", help="Specify the thread ID for the configuration.")
         submit_button = st.button("Submit")
+        config_complexity_level = st.selectbox(
+            "Level of complexity of responses",
+            ('Base', 'Intermediate', 'Advanced')
+        )
+        config_language = st.selectbox(
+            "Responses language",
+            ("Italian", "English")
+        )
+        config_course = st.selectbox(
+            "Which course do you want to delve in?",
+            ("None", "Semantics in Intelligent Information Access")
+        )
     
-    return user_input, config_thread_id, submit_button
+    return user_input, config_thread_id, submit_button, config_complexity_level, config_language, config_course
 
 
 def display_graph():
@@ -48,12 +60,38 @@ def display_graph():
         st.error("Graph image not found. Please check the path.")
 
 
-def handle_chatbot_response(user_input, thread_id):
+#TODO è una funzione per provare, ha il problema di dipendere dalla lingua
+def enhance_user_input(config_complexity_level, config_language, config_course, user_input):
+
+    select_complexity_string = f"Answer with a response with {config_complexity_level} level of complexity.\n"
+    select_language_string = f"The answer must be in {config_language}.\n"
+    if config_course == "None":
+        select_course_string = ""
+    else:
+        select_course_string = f"The question is about the course of {config_course}.\n"
+
+    enhanced_user_input = select_complexity_string + select_language_string + select_course_string + user_input
+
+    # if config_complexity_level == "Base":
+    #     enhanced_user_input = "Se è una domanda inerente al contenuto del corso, risponi in maniera basilare.\n" + user_input
+    # elif config_complexity_level == "Intermediate":
+    #     enhanced_user_input = "Se è una domanda inerente al contenuto del corso, rispondi in maniera intermedia.\n" + user_input
+    # elif config_complexity_level == "Advanced":
+    #     enhanced_user_input = "Se è una domanda inerente al contenuto del corso, rispondi in maniera dettagliata.\n" + user_input
+    # else:
+    #     raise ValueError('Selected complexity level not recognized')
+
+    return enhanced_user_input
+
+
+def handle_chatbot_response(user_input, thread_id, config_complexity_level, config_language, config_course):
     """Handle chatbot response and update conversation history."""
     if not user_input.strip():
         st.warning("Please enter a valid input.")
         return
-
+    
+    # modify user input based on config_complexity_level
+    enhanced_user_input = enhance_user_input(config_complexity_level, config_language, config_course, user_input)
     config = {"configurable": {"thread_id": thread_id}}
     chat_history = get_chat_history(thread_id)
 
@@ -63,7 +101,7 @@ def handle_chatbot_response(user_input, thread_id):
 
     try:
         events = compiled_graph.stream(
-            {"messages": [{"role": "user", "content": user_input}]},
+            {"messages": [{"role": "user", "content": enhanced_user_input}]},
             config,
             stream_mode="values",
         )
@@ -113,7 +151,7 @@ def main():
     initialize_session()
 
     # Sidebar configuration
-    user_input, config_thread_id, submit_button = sidebar_configuration()
+    user_input, config_thread_id, submit_button, config_complexity_level, config_language, config_course = sidebar_configuration()
 
     # Define layout columns
     col1, col2 = st.columns([1, 2])
@@ -127,7 +165,7 @@ def main():
         st.header("Chatbot Response")
 
         if submit_button:
-            handle_chatbot_response(user_input, config_thread_id)
+            handle_chatbot_response(user_input, config_thread_id, config_complexity_level, config_language, config_course)
 
         display_chat_history(config_thread_id)
 
