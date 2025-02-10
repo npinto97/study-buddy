@@ -1,7 +1,11 @@
-import os
-import requests
+import os, requests, loguru
+from langdetect import detect
 from langchain_core.tools import tool, Tool
+from langchain_community.agent_toolkits.load_tools import load_tools
 
+# from langchain_community.agent_toolkits import O365Toolkit
+# from langchain_community.tools import ElevenLabsText2SpeechTool
+# from langchain_google_community import TextToSpeechTool
 from langchain_community.tools import YouTubeSearchTool
 from langchain_community.tools import WikipediaQueryRun
 from langchain_community.utilities import WikipediaAPIWrapper
@@ -23,6 +27,9 @@ google_api_key = os.getenv("GOOGLE_API_KEY")
 
 # ------------------------------------------------------------------------------
 # Basic tools
+base_tool = load_tools(["human", "pubmed"])
+
+
 @tool(response_format="content_and_artifact")
 def retrieve_tool(query: str):
     """Retrieve information related to a query."""
@@ -68,6 +75,9 @@ class CustomGoogleBooksAPIWrapper(GoogleBooksAPIWrapper):
 
 
 google_books_tool = GoogleBooksQueryRun(api_wrapper=CustomGoogleBooksAPIWrapper(google_books_api_key=google_api_key))
+
+# toolkit = O365Toolkit()
+# o365_tools = toolkit.get_tools()
 
 # ------------------------------------------------------------------------------
 # Tools for learning support
@@ -229,9 +239,158 @@ execute_python_tool = CodeInterpreterFunctionTool().to_langchain_tool()
 # ------------------------------------------------------------------------------
 # Tools for emotional support and mental health
 
+class SpotifyAPIWrapper:
+    """Wrapper for Spotify Web API to search and play music."""
+
+    def __init__(self):
+        self.client_id = os.getenv("SPOTIFY_CLIENT_ID")
+        self.client_secret = os.getenv("SPOTIFY_CLIENT_SECRET")
+        self.access_token = self.get_access_token()
+
+    def get_access_token(self):
+        """Retrieve an access token from Spotify API."""
+        auth_url = "https://accounts.spotify.com/api/token"
+        auth_response = requests.post(
+            auth_url,
+            data={"grant_type": "client_credentials"},
+            auth=(self.client_id, self.client_secret),
+        )
+        if auth_response.status_code != 200:
+            raise Exception("Error getting Spotify access token")
+        return auth_response.json()["access_token"]
+
+    def search_music(self, query: str, search_type="track", limit=5):
+        """Search for a song, artist, or playlist on Spotify."""
+        url = f"https://api.spotify.com/v1/search?q={query}&type={search_type}&limit={limit}"
+        headers = {"Authorization": f"Bearer {self.access_token}"}
+        response = requests.get(url, headers=headers)
+
+        if response.status_code != 200:
+            return f"Error searching Spotify (status {response.status_code})"
+
+        data = response.json()
+        results = []
+        for item in data[search_type + "s"]["items"]:
+            name = item["name"]
+            artist = item["artists"][0]["name"] if "artists" in item else "Unknown Artist"
+            link = item["external_urls"]["spotify"]
+            results.append(f"{name} by {artist} → [Listen]({link})")
+
+        return "\n".join(results) if results else "No results found."
+
+
+spotify_music_tool = Tool(
+    name="Spotify_music",
+    description="Searches for a song, artist, or playlist on Spotify and provides a listening link.",
+    func=SpotifyAPIWrapper().search_music
+)
+
+
+class MoodBasedMusicRecommender:
+    """Suggests music based on the user's mood."""
+
+    MOOD_TO_GENRE = {
+        "happy": "pop",
+        "relaxed": "chill",
+        "focused": "lo-fi",
+        "motivated": "workout",
+        "sad": "blues",
+        "stressed": "ambient",
+    }
+
+    def __init__(self):
+        self.spotify_api = SpotifyAPIWrapper()
+
+    def recommend_music(self, mood: str):
+        """Suggests music based on the mood."""
+        genre = self.MOOD_TO_GENRE.get(mood.lower(), "pop")
+        return self.spotify_api.search_music(query=genre, search_type="playlist", limit=3)
+
+
+mood_music_tool = Tool(
+    name="Mood-Based_music",
+    description="Suggests music based on the user's mood (e.g., happy, relaxed, focused).",
+    func=MoodBasedMusicRecommender().recommend_music
+)
+
 
 # ------------------------------------------------------------------------------
 # Tools for accessibility and inclusivity
+
+# elevenlabs_tts = ElevenLabsText2SpeechTool()
+# google_tts = TextToSpeechTool(api_key=google_api_key)
+
+
+# def get_google_voice(language: str):
+#     """
+#     Returns the corresponding Google voice for a detected language.
+#     """
+#     # Google Cloud supports various languages, we pass the language code directly
+#     google_voice_map = {
+#         'en': 'en-US-Wavenet-D',  # English
+#         'it': 'it-IT-Wavenet-A',  # Italian
+#         'fr': 'fr-FR-Wavenet-A',  # French
+#         'de': 'de-DE-Wavenet-A',  # German
+#         'es': 'es-ES-Wavenet-A',  # Spanish
+#         'pt': 'pt-BR-Wavenet-A',  # Portuguese
+#         # Add more languages here as needed
+#     }
+    
+#     return google_voice_map.get(language, 'en-US-Wavenet-D')  # Default to English if no match
+
+# def get_elevenlabs_voice(language: str):
+#     """
+#     Returns the corresponding ElevenLabs voice for a detected language.
+#     """
+#     # ElevenLabs supports various languages, we pass the language code directly
+#     elevenlabs_voice_map = {
+#         'en': 'English-Voice',  # Example: Adjust based on actual voices available
+#         'it': 'Italian-Voice',
+#         'fr': 'French-Voice',
+#         'de': 'German-Voice',
+#         'es': 'Spanish-Voice',
+#         # Add more languages here as needed
+#     }
+
+#     return elevenlabs_voice_map.get(language, 'English-Voice')
+
+
+# def smart_tts(text: str, engine: str = "auto") -> str:
+#     """
+#     Converts text to speech based on detected language.
+#     Automatically selects voice based on the language.
+#     """
+#     # Detect language of the text
+#     detected_language = detect(text)
+#     print(f"Detected language: {detected_language}")
+
+#     # Get appropriate voices based on the detected language
+#     google_voice = get_google_voice(detected_language)
+#     elevenlabs_voice = get_elevenlabs_voice(detected_language)
+
+#     # Choose TTS engine based on text length or preference
+#     if engine == "elevenlabs" or (engine == "auto" and len(text) < 500):
+#         print(f"Using ElevenLabs with voice: {elevenlabs_voice}")
+#         return elevenlabs_tts.run(text, voice=elevenlabs_voice)
+    
+#     print(f"Using Google TTS with voice: {google_voice}")
+#     return google_tts.run(text, voice=google_voice)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 tools = [
     retrieve_tool,
@@ -243,5 +402,8 @@ tools = [
     wikidata_tool,
     wikipedia_tool,
     wolfram_tool,
-    youtube_search_tool
-]
+    youtube_search_tool,
+    spotify_music_tool,
+    mood_music_tool,
+    # smart_tts
+] + base_tool  # + o365_tools
