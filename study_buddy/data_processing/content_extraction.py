@@ -1,4 +1,5 @@
 import os
+import re
 import json
 from pathlib import Path
 from study_buddy.data_processing.text_handler import TextExtractor
@@ -145,7 +146,7 @@ def extract_references_from_lesson(lesson_path: Path, extractor: TextExtractor):
         output_dir.mkdir(parents=True, exist_ok=True)
 
         for reference in references:
-            ref_title = reference.get("title", "unknown").replace(" ", "_")
+            ref_title = re.sub(r'[^\w]', '', reference.get("title", "unknown").replace(" ", "_"))
             ref_filename = reference.get("filename")
 
             if not ref_filename:
@@ -286,7 +287,7 @@ def extract_supplementary_materials_from_lesson(lesson_path: Path, extractor: Te
         output_dir.mkdir(parents=True, exist_ok=True)
 
         for supp_material in supp_materials:
-            supp_title = supp_material.get("title", "unknown").replace(" ", "_")
+            supp_title = re.sub(r'[^\w]', '', supp_material.get("title", "unknown").replace(" ", "_"))
             supp_filename = supp_material.get("filename")
 
             if not supp_filename:
@@ -333,7 +334,8 @@ def extract_content_from_course(course_path):
     """
     lesson_list = extract_lesson_list(course_path)
     for lesson in lesson_list:
-        lesson_path = course_path / lesson
+        lesson_path = Path(lesson)
+        lesson_path = course_path / lesson_path
         extractor = TextExtractor(data_dir=lesson_path, output_dir=PROCESSED_DATA_DIR, metadata_dir=lesson_path)
         extract_references_from_lesson(lesson_path, extractor)
         extract_slides_from_lesson(lesson_path, extractor)
