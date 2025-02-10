@@ -41,6 +41,9 @@ def sidebar_configuration():
         user_input = st.text_area("Enter your input:", placeholder="Type your message here...")
 
         user_file_input = st.file_uploader("Attach multimedial content")
+
+        # pulsante per messaggio vocale (st.audio_input)
+        
         
         #config_thread_id = st.text_input("Thread ID:", value="7", help="Specify the thread ID for the configuration.")
         
