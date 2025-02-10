@@ -11,6 +11,13 @@ os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
 st.set_page_config(page_title="LangGraph Interface", layout="wide")
 
 
+class ConfigChat:
+    def __init__(self, complexity_level="None", language="Engligh", course="None"):
+        self.complexity_level = complexity_level
+        self.language = language
+        self.course = course
+
+
 def initialize_session():
     """If not exists, initialize chat histories dictionary."""
     if "chat_histories" not in st.session_state:
@@ -69,9 +76,15 @@ def sidebar_configuration():
             ("None", "Semantics in Intelligent Information Access")
         )
 
+        config_chat = ConfigChat(
+            complexity_level=config_complexity_level,
+            language=config_language,
+            course=config_course
+        )
+
         submit_button = st.button("Submit")
     
-    return user_input, user_file_input, config_thread_id, submit_button, config_complexity_level, config_language, config_course
+    return user_input, user_file_input, config_thread_id, submit_button, config_chat
 
 
 def display_graph():
@@ -86,33 +99,33 @@ def display_graph():
         st.error("Graph image not found. Please check the path.")
 
 
-def enhance_user_input(config_complexity_level, config_language, config_course, user_input):
+def enhance_user_input(config_chat, user_input):
 
-    if config_complexity_level == "None":
+    if config_chat.complexity_level == "None":
         select_complexity_string = ""
     else:
-        select_complexity_string =  f"Answer with a response with {config_complexity_level} level of complexity.\n"
+        select_complexity_string =  f"Answer with a response with {config_chat.complexity_level} level of complexity.\n"
 
-    select_language_string = f"The answer must be in {config_language}.\n"
+    select_language_string = f"The answer must be in {config_chat.language}.\n"
 
-    if config_course == "None":
+    if config_chat.course == "None":
         select_course_string = ""
     else:
-        select_course_string = f"The question is about the course of {config_course}.\n"
+        select_course_string = f"The question is about the course of {config_chat.course}.\n"
 
     enhanced_user_input = select_complexity_string + select_language_string + select_course_string + user_input
 
     return enhanced_user_input
 
 
-def handle_chatbot_response(user_input, thread_id, config_complexity_level, config_language, config_course):
+def handle_chatbot_response(user_input, thread_id, config_chat):
     """Handle chatbot response and update conversation history."""
     if not user_input.strip():
         st.warning("Please enter a valid input.")
         return
     
     # modify user input based on config_complexity_level
-    enhanced_user_input = enhance_user_input(config_complexity_level, config_language, config_course, user_input)
+    enhanced_user_input = enhance_user_input(config_chat, user_input)
     config = {"configurable": {"thread_id": thread_id}}
     chat_history = get_chat_history(thread_id)
 
@@ -172,7 +185,7 @@ def main():
     initialize_session()
 
     # Sidebar configuration
-    user_input, user_file_input, config_thread_id, submit_button, config_complexity_level, config_language, config_course = sidebar_configuration()
+    user_input, user_file_input, config_thread_id, submit_button, config_chat = sidebar_configuration()
 
     # Define layout columns
     col1, col2 = st.columns([1, 2])
@@ -186,7 +199,7 @@ def main():
         st.header("Chatbot Response")
 
         if submit_button:
-            handle_chatbot_response(user_input, config_thread_id, config_complexity_level, config_language, config_course)
+            handle_chatbot_response(user_input, config_thread_id, config_chat)
 
         display_chat_history(config_thread_id)
 
