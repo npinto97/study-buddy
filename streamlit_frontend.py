@@ -174,16 +174,31 @@ def handle_chatbot_response(user_input, thread_id, config_chat):
         st.error(f"An error occurred: {str(e)}")
 
 
-def display_chat_history(thread_id):
-    """Display the conversation history."""
+def display_chat_history(thread_id, chunk_last_message=False):
+    """Visualizza la cronologia della conversazione.
+    
+    Se `chunk_last_message` è True, l'ultimo messaggio del bot viene mostrato come generato a chunk.
+    """
     st.markdown("---")
     st.markdown("### Conversation")
     chat_history = get_chat_history(thread_id)
-    for chat in chat_history:
+    
+    for i, chat in enumerate(chat_history):
         if chat["role"] == "user":
             st.markdown(f"**Utente:** {chat['content']}")
         else:
-            st.markdown(f"**Bot:** {chat['content']}")
+            # Se il submit è stato cliccato ed è l'ultimo messaggio del bot, mostralo a chunk
+            if chunk_last_message and i == len(chat_history) - 1:
+                placeholder = st.empty()
+                content_so_far = ""
+                # Simula la generazione a chunk (ad esempio, aggiornando parola per parola)
+                for word in chat["content"].split():
+                    content_so_far += word + " "
+                    placeholder.markdown(f"**Bot:** {content_so_far}")
+                    time.sleep(0.1)  # Ritardo per simulare la generazione graduale
+                # NON stampare un ulteriore messaggio finale: il placeholder è già aggiornato.
+            else:
+                st.markdown(f"**Bot:** {chat['content']}")
 
 
 def main():
@@ -211,8 +226,9 @@ def main():
 
         if submit_button:
             handle_chatbot_response(user_input, config_thread_id, config_chat)
-
-        display_chat_history(config_thread_id)
+            display_chat_history(config_thread_id, chunk_last_message=True)
+        else:
+            display_chat_history(config_thread_id)
 
     # Footer
     st.markdown("---")
