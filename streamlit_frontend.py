@@ -1,6 +1,8 @@
 import streamlit as st
 from PIL import Image
 import os
+from pathlib import Path
+import time
 
 from study_buddy.agent import compiled_graph
 
@@ -9,6 +11,9 @@ os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
 
 # Streamlit app layout
 st.set_page_config(page_title="LangGraph Interface", layout="wide")
+
+
+st.logo(image=Path("images\\logo.png"), size="large", icon_image=Path("images\\logo_icon.png"))
 
 
 class ConfigChat:
@@ -37,13 +42,12 @@ def get_chat_history(thread_id):
 def sidebar_configuration():
     """Render the sidebar for user input and configuration."""
     with st.sidebar:
-        st.header("Configuration")
-        user_input = st.text_area("Enter your input:", placeholder="Type your message here...")
-
-        user_file_input = st.file_uploader("Attach multimedial content")
-
-        # pulsante per messaggio vocale (st.audio_input)
         
+        user_input = st.text_area(":pencil2: Enter your input:", placeholder="Type your message here...")
+
+        user_file_input = st.file_uploader(":paperclip: Attach multimedial content")
+
+        user_audio_input = st.audio_input(":studio_microphone: Record a voice message")
         
         #config_thread_id = st.text_input("Thread ID:", value="7", help="Specify the thread ID for the configuration.")
         
@@ -66,28 +70,30 @@ def sidebar_configuration():
 
         config_thread_id = select_thread_id if select_thread_id and select_thread_id == new_thread_id else new_thread_id
 
-        config_complexity_level = st.selectbox(
-            "Level of complexity of responses",
-            ('None', 'Base', 'Intermediate', 'Advanced')
-        )
-        config_language = st.selectbox(
-            "Responses language",
-            ("Italian", "English")
-        )
-        config_course = st.selectbox(
-            "Which course do you want to delve in?",
-            ("None", "Semantics in Intelligent Information Access")
-        )
+        with st.expander(":gear: Chat configuration"):
 
-        config_chat = ConfigChat(
-            complexity_level=config_complexity_level,
-            language=config_language,
-            course=config_course
-        )
+            config_complexity_level = st.selectbox(
+                "Level of complexity of responses",
+                ('None', 'Base', 'Intermediate', 'Advanced')
+            )
+            config_language = st.selectbox(
+                "Responses language",
+                ("Italian", "English")
+            )
+            config_course = st.selectbox(
+                "Which course do you want to delve in?",
+                ("None", "Semantics in Intelligent Information Access")
+            )
+
+            config_chat = ConfigChat(
+                complexity_level=config_complexity_level,
+                language=config_language,
+                course=config_course
+            )
 
         submit_button = st.button("Submit")
     
-    return user_input, user_file_input, config_thread_id, submit_button, config_chat
+    return user_input, user_file_input, user_audio_input, config_thread_id, submit_button, config_chat
 
 
 def display_graph():
@@ -182,24 +188,26 @@ def display_chat_history(thread_id):
 
 def main():
     """Main function to render the Streamlit app."""
-    st.title("LangGraph Application")
+    st.title(":sparkles: UniChat: ci sono domande:question:")
 
     # Initialize session state
     initialize_session()
 
     # Sidebar configuration
-    user_input, user_file_input, config_thread_id, submit_button, config_chat = sidebar_configuration()
+    user_input, user_file_input, user_audio_input, config_thread_id, submit_button, config_chat = sidebar_configuration()
 
     # Define layout columns
     col1, col2 = st.columns([1, 2])
 
     # Display graph in column 1
     with col1:
-        display_graph()
+        # display_graph()
+        st.header(":space_invader: Our Purpose")
+        st.text("Inserire descrizione del progetto")
 
     # Chatbot response in column 2
     with col2:
-        st.header("Chatbot Response")
+        st.header(":crystal_ball: Chatbot Response")
 
         if submit_button:
             handle_chatbot_response(user_input, config_thread_id, config_chat)
