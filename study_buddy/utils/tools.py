@@ -1,11 +1,18 @@
-import os, requests, loguru
-from langdetect import detect
+import os
+import requests
+from openai import OpenAI
+from pathlib import Path
+from typing import Literal
+
+from pydantic import BaseModel, Field
+
 from langchain_core.tools import tool, Tool
 from langchain_community.agent_toolkits.load_tools import load_tools
 
 # from langchain_community.agent_toolkits import O365Toolkit
-# from langchain_community.tools import ElevenLabsText2SpeechTool
-# from langchain_google_community import TextToSpeechTool
+
+from langchain_community.tools.google_lens import GoogleLensQueryRun
+from langchain_community.utilities.google_lens import GoogleLensAPIWrapper
 from langchain_community.tools import YouTubeSearchTool
 from langchain_community.tools import WikipediaQueryRun
 from langchain_community.utilities import WikipediaAPIWrapper
@@ -17,7 +24,14 @@ from langchain_community.utilities.google_scholar import GoogleScholarAPIWrapper
 from langchain_community.tools.tavily_search import TavilySearchResults
 from langchain_community.tools.arxiv.tool import ArxivQueryRun
 from e2b_code_interpreter import Sandbox
-from pydantic import BaseModel, Field
+
+# from gradio_tools import (StableDiffusionTool,
+#                           ImageCaptioningTool,
+#                           StableDiffusionPromptGeneratorTool,
+#                           TextToVideoTool,
+#                           WhisperAudioTranscriptionTool)
+
+from gradio_client import Client
 
 from study_buddy.utils.vector_store import get_vector_store
 from study_buddy.config import FAISS_INDEX_DIR
@@ -95,7 +109,7 @@ def wolfram_tool(query: str):
 wikipedia_tool = WikipediaQueryRun(api_wrapper=WikipediaAPIWrapper())
 
 # ------------------------------------------------------------------------------
-# Advanced tools for scientific research support
+# Scientific research support tools
 arxive_tool = ArxivQueryRun()
 
 google_scholar_tool = GoogleScholarQueryRun(api_wrapper=GoogleScholarAPIWrapper())
@@ -285,6 +299,8 @@ spotify_music_tool = Tool(
     func=SpotifyAPIWrapper().search_music
 )
 
+# aggiungi music lofi generator
+
 
 class MoodBasedMusicRecommender:
     """Suggests music based on the user's mood."""
@@ -307,6 +323,7 @@ class MoodBasedMusicRecommender:
         return self.spotify_api.search_music(query=genre, search_type="playlist", limit=3)
 
 
+# TODO: non funziona
 mood_music_tool = Tool(
     name="Mood-Based_music",
     description="Suggests music based on the user's mood (e.g., happy, relaxed, focused).",
@@ -317,80 +334,123 @@ mood_music_tool = Tool(
 # ------------------------------------------------------------------------------
 # Tools for accessibility and inclusivity
 
-# elevenlabs_tts = ElevenLabsText2SpeechTool()
-# google_tts = TextToSpeechTool(api_key=google_api_key)
+
+# Convert audio (lectures, meetings) into text
+class WhisperAPIWrapper:
+    """Wrapper for OpenAI Whisper API via Hugging Face for speech-to-text transcription and translation."""
+
+    def __init__(self, api_url: str = "https://openai-whisper.hf.space/"):
+        self.client = Client(api_url)
+
+    def transcribe_audio(self, audio_url: str, task: Literal["transcribe", "translate"] = "transcribe"):
+        """Transcribes or translates audio from a file, URL, or YouTube link."""
+        result = self.client.predict(audio_url, task, api_name="/predict")
+        return result  # Returns transcribed or translated text
 
 
-# def get_google_voice(language: str):
-#     """
-#     Returns the corresponding Google voice for a detected language.
-#     """
-#     # Google Cloud supports various languages, we pass the language code directly
-#     google_voice_map = {
-#         'en': 'en-US-Wavenet-D',  # English
-#         'it': 'it-IT-Wavenet-A',  # Italian
-#         'fr': 'fr-FR-Wavenet-A',  # French
-#         'de': 'de-DE-Wavenet-A',  # German
-#         'es': 'es-ES-Wavenet-A',  # Spanish
-#         'pt': 'pt-BR-Wavenet-A',  # Portuguese
-#         # Add more languages here as needed
-#     }
-    
-#     return google_voice_map.get(language, 'en-US-Wavenet-D')  # Default to English if no match
+whisper_wrapper = WhisperAPIWrapper()
 
-# def get_elevenlabs_voice(language: str):
-#     """
-#     Returns the corresponding ElevenLabs voice for a detected language.
-#     """
-#     # ElevenLabs supports various languages, we pass the language code directly
-#     elevenlabs_voice_map = {
-#         'en': 'English-Voice',  # Example: Adjust based on actual voices available
-#         'it': 'Italian-Voice',
-#         'fr': 'French-Voice',
-#         'de': 'German-Voice',
-#         'es': 'Spanish-Voice',
-#         # Add more languages here as needed
-#     }
-
-#     return elevenlabs_voice_map.get(language, 'English-Voice')
+whisper_tool = Tool(
+    name="speech_to_text",
+    description="Transcribes or translates audio from files, URLs, or YouTube videos using OpenAI Whisper.",
+    func=whisper_wrapper.transcribe_audio,
+)
 
 
-# def smart_tts(text: str, engine: str = "auto") -> str:
-#     """
-#     Converts text to speech based on detected language.
-#     Automatically selects voice based on the language.
-#     """
-#     # Detect language of the text
-#     detected_language = detect(text)
-#     print(f"Detected language: {detected_language}")
+# Convert text into spoken voice
+class OpenAITTSWrapper:
+    """Wrapper for OpenAI's Text-to-Speech API."""
 
-#     # Get appropriate voices based on the detected language
-#     google_voice = get_google_voice(detected_language)
-#     elevenlabs_voice = get_elevenlabs_voice(detected_language)
+    def __init__(self, api_key: str = None):
+        self.client = OpenAI(api_key=api_key or os.getenv("OPENAI_API_KEY"))
 
-#     # Choose TTS engine based on text length or preference
-#     if engine == "elevenlabs" or (engine == "auto" and len(text) < 500):
-#         print(f"Using ElevenLabs with voice: {elevenlabs_voice}")
-#         return elevenlabs_tts.run(text, voice=elevenlabs_voice)
-    
-#     print(f"Using Google TTS with voice: {google_voice}")
-#     return google_tts.run(text, voice=google_voice)
+    def text_to_speech(self, text: str, model: str = "tts-1", voice: str = "sage", output_filename: str = "speech.mp3"):
+        """Converts text to speech and saves the audio file."""
+        output_path = Path(__file__).parent / output_filename
+        response = self.client.audio.speech.create(
+            model=model,
+            voice=voice,
+            input=text,
+        )
+        with open(output_path, "wb") as audio_file:
+            audio_file.write(response.content)
 
+        return str(output_path)
 
 
+# Instantiate the wrapper
+tts_wrapper = OpenAITTSWrapper()
+
+# Define the tool
+tts_tool = Tool(
+    name="text_to_speech",
+    description="Converts text to speech using OpenAI's TTS API and returns an audio file.",
+    func=tts_wrapper.text_to_speech,
+)
 
 
+# ------------------------------------------------------------------------------
+# Advanced tools (multimodal, ...)
 
 
+# image_generation_tool = StableDiffusionTool().langchain
+# image_caption_tool = ImageCaptioningTool().langchain
+# improve_prompt_tool = StableDiffusionPromptGeneratorTool().langchain
+# video_generator_tool = TextToVideoTool().langchain
 
 
+google_lens_tool = GoogleLensQueryRun(api_wrapper=GoogleLensAPIWrapper())
 
 
+class ImageGenerationAPIWrapper:
+    def __init__(self, model_name: str):
+        self.client = Client(model_name)
+
+    def generate_image(self, prompt: str, seed: int = 0, randomize_seed: bool = True, width: int = 1024, height: int = 1024, num_inference_steps: int = 4):
+        """Generates an image from a prompt using the Hugging Face API."""
+        result = self.client.predict(
+            prompt=prompt,
+            seed=seed,
+            randomize_seed=randomize_seed,
+            width=width,
+            height=height,
+            num_inference_steps=num_inference_steps,
+            api_name="/infer"
+        )
+        return result  # This could be an image URL or file path depending on the API response
 
 
+image_generation_wrapper = ImageGenerationAPIWrapper("black-forest-labs/FLUX.1-schnell")
+
+image_generation_tool = Tool(
+    name="image_generator",
+    description="Generates an image following a given prompt and returns the result.",
+    func=image_generation_wrapper.generate_image
+)
 
 
+class CLIPInterrogatorAPIWrapper:
+    def __init__(self, api_url: str):
+        self.client = Client(api_url)
 
+    def interrogate_image(self, image_url: str, model: str = "ViT-L (best for Stable Diffusion 1.*)", mode: str = "best"):
+        """Interrogate the image to get information using CLIP-Interrogator."""
+        result = self.client.predict(
+            image_url,         # Image URL
+            model,             # Model to use
+            mode,              # Mode ('best', 'fast', 'classic', 'negative')
+            fn_index=3         # Function index for image interrogation
+        )
+        return result
+
+
+clip_interrogator_wrapper = CLIPInterrogatorAPIWrapper("https://pharmapsychotic-clip-interrogator.hf.space/")
+
+clip_interrogator_tool = Tool(
+    name="clip_interrogator",
+    description="Interrogate an image and return artistic information, movement, and more.",
+    func=clip_interrogator_wrapper.interrogate_image  # The function from the wrapper
+)
 
 tools = [
     retrieve_tool,
@@ -405,5 +465,9 @@ tools = [
     youtube_search_tool,
     spotify_music_tool,
     mood_music_tool,
-    # smart_tts
-] + base_tool  # + o365_tools
+    tts_tool,
+    whisper_tool,
+    google_lens_tool,
+    image_generation_tool,
+    clip_interrogator_tool
+] + base_tool   # + o365_tools
