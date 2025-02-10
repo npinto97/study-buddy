@@ -32,6 +32,8 @@ def sidebar_configuration():
     with st.sidebar:
         st.header("Configuration")
         user_input = st.text_area("Enter your input:", placeholder="Type your message here...")
+
+        user_file_input = st.file_uploader("Attach multimedial content")
         
         #config_thread_id = st.text_input("Thread ID:", value="7", help="Specify the thread ID for the configuration.")
         
@@ -69,7 +71,7 @@ def sidebar_configuration():
 
         submit_button = st.button("Submit")
     
-    return user_input, config_thread_id, submit_button, config_complexity_level, config_language, config_course
+    return user_input, user_file_input, config_thread_id, submit_button, config_complexity_level, config_language, config_course
 
 
 def display_graph():
@@ -170,7 +172,7 @@ def main():
     initialize_session()
 
     # Sidebar configuration
-    user_input, config_thread_id, submit_button, config_complexity_level, config_language, config_course = sidebar_configuration()
+    user_input, user_file_input, config_thread_id, submit_button, config_complexity_level, config_language, config_course = sidebar_configuration()
 
     # Define layout columns
     col1, col2 = st.columns([1, 2])
