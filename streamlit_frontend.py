@@ -185,7 +185,10 @@ def display_chat_history(thread_id, chunk_last_message=False):
     
     for i, chat in enumerate(chat_history):
         if chat["role"] == "user":
-            st.markdown(f"**Utente:** {chat['content']}")
+            st.markdown(
+                f'<p style="color: #613980;"><strong>Utente:</strong> {chat["content"]}</p>',
+                unsafe_allow_html=True,
+            )
         else:
             # Se il submit è stato cliccato ed è l'ultimo messaggio del bot, mostralo a chunk
             if chunk_last_message and i == len(chat_history) - 1:
