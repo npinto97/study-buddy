@@ -5,6 +5,7 @@ from pathlib import Path
 import time
 
 from study_buddy.agent import compiled_graph
+from study_buddy.utils.tools import OpenAITTSWrapper
 
 # Set up the environment
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
@@ -42,19 +43,19 @@ def get_chat_history(thread_id):
 def sidebar_configuration():
     """Render the sidebar for user input and configuration."""
     with st.sidebar:
-        
+
         user_input = st.text_area(":pencil2: Enter your input:", placeholder="Type your message here...")
 
         user_file_input = st.file_uploader(":paperclip: Attach multimedial content")
 
         user_audio_input = st.audio_input(":studio_microphone: Record a voice message")
-        
-        #config_thread_id = st.text_input("Thread ID:", value="7", help="Specify the thread ID for the configuration.")
-        
+
+        # config_thread_id = st.text_input("Thread ID:", value="7", help="Specify the thread ID for the configuration.")
+
         new_thread_id = st.text_input(
             "Thread ID:",
-            value = "7",
-            help = "Specify the thread ID for the configuration"
+            value="7",
+            help="Specify the thread ID for the configuration"
         )
 
         if new_thread_id and new_thread_id not in st.session_state.chat_list:
@@ -92,7 +93,7 @@ def sidebar_configuration():
             )
 
         submit_button = st.button("Submit")
-    
+
     return user_input, user_file_input, user_audio_input, config_thread_id, submit_button, config_chat
 
 
@@ -100,7 +101,7 @@ def display_graph():
     """Display the compiled LangGraph image."""
     st.header("Graph Visualization")
     graph_path = "images/agents_graph.png"
-    
+
     if os.path.exists(graph_path):
         graph_image = Image.open(graph_path)
         st.image(graph_image, caption="Compiled LangGraph", use_container_width=True)
@@ -113,7 +114,7 @@ def enhance_user_input(config_chat, user_input):
     if config_chat.complexity_level == "None":
         select_complexity_string = ""
     else:
-        select_complexity_string =  f"Answer with a response with {config_chat.complexity_level} level of complexity.\n"
+        select_complexity_string = f"Answer with a response with {config_chat.complexity_level} level of complexity.\n"
 
     select_language_string = f"The answer must be in {config_chat.language}.\n"
 
@@ -132,7 +133,7 @@ def handle_chatbot_response(user_input, thread_id, config_chat):
     if not user_input.strip():
         st.warning("Please enter a valid input.")
         return
-    
+
     # modify user input based on config_complexity_level
     enhanced_user_input = enhance_user_input(config_chat, user_input)
     config = {"configurable": {"thread_id": thread_id}}
@@ -174,15 +175,25 @@ def handle_chatbot_response(user_input, thread_id, config_chat):
         st.error(f"An error occurred: {str(e)}")
 
 
+tts_wrapper = OpenAITTSWrapper()
+
+
+def play_text_to_speech(text):
+    """Call OpenAI's TTS tool and play the generated speech."""
+    if st.button("🔊"):
+        audio_path = tts_wrapper.text_to_speech(text)
+        st.audio(audio_path, format="audio/mp3")
+
+
 def display_chat_history(thread_id, chunk_last_message=False):
-    """Visualizza la cronologia della conversazione.
-    
-    Se `chunk_last_message` è True, l'ultimo messaggio del bot viene mostrato come generato a chunk.
+    """Display the conversation history.
+
+    If `chunk_last_message` is True, the last bot message is shown as generated in chunks.
     """
     st.markdown("---")
     st.markdown("### Conversation")
     chat_history = get_chat_history(thread_id)
-    
+
     for i, chat in enumerate(chat_history):
         if chat["role"] == "user":
             st.markdown(
@@ -202,6 +213,8 @@ def display_chat_history(thread_id, chunk_last_message=False):
                 # NON stampare un ulteriore messaggio finale: il placeholder è già aggiornato.
             else:
                 st.markdown(f"**Bot:** {chat['content']}")
+
+            play_text_to_speech(chat["content"])
 
 
 def main():
@@ -236,6 +249,7 @@ def main():
     # Footer
     st.markdown("---")
     st.caption("LangGraph Application - Built with Streamlit")
+
 
 if __name__ == "__main__":
     main()
