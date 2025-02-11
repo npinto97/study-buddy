@@ -178,9 +178,9 @@ def handle_chatbot_response(user_input, thread_id, config_chat):
 tts_wrapper = OpenAITTSWrapper()
 
 
-def play_text_to_speech(text):
+def play_text_to_speech(text, key=None):
     """Call OpenAI's TTS tool and play the generated speech."""
-    if st.button("🔊"):
+    if st.button("🔊", key=key):
         audio_path = tts_wrapper.text_to_speech(text)
         st.audio(audio_path, format="audio/mp3")
 
@@ -214,7 +214,7 @@ def display_chat_history(thread_id, chunk_last_message=False):
             else:
                 st.markdown(f"**Bot:** {chat['content']}")
 
-            play_text_to_speech(chat["content"])
+            play_text_to_speech(chat["content"], key=f"tts_button_{i}")
 
 
 def main():
