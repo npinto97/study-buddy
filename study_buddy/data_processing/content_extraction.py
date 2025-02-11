@@ -208,7 +208,7 @@ def extract_slides_from_lesson(lesson_path: Path, extractor: TextExtractor):
         with metadata_path.open('r', encoding='utf-8') as metadata_file:
             metadata = json.load(metadata_file)
 
-        slides = metadata.get("multimedia", {}).get("slides", [])
+        slides = metadata.get("slides", [])
         if not slides:
             print(f"No slides found in {lesson_path}.")
             return
@@ -217,16 +217,19 @@ def extract_slides_from_lesson(lesson_path: Path, extractor: TextExtractor):
         output_dir.mkdir(parents=True, exist_ok=True)
 
         for slide in slides:
-            slide_title = slide.get("title", "unknown").replace(" ", "_")
-            slide_filename = slide.get("filename")
 
-            if not slide_filename:
-                print("No filename found in slide. Skip ...")
-                continue
+            slide_title = re.sub(r'\.[^.]+$', '', slide)
 
-            slide_file_path = lesson_path / "slides" / slide_filename
+            # slide_title = slide.get("title", "unknown").replace(" ", "_")
+            # slide_filename = slide.get("filename")
+
+            # if not slide_filename:
+            #     print("No filename found in slide. Skip ...")
+            #     continue
+
+            slide_file_path = lesson_path / "slides" / slide
             if not slide_file_path.exists():
-                print(f"File {slide_filename} not found in {lesson_path}. Skip ...")
+                print(f"File {slide} not found in {lesson_path}. Skip ...")
                 continue
 
             try:
