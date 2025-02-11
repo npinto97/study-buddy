@@ -1,7 +1,7 @@
 import os
 import requests
+import tempfile
 from openai import OpenAI
-from pathlib import Path
 from typing import Literal
 
 from pydantic import BaseModel, Field
@@ -302,35 +302,6 @@ spotify_music_tool = Tool(
 # aggiungi music lofi generator
 
 
-class MoodBasedMusicRecommender:
-    """Suggests music based on the user's mood."""
-
-    MOOD_TO_GENRE = {
-        "happy": "pop",
-        "relaxed": "chill",
-        "focused": "lo-fi",
-        "motivated": "workout",
-        "sad": "blues",
-        "stressed": "ambient",
-    }
-
-    def __init__(self):
-        self.spotify_api = SpotifyAPIWrapper()
-
-    def recommend_music(self, mood: str):
-        """Suggests music based on the mood."""
-        genre = self.MOOD_TO_GENRE.get(mood.lower(), "pop")
-        return self.spotify_api.search_music(query=genre, search_type="playlist", limit=3)
-
-
-# TODO: non funziona
-mood_music_tool = Tool(
-    name="Mood-Based_music",
-    description="Suggests music based on the user's mood (e.g., happy, relaxed, focused).",
-    func=MoodBasedMusicRecommender().recommend_music
-)
-
-
 # ------------------------------------------------------------------------------
 # Tools for accessibility and inclusivity
 
@@ -365,17 +336,20 @@ class OpenAITTSWrapper:
         self.client = OpenAI(api_key=api_key or os.getenv("OPENAI_API_KEY"))
 
     def text_to_speech(self, text: str, model: str = "tts-1", voice: str = "sage", output_filename: str = "speech.mp3"):
-        """Converts text to speech and saves the audio file."""
-        output_path = Path(__file__).parent / output_filename
+        """Converts text to speech and saves the audio file in a temporary dictionary."""
+
+        temp_audio_file = tempfile.NamedTemporaryFile(delete=False, suffix=".mp3")
+        temp_audio_path = temp_audio_file.name
+
         response = self.client.audio.speech.create(
             model=model,
             voice=voice,
             input=text,
         )
-        with open(output_path, "wb") as audio_file:
+        with open(temp_audio_path, "wb") as audio_file:
             audio_file.write(response.content)
 
-        return str(output_path)
+        return str(temp_audio_path)
 
 
 # Instantiate the wrapper
@@ -464,7 +438,6 @@ tools = [
     wolfram_tool,
     youtube_search_tool,
     spotify_music_tool,
-    mood_music_tool,
     tts_tool,
     whisper_tool,
     google_lens_tool,

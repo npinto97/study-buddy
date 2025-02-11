@@ -36,7 +36,7 @@ graph_builder.add_edge("tools", "agent")
 
 memory = MemorySaver()
 compiled_graph = graph_builder.compile(checkpointer=memory)
-
+# compiled_graph = create_react_agent(model, tools=tools, checkpointer=memory, state=AgentState, ...)
 
 if not os.path.exists(IMAGES_DIR):
     os.makedirs(IMAGES_DIR)
@@ -47,20 +47,28 @@ compiled_graph.get_graph().draw_mermaid_png(output_file_path=output_file_path)
 logger.info(f"Graph saved to: {output_file_path}")
 
 
-# # Run chatbot loop
-# config = {"configurable": {"thread_id": "7"}}
+# Run chatbot loop
+config = {"configurable": {"thread_id": "8"}}
 
-# while True:
-#     user_input = input("User: ")
-#     if user_input.lower() in ["quit", "exit", "q"]:
-#         print("Goodbye!")
-#         break
+while True:
+    user_input = input("User: ")
+    if user_input.lower() in ["quit", "exit", "q"]:
+        print("Goodbye!")
+        break
 
-#     events = compiled_graph.stream(
-#         {"messages": [{"role": "user", "content": user_input}]},
-#         config,
-#         stream_mode="values",
-#     )
-#     for event in events:
-#         # print("DEBUG: Messages:", event["messages"])
-#         event["messages"][-1].pretty_print()
+    # events = compiled_graph.stream(
+    #     {"messages": [{"role": "user", "content": user_input}]},
+    #     config,
+    #     stream_mode="values",
+    # )
+    # for event in events:
+    #     # print("DEBUG: Messages:", event["messages"])
+    #     event["messages"][-1].pretty_print()
+
+    for message_chunk, metadata in compiled_graph.stream(
+        {"messages": [{"role": "user", "content": user_input}]},
+        config,
+        stream_mode="messages",
+    ):
+        if message_chunk.content:
+            print(message_chunk.content, end="", flush=True)
