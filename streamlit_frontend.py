@@ -127,21 +127,23 @@ def enhance_user_input(config_chat, user_input, file_path):
         select_course_string = f"The question is about the course of {config_chat.course}.\n"
 
     if file_path is None:
-        file_path = ""
+        file_path_string = ""
+    else:
+        file_path_string = f"The user's query contains the path to a file that needs to be examined: {file_path}"
 
-    enhanced_user_input = select_complexity_string + select_language_string + select_course_string + user_input + file_path
+    enhanced_user_input = select_complexity_string + select_language_string + select_course_string + user_input + file_path_string
 
     return enhanced_user_input
 
 
-def handle_chatbot_response(user_input, thread_id, config_chat, file_path):
+def handle_chatbot_response(user_input, thread_id, config_chat, user_file_path):
     """Handle chatbot response and update conversation history."""
-    if not user_input.strip():
+    if not (user_input.strip() or user_file_path):
         st.warning("Please enter a valid input.")
         return
 
     # modify user input based on config_complexity_level
-    enhanced_user_input = enhance_user_input(config_chat, user_input, file_path)
+    enhanced_user_input = enhance_user_input(config_chat, user_input, user_file_path)
     config = {"configurable": {"thread_id": thread_id}}
     chat_history = get_chat_history(thread_id)
 
@@ -155,8 +157,6 @@ def handle_chatbot_response(user_input, thread_id, config_chat, file_path):
             config,
             stream_mode="values",
         )
-        st.write(f"File path passato al chatbot: {file_path}")
-        st.success("Response received:")
 
         last_event = None
 
@@ -187,11 +187,16 @@ def handle_chatbot_response(user_input, thread_id, config_chat, file_path):
 
             if tool_messages:
                 try:
-                    # Il contenuto del ToolMessage è una stringa JSON-like, quindi lo parsiamo
                     tool_output = json.loads(tool_messages[-1])
-                    image_path = tool_output[0]  # Il primo elemento dovrebbe essere il percorso
-                    if image_path and (not chat_history or chat_history[-1].get("image") != image_path):
-                        chat_history.append({"role": "bot", "image": image_path})
+                    image_path = tool_output[0]
+
+                    if image_path:
+                        # Controlla se l'immagine è già stata aggiunta alla cronologia
+                        last_image = next((msg for msg in reversed(chat_history) if msg.get("role") == "tool"), None)
+
+                        # Aggiunge solo se è una nuova immagine e non è già presente
+                        if not last_image or last_image.get("image") != image_path:
+                            chat_history.append({"role": "tool", "image": image_path})
                 except Exception as e:
                     st.error(f"Errore nell'estrazione dell'immagine: {str(e)}")
 
@@ -232,8 +237,6 @@ def save_file(user_file_input):
             tmp_file_path = tmp_file.name
             if not os.path.exists(tmp_file_path):
                 st.error(f"Il file audio non è stato trovato: {tmp_file_path}")
-            else:
-                st.success(f"File audio trovato: {tmp_file_path}")
         return tmp_file_path
     except Exception as e:
         st.error(f"Errore durante la trascrizione dell'audio: {str(e)}")
@@ -248,7 +251,7 @@ def play_text_to_speech(text, key=None):
         st.audio(audio_path, format="audio/mp3")
 
 
-def display_chat_history(thread_id, chunk_last_message=False):
+def display_chat_history(thread_id):
     """Display the conversation history.
 
     If `chunk_last_message` is True, the last bot message is shown as generated in chunks.
@@ -258,6 +261,7 @@ def display_chat_history(thread_id, chunk_last_message=False):
     chat_history = get_chat_history(thread_id)
 
     for i, chat in enumerate(chat_history):
+        print(f"------------------------------------------------->{chat}")
         role = chat["role"]
         content = chat.get("content", None)
         image_path = chat.get("image", None)
@@ -275,20 +279,15 @@ def display_chat_history(thread_id, chunk_last_message=False):
 
         # Messaggio del bot
         elif role == "bot":
-            # Se il messaggio contiene solo testo
             if content:
                 st.markdown(f"**Bot:** {content}")
-
-            # Se il messaggio contiene un'immagine
-            if image_path:
-                if os.path.exists(image_path):
-                    st.image(image_path, caption="Immagine generata", width=500)
-                else:
-                    st.error(f"Errore: immagine non trovata in {image_path}")
-
-            # Gestione della sintesi vocale per il messaggio di testo
-            if content:
                 play_text_to_speech(content, key=f"tts_button_{i}")
+
+        elif role == "tool" and image_path:
+            if os.path.exists(image_path):
+                st.image(image_path, caption="Immagine generata", width=500)
+            else:
+                st.error(f"Errore: immagine non trovata in {image_path}")
 
 
 def main():
@@ -309,11 +308,10 @@ def main():
             user_input = transcribed_text
             st.success(f"Transcribed text: {user_input}")
 
-    file_path = None
+    user_file_path = None
     if user_file_input is not None:
         st.info("🎙️ Caricando il file...")
-        file_path = save_file(user_file_input)
-        st.success(f"File caricato: {file_path}")
+        user_file_path = save_file(user_file_input)
 
     # Define layout columns
     col1, col2 = st.columns([1, 2])
@@ -329,8 +327,8 @@ def main():
         st.header(":crystal_ball: Chatbot Response")
 
         if submit_button:
-            handle_chatbot_response(user_input, config_thread_id, config_chat, file_path)
-            display_chat_history(config_thread_id, chunk_last_message=True)
+            handle_chatbot_response(user_input, config_thread_id, config_chat, user_file_path)
+            display_chat_history(config_thread_id)
         else:
             display_chat_history(config_thread_id)
 
