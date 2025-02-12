@@ -14,3 +14,10 @@ tqdm
 typing_extensions
 pdfplumber
 faiss-cpu
+e2b-code-interpreter
+gradio-client
+xmltodict
+wolframalpha
+wikipedia
+arxiv
+google-search-results
