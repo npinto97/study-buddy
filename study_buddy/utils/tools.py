@@ -2,7 +2,7 @@ import os
 import requests
 import tempfile
 from openai import OpenAI
-from typing import Literal
+from typing import Union
 
 from pydantic import BaseModel, Field
 
@@ -307,24 +307,66 @@ spotify_music_tool = Tool(
 
 
 # Convert audio (lectures, meetings) into text
-class WhisperAPIWrapper:
-    """Wrapper for OpenAI Whisper API via Hugging Face for speech-to-text transcription and translation."""
+class OpenAISpeechToText:
+    """Wrapper for the OpenAI Whisper API to transcribe or translate audio from files, paths, or URLs."""
 
-    def __init__(self, api_url: str = "https://openai-whisper.hf.space/"):
-        self.client = Client(api_url)
+    def __init__(self):
+        self.client = OpenAI()
 
-    def transcribe_audio(self, audio_url: str, task: Literal["transcribe", "translate"] = "transcribe"):
-        """Transcribes or translates audio from a file, URL, or YouTube link."""
-        result = self.client.predict(audio_url, task, api_name="/predict")
-        return result  # Returns transcribed or translated text
+    def _download_audio(self, audio_url: str) -> str:
+        """Download a temporary audio file from a URL and return the local path."""
+        response = requests.get(audio_url, stream=True)
+        if response.status_code != 200:
+            raise ValueError("Error downloading the audio file.")
+
+        temp_audio = tempfile.NamedTemporaryFile(delete=False, suffix=".mp3")
+        for chunk in response.iter_content(chunk_size=1024):
+            if chunk:
+                temp_audio.write(chunk)
+        temp_audio.close()
+        return temp_audio.name
+
+    def _get_audio_path(self, audio_input: Union[str, bytes]) -> str:
+        """Determine the audio file path based on the input type."""
+        if isinstance(audio_input, str):
+            if audio_input.startswith("http"):  # Remote URL
+                return self._download_audio(audio_input)
+            elif os.path.exists(audio_input):  # Local path
+                return audio_input
+            else:
+                raise ValueError("The audio file path does not exist.")
+        elif isinstance(audio_input, bytes):  # File uploaded as binary object
+            temp_audio = tempfile.NamedTemporaryFile(delete=False, suffix=".mp3")
+            temp_audio.write(audio_input)
+            temp_audio.close()
+            return temp_audio.name
+        else:
+            raise TypeError("Invalid input. Provide a URL, file path, or binary file.")
+
+    def transcribe_audio(self, audio_input: Union[str, bytes], task: str = "transcribe") -> str:
+        """Transcribe or translate a local audio file, URL, or binary file."""
+        audio_path = self._get_audio_path(audio_input)
+
+        with open(audio_path, "rb") as audio_file:
+            if task == "translate":
+                response = self.client.audio.translations.create(
+                    model="whisper-1",
+                    file=audio_file
+                )
+            else:
+                response = self.client.audio.transcriptions.create(
+                    model="whisper-1",
+                    file=audio_file
+                )
+
+        os.remove(audio_path)  # Delete the temporary file if created
+        return response.text  # Return the transcribed/translated text
 
 
-whisper_wrapper = WhisperAPIWrapper()
-
-whisper_tool = Tool(
+speech_to_text_tool = Tool(
     name="speech_to_text",
-    description="Transcribes or translates audio from files, URLs, or YouTube videos using OpenAI Whisper.",
-    func=whisper_wrapper.transcribe_audio,
+    description="Trascrive o traduce audio da file, percorsi locali o URL utilizzando OpenAI Whisper.",
+    func=OpenAISpeechToText().transcribe_audio,
 )
 
 
@@ -365,13 +407,6 @@ tts_tool = Tool(
 
 # ------------------------------------------------------------------------------
 # Advanced tools (multimodal, ...)
-
-
-# image_generation_tool = StableDiffusionTool().langchain
-# image_caption_tool = ImageCaptioningTool().langchain
-# improve_prompt_tool = StableDiffusionPromptGeneratorTool().langchain
-# video_generator_tool = TextToVideoTool().langchain
-
 
 google_lens_tool = GoogleLensQueryRun(api_wrapper=GoogleLensAPIWrapper())
 
@@ -439,7 +474,7 @@ tools = [
     youtube_search_tool,
     spotify_music_tool,
     tts_tool,
-    whisper_tool,
+    speech_to_text_tool,
     google_lens_tool,
     image_generation_tool,
     clip_interrogator_tool
