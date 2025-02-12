@@ -184,15 +184,12 @@ def handle_chatbot_response(user_input, thread_id, config_chat):
             if tool_messages:
                 try:
                     # Il contenuto del ToolMessage è una stringa JSON-like, quindi lo parsiamo
-                    tool_output = json.loads(tool_messages[0])
+                    tool_output = json.loads(tool_messages[-1])
                     image_path = tool_output[0]  # Il primo elemento dovrebbe essere il percorso
+                    if image_path and (not chat_history or chat_history[-1].get("image") != image_path):
+                        chat_history.append({"role": "bot", "image": image_path})
                 except Exception as e:
                     st.error(f"Errore nell'estrazione dell'immagine: {str(e)}")
-
-            if image_path:
-                chat_history.append({"role": "bot", "image": image_path})
-            elif ai_messages:
-                chat_history.append({"role": "bot", "content": ai_messages[-1]})
 
     except Exception as e:
         st.error(f"An error occurred: {str(e)}")
