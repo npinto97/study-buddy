@@ -112,7 +112,7 @@ def display_graph():
         st.error("Graph image not found. Please check the path.")
 
 
-def enhance_user_input(config_chat, user_input):
+def enhance_user_input(config_chat, user_input, file_path):
 
     if config_chat.complexity_level == "None":
         select_complexity_string = ""
@@ -126,19 +126,22 @@ def enhance_user_input(config_chat, user_input):
     else:
         select_course_string = f"The question is about the course of {config_chat.course}.\n"
 
-    enhanced_user_input = select_complexity_string + select_language_string + select_course_string + user_input
+    if file_path is None:
+        file_path = ""
+
+    enhanced_user_input = select_complexity_string + select_language_string + select_course_string + user_input + file_path
 
     return enhanced_user_input
 
 
-def handle_chatbot_response(user_input, thread_id, config_chat):
+def handle_chatbot_response(user_input, thread_id, config_chat, file_path):
     """Handle chatbot response and update conversation history."""
     if not user_input.strip():
         st.warning("Please enter a valid input.")
         return
 
     # modify user input based on config_complexity_level
-    enhanced_user_input = enhance_user_input(config_chat, user_input)
+    enhanced_user_input = enhance_user_input(config_chat, user_input, file_path)
     config = {"configurable": {"thread_id": thread_id}}
     chat_history = get_chat_history(thread_id)
 
@@ -152,6 +155,7 @@ def handle_chatbot_response(user_input, thread_id, config_chat):
             config,
             stream_mode="values",
         )
+        st.write(f"File path passato al chatbot: {file_path}")
         st.success("Response received:")
 
         last_event = None
@@ -215,6 +219,24 @@ def transcribe_audio(audio_file):
             return transcribed_audio
     except Exception as e:
         st.error(f"Audio transcription error: {str(e)}")
+        return ""
+
+
+def save_file(user_file_input):
+    """Save the uploaded file(s)"""
+    try:
+        # Crea un file temporaneo per il salvataggio dell'audio
+        with tempfile.NamedTemporaryFile(delete=False, suffix='.wav') as tmp_file:
+            tmp_file.write(user_file_input.getvalue())
+            tmp_file.close()  # Assicura che i dati siano scritti
+            tmp_file_path = tmp_file.name
+            if not os.path.exists(tmp_file_path):
+                st.error(f"Il file audio non è stato trovato: {tmp_file_path}")
+            else:
+                st.success(f"File audio trovato: {tmp_file_path}")
+        return tmp_file_path
+    except Exception as e:
+        st.error(f"Errore durante la trascrizione dell'audio: {str(e)}")
         return ""
 
 
@@ -287,6 +309,12 @@ def main():
             user_input = transcribed_text
             st.success(f"Transcribed text: {user_input}")
 
+    file_path = None
+    if user_file_input is not None:
+        st.info("🎙️ Caricando il file...")
+        file_path = save_file(user_file_input)
+        st.success(f"File caricato: {file_path}")
+
     # Define layout columns
     col1, col2 = st.columns([1, 2])
 
@@ -301,7 +329,7 @@ def main():
         st.header(":crystal_ball: Chatbot Response")
 
         if submit_button:
-            handle_chatbot_response(user_input, config_thread_id, config_chat)
+            handle_chatbot_response(user_input, config_thread_id, config_chat, file_path)
             display_chat_history(config_thread_id, chunk_last_message=True)
         else:
             display_chat_history(config_thread_id)
