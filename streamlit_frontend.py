@@ -1,11 +1,13 @@
+from pydub import AudioSegment
 import streamlit as st
 from PIL import Image
 import os
 from pathlib import Path
 import time
+import tempfile 
 
 from study_buddy.agent import compiled_graph
-from study_buddy.utils.tools import OpenAITTSWrapper
+from study_buddy.utils.tools import OpenAITTSWrapper, OpenAISpeechToText
 
 # Set up the environment
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
@@ -48,7 +50,7 @@ def sidebar_configuration():
 
         user_file_input = st.file_uploader(":paperclip: Attach multimedial content")
 
-        user_audio_input = st.audio_input(":studio_microphone: Record a voice message")
+        user_audio_input = st.audio_input(":studio_microphone: Use voice mode")
 
         # config_thread_id = st.text_input("Thread ID:", value="7", help="Specify the thread ID for the configuration.")
 
@@ -175,12 +177,33 @@ def handle_chatbot_response(user_input, thread_id, config_chat):
         st.error(f"An error occurred: {str(e)}")
 
 
-tts_wrapper = OpenAITTSWrapper()
+def transcribe_audio(audio_file):
+    """Use OpenAI's Whisper to transcribe audio."""
+    try:
+        # Salva il file audio in un file temporaneo
+        with tempfile.NamedTemporaryFile(delete=False, suffix='.tmp') as tmp_audio_file:
+            tmp_audio_file.write(audio_file.getvalue())
+            tmp_audio_file.close()
+            wav_audio_path = tmp_audio_file.name
+
+            audio = AudioSegment.from_file(tmp_audio_file.name)
+            wav_audio_path = tmp_audio_file.name.replace(".tmp", ".wav")
+
+            audio.export(wav_audio_path, format="wav")
+
+            transcriber = OpenAISpeechToText()
+            transcribed_audio = transcriber.transcribe_audio(wav_audio_path)
+
+            return transcribed_audio
+    except Exception as e:
+        st.error(f"Audio transcription error: {str(e)}")
+        return ""
 
 
-def play_text_to_speech(text):
+def play_text_to_speech(text, key=None):
     """Call OpenAI's TTS tool and play the generated speech."""
-    if st.button("🔊"):
+    if st.button("🔊", key=key):
+        tts_wrapper = OpenAITTSWrapper()
         audio_path = tts_wrapper.text_to_speech(text)
         st.audio(audio_path, format="audio/mp3")
 
@@ -214,7 +237,7 @@ def display_chat_history(thread_id, chunk_last_message=False):
             else:
                 st.markdown(f"**Bot:** {chat['content']}")
 
-            play_text_to_speech(chat["content"])
+            play_text_to_speech(chat["content"], key=f"tts_button_{i}")
 
 
 def main():
@@ -226,6 +249,14 @@ def main():
 
     # Sidebar configuration
     user_input, user_file_input, user_audio_input, config_thread_id, submit_button, config_chat = sidebar_configuration()
+
+    transcribed_text = ""
+    if user_audio_input is not None:
+        st.info("🎙️ Trascrivendo audio...")
+        transcribed_text = transcribe_audio(user_audio_input)
+        if transcribed_text:
+            user_input = transcribed_text
+            st.success(f"Transcribed text: {user_input}")
 
     # Define layout columns
     col1, col2 = st.columns([1, 2])
