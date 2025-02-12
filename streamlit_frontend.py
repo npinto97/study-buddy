@@ -2,9 +2,10 @@ from pydub import AudioSegment
 import streamlit as st
 from PIL import Image
 import os
+import re
 from pathlib import Path
-import time
-import tempfile 
+import tempfile
+import json
 
 from study_buddy.agent import compiled_graph
 from study_buddy.utils.tools import OpenAITTSWrapper, OpenAISpeechToText
@@ -166,12 +167,32 @@ def handle_chatbot_response(user_input, thread_id, config_chat):
                 msg.content for msg in last_event.get("messages", [])
                 if type(msg).__name__ == "AIMessage"
             ]
+
+            # Controlla se l'evento ha un messaggio ToolMessage che contiene il percorso dell'immagine
+            tool_messages = [
+                msg.content for msg in last_event.get("messages", [])
+                if type(msg).__name__ == "ToolMessage" and msg.name == "image_generator"
+            ]
+
             if ai_messages:
                 chat_history.append({"role": "bot", "content": ai_messages[-1]})
             else:
                 st.write("No AI message found.")
-        else:
-            st.write("No stream events received.")
+
+            image_path = None
+
+            if tool_messages:
+                try:
+                    # Il contenuto del ToolMessage è una stringa JSON-like, quindi lo parsiamo
+                    tool_output = json.loads(tool_messages[0])
+                    image_path = tool_output[0]  # Il primo elemento dovrebbe essere il percorso
+                except Exception as e:
+                    st.error(f"Errore nell'estrazione dell'immagine: {str(e)}")
+
+            if image_path:
+                chat_history.append({"role": "bot", "image": image_path})
+            elif ai_messages:
+                chat_history.append({"role": "bot", "content": ai_messages[-1]})
 
     except Exception as e:
         st.error(f"An error occurred: {str(e)}")
@@ -218,26 +239,37 @@ def display_chat_history(thread_id, chunk_last_message=False):
     chat_history = get_chat_history(thread_id)
 
     for i, chat in enumerate(chat_history):
-        if chat["role"] == "user":
+        role = chat["role"]
+        content = chat.get("content", None)
+        image_path = chat.get("image", None)
+
+        # Se il messaggio contiene un link Markdown a un'immagine, lo rimuoviamo
+        if content:
+            content = re.sub(r"!\[.*?\]\(sandbox:.*?\)", "", content).strip()
+
+        # Messaggio dell'utente
+        if role == "user":
             st.markdown(
-                f'<p style="color: #613980;"><strong>Utente:</strong> {chat["content"]}</p>',
+                f'<p style="color: #613980;"><strong>Utente:</strong> {content if content else "[Messaggio vuoto]"}</p>',
                 unsafe_allow_html=True,
             )
-        else:
-            # Se il submit è stato cliccato ed è l'ultimo messaggio del bot, mostralo a chunk
-            if chunk_last_message and i == len(chat_history) - 1:
-                placeholder = st.empty()
-                content_so_far = ""
-                # Simula la generazione a chunk (ad esempio, aggiornando parola per parola)
-                for word in chat["content"].split():
-                    content_so_far += word + " "
-                    placeholder.markdown(f"**Bot:** {content_so_far}")
-                    time.sleep(0.1)  # Ritardo per simulare la generazione graduale
-                # NON stampare un ulteriore messaggio finale: il placeholder è già aggiornato.
-            else:
-                st.markdown(f"**Bot:** {chat['content']}")
 
-            play_text_to_speech(chat["content"], key=f"tts_button_{i}")
+        # Messaggio del bot
+        elif role == "bot":
+            # Se il messaggio contiene solo testo
+            if content:
+                st.markdown(f"**Bot:** {content}")
+
+            # Se il messaggio contiene un'immagine
+            if image_path:
+                if os.path.exists(image_path):
+                    st.image(image_path, caption="Immagine generata", width=500)
+                else:
+                    st.error(f"Errore: immagine non trovata in {image_path}")
+
+            # Gestione della sintesi vocale per il messaggio di testo
+            if content:
+                play_text_to_speech(content, key=f"tts_button_{i}")
 
 
 def main():
