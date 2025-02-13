@@ -41,7 +41,7 @@ google_api_key = os.getenv("GOOGLE_API_KEY")
 
 # ------------------------------------------------------------------------------
 # Basic tools
-base_tool = load_tools(["human", "pubmed"])
+# base_tool = load_tools(["human", "pubmed"])
 
 
 @tool(response_format="content_and_artifact")
@@ -78,7 +78,7 @@ class CustomGoogleBooksAPIWrapper(GoogleBooksAPIWrapper):
             info = book.get("volumeInfo", {})
             title = info.get("title", "Title not available")
             authors = self._format_authors(info.get("authors", ["Unknown author"]))
-            summary = info.get("description", "No description available")  # ✅ FIXED
+            summary = info.get("description", "No description available")
             source = info.get("infoLink", "No source available")
 
             desc = f'{i}. "{title}" by {authors}: {summary}\n'
@@ -107,6 +107,34 @@ def wolfram_tool(query: str):
 
 
 wikipedia_tool = WikipediaQueryRun(api_wrapper=WikipediaAPIWrapper())
+
+
+class QwenTextAnalysis:
+    """Wrapper per l'analisi del testo tramite il modello di Hugging Face."""
+
+    def __init__(self, api_url: str = "n1ck007007/Qwen2.5-Turbo-1M-Demo"):
+        self.client = Client(api_url)
+
+    def analyze_text(self, text: str, files: list = []):
+        """Invia il testo e i file per l'analisi."""
+        try:
+            result = self.client.predict(
+                _input={"files": files, "text": text},
+                _chatbot=[],
+                api_name="/add_text"
+            )
+            return result
+        except Exception as e:
+            return {"error": str(e)}
+
+
+# Creazione di un'istanza del wrapper
+text_analysis_tool = Tool(
+    name="text_analysis",
+    description="Analyze text or files (pdf/docx/pptx/txt/html) using Qwen model.",
+    func=QwenTextAnalysis().analyze_text
+)
+
 
 # ------------------------------------------------------------------------------
 # Scientific research support tools
@@ -328,10 +356,12 @@ class OpenAISpeechToText:
 
     def _get_audio_path(self, audio_input: Union[str, bytes]) -> str:
         """Determine the audio file path based on the input type."""
+        print(f"Ricevuto input audio: {audio_input}")
         if isinstance(audio_input, str):
             if audio_input.startswith("http"):  # Remote URL
                 return self._download_audio(audio_input)
             elif os.path.exists(audio_input):  # Local path
+                print(f"Path audio esistente: {audio_input}")
                 return audio_input
             else:
                 raise ValueError("The audio file path does not exist.")
@@ -340,6 +370,9 @@ class OpenAISpeechToText:
             temp_audio.write(audio_input)
             temp_audio.close()
             return temp_audio.name
+        elif isinstance(audio_input, tempfile.NamedTemporaryFile):
+            # Ritorna il percorso del file temporaneo esistente
+            return audio_input.name
         else:
             raise TypeError("Invalid input. Provide a URL, file path, or binary file.")
 
@@ -415,7 +448,7 @@ class ImageGenerationAPIWrapper:
     def __init__(self, model_name: str):
         self.client = Client(model_name)
 
-    def generate_image(self, prompt: str, seed: int = 0, randomize_seed: bool = True, width: int = 1024, height: int = 1024, num_inference_steps: int = 4):
+    def generate_image(self, prompt: str, seed: int = 0, randomize_seed: bool = True, width: int = 100, height: int = 100, num_inference_steps: int = 2):
         """Generates an image from a prompt using the Hugging Face API."""
         result = self.client.predict(
             prompt=prompt,
@@ -442,7 +475,7 @@ class CLIPInterrogatorAPIWrapper:
     def __init__(self, api_url: str):
         self.client = Client(api_url)
 
-    def interrogate_image(self, image_url: str, model: str = "ViT-L (best for Stable Diffusion 1.*)", mode: str = "best"):
+    def interrogate_image(self, image_url: str, model: str = "ViT-L (best for Stable Diffusion 1.*)", mode: str = "classic"):
         """Interrogate the image to get information using CLIP-Interrogator."""
         result = self.client.predict(
             image_url,         # Image URL
@@ -453,12 +486,12 @@ class CLIPInterrogatorAPIWrapper:
         return result
 
 
-clip_interrogator_wrapper = CLIPInterrogatorAPIWrapper("https://pharmapsychotic-clip-interrogator.hf.space/")
+image_interrogator_wrapper = CLIPInterrogatorAPIWrapper("https://pharmapsychotic-clip-interrogator.hf.space/")
 
-clip_interrogator_tool = Tool(
-    name="clip_interrogator",
+image_interrogator_tool = Tool(
+    name="image_interrogator",
     description="Interrogate an image and return artistic information, movement, and more.",
-    func=clip_interrogator_wrapper.interrogate_image  # The function from the wrapper
+    func=image_interrogator_wrapper.interrogate_image  # The function from the wrapper
 )
 
 tools = [
@@ -477,5 +510,6 @@ tools = [
     speech_to_text_tool,
     google_lens_tool,
     image_generation_tool,
-    clip_interrogator_tool
-] + base_tool   # + o365_tools
+    image_interrogator_tool,
+    text_analysis_tool
+]  #  + base_tool   # + o365_tools
