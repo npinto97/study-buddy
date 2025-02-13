@@ -1,6 +1,7 @@
 from pydub import AudioSegment
 import streamlit as st
 from PIL import Image
+import mimetypes
 import os
 import re
 from pathlib import Path
@@ -113,25 +114,77 @@ def display_graph():
 
 
 def enhance_user_input(config_chat, user_input, file_path):
+    """
+    Generates an optimized prompt for the chatbot, ensuring:
+    - Preferential use of 'retrieve_tool' for document retrieval.
+    - A hierarchical retrieval strategy (first within the selected course, then other courses, finally the web).
+    - Security measures to prevent harmful or unethical responses.
+    - A clear and structured response according to user preferences.
+    """
 
-    if config_chat.complexity_level == "None":
-        select_complexity_string = ""
-    else:
-        select_complexity_string = f"Answer with a response with {config_chat.complexity_level} level of complexity.\n"
+    # Set response complexity level
+    select_complexity_string = (
+        f"Answer with a response of {config_chat.complexity_level} level of complexity.\n"
+        if config_chat.complexity_level != "None"
+        else ""
+    )
 
+    # Set response language
     select_language_string = f"The answer must be in {config_chat.language}.\n"
 
+    # Define course context
     if config_chat.course == "None":
         select_course_string = ""
+        course_info_string = ""
     else:
-        select_course_string = f"The question is about the course of {config_chat.course}.\n"
+        select_course_string = f"The question is about the course '{config_chat.course}'.\n"
+        course_info_string = (
+            f"First, try retrieving relevant documents from the course '{config_chat.course}'.\n"
+            "If no relevant documents are found, expand the search to other available courses.\n"
+            "If there are still no relevant documents, use an appropriate web search tool.\n"
+        )
 
-    if file_path is None:
-        file_path_string = ""
-    else:
-        file_path_string = f"The user's query contains the path to a file that needs to be examined: {file_path}"
+    # Handle attached files
+    file_path_string = (
+        f"The user's query contains a file that needs to be examined: {file_path}.\n"
+        if file_path else ""
+    )
 
-    enhanced_user_input = select_complexity_string + select_language_string + select_course_string + user_input + file_path_string
+    # Retrieval preference instructions
+    retrieval_instruction = (
+        "If the user's request involves retrieving documents, always prioritize using 'retrieve_tool'.\n"
+        "Only resort to other tools if the required information is not found in the retrieved documents.\n"
+    )
+
+    # Security and ethical guidelines
+    security_guidelines = (
+        "Ensure that all responses adhere to ethical and safety standards.\n"
+        "DO NOT generate harmful, misleading, biased, or illegal content.\n"
+        "DO NOT provide personal, medical, financial, or legal advice.\n"
+        "If the request is ambiguous, ask for clarification before responding.\n"
+        "If a query violates ethical guidelines, politely refuse to provide an answer.\n"
+    )
+
+    # Response optimization guidelines
+    response_guidelines = (
+        "Structure the response in a clear and logical manner.\n"
+        "Provide concise and informative answers while avoiding unnecessary verbosity.\n"
+        "Use examples when helpful and cite sources when applicable.\n"
+        "If additional context is required, prompt the user for clarification.\n"
+    )
+
+    # Compose the final meta-prompt
+    enhanced_user_input = (
+        security_guidelines +
+        retrieval_instruction +
+        course_info_string +
+        select_complexity_string +
+        select_language_string +
+        select_course_string +
+        response_guidelines +
+        user_input +
+        file_path_string
+    )
 
     return enhanced_user_input
 
@@ -228,18 +281,106 @@ def transcribe_audio(audio_file):
 
 
 def save_file(user_file_input):
-    """Save the uploaded file(s)"""
+    """Salva il file caricato in base al tipo (audio, immagine, video, testo)"""
     try:
-        # Crea un file temporaneo per il salvataggio dell'audio
-        with tempfile.NamedTemporaryFile(delete=False, suffix='.wav') as tmp_file:
-            tmp_file.write(user_file_input.getvalue())
-            tmp_file.close()  # Assicura che i dati siano scritti
-            tmp_file_path = tmp_file.name
-            if not os.path.exists(tmp_file_path):
-                st.error(f"Il file audio non è stato trovato: {tmp_file_path}")
+        file_name = user_file_input.name
+        file_type, encoding = mimetypes.guess_type(file_name)
+
+        # Crea una cartella temporanea per il salvataggio dei file
+        temp_dir = tempfile.mkdtemp()
+
+        # Verifica se il tipo di file è audio, immagine, video o testo
+        if file_type:
+            if file_type.startswith('audio'):
+                # Salva i file audio con estensione .wav o altro
+                tmp_file_path = save_audio_file(user_file_input, temp_dir)
+            elif file_type.startswith('image'):
+                # Salva i file immagine con estensione .jpg o altro
+                tmp_file_path = save_image_file(user_file_input, temp_dir)
+            elif file_type.startswith('video'):
+                # Salva i file video con estensione .mp4 o altro
+                tmp_file_path = save_video_file(user_file_input, temp_dir)
+            elif file_type.startswith('text'):
+                # Salva i file testuali (txt, csv, json, xml, ecc.)
+                tmp_file_path = save_text_file(user_file_input, temp_dir)
+            elif file_type == 'application/pdf':
+                # Salva i file PDF
+                tmp_file_path = save_pdf_file(user_file_input, temp_dir)
+            else:
+                st.error(f"Tipo di file non supportato: {file_type}")
+                return ""
+        else:
+            st.error("Tipo di file non riconosciuto.")
+            return ""
+
         return tmp_file_path
     except Exception as e:
-        st.error(f"Errore durante la trascrizione dell'audio: {str(e)}")
+        st.error(f"Errore durante il salvataggio del file: {str(e)}")
+        return ""
+
+
+def save_audio_file(user_file_input, temp_dir):
+    """Salva i file audio nel formato appropriato"""
+    try:
+        tmp_file_path = os.path.join(temp_dir, user_file_input.name)
+        with open(tmp_file_path, 'wb') as f:
+            f.write(user_file_input.getvalue())
+        st.success("File audio caricato 📤")
+        return tmp_file_path
+    except Exception as e:
+        st.error(f"Errore durante il salvataggio del file audio: {str(e)}")
+        return ""
+
+
+def save_image_file(user_file_input, temp_dir):
+    """Salva i file immagine nel formato appropriato"""
+    try:
+        tmp_file_path = os.path.join(temp_dir, user_file_input.name)
+        with open(tmp_file_path, 'wb') as f:
+            f.write(user_file_input.getvalue())
+        st.success(f"File immagine caricato 📤 {tmp_file_path}")
+        return tmp_file_path
+    except Exception as e:
+        st.error(f"Errore durante il salvataggio del file immagine: {str(e)}")
+        return ""
+
+
+def save_video_file(user_file_input, temp_dir):
+    """Salva i file video nel formato appropriato"""
+    try:
+        tmp_file_path = os.path.join(temp_dir, user_file_input.name)
+        with open(tmp_file_path, 'wb') as f:
+            f.write(user_file_input.getvalue())
+        st.success(f"File video caricato 📤 {tmp_file_path}")
+        return tmp_file_path
+    except Exception as e:
+        st.error(f"Errore durante il salvataggio del file video: {str(e)}")
+        return ""
+
+
+def save_text_file(user_file_input, temp_dir):
+    """Salva i file testuali (txt, csv, json, xml)"""
+    try:
+        tmp_file_path = os.path.join(temp_dir, user_file_input.name)
+        with open(tmp_file_path, 'wb') as f:
+            f.write(user_file_input.getvalue())
+        st.success("File testuale caricato 📤")
+        return tmp_file_path
+    except Exception as e:
+        st.error(f"Errore durante il salvataggio del file testuale: {str(e)}")
+        return ""
+
+
+def save_pdf_file(user_file_input, temp_dir):
+    """Salva i file PDF"""
+    try:
+        tmp_file_path = os.path.join(temp_dir, user_file_input.name)
+        with open(tmp_file_path, 'wb') as f:
+            f.write(user_file_input.getvalue())
+        st.success("File PDF caricato 📤")
+        return tmp_file_path
+    except Exception as e:
+        st.error(f"Errore durante il salvataggio del file PDF: {str(e)}")
         return ""
 
 
@@ -261,7 +402,7 @@ def display_chat_history(thread_id):
     chat_history = get_chat_history(thread_id)
 
     for i, chat in enumerate(chat_history):
-        print(f"------------------------------------------------->{chat}")
+        # print(f"-->{chat}")
         role = chat["role"]
         content = chat.get("content", None)
         image_path = chat.get("image", None)
@@ -302,7 +443,7 @@ def main():
 
     transcribed_text = ""
     if user_audio_input is not None:
-        st.info("🎙️ Trascrivendo audio...")
+        st.info("✍️ Trascrivendo audio...")
         transcribed_text = transcribe_audio(user_audio_input)
         if transcribed_text:
             user_input = transcribed_text
@@ -310,7 +451,7 @@ def main():
 
     user_file_path = None
     if user_file_input is not None:
-        st.info("🎙️ Caricando il file...")
+        st.info("📤 Caricando il file...")
         user_file_path = save_file(user_file_input)
 
     # Define layout columns
