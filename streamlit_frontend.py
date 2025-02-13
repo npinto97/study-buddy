@@ -116,7 +116,6 @@ def display_graph():
 def enhance_user_input(config_chat, user_input, file_path):
     """
     Generates an optimized prompt for the chatbot, ensuring:
-    - Preferential use of 'retrieve_tool' for document retrieval.
     - A hierarchical retrieval strategy (first within the selected course, then other courses, finally the web).
     - Security measures to prevent harmful or unethical responses.
     - A clear and structured response according to user preferences.
@@ -139,7 +138,7 @@ def enhance_user_input(config_chat, user_input, file_path):
     else:
         select_course_string = f"The question is about the course '{config_chat.course}'.\n"
         course_info_string = (
-            f"First, try retrieving relevant documents from the course '{config_chat.course}'.\n"
+            f"If the user does not specify where to search, first, try retrieving relevant documents from the course '{config_chat.course}'.\n"
             "If no relevant documents are found, expand the search to other available courses.\n"
             "If there are still no relevant documents, use an appropriate web search tool.\n"
         )
