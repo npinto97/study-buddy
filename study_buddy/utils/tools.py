@@ -3,14 +3,17 @@ import requests
 import tempfile
 from openai import OpenAI
 from typing import Union
+from textblob import TextBlob
 
 from pydantic import BaseModel, Field
 
 from langchain_core.tools import tool, Tool
-from langchain_community.agent_toolkits.load_tools import load_tools
+# from langchain_community.agent_toolkits.load_tools import load_tools
 
 # from langchain_community.agent_toolkits import O365Toolkit
-
+from langchain_openai import ChatOpenAI
+from langchain.chains.summarize import load_summarize_chain
+from langchain_community.document_loaders import PyPDFLoader, TextLoader
 from langchain_community.tools.google_lens import GoogleLensQueryRun
 from langchain_community.utilities.google_lens import GoogleLensAPIWrapper
 from langchain_community.tools import YouTubeSearchTool
@@ -112,7 +115,7 @@ wikipedia_tool = WikipediaQueryRun(api_wrapper=WikipediaAPIWrapper())
 class QwenTextAnalysis:
     """Wrapper per l'analisi del testo tramite il modello di Hugging Face."""
 
-    def __init__(self, api_url: str = "n1ck007007/Qwen2.5-Turbo-1M-Demo"):
+    def __init__(self, api_url: str = "Qwen/Qwen2.5-Turbo-1M-Demo"):
         self.client = Client(api_url)
 
     def analyze_text(self, text: str, files: list = []):
@@ -128,11 +131,55 @@ class QwenTextAnalysis:
             return {"error": str(e)}
 
 
-# Creazione di un'istanza del wrapper
 text_analysis_tool = Tool(
     name="text_analysis",
     description="Analyze text or files (pdf/docx/pptx/txt/html) using Qwen model.",
     func=QwenTextAnalysis().analyze_text
+)
+
+
+class DocumentSummarizerWrapper:
+    def __init__(self, file_path: str):
+        self.file_path = file_path
+        self.documents = self.load_documents()
+
+    def load_documents(self):
+        """
+        Carica il documento dal percorso fornito (supporta PDF e TXT).
+        """
+        if self.file_path.endswith(".pdf"):
+            loader = PyPDFLoader(self.file_path)
+        else:
+            loader = TextLoader(self.file_path)
+
+        return loader.load()
+
+    def summarize_document(self) -> str:
+        """
+        Riassume il contenuto del documento utilizzando il modello di linguaggio.
+        """
+        # Inizializza il modello di linguaggio
+        llm = ChatOpenAI(model_name="gpt-4", temperature=0)
+
+        # Crea la catena di riassunto
+        chain = load_summarize_chain(llm, chain_type="map_reduce")
+
+        # Esegui il riassunto
+        summary = chain.invoke(self.documents)
+        return summary
+
+
+# Funzione di supporto per l'integrazione con LangChain
+def summarize_document_from_wrapper(file_path: str) -> str:
+    summarizer = DocumentSummarizerWrapper(file_path)
+    return summarizer.summarize_document()
+
+
+# Creazione del Tool per LangChain
+summarize_tool = Tool(
+    name="DocumentSummarizer",
+    description="Riassume un documento testuale dato un file path (PDF o TXT)",
+    func=summarize_document_from_wrapper  # Funzione che invoca il riassunto dal wrapper
 )
 
 
@@ -494,6 +541,62 @@ image_interrogator_tool = Tool(
     func=image_interrogator_wrapper.interrogate_image  # The function from the wrapper
 )
 
+# ------------------------------------------------------------------------------
+# Other tools (sentiment analysis, ...)
+# ------------------------------------------------------------------------------
+
+
+class SentimentAnalyzerWrapper:
+    def __init__(self, file_path: str):
+        self.file_path = file_path
+        self.text = self.read_file()
+
+    def read_file(self) -> str:
+        """
+        Legge il contenuto di un file PDF o TXT e lo restituisce come stringa.
+        """
+        if self.file_path.endswith(".pdf"):
+            loader = PyPDFLoader(self.file_path)
+        elif self.file_path.endswith(".txt"):
+            loader = TextLoader(self.file_path)
+        else:
+            raise ValueError("Formato file non supportato. Usa .txt o .pdf.")
+
+        docs = loader.load()
+        return " ".join([doc.page_content for doc in docs])
+
+    def analyze_sentiment(self) -> str:
+        """
+        Analizza il sentimento del testo estratto dal file.
+        Restituisce il sentimento (positivo, negativo, neutro), polarità e soggettività.
+        """
+        blob = TextBlob(self.text)
+
+        # Polarità e soggettività
+        polarity = blob.sentiment.polarity  # Va da -1 (negativo) a 1 (positivo)
+        subjectivity = blob.sentiment.subjectivity  # Va da 0 (oggettivo) a 1 (soggettivo)
+
+        if polarity > 0:
+            sentiment = "Positivo"
+        elif polarity < 0:
+            sentiment = "Negativo"
+        else:
+            sentiment = "Neutrale"
+
+        return f"Sentimento: {sentiment}\nPolarità: {polarity}\nSoggettività: {subjectivity}"
+
+
+def analyze_sentiment_from_wrapper(file_path: str) -> str:
+    sentiment_analyzer = SentimentAnalyzerWrapper(file_path)
+    return sentiment_analyzer.analyze_sentiment()
+
+
+sentiment_tool = Tool(
+    name="SentimentAnalyzer",
+    description="Analizza il sentimento di un file (PDF o TXT) e restituisce polarità e soggettività.",
+    func=analyze_sentiment_from_wrapper  # La funzione del wrapper da invocare
+)
+
 tools = [
     retrieve_tool,
     web_search_tool,
@@ -511,5 +614,7 @@ tools = [
     google_lens_tool,
     image_generation_tool,
     image_interrogator_tool,
-    text_analysis_tool
-]  #  + base_tool   # + o365_tools
+    # text_analysis_tool,
+    summarize_tool,
+    sentiment_tool
+]  # + base_tool   # + o365_tools
