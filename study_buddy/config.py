@@ -6,7 +6,43 @@ from dotenv import load_dotenv
 from loguru import logger
 from pydantic import BaseModel
 import sys
+import pytesseract
+from PIL import Image
 
+
+from langchain_docling import DoclingLoader
+from langchain_community.document_loaders import (TextLoader,
+                                                  UnstructuredMarkdownLoader,
+                                                  UnstructuredPDFLoader,
+                                                  UnstructuredCSVLoader,
+                                                  UnstructuredExcelLoader,
+                                                  UnstructuredPowerPointLoader,
+                                                  UnstructuredHTMLLoader,
+                                                  UnstructuredEPubLoader)
+
+
+def image_loader(filepath: str):
+    """ Estrae il testo da un'immagine usando OCR. """
+    image = Image.open(filepath)
+    text = pytesseract.image_to_string(image)
+    return [text]
+
+
+# Define a mapping for file loaders
+FILE_LOADERS = {
+    ".pdf": UnstructuredPDFLoader,
+    ".txt": TextLoader,
+    ".md": UnstructuredMarkdownLoader,
+    ".docx": DoclingLoader,
+    ".csv": UnstructuredCSVLoader,
+    ".xlsx": UnstructuredExcelLoader,
+    ".pptx": UnstructuredPowerPointLoader,
+    ".html": UnstructuredHTMLLoader,
+    ".epub": UnstructuredEPubLoader,
+}
+
+AUDIO_EXTENSIONS = {".mp3", ".wav", ".flac", ".m4a"}
+SUPPORTED_EXTENSIONS = set(FILE_LOADERS.keys()).union(AUDIO_EXTENSIONS)
 
 # Load environment variables from .env
 load_dotenv()
@@ -21,11 +57,12 @@ PROJ_ROOT = Path(__file__).resolve().parents[1]
 logger.info(f"Project root path resolved to: {PROJ_ROOT}")
 
 DATA_DIR = PROJ_ROOT / "data"
-RAW_DATA_DIR = DATA_DIR / "raw"
-# RAW_DATA_DIR = PROJ_ROOT / "notebooks" / "demo_material"
+# RAW_DATA_DIR = DATA_DIR / "raw"
+RAW_DATA_DIR = PROJ_ROOT / "notebooks" / "demo_material"
 PROCESSED_DATA_DIR = DATA_DIR / "processed"
 EXTERNAL_DATA_DIR = DATA_DIR / "external"
 METADATA_DIR = DATA_DIR / "metadata"
+TEMP_DATA_DIR = DATA_DIR / "temp"
 
 FAISS_INDEX_DIR = DATA_DIR / "faiss_index"
 
@@ -35,8 +72,6 @@ PROCESSED_DOCS_FILE = PROCESSED_DATA_DIR / "processed_docs.json"
 
 
 IMAGES_DIR = PROJ_ROOT / "images"
-
-SUPPORTED_EXTENSIONS = {".txt", ".md", ".pdf", ".docx"}
 
 
 # Definition of configuration models
