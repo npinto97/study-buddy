@@ -4,18 +4,8 @@
 import hashlib
 from pathlib import Path
 
-from langchain_community.document_loaders import TextLoader, UnstructuredMarkdownLoader, PDFPlumberLoader
-from langchain_docling import DoclingLoader
-
-from study_buddy.config import logger
-
-# Define a mapping for file loaders
-FILE_LOADERS = {
-    ".pdf": PDFPlumberLoader,
-    ".txt": TextLoader,
-    ".md": UnstructuredMarkdownLoader,
-    ".docx": DoclingLoader
-}
+from study_buddy.config import logger, SUPPORTED_EXTENSIONS, FILE_LOADERS
+from study_buddy.vectorstore_pipeline.audio_handler import transcribe_audio
 
 
 def compute_document_hash(filepath: Path) -> str:
@@ -28,15 +18,18 @@ def compute_document_hash(filepath: Path) -> str:
     Returns:
         str: SHA-256 hash of the file content.
     """
+    hasher = hashlib.sha256()
     try:
         with open(filepath, "rb") as f:
-            return hashlib.sha256(f.read()).hexdigest()
+            for chunk in iter(lambda: f.read(4096), b""):
+                hasher.update(chunk)
+        return hasher.hexdigest()
     except Exception as e:
         logger.error(f"Error computing hash for {filepath}: {e}")
         raise
 
 
-def load_document(filepath: Path, supported_extensions: set):
+def load_document(filepath: Path):
     """
     Load a document using the appropriate loader based on its extension.
 
@@ -48,12 +41,16 @@ def load_document(filepath: Path, supported_extensions: set):
     """
     file_extension = filepath.suffix.lower()
 
-    if file_extension in supported_extensions:
+    if file_extension in SUPPORTED_EXTENSIONS:
         try:
+            if file_extension in {".mp3", ".wav", ".flac"}:  # Controlla se è un file audio
+                return transcribe_audio(filepath)  # Restituisce direttamente il testo come documento
+
             loader_class = FILE_LOADERS[file_extension]
             loader = loader_class(str(filepath))
             documents = loader.load()
             return documents
+
         except Exception as e:
             logger.error(f"Error loading document {filepath}: {e}")
             raise
@@ -62,13 +59,12 @@ def load_document(filepath: Path, supported_extensions: set):
         raise ValueError(f"Unsupported file format: {file_extension}")
 
 
-def scan_directory_for_new_documents(raw_data_dir: Path, supported_extensions: set, processed_hashes: set):
+def scan_directory_for_new_documents(raw_data_dir: Path, processed_hashes: set):
     """
     Scans a directory for unprocessed documents and loads them.
 
     Args:
         raw_data_dir (Path): Directory containing the raw documents.
-        supported_extensions (set): Supported file extensions for processing.
         processed_hashes (set): Set of hashes for already processed documents.
 
     Returns:
@@ -79,13 +75,13 @@ def scan_directory_for_new_documents(raw_data_dir: Path, supported_extensions: s
 
     try:
         for filepath in raw_data_dir.rglob("*"):
-            if filepath.is_file() and filepath.suffix.lower() in supported_extensions:
+            if filepath.is_file() and filepath.suffix.lower() in SUPPORTED_EXTENSIONS:
                 doc_hash = compute_document_hash(filepath)
 
                 if doc_hash not in processed_hashes:
                     logger.info(f"Found new document: {filepath}")
                     try:
-                        documents = load_document(filepath, supported_extensions)
+                        documents = load_document(filepath)
                         new_docs.extend(documents)
                         new_hashes.add(doc_hash)
                     except Exception as e:
