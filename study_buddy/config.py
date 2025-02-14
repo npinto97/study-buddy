@@ -42,7 +42,8 @@ FILE_LOADERS = {
 }
 
 AUDIO_EXTENSIONS = {".mp3", ".wav", ".flac", ".m4a"}
-SUPPORTED_EXTENSIONS = set(FILE_LOADERS.keys()).union(AUDIO_EXTENSIONS)
+VIDEO_EXTENSIONS = {".mp4", ".avi", ".mov", ".mkv"}
+SUPPORTED_EXTENSIONS = set(FILE_LOADERS.keys()).union(AUDIO_EXTENSIONS, VIDEO_EXTENSIONS)
 
 # Load environment variables from .env
 load_dotenv()
