@@ -12,6 +12,5 @@ PyYAML
 PyYAML
 tqdm
 typing_extensions
-pdfplumber
 faiss-cpu
 textblob
