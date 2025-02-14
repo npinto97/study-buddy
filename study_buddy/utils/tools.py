@@ -187,7 +187,63 @@ summarize_tool = Tool(
 # Scientific research support tools
 arxive_tool = ArxivQueryRun()
 
-google_scholar_tool = GoogleScholarQueryRun(api_wrapper=GoogleScholarAPIWrapper())
+
+class CustomGoogleScholarAPIWrapper(GoogleScholarAPIWrapper):
+    def run(self, query: str) -> str:
+        """Run query through GoogleSearchScholar and parse result, including URL"""
+        total_results = []
+        page = 0
+        while page < max((self.top_k_results - 20), 1):
+            results = (
+                self.google_scholar_engine(  # type: ignore
+                    {
+                        "q": query,
+                        "start": page,
+                        "hl": self.hl,
+                        "num": min(self.top_k_results, 20),
+                        "lr": self.lr,
+                    }
+                )
+                .get_dict()
+                .get("organic_results", [])
+            )
+            total_results.extend(results)
+            if not results:
+                break
+            page += 20
+        
+        if self.top_k_results % 20 != 0 and page > 20 and total_results:
+            results = (
+                self.google_scholar_engine(  # type: ignore
+                    {
+                        "q": query,
+                        "start": page,
+                        "num": self.top_k_results % 20,
+                        "hl": self.hl,
+                        "lr": self.lr,
+                    }
+                )
+                .get_dict()
+                .get("organic_results", [])
+            )
+            total_results.extend(results)
+        
+        if not total_results:
+            return "No good Google Scholar Result was found"
+        
+        docs = [
+            f"Title: {result.get('title', '')}\n"
+            f"Authors: {', '.join([author.get('name') for author in result.get('publication_info', {}).get('authors', [])])}\n"
+            f"Summary: {result.get('publication_info', {}).get('summary', '')}\n"
+            f"Total-Citations: {result.get('inline_links', {}).get('cited_by', {}).get('total', '')}\n"
+            f"URL: {result.get('link', 'No URL available')}"
+            for result in total_results
+        ]
+        
+        return "\n\n".join(docs)
+
+
+google_scholar_tool = GoogleScholarQueryRun(api_wrapper=CustomGoogleScholarAPIWrapper())
 
 
 class CustomWikidataAPIWrapper:
