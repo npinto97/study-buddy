@@ -3,8 +3,8 @@ from pathlib import Path
 from langchain_community.vectorstores import FAISS
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from study_buddy.utils.embeddings import embeddings
-from study_buddy.utils.document_loader import scan_directory_for_new_documents
-from study_buddy.config import logger, PROCESSED_DOCS_FILE, RAW_DATA_DIR, SUPPORTED_EXTENSIONS, FAISS_INDEX_DIR
+from study_buddy.vectorstore_pipeline.document_loader import scan_directory_for_new_documents
+from study_buddy.config import logger, PROCESSED_DOCS_FILE, RAW_DATA_DIR, FAISS_INDEX_DIR
 from typing import Optional, Set
 
 CHUNK_SIZE = 1000
@@ -29,7 +29,7 @@ def initialize_faiss_store() -> Optional[FAISS]:
             logger.info("FAISS vector store loaded successfully.")
 
             # Scan for new documents
-            new_docs, new_hashes = scan_directory_for_new_documents(RAW_DATA_DIR, SUPPORTED_EXTENSIONS, load_processed_hashes(PROCESSED_DOCS_FILE))
+            new_docs, new_hashes = scan_directory_for_new_documents(RAW_DATA_DIR, load_processed_hashes(PROCESSED_DOCS_FILE))
             if not new_docs:
                 logger.info("No new documents found to update the vector store.")
                 return vector_store
@@ -49,7 +49,7 @@ def initialize_faiss_store() -> Optional[FAISS]:
         logger.info(f"FAISS store not found at {faiss_file_path}. Attempting to create and populate it.")
 
         # Scan for any documents
-        new_docs, new_hashes = scan_directory_for_new_documents(RAW_DATA_DIR, SUPPORTED_EXTENSIONS, load_processed_hashes(PROCESSED_DOCS_FILE))
+        new_docs, new_hashes = scan_directory_for_new_documents(RAW_DATA_DIR, load_processed_hashes(PROCESSED_DOCS_FILE))
 
         # If there are no documents to process, log the error
         if not new_docs:
@@ -77,8 +77,9 @@ def load_processed_hashes(file_path: Path) -> Set[str]:
 
 
 def save_processed_hashes(file_path: Path, hashes: Set[str]):
-    """Save the hashes of processed documents."""
+    """Save the hashes of processed documents, creating the directory if needed."""
     try:
+        file_path.parent.mkdir(parents=True, exist_ok=True)
         with open(file_path, "w", encoding="utf-8") as f:
             json.dump(list(hashes), f, indent=4)
         logger.info("Processed hashes saved successfully.")
