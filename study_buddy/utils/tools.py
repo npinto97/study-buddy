@@ -36,7 +36,7 @@ from e2b_code_interpreter import Sandbox
 
 from gradio_client import Client
 
-from study_buddy.utils.vector_store import get_vector_store
+from study_buddy.vectorstore_pipeline.vector_store import get_vector_store
 from study_buddy.config import FAISS_INDEX_DIR
 
 google_api_key = os.getenv("GOOGLE_API_KEY")
@@ -522,7 +522,7 @@ class CLIPInterrogatorAPIWrapper:
     def __init__(self, api_url: str):
         self.client = Client(api_url)
 
-    def interrogate_image(self, image_url: str, model: str = "ViT-L (best for Stable Diffusion 1.*)", mode: str = "classic"):
+    def interrogate_image(self, image_url: str, model: str = "ViT-L (best for Stable Diffusion 1.*)", mode: str = "fast"):
         """Interrogate the image to get information using CLIP-Interrogator."""
         result = self.client.predict(
             image_url,         # Image URL
