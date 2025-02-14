@@ -38,3 +38,4 @@ pydub
 torch
 torchvision
 torchaudio
+youtube_transcript_api
