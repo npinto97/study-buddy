@@ -1,9 +1,9 @@
 from study_buddy.utils.tools import image_interrogator_tool
 
 print("Test manuale di clip interrogator...")
-test_file_path = "C:/Users/Ningo/Desktop/sample_image.jpg"
+test_file_path = "C:/Users/Ningo/Desktop/bird.jpg"
 try:
-    result = image_interrogator_tool.interrogate_image(test_file_path)
+    result = image_interrogator_tool.func(test_file_path)
     print(f"Immagine OK! Risultato: {result}")
 except Exception as e:
     print(f"Errore: {e}")
