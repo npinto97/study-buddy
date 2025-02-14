@@ -27,3 +27,14 @@ pillow-heif
 pypdf
 openai-whisper
 mutagen
+ffmpeg-python
+textblob
+langchain 
+pydantic
+serpapi
+google-search-results
+streamlit
+pydub
+torch
+torchvision
+torchaudio
