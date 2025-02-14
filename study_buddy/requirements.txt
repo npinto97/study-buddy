@@ -1,41 +1,66 @@
-langchain
-langchain_community
-langchain_core
-langchain_docling
-langchain_openai
-langchain_text_splitters
-langgraph
-loguru
-pydantic
-python-dotenv
-PyYAML
-PyYAML
-tqdm
-typing_extensions
-pdfplumber
-faiss-cpu
-e2b-code-interpreter
-gradio-client
-xmltodict
-wolframalpha
-wikipedia
-arxiv
-google-search-results
-unstructured_inference
-pi-heif
-pillow-heif
-pypdf
-openai-whisper
-mutagen
-ffmpeg-python
-textblob
-langchain 
-pydantic
-serpapi
-google-search-results
-streamlit
-pydub
+# Aggiornamento di base
+pip
+setuptools
+wheel
+
+# Librerie fondamentali per AI
 torch
 torchvision
 torchaudio
+
+# Librerie di sistema e utilità
+python-dotenv
+PyYAML
+tqdm
+typing_extensions
+loguru
+
+# Librerie per HTTP e asincronia
+aiohttp
+asyncio
+httpx
+google-api-python-client
+
+# Elaborazione di documenti e immagini
+pdfplumber
+pypdf
+unstructured_inference
+pi-heif
+pillow-heif
+xmltodict
+
+# Gestione di audio e video
+ffmpeg-python
+pydub
+mutagen
+openai-whisper
+
+# NLP e AI
+textblob
+wikipedia
+wolframalpha
+arxiv
+
+# Ricerca e API per LLM
+google-search-results
+serpapi
+
+# LangChain e componenti
+langchain_core
+langchain_community
+langchain
+langchain_text_splitters
+langchain_docling
+langchain_openai
+
+# Librerie avanzate per AI e orchestrazione
+langgraph
+faiss-cpu
+e2b-code-interpreter
+
+# Librerie per interfacce e API
+streamlit
+gradio-client
+
+# YouTube e trascrizione
 youtube_transcript_api
