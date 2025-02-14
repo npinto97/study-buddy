@@ -7,9 +7,12 @@ import re
 from pathlib import Path
 import tempfile
 import json
+import torch
 
 from study_buddy.agent import compiled_graph
 from study_buddy.utils.tools import OpenAITTSWrapper, OpenAISpeechToText
+
+torch.classes.__path__ = [os.path.join(torch.__path__[0], torch.classes.__file__)]
 
 # Set up the environment
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
