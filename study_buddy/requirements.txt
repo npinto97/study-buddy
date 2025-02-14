@@ -21,3 +21,9 @@ wolframalpha
 wikipedia
 arxiv
 google-search-results
+unstructured_inference
+pi-heif
+pillow-heif
+pypdf
+openai-whisper
+mutagen
