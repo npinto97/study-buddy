@@ -4,7 +4,7 @@ from langchain_community.vectorstores import FAISS
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from study_buddy.utils.embeddings import embeddings
 from study_buddy.vectorstore_pipeline.document_loader import scan_directory_for_new_documents
-from study_buddy.config import logger, PROCESSED_DOCS_FILE, RAW_DATA_DIR, FAISS_INDEX_DIR
+from study_buddy.config import logger, PROCESSED_DOCS_FILE, FAISS_INDEX_DIR
 from typing import Optional, Set
 
 CHUNK_SIZE = 1000
@@ -29,7 +29,7 @@ def initialize_faiss_store() -> Optional[FAISS]:
             logger.info("FAISS vector store loaded successfully.")
 
             # Scan for new documents
-            new_docs, new_hashes = scan_directory_for_new_documents(RAW_DATA_DIR, load_processed_hashes(PROCESSED_DOCS_FILE))
+            new_docs, new_hashes = scan_directory_for_new_documents(load_processed_hashes(PROCESSED_DOCS_FILE))
             if not new_docs:
                 logger.info("No new documents found to update the vector store.")
                 return vector_store
@@ -49,7 +49,7 @@ def initialize_faiss_store() -> Optional[FAISS]:
         logger.info(f"FAISS store not found at {faiss_file_path}. Attempting to create and populate it.")
 
         # Scan for any documents
-        new_docs, new_hashes = scan_directory_for_new_documents(RAW_DATA_DIR, load_processed_hashes(PROCESSED_DOCS_FILE))
+        new_docs, new_hashes = scan_directory_for_new_documents(load_processed_hashes(PROCESSED_DOCS_FILE))
 
         # If there are no documents to process, log the error
         if not new_docs:
