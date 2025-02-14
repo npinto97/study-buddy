@@ -3,10 +3,17 @@
 # nltk.download('averaged_perceptron_tagger_eng')
 import hashlib
 from pathlib import Path
+import json
+from langchain.schema import Document
 
-from study_buddy.config import logger, SUPPORTED_EXTENSIONS, FILE_LOADERS, AUDIO_EXTENSIONS, VIDEO_EXTENSIONS
+from study_buddy.config import logger, SUPPORTED_EXTENSIONS, FILE_LOADERS, AUDIO_EXTENSIONS, VIDEO_EXTENSIONS, RAW_DATA_DIR, METADATA_DIR
 from study_buddy.vectorstore_pipeline.audio_handler import transcribe_audio
 from study_buddy.vectorstore_pipeline.video_handler import transcribe_video
+from study_buddy.vectorstore_pipeline.external_resources_handler import (
+    extract_text_from_url,
+    extract_readme_from_repo,
+    extract_transcript_from_youtube
+)
 
 
 def compute_document_hash(filepath: Path) -> str:
@@ -46,7 +53,7 @@ def load_document(filepath: Path):
         try:
             if file_extension in AUDIO_EXTENSIONS:
                 return transcribe_audio(filepath)
-            
+
             if file_extension in VIDEO_EXTENSIONS:
                 return transcribe_video(filepath)
 
@@ -63,12 +70,13 @@ def load_document(filepath: Path):
         raise ValueError(f"Unsupported file format: {file_extension}")
 
 
-def scan_directory_for_new_documents(raw_data_dir: Path, processed_hashes: set):
+def scan_directory_for_new_documents(processed_hashes: set):
     """
-    Scans a directory for unprocessed documents and loads them.
+    Scans a directory for unprocessed documents/external resources and loads them.
 
     Args:
         raw_data_dir (Path): Directory containing the raw documents.
+        lesson_json_dir (Path): Directory contenente i file JSON delle lezioni.
         processed_hashes (set): Set of hashes for already processed documents.
 
     Returns:
@@ -77,8 +85,9 @@ def scan_directory_for_new_documents(raw_data_dir: Path, processed_hashes: set):
     new_docs = []
     new_hashes = set()
 
+    # Scansiona i file locali
     try:
-        for filepath in raw_data_dir.rglob("*"):
+        for filepath in RAW_DATA_DIR.rglob("*"):
             if filepath.is_file() and filepath.suffix.lower() in SUPPORTED_EXTENSIONS:
                 doc_hash = compute_document_hash(filepath)
 
@@ -91,9 +100,59 @@ def scan_directory_for_new_documents(raw_data_dir: Path, processed_hashes: set):
                     except Exception as e:
                         logger.error(f"Error processing document {filepath}: {e}")
 
-        logger.info(f"New documents to process: {len(new_docs)}")
     except Exception as e:
-        logger.error(f"Error scanning directory {raw_data_dir}: {e}")
+        logger.error(f"Errore nella scansione delle risorse locali: {e}")
         raise
+
+    # Scansione di tutti i file JSON nella cartella delle lezioni
+    try:
+        for json_file in METADATA_DIR.rglob("*.json"):
+            logger.info(f"Lettura file JSON: {json_file}")
+
+            try:
+                with open(json_file, "r", encoding="utf-8") as f:
+                    lesson_data = json.load(f)
+            except json.JSONDecodeError as e:
+                logger.error(f"Errore nel parsing di {json_file}: {e}")
+                continue
+
+            resources = lesson_data.get("external_resources", [])
+            if not resources:
+                logger.warning(f"Nessuna risorsa trovata in {json_file}")
+
+            for resource in resources:
+                url = resource.get("url")
+                logger.info(f"Estrazione da: {url}")
+                content = None
+
+                try:
+                    if "github.com" in url:
+                        logger.info(f"[GitHub] Estrazione README da: {url}")
+                        content = extract_readme_from_repo(url)
+                    elif "youtube.com" in url or "youtu.be" in url:
+                        logger.info(f"[YouTube] Estrazione trascrizione da: {url}")
+                        content = extract_transcript_from_youtube(url)
+                    else:
+                        logger.info(f"[Web] Estrazione testo da: {url}")
+                        content = extract_text_from_url(url)
+
+                    if content:
+                        doc_hash = hashlib.sha256(content.encode()).hexdigest()
+                        if doc_hash not in processed_hashes:
+                            metadata = {key: value for key, value in resource.items()}
+                            new_docs.append(Document(page_content=content, metadata=metadata))
+                            new_hashes.add(doc_hash)
+                            logger.info(f"Documento aggiunto: {url}")
+                        else:
+                            logger.info(f"Documento già processato: {url}")
+                    else:
+                        logger.warning(f"Nessun contenuto estratto da: {url}")
+                except Exception as e:
+                    logger.error(f"Errore nell'estrazione da {url}: {e}")
+
+    except Exception as e:
+        logger.error(f"Errore nella scansione della cartella metadata: {e}")
+
+    logger.info(f"Nuovi documenti trovati: {len(new_docs)}")
 
     return new_docs, new_hashes
