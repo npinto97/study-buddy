@@ -4,8 +4,9 @@
 import hashlib
 from pathlib import Path
 
-from study_buddy.config import logger, SUPPORTED_EXTENSIONS, FILE_LOADERS
+from study_buddy.config import logger, SUPPORTED_EXTENSIONS, FILE_LOADERS, AUDIO_EXTENSIONS, VIDEO_EXTENSIONS
 from study_buddy.vectorstore_pipeline.audio_handler import transcribe_audio
+from study_buddy.vectorstore_pipeline.video_handler import transcribe_video
 
 
 def compute_document_hash(filepath: Path) -> str:
@@ -43,8 +44,11 @@ def load_document(filepath: Path):
 
     if file_extension in SUPPORTED_EXTENSIONS:
         try:
-            if file_extension in {".mp3", ".wav", ".flac"}:  # Controlla se è un file audio
-                return transcribe_audio(filepath)  # Restituisce direttamente il testo come documento
+            if file_extension in AUDIO_EXTENSIONS:
+                return transcribe_audio(filepath)
+            
+            if file_extension in VIDEO_EXTENSIONS:
+                return transcribe_video(filepath)
 
             loader_class = FILE_LOADERS[file_extension]
             loader = loader_class(str(filepath))
