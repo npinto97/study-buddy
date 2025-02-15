@@ -13,30 +13,28 @@ from study_buddy.utils.nodes import call_model, tool_node
 import os
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
 
-# Define a new graph
-graph_builder = StateGraph(AgentState)
 
-# Define the two nodes we will cycle between
-graph_builder.add_node("agent", call_model)
-graph_builder.add_node("tools", tool_node)
+def build_compiled_graph():
+    graph_builder = StateGraph(AgentState)
 
-# Set the entrypoint as `agent`
-# This means that this node is the first one called
-graph_builder.set_entry_point("agent")
+    graph_builder.add_node("agent", call_model)
+    graph_builder.add_node("tools", tool_node)
 
-# Add the conditional edges
-graph_builder.add_conditional_edges(
-    "agent",
-    tools_condition,
-)
+    graph_builder.set_entry_point("agent")
 
-# We now add a normal edge from `tools` to `agent`.
-# This means that after `tools` is called, `agent` node is called next.
-graph_builder.add_edge("tools", "agent")
+    graph_builder.add_conditional_edges(
+        "agent",
+        tools_condition
+    )
 
-memory = MemorySaver()
-compiled_graph = graph_builder.compile(checkpointer=memory)
-# compiled_graph = create_react_agent(model, tools=tools, checkpointer=memory, state=AgentState, ...)
+    graph_builder.add_edge("tools", "agent")
+
+    memory = MemorySaver()
+
+    return graph_builder.compile(checkpointer=memory)
+
+
+compiled_graph = build_compiled_graph()
 
 if not os.path.exists(IMAGES_DIR):
     os.makedirs(IMAGES_DIR)
@@ -47,23 +45,23 @@ compiled_graph.get_graph().draw_mermaid_png(output_file_path=output_file_path)
 logger.info(f"Graph saved to: {output_file_path}")
 
 
-# Run chatbot loop
-config = {"configurable": {"thread_id": "8"}}
+# # Run chatbot loop
+# config = {"configurable": {"thread_id": "8"}}
 
-while True:
-    user_input = input("User: ")
-    if user_input.lower() in ["quit", "exit", "q"]:
-        print("Goodbye!")
-        break
+# while True:
+#     user_input = input("User: ")
+#     if user_input.lower() in ["quit", "exit", "q"]:
+#         print("Goodbye!")
+#         break
 
-    events = compiled_graph.stream(
-        {"messages": [{"role": "user", "content": user_input}]},
-        config,
-        stream_mode="values",
-    )
-    for event in events:
-        # print("DEBUG: Messages:", event["messages"])
-        event["messages"][-1].pretty_print()
+#     events = compiled_graph.stream(
+#         {"messages": [{"role": "user", "content": user_input}]},
+#         config,
+#         stream_mode="values",
+#     )
+#     for event in events:
+#         # print("DEBUG: Messages:", event["messages"])
+#         event["messages"][-1].pretty_print()
 
 #     for message_chunk, metadata in compiled_graph.stream(
 #         {"messages": [{"role": "user", "content": user_input}]},
