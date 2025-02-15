@@ -2,18 +2,16 @@ import os
 import json
 import openai
 from dotenv import load_dotenv
-from langchain_openai import ChatOpenAI
 from study_buddy.config import CONFIG, logger
 
-# Carica la configurazione API da .env
 load_dotenv()
 openai.api_key = os.getenv("OPENAI_API_KEY") 
 
-# Directory dei file JSON
+# path to the folder containing the documents used for vectorial indexing
 json_folder = "data\\processed"
 documents = []
 
-# Limite per il numero di richieste API
+# counter for limiting API request (for testing the functions)
 count = 0
 
 # Lettura dei file JSON
@@ -32,10 +30,10 @@ for filename in os.listdir(json_folder):
             }
             documents.append(doc)
     count += 1
-    if count > 3:
+    if count > 3: # this limit must be removed for creating the final test set
         break
 
-# Funzione per generare una domanda
+# Function for generating a question starting from the file content
 def generate_question(text, keywords):
     keyword_str = ", ".join(keywords) if keywords else "no keywords"
     prompt = f"""
@@ -54,13 +52,13 @@ def generate_question(text, keywords):
     
     return response.choices[0].message.content if response.choices else None
 
-# Funzione per generare la risposta
-def generate_response(question, answer):
+# Function to generate an answer starting from the question and the file content
+def generate_response(question, content):
     prompt = f"""
     Usa "domanda" per estrarre la risposta alla domanda da "risposta attesa".
     
     domanda: "{question}"
-    risposta attesa: "{answer}"
+    risposta attesa: "{content}"
     
     Restituisci solo la risposta, in italiano, senza altro testo.
     """
@@ -70,36 +68,34 @@ def generate_response(question, answer):
                   {"role": "user", "content": prompt}]
     )
     
-    # Verifica che la risposta esista
     if response.choices:
         return response.choices[0].message.content.strip()
     else:
         return None
 
-# Creazione del dataset di test
+# Creating test dataset
 test_set = []
 for doc in documents:
-    # Filtra documenti con contenuti troppo brevi
+    
+    #  Filter on documents with reduced content (if any) 
     if len(doc["content"]) < 50:
         continue
 
-    # Limita la lunghezza del contenuto per evitare richieste troppo grandi
+    # To avoid request fails
     MAXLEN = min(len(doc["content"]), 5000)
 
-    # Genera la domanda
+    # Generate question
     question = generate_question(doc["content"][:MAXLEN], doc["keywords"])
     if not question:
-        continue  # Se non è stata generata una domanda, passa al prossimo documento
+        continue  
 
-    # Genera la risposta
+    # Generate answer starting from the generated question
     response = generate_response(question, doc["content"][:MAXLEN])
     if not response:
-        continue  # Se non è stata generata una risposta, passa al prossimo documento
+        continue  
 
-    # Aggiungi al set di test
     test_set.append({"question": question, "expected_answer": response, "filename": doc["filename"]})
 
-# Salva il risultato in un file JSON
 with open("test_set.json", "w", encoding="utf-8") as f:
     json.dump(test_set, f, indent=4, ensure_ascii=False)
 
