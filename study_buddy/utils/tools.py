@@ -40,7 +40,7 @@ from e2b_code_interpreter import Sandbox
 
 from gradio_client import Client
 
-from study_buddy.vectorstore_pipeline.vector_store import get_vector_store
+from study_buddy.vectorstore_pipeline.vector_store_builder import get_vector_store
 from study_buddy.config import FAISS_INDEX_DIR
 
 google_api_key = os.getenv("GOOGLE_API_KEY")
