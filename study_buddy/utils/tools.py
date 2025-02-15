@@ -1,4 +1,8 @@
 import os
+import fitz  # PyMuPDF per estrazione testo da PDF
+import pytesseract
+from pdf2image import convert_from_path
+from PIL import Image
 import requests
 import tempfile
 from openai import OpenAI
@@ -211,7 +215,7 @@ class CustomGoogleScholarAPIWrapper(GoogleScholarAPIWrapper):
             if not results:
                 break
             page += 20
-        
+
         if self.top_k_results % 20 != 0 and page > 20 and total_results:
             results = (
                 self.google_scholar_engine(  # type: ignore
@@ -227,10 +231,10 @@ class CustomGoogleScholarAPIWrapper(GoogleScholarAPIWrapper):
                 .get("organic_results", [])
             )
             total_results.extend(results)
-        
+
         if not total_results:
             return "No good Google Scholar Result was found"
-        
+
         docs = [
             f"Title: {result.get('title', '')}\n"
             f"Authors: {', '.join([author.get('name') for author in result.get('publication_info', {}).get('authors', [])])}\n"
@@ -239,7 +243,7 @@ class CustomGoogleScholarAPIWrapper(GoogleScholarAPIWrapper):
             f"URL: {result.get('link', 'No URL available')}"
             for result in total_results
         ]
-        
+
         return "\n\n".join(docs)
 
 
@@ -578,7 +582,7 @@ class CLIPInterrogatorAPIWrapper:
     def __init__(self, api_url: str):
         self.client = Client(api_url)
 
-    def interrogate_image(self, image_url: str, model: str = "ViT-L (best for Stable Diffusion 1.*)", mode: str = "fast"):
+    def interrogate_image(self, image_url: str, model: str = "ViT-L (best for Stable Diffusion 1.*)", mode: str = "classic"):
         """Interrogate the image to get information using CLIP-Interrogator."""
         result = self.client.predict(
             image_url,         # Image URL
@@ -594,11 +598,11 @@ image_interrogator_wrapper = CLIPInterrogatorAPIWrapper("https://pharmapsychotic
 image_interrogator_tool = Tool(
     name="image_interrogator",
     description="Interrogate an image and return artistic information, movement, and more.",
-    func=image_interrogator_wrapper.interrogate_image  # The function from the wrapper
+    func=image_interrogator_wrapper.interrogate_image
 )
 
 # ------------------------------------------------------------------------------
-# Other tools (sentiment analysis, ...)
+# Other tools (sentiment analysis, ocr, ...)
 # ------------------------------------------------------------------------------
 
 
@@ -650,8 +654,79 @@ def analyze_sentiment_from_wrapper(file_path: str) -> str:
 sentiment_tool = Tool(
     name="SentimentAnalyzer",
     description="Analizza il sentimento di un file (PDF o TXT) e restituisce polarità e soggettività.",
-    func=analyze_sentiment_from_wrapper  # La funzione del wrapper da invocare
+    func=analyze_sentiment_from_wrapper
 )
+
+
+class TextExtractorWrapper:
+    def __init__(self, file_path: str):
+        """
+        Inizializza il wrapper e legge il contenuto del file.
+        """
+        self.file_path = file_path
+        self.text = self.extract_text()
+
+    def extract_text(self) -> str:
+        """
+        Determina il tipo di file ed estrae il testo di conseguenza.
+        """
+        if self.file_path.lower().endswith(".pdf"):
+            return self.extract_text_from_pdf()
+        elif self.file_path.lower().endswith((".png", ".jpg", ".jpeg", ".tiff", ".bmp")):
+            return self.extract_text_from_image()
+        else:
+            raise ValueError("Formato file non supportato. Usa PDF o immagini.")
+
+    def extract_text_from_pdf(self) -> str:
+        """
+        Estrae testo da un PDF con testo selezionabile o usa OCR se è scansionato.
+        """
+        try:
+            doc = fitz.open(self.file_path)
+            text = "\n".join([page.get_text("text") for page in doc])
+
+            # Se il PDF è scansionato (senza testo), usa OCR
+            if not text.strip():
+                return self.extract_text_from_scanned_pdf()
+            return text
+        except Exception as e:
+            return f"Errore nell'estrazione del testo dal PDF: {str(e)}"
+
+    def extract_text_from_scanned_pdf(self) -> str:
+        """
+        Esegue OCR su un PDF scansionato convertendolo in immagini.
+        """
+        try:
+            images = convert_from_path(self.file_path)
+            return "\n".join([pytesseract.image_to_string(img) for img in images])
+        except Exception as e:
+            return f"Errore nell'esecuzione dell'OCR sul PDF: {str(e)}"
+
+    def extract_text_from_image(self) -> str:
+        """
+        Estrae il testo da un'immagine usando OCR.
+        """
+        try:
+            image = Image.open(self.file_path)
+            return pytesseract.image_to_string(image)
+        except Exception as e:
+            return f"Errore nell'estrazione del testo dall'immagine: {str(e)}"
+
+
+def extract_text_from_wrapper(file_path: str) -> str:
+    """
+    Funzione helper per usare la classe TextExtractorWrapper.
+    """
+    extractor = TextExtractorWrapper(file_path)
+    return extractor.text
+
+
+extract_text_tool = Tool(
+    name="TextExtractor",
+    description="Estrae il testo da file PDF o immagini usando OCR se necessario.",
+    func=extract_text_from_wrapper
+)
+
 
 tools = [
     retrieve_tool,
@@ -667,10 +742,11 @@ tools = [
     spotify_music_tool,
     tts_tool,
     speech_to_text_tool,
-    google_lens_tool,
+    google_lens_tool,           # per analizzare immagini da url
     image_generation_tool,
-    image_interrogator_tool,
-    # text_analysis_tool,
+    image_interrogator_tool,  # per analizzare immagini caricate in locale
+    # text_analysis_tool,       # funziona ma non so come trattare la risposta
     summarize_tool,
-    sentiment_tool
+    sentiment_tool,
+    extract_text_tool
 ]  # + base_tool   # + o365_tools
