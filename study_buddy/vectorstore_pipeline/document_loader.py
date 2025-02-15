@@ -6,7 +6,7 @@ from pathlib import Path
 import json
 from langchain.schema import Document
 
-from study_buddy.config import logger, SUPPORTED_EXTENSIONS, FILE_LOADERS, AUDIO_EXTENSIONS, VIDEO_EXTENSIONS, RAW_DATA_DIR, METADATA_DIR
+from study_buddy.config import logger, SUPPORTED_EXTENSIONS, FILE_LOADERS, AUDIO_EXTENSIONS, VIDEO_EXTENSIONS, RAW_DATA_DIR, METADATA_DIR, EXTRACTED_TEXT_DIR
 from study_buddy.vectorstore_pipeline.audio_handler import transcribe_audio
 from study_buddy.vectorstore_pipeline.video_handler import transcribe_video
 from study_buddy.vectorstore_pipeline.external_resources_handler import (
@@ -14,6 +14,18 @@ from study_buddy.vectorstore_pipeline.external_resources_handler import (
     extract_readme_from_repo,
     extract_transcript_from_youtube
 )
+
+
+def save_extracted_text(doc_hash: str, content: str):
+    """
+    Save extracted text to a file inside the `extracted_texts` folder.
+    """
+    EXTRACTED_TEXT_DIR.mkdir(parents=True, exist_ok=True)
+    file_path = EXTRACTED_TEXT_DIR / f"{doc_hash}.txt"
+    with open(file_path, "w", encoding="utf-8") as f:
+        f.write(content)
+
+    logger.info(f"Extracted text saved: {file_path}")
 
 
 def compute_document_hash(filepath: Path) -> str:
@@ -95,11 +107,12 @@ def scan_directory_for_new_documents(processed_hashes: set):
                     logger.info(f"Found new document: {filepath}")
                     try:
                         documents = load_document(filepath)
+                        for doc in documents:
+                            save_extracted_text(doc_hash, doc.page_content)
                         new_docs.extend(documents)
                         new_hashes.add(doc_hash)
                     except Exception as e:
                         logger.error(f"Error processing document {filepath}: {e}")
-
     except Exception as e:
         logger.error(f"Errore nella scansione delle risorse locali: {e}")
         raise
@@ -142,6 +155,7 @@ def scan_directory_for_new_documents(processed_hashes: set):
                             metadata = {key: value for key, value in resource.items()}
                             new_docs.append(Document(page_content=content, metadata=metadata))
                             new_hashes.add(doc_hash)
+                            save_extracted_text(doc_hash, content)
                             logger.info(f"Documento aggiunto: {url}")
                         else:
                             logger.info(f"Documento già processato: {url}")
