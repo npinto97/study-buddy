@@ -1,4 +1,4 @@
-from study_buddy.vectorstore_pipeline.vector_store import initialize_faiss_store
+from study_buddy.vectorstore_pipeline.vector_store_builder import initialize_faiss_store
 from study_buddy.config import logger
 
 
