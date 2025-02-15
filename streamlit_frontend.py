@@ -144,6 +144,9 @@ def enhance_user_input(config_chat, user_input, file_path):
             f"If the user does not specify where to search, first, try retrieving relevant documents from the course '{config_chat.course}'.\n"
             "If no relevant documents are found, expand the search to other available courses.\n"
             "If there are still no relevant documents, use an appropriate web search tool.\n"
+            "After providing an answer, evaluate whether applying a tool to the response could enhance the user's experience. If so, proactively suggest the functionality. \n"
+            "For example, if you've extracted text from a document and a summary could be beneficial, recommend it. \n"
+            "Aim to anticipate user needs and offer relevant, value-added actions. \n"
         )
 
     # Handle attached files
