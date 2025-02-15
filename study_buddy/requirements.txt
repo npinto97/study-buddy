@@ -28,6 +28,9 @@ unstructured_inference
 pi-heif
 pillow-heif
 xmltodict
+pytesseract
+pymupdf
+pdf2image 
 
 # Gestione di audio e video
 ffmpeg-python
