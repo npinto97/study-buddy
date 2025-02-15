@@ -29,6 +29,7 @@ pi-heif
 pillow-heif
 xmltodict
 pytesseract
+unstructured_pytesseract
 pymupdf
 pdf2image 
 
@@ -55,6 +56,7 @@ langchain
 langchain_text_splitters
 langchain_docling
 langchain_openai
+unstructured
 
 # Librerie avanzate per AI e orchestrazione
 langgraph
