@@ -48,6 +48,7 @@ SUPPORTED_EXTENSIONS = set(FILE_LOADERS.keys()).union(AUDIO_EXTENSIONS, VIDEO_EX
 # Load environment variables from .env
 load_dotenv()
 
+logger.remove()
 logger.add(sys.stderr, level="INFO", format="{time} {level} {message}")
 logger.add("logs/study_buddy.log", level="DEBUG", rotation="10 MB", compression="zip")
 
@@ -65,15 +66,12 @@ EXTERNAL_DATA_DIR = DATA_DIR / "external"
 # METADATA_DIR = DATA_DIR / "metadata"
 METADATA_DIR = PROJ_ROOT / "notebooks" / "demo_material" / "metadata"
 TEMP_DATA_DIR = DATA_DIR / "temp"
+EXTRACTED_TEXT_DIR = PROCESSED_DATA_DIR / "extracted_text"
+FAISS_INDEX_DIR = PROJ_ROOT / "faiss_index"
+IMAGES_DIR = PROJ_ROOT / "images"
 
-FAISS_INDEX_DIR = DATA_DIR / "faiss_index"
 
 PROCESSED_DOCS_FILE = PROCESSED_DATA_DIR / "processed_docs.json"
-# PROCESSED_STATUS_FILE = PROCESSED_DATA_DIR / "processed_status.json"
-# logger.info(f"Processed documents file set to: {PROCESSED_DOCS_FILE}")
-
-
-IMAGES_DIR = PROJ_ROOT / "images"
 
 
 # Definition of configuration models
@@ -115,9 +113,9 @@ if not os.environ.get("OPENAI_API_KEY"):
 try:
     from tqdm import tqdm
 
-    logger.remove(0)
+    logger.remove()
     logger.add(
-        lambda msg: tqdm.write(msg, end="") if tqdm else logger.error(f"Failed to write log message: {msg}"),
+        lambda msg: tqdm.write(msg, end=""),
         colorize=True
     )
 except ModuleNotFoundError as e:
