@@ -2,10 +2,11 @@ import os
 import json
 from loguru import logger
 from study_buddy.agent import build_compiled_graph
+from study_buddy.config import EVAL_DATA_DIR
 
-# this file is temporary
-TEST_SET_PATH = "test_set.json" # must be updated
-OUTPUT_PATH = "rag_responses.json"
+TEST_SET_PATH = EVAL_DATA_DIR / "test_set.json"
+OUTPUT_PATH = EVAL_DATA_DIR / "rag_responses.json"
+
 
 with open(TEST_SET_PATH, 'r', encoding="utf-8") as f:
     test_set = json.load(f)
@@ -14,7 +15,6 @@ rag_responses = []
 
 for item in test_set:
     question = item["question"]
-
     logger.info(f"Processing quesiton: {question}")
 
     compiled_graph = build_compiled_graph()
@@ -38,6 +38,7 @@ for item in test_set:
                 response_text = msg.content
                 break
 
+        # extracts file paths from event log
         for msg in messages:
             if type(msg).__name__ == "ToolMessage" and msg.name == "retrieve_tool":
                 if hasattr(msg, "artifact") and isinstance(msg.artifact, list):
