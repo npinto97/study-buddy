@@ -1,9 +1,10 @@
 import os
 import json
 from sentence_transformers import SentenceTransformer, util
+from study_buddy.config import EVAL_DATA_DIR
 
-INPUT_JSON = "rag_responses.json"
-OUTPUT_EVAL = "evaluation_results.json"
+INPUT_JSON = EVAL_DATA_DIR / "rag_responses.json"
+OUTPUT_EVAL = EVAL_DATA_DIR / "evaluation_results.json"
 
 with open(INPUT_JSON, 'r', encoding="utf-8") as f:
     data = json.load(f)
