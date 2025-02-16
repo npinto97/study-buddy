@@ -72,6 +72,9 @@ PROCESSED_DOCS_FILE = PROCESSED_DATA_DIR / "processed_docs.json"
 # PROCESSED_STATUS_FILE = PROCESSED_DATA_DIR / "processed_status.json"
 # logger.info(f"Processed documents file set to: {PROCESSED_DOCS_FILE}")
 
+# directory that contains data files for evaluation
+EVAL_DATA_DIR = DATA_DIR / "evaluation"
+
 
 IMAGES_DIR = PROJ_ROOT / "images"
 
