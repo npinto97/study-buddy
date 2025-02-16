@@ -3,12 +3,13 @@ import json
 import openai
 from dotenv import load_dotenv
 from study_buddy.config import CONFIG, logger
+from study_buddy.config import PROCESSED_DATA_DIR, EVAL_DATA_DIR
 
 load_dotenv()
 openai.api_key = os.getenv("OPENAI_API_KEY") 
 
 # path to the folder containing the documents used for vectorial indexing
-json_folder = "data\\processed"
+json_folder = PROCESSED_DATA_DIR
 documents = []
 
 # counter for limiting API request (for testing the functions)
@@ -96,7 +97,9 @@ for doc in documents:
 
     test_set.append({"question": question, "expected_answer": response, "filename": doc["filename"]})
 
-with open("test_set.json", "w", encoding="utf-8") as f:
+
+test_set_path = EVAL_DATA_DIR / "test_set.json"
+with open(test_set_path, "w", encoding="utf-8") as f:
     json.dump(test_set, f, indent=4, ensure_ascii=False)
 
-logger.info("Test set creato e salvato in 'test_set_rag.json'")
+logger.info(f"Test set saved in: {test_set_path}.")
