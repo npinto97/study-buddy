@@ -14,8 +14,7 @@ documents = []
 
 # counter for limiting API request (for testing the functions)
 count = 0
-
-# Lettura dei file JSON
+MAXDOCS = 3  # limit of processed documents
 for filename in os.listdir(json_folder):
     if filename.endswith(".json"):
         with open(os.path.join(json_folder, filename), 'r', encoding="utf-8") as f:
@@ -31,7 +30,7 @@ for filename in os.listdir(json_folder):
             }
             documents.append(doc)
     count += 1
-    if count > 3: # this limit must be removed for creating the final test set
+    if count > MAXDOCS: # this limit must be removed for creating the final test set
         break
 
 # Function for generating a question starting from the file content
