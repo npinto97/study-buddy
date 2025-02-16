@@ -30,7 +30,7 @@ def evaluate_recommendation(target_doc, retrieved_docs):
         rank = None
         hit = 0
         mrr = 0.0
-        precison = 0.0
+        precision = 0.0
 
     return hit, rank, mrr, precision
 

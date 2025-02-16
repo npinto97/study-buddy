@@ -14,7 +14,7 @@ documents = []
 
 # counter for limiting API request (for testing the functions)
 count = 0
-MAXDOCS = 3  # limit of processed documents
+MAXDOCS = 2  # limit of processed documents
 for filename in os.listdir(json_folder):
     if filename.endswith(".json"):
         with open(os.path.join(json_folder, filename), 'r', encoding="utf-8") as f:
