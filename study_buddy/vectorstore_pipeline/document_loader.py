@@ -116,7 +116,7 @@ def scan_directory_for_new_documents(processed_hashes: set, parsed_data_file: Pa
                     if doc_hash not in processed_hashes:
                         new_docs.append(Document(page_content=content, metadata=metadata))
                         new_hashes.add(doc_hash)
-                        save_extracted_text(doc_hash, content)
+                        save_extracted_text(doc_hash, content)  # solo per debug
                         logger.info(f"Documento esterno aggiunto: {url}")
                     else:
                         logger.info(f"Documento esterno già processato: {url}")
@@ -146,6 +146,8 @@ def scan_directory_for_new_documents(processed_hashes: set, parsed_data_file: Pa
                 documents = load_document(filepath)
                 for doc in documents:
                     # Aggiunge i metadati al documento
+                    metadata["file_path"] = str(filepath)
+                    
                     new_doc = Document(page_content=doc.page_content, metadata=metadata)
                     save_extracted_text(doc_hash, doc.page_content)
                     new_docs.append(new_doc)
