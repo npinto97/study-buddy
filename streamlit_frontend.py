@@ -141,12 +141,12 @@ def enhance_user_input(config_chat, user_input, file_path):
     else:
         select_course_string = f"The question is about the course '{config_chat.course}'.\n"
         course_info_string = (
-            f"If the user does not specify where to search, first, try retrieving relevant documents from the course '{config_chat.course}'.\n"
+            f"First, try retrieving relevant documents from the course '{config_chat.course}'.\n"
             "If no relevant documents are found, expand the search to other available courses.\n"
             "If there are still no relevant documents, use an appropriate web search tool.\n"
-            "After providing an answer, evaluate whether applying a tool to the response could enhance the user's experience. If so, proactively suggest the functionality. \n"
-            "For example, if you've extracted text from a document and a summary could be beneficial, recommend it. \n"
-            "Aim to anticipate user needs and offer relevant, value-added actions. \n"
+            "After providing an answer, evaluate whether applying a tool to the response could enhance the user's experience. If so, proactively suggest the functionality.\n"
+            "For example, if you've extracted text from a document and a summary could be beneficial, recommend it.\n"
+            "Aim to anticipate user needs and offer relevant, value-added actions.\n"
         )
 
     # Handle attached files
@@ -158,35 +158,36 @@ def enhance_user_input(config_chat, user_input, file_path):
     # Retrieval preference instructions
     retrieval_instruction = (
         "If the user's request involves retrieving documents, always prioritize using 'retrieve_tool'.\n"
+        "Always show the path or the url where the user can find the file.\n"
         "Only resort to other tools if the required information is not found in the retrieved documents.\n"
     )
 
-    # Security and ethical guidelines
-    security_guidelines = (
-        "Ensure that all responses adhere to ethical and safety standards.\n"
-        "DO NOT generate harmful, misleading, biased, or illegal content.\n"
-        "DO NOT provide personal, medical, financial, or legal advice.\n"
-        "If the request is ambiguous, ask for clarification before responding.\n"
-        "If a query violates ethical guidelines, politely refuse to provide an answer.\n"
-    )
+    # # Security and ethical guidelines
+    # security_guidelines = (
+    #     "Ensure that all responses adhere to ethical and safety standards.\n"
+    #     "DO NOT generate harmful, misleading, biased, or illegal content.\n"
+    #     "DO NOT provide personal, medical, financial, or legal advice.\n"
+    #     "If the request is ambiguous, ask for clarification before responding.\n"
+    #     "If a query violates ethical guidelines, politely refuse to provide an answer.\n"
+    # )
 
-    # Response optimization guidelines
-    response_guidelines = (
-        "Structure the response in a clear and logical manner.\n"
-        "Provide concise and informative answers while avoiding unnecessary verbosity.\n"
-        "Use examples when helpful and cite sources when applicable.\n"
-        "If additional context is required, prompt the user for clarification.\n"
-    )
+    # # Response optimization guidelines
+    # response_guidelines = (
+    #     "Structure the response in a clear and logical manner.\n"
+    #     "Provide concise and informative answers while avoiding unnecessary verbosity.\n"
+    #     "Use examples when helpful and cite sources when applicable.\n"
+    #     "If additional context is required, prompt the user for clarification.\n"
+    # )
 
     # Compose the final meta-prompt
     enhanced_user_input = (
-        security_guidelines +
+        # security_guidelines +
         retrieval_instruction +
         course_info_string +
         select_complexity_string +
         select_language_string +
         select_course_string +
-        response_guidelines +
+        # response_guidelines +
         user_input +
         file_path_string
     )
