@@ -48,22 +48,22 @@ logger.info(f"Graph saved to: {output_file_path}")
 
 
 # Run chatbot loop
-config = {"configurable": {"thread_id": "8"}}
+# config = {"configurable": {"thread_id": "8"}}
 
-while True:
-    user_input = input("User: ")
-    if user_input.lower() in ["quit", "exit", "q"]:
-        print("Goodbye!")
-        break
+# while True:
+#     user_input = input("User: ")
+#     if user_input.lower() in ["quit", "exit", "q"]:
+#         print("Goodbye!")
+#         break
 
-    events = compiled_graph.stream(
-        {"messages": [{"role": "user", "content": user_input}]},
-        config,
-        stream_mode="values",
-    )
-    for event in events:
-        # print("DEBUG: Messages:", event["messages"])
-        event["messages"][-1].pretty_print()
+#     events = compiled_graph.stream(
+#         {"messages": [{"role": "user", "content": user_input}]},
+#         config,
+#         stream_mode="values",
+#     )
+#     for event in events:
+#         # print("DEBUG: Messages:", event["messages"])
+#         event["messages"][-1].pretty_print()
 
 #     for message_chunk, metadata in compiled_graph.stream(
 #         {"messages": [{"role": "user", "content": user_input}]},
