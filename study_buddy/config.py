@@ -71,8 +71,8 @@ FAISS_INDEX_DIR = PROJ_ROOT / "faiss_index"
 IMAGES_DIR = PROJ_ROOT / "images"
 
 PARSED_COURSES_DATA_FILE = PROCESSED_DATA_DIR / "parsed_course_data.json"
-
 PROCESSED_DOCS_FILE = PROCESSED_DATA_DIR / "processed_docs.json"
+TEMP_DOCS_FILE = TEMP_DATA_DIR / "temp_extracted_documents.json"
 
 
 # Definition of configuration models
