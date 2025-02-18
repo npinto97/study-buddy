@@ -1,14 +1,47 @@
 import json
+import os
 from pathlib import Path
+from time import sleep
+from typing import Optional, Set
+
 from langchain_community.vectorstores import FAISS
 from langchain_text_splitters import RecursiveCharacterTextSplitter
+
 from study_buddy.utils.embeddings import embeddings
 from study_buddy.vectorstore_pipeline.document_loader import scan_directory_for_new_documents
-from study_buddy.config import logger, PROCESSED_DOCS_FILE, FAISS_INDEX_DIR, PARSED_COURSES_DATA_FILE
-from typing import Optional, Set
+from study_buddy.config import logger, PROCESSED_DOCS_FILE, FAISS_INDEX_DIR, PARSED_COURSES_DATA_FILE, TEMP_DOCS_FILE
 
 CHUNK_SIZE = 1000
 CHUNK_OVERLAP = 200
+BATCH_SIZE = 200  # Numero di documenti per batch
+RATE_LIMIT_DELAY = 60  # Secondi di attesa se viene raggiunto il TPM massimo
+
+
+def save_temp_docs(docs, hashes):
+    """Save temporary documents and their hashes in case of failure."""
+    try:
+        with open(TEMP_DOCS_FILE, "w", encoding="utf-8") as f:
+            json.dump({
+                "docs": [doc.dict() for doc in docs],
+                "hashes": list(hashes)
+            }, f, indent=4)
+        logger.info("Temporary documents and hashes saved successfully.")
+    except Exception as e:
+        logger.error(f"Error saving temporary documents: {e}")
+
+
+def load_temp_docs():
+    """Load temporary documents and their hashes if they exist."""
+    try:
+        with open(TEMP_DOCS_FILE, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        logger.info("Temporary documents and hashes loaded successfully.")
+        return data.get("docs", []), set(data.get("hashes", []))
+    except FileNotFoundError:
+        return [], set()
+    except Exception as e:
+        logger.error(f"Error loading temporary documents: {e}")
+        return [], set()
 
 
 def initialize_faiss_store() -> Optional[FAISS]:
@@ -28,16 +61,20 @@ def initialize_faiss_store() -> Optional[FAISS]:
             vector_store = FAISS.load_local(str(faiss_file_path), embeddings, allow_dangerous_deserialization=True)
             logger.info("FAISS vector store loaded successfully.")
 
-            # Scan for new documents
-            new_docs, new_hashes = scan_directory_for_new_documents(load_processed_hashes(PROCESSED_DOCS_FILE), PARSED_COURSES_DATA_FILE)
+            # Prova a caricare i documenti temporanei
+            new_docs, new_hashes = load_temp_docs()
+            if not new_docs:
+                new_docs, new_hashes = scan_directory_for_new_documents(load_processed_hashes(PROCESSED_DOCS_FILE), PARSED_COURSES_DATA_FILE)
+
             if not new_docs:
                 logger.info("No new documents found to update the vector store.")
                 return vector_store
 
+            save_temp_docs(new_docs, new_hashes)  # se fallisce l'aggiornamento dell'indice, non devo aspettare altre X ore... :-(
+
             logger.info(f"Updating vector store with {len(new_docs)} new documents...")
             vector_store = index_documents(new_docs, new_hashes, load_processed_hashes(PROCESSED_DOCS_FILE), vector_store)
             logger.info("Vector store updated successfully.")
-
             return vector_store
 
         except Exception as e:
@@ -48,19 +85,20 @@ def initialize_faiss_store() -> Optional[FAISS]:
     else:
         logger.info(f"FAISS store not found at {faiss_file_path}. Attempting to create and populate it.")
 
-        # Scan for any documents
-        new_docs, new_hashes = scan_directory_for_new_documents(load_processed_hashes(PROCESSED_DOCS_FILE), PARSED_COURSES_DATA_FILE)
+        new_docs, new_hashes = load_temp_docs()
+        if not new_docs:
+            new_docs, new_hashes = scan_directory_for_new_documents(load_processed_hashes(PROCESSED_DOCS_FILE), PARSED_COURSES_DATA_FILE)
 
         # If there are no documents to process, log the error
         if not new_docs:
             logger.error("No documents found. FAISS cannot be initialized.")
             return None
 
+        save_temp_docs(new_docs, new_hashes)
+
         vector_store = FAISS.from_documents(new_docs, embeddings)
-
-        vector_store = index_documents(new_docs, new_hashes, load_processed_hashes(PROCESSED_DOCS_FILE), vector_store)
+        vector_store = index_documents(load_temp_docs(), new_hashes, load_processed_hashes(PROCESSED_DOCS_FILE), vector_store)
         logger.info("FAISS vector store created and populated with documents.")
-
         return vector_store
 
 
@@ -126,28 +164,45 @@ def _save_faiss_store(vector_store: FAISS):
         logger.error(f"Error saving FAISS vector store: {e}")
 
 
+def batch_process_documents(docs, batch_size=BATCH_SIZE):
+    """Generator that yields documents in batches."""
+    for i in range(0, len(docs), batch_size):
+        yield docs[i:i + batch_size]
+
+
 def index_documents(new_docs: list, new_hashes: set, processed_hashes: set, vector_store: Optional[FAISS] = None) -> Optional[FAISS]:
     """
-    Index new documents without overwriting the existing vector store.
-
-    Args:
-        new_docs: List of new documents to index.
-        processed_hashes: Set of hashes that have already been processed.
-        vector_store: Optional; an existing vector store instance to update.
-
-    Returns:
-        The updated or newly created vector store.
+    Index new documents in batches to avoid exceeding TPM limits.
     """
     text_splitter = RecursiveCharacterTextSplitter(chunk_size=CHUNK_SIZE, chunk_overlap=CHUNK_OVERLAP)
-    all_splits = text_splitter.split_documents(new_docs)
+    successfully_processed_hashes = set()
 
-    if all_splits:
-        add_documents_to_store(vector_store, all_splits)
-        logger.info(f"Indexed {len(all_splits)} document chunks successfully.")
-        processed_hashes.update(new_hashes)
+    for batch in batch_process_documents(new_docs):
+        all_splits = text_splitter.split_documents(batch)
+
+        if all_splits:
+            try:
+                add_documents_to_store(vector_store, all_splits)
+                logger.info(f"Indexed {len(all_splits)} document chunks successfully.")
+
+                successfully_processed_hashes.update(new_hashes)
+            except Exception as e:
+                logger.error(f"Error indexing batch: {e}")
+                logger.info(f"Waiting {RATE_LIMIT_DELAY} seconds before retrying...")
+                sleep(RATE_LIMIT_DELAY)  # Attendi per evitare il rate limit
+
+                # Continua il loop senza salvare gli hash prematuramente
+                continue
+
+    # Dopo il completamento di tutti i batch, aggiorniamo gli hash definitivamente
+    if successfully_processed_hashes:
+        processed_hashes.update(successfully_processed_hashes)
         save_processed_hashes(PROCESSED_DOCS_FILE, processed_hashes)
-    else:
-        logger.info("No document chunks generated from the new documents.")
+
+    # Remove temporary file after successful indexing
+    if os.path.exists(TEMP_DOCS_FILE):
+        os.remove(TEMP_DOCS_FILE)
+        logger.info("Temporary documents file deleted successfully.")
 
     return vector_store
 
