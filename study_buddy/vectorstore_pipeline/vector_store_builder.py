@@ -4,7 +4,10 @@ from pathlib import Path
 from time import sleep
 from typing import Optional, Set
 
+from langchain.schema import Document
 from langchain_community.vectorstores import FAISS
+from faiss import IndexFlatL2
+from langchain_community.docstore.in_memory import InMemoryDocstore
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 from study_buddy.utils.embeddings import embeddings
@@ -13,8 +16,8 @@ from study_buddy.config import logger, PROCESSED_DOCS_FILE, FAISS_INDEX_DIR, PAR
 
 CHUNK_SIZE = 1000
 CHUNK_OVERLAP = 200
-BATCH_SIZE = 200  # Numero di documenti per batch
-RATE_LIMIT_DELAY = 60  # Secondi di attesa se viene raggiunto il TPM massimo
+BATCH_SIZE = 50  # Numero di documenti per batch
+RATE_LIMIT_DELAY = 120  # Secondi di attesa se viene raggiunto il TPM massimo
 
 
 def save_temp_docs(docs, hashes):
@@ -35,8 +38,14 @@ def load_temp_docs():
     try:
         with open(TEMP_DOCS_FILE, "r", encoding="utf-8") as f:
             data = json.load(f)
+
+        # Converti i dizionari in oggetti Document
+        docs = [Document(**doc) for doc in data.get("docs", [])]
+        hashes = set(data.get("hashes", []))
+
         logger.info("Temporary documents and hashes loaded successfully.")
-        return data.get("docs", []), set(data.get("hashes", []))
+        return docs, hashes
+
     except FileNotFoundError:
         return [], set()
     except Exception as e:
@@ -94,10 +103,13 @@ def initialize_faiss_store() -> Optional[FAISS]:
             logger.error("No documents found. FAISS cannot be initialized.")
             return None
 
-        save_temp_docs(new_docs, new_hashes)
+        save_temp_docs(new_docs, new_hashes) # se fallisce l'aggiornamento dell'indice, non devo aspettare altre X ore... :-(
 
-        vector_store = FAISS.from_documents(new_docs, embeddings)
-        vector_store = index_documents(load_temp_docs(), new_hashes, load_processed_hashes(PROCESSED_DOCS_FILE), vector_store)
+        vector_store = FAISS(embedding_function=embeddings, # https://github.com/langchain-ai/langchain/discussions/13773
+                             index=IndexFlatL2(1536),
+                             docstore=InMemoryDocstore(),
+                             index_to_docstore_id={})
+        vector_store = index_documents(new_docs, new_hashes, load_processed_hashes(PROCESSED_DOCS_FILE), vector_store)
         logger.info("FAISS vector store created and populated with documents.")
         return vector_store
 
