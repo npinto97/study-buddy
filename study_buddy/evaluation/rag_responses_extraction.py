@@ -41,6 +41,7 @@ for item in test_set:
         # extracts file paths from event log
         for msg in messages:
             if type(msg).__name__ == "ToolMessage" and msg.name == "retrieve_tool":
+                print(msg) # stampa di debug
                 if hasattr(msg, "artifact") and isinstance(msg.artifact, list):
                     for doc in msg.artifact:
                         if isinstance(doc, dict) and "metadata" in doc:
