@@ -139,27 +139,36 @@ def enhance_user_input(config_chat, user_input, file_path):
         select_course_string = ""
         course_info_string = ""
     else:
-        select_course_string = f"The question is about the course '{config_chat.course}'.\n"
+        select_course_string = f"The user is studying the course '{config_chat.course}'.\n"
         course_info_string = (
-            f"First, try retrieving relevant documents from the course '{config_chat.course}'.\n"
-            "If no relevant documents are found, expand the search to other available courses.\n"
+            f"Prioritize retrieving information from course materials related to '{config_chat.course}'.\n"
+            "If no relevant course materials are found, expand the search to other courses.\n"
             "If there are still no relevant documents, use an appropriate web search tool.\n"
-            "After providing an answer, evaluate whether applying a tool to the response could enhance the user's experience. If so, proactively suggest the functionality.\n"
-            "For example, if you've extracted text from a document and a summary could be beneficial, recommend it.\n"
-            "Aim to anticipate user needs and offer relevant, value-added actions.\n"
+            "Structure your response with clarity, using examples where needed.\n"
         )
 
     # Handle attached files
     file_path_string = (
-        f"The user's query contains a file that needs to be examined: {file_path}.\n"
+        f"The user has uploaded a file for analysis: {file_path}.\n"
         if file_path else ""
     )
 
     # Retrieval preference instructions
     retrieval_instruction = (
-        "If the user's request involves retrieving documents, always prioritize using 'retrieve_tool'.\n"
-        "Always show the path or the url where the user can find the file.\n"
-        "Only resort to other tools if the required information is not found in the retrieved documents.\n"
+        "For document-related queries, prioritize using the 'retrieve_tool' to find relevant information.\n"
+        "Always provide a source or a link where the user can access the referenced material.\n"
+        "If the user's question relates to study efficiency, accessibility, or mental health, consider recommending the appropriate tool.\n"
+        "Examples of tool recommendations:\n"
+        "- If the user is struggling with complex concepts, suggest 'code_interpreter' for demonstrations.\n"
+        "- If the user expresses stress, analyze their sentiment and provide study wellness tips.\n"
+        "- If accessibility is a concern, offer text-to-speech or document summarization options.\n"
+        "- If the user is working on research, suggest retrieving academic papers via Google Scholar.\n"
+    )
+
+    # Interdisciplinary awareness
+    interdisciplinary_instruction = (
+        "Encourage an interdisciplinary approach when beneficial.\n"
+        "For example, if a student is studying Natural Language Processing but struggles with mathematical models, offer insights from linear algebra.\n"
     )
 
     # # Security and ethical guidelines
@@ -189,7 +198,8 @@ def enhance_user_input(config_chat, user_input, file_path):
         select_course_string +
         # response_guidelines +
         user_input +
-        file_path_string
+        file_path_string +
+        interdisciplinary_instruction
     )
 
     return enhanced_user_input
@@ -399,10 +409,8 @@ def play_text_to_speech(text, key=None):
 
 
 def display_chat_history(thread_id):
-    """Display the conversation history.
+    """Display the conversation history."""
 
-    If `chunk_last_message` is True, the last bot message is shown as generated in chunks.
-    """
     st.markdown("---")
     st.markdown("### Conversation")
     chat_history = get_chat_history(thread_id)
@@ -425,10 +433,29 @@ def display_chat_history(thread_id):
             )
 
         # Messaggio del bot
-        elif role == "bot":
-            if content:
-                st.markdown(f"**Bot:** {content}")
-                play_text_to_speech(content, key=f"tts_button_{i}")
+        elif role == "bot" and content:
+            st.markdown(f"**Bot:** {content}", unsafe_allow_html=True)
+            
+            # Cerca link file:/// e crea pulsanti di download
+            if "file:///" in content:
+                file_links = re.findall(r'\[([^\]]+)\]\((file:///.*?)\)', content)
+                for text, link in file_links:
+                    file_path = link.replace("file:///", "")  # Rimuove il prefisso per ottenere il percorso locale
+
+                    if os.path.exists(file_path):
+                        with open(file_path, "rb") as file:
+                            file_bytes = file.read()
+
+                        st.download_button(
+                            label=f"📥 Scarica {text}",
+                            data=file_bytes,
+                            file_name=os.path.basename(file_path),
+                            mime="application/octet-stream",
+                        )
+                    else:
+                        st.error(f"❌ File non trovato: {file_path}")
+
+            play_text_to_speech(content, key=f"tts_button_{i}")
 
         elif role == "tool" and image_path:
             if os.path.exists(image_path):
