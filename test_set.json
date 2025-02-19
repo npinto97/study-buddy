@@ -1,0 +1,22 @@
+[
+    {
+        "question": "Quali differenze significative sono emerse nella conoscenza degli studenti svedesi riguardo alla mortalità infantile rispetto a quella attesa, e quale conclusione il docente ha tratto da tale comparazione?",
+        "expected_answer": "Gli studenti svedesi sapevano statisticamente significativamente meno sul mondo rispetto agli scimpanzé, ottenendo una media di 1,8 risposte corrette su cinque in un test sulla mortalità infantile. Il docente ha concluso che c'era una necessità di comunicare le reali informazioni globali, poiché gli studenti avevano idee preconcette distorte sulla situazione mondiale.",
+        "filename": "2006-hans-rosling-005-fallback-c3d98a9ebcba77e543774e749251147a-1200k.json"
+    },
+    {
+        "question": "Qual è la principale frustrazione dell'autore riguardo all'uso delle informazioni e dei dati durante la sua esperienza con la creazione del World Wide Web?",
+        "expected_answer": "L'autore esprime la sua frustrazione principale riguardo all'uso delle informazioni e dei dati durante la creazione del World Wide Web perché si trovava a dover affrontare una grande diversità di formati di dati e sistemi di documentazione incompatibili, il che rendeva difficile costruire qualcosa, dato che doveva sempre connettersi a nuove macchine, imparare nuovi programmi e cercare dati nei formati nuovi. Questa situazione era molto frustrante e rappresentava un potenziale inespresso.",
+        "filename": "2009-tim-berners-lee-009-fallback-84ea51342ae313c2e49f86da9b59d564-1200k.json"
+    },
+    {
+        "question": "Quali esempi vengono forniti nel testo per dimostrare come l'apertura dei dati possa generare impatti significativi nelle comunità e nei governi?",
+        "expected_answer": "Nel testo vengono forniti diversi esempi per dimostrare come l'apertura dei dati possa generare impatti significativi nelle comunità e nei governi. Un esempio è quello di Paul Clark del governo del Regno Unito, che ha pubblicato dati sugli incidenti ciclistici, portando a una mappa interattiva realizzata dal Times online. Un altro esempio è relativo a Zanesville, Ohio, dove un avvocato ha utilizzato dati sulla rete idrica e confrontandoli con informazioni demografiche ha portato a una sentenza di 10,9 milioni di dollari per la correlazione tra le case occupate da bianchi e l'accesso all'acqua. Inoltre, è stata menzionata una piattaforma nel Regno Unito che permette ai cittadini di esplorare i dati di spesa pubblica e un sito in California dedicato alla spesa per il recupero. Infine, l'esempio del mapping collaborativo durante il terremoto ad Haiti illustra come i dati aperti possano migliorare la risposta umanitaria attraverso mappe in tempo reale create da volontari.",
+        "filename": "2010u-tim-berners-lee-003-fallback-2ac11ea6fd5b0a64ff2388b9ca79cc60-1200k.json"
+    },
+    {
+        "question": "Quali sono le principali limitazioni del modello BLOOM in relazione alle lingue supportate, e come viene affrontata la questione dell'adattamento linguistico nel caso dell'italiano nel contesto di questo studio?",
+        "expected_answer": "Il modello BLOOM ha limitazioni significative riguardo il numero di lingue supportate, poiché non include l'italiano tra le lingue disponibili. Questa mancanza rende difficile l'uso del modello in contesti italiani. Nel contesto di questo studio, la questione dell'adattamento linguistico viene affrontata attraverso una strategia di adattamento della lingua basata sul continuo addestramento su dati specifici per la lingua. Inoltre, i modelli BLOOM e adattati vengono affinati su diversi set di istruzioni e compiti di classificazione basati su dati EV ALITA. Si è osservato che l'adattamento linguistico seguito da un affinamento basato su istruzioni è efficace nel trattare compiti mai visti dal modello in una nuova lingua appresa su dati specifici per la lingua.",
+        "filename": "Adapting_BLOOM_to_a_new_language_A_case_study_for_the_Italian.json"
+    }
+]

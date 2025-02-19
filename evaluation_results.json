@@ -1,0 +1,48 @@
+[
+    {
+        "question": "Quali differenze significative sono emerse nella conoscenza degli studenti svedesi riguardo alla mortalità infantile rispetto a quella attesa, e quale conclusione il docente ha tratto da tale comparazione?",
+        "semantic_similarity": 0.7568668127059937,
+        "target_doc": "2006-hans-rosling-005-fallback-c3d98a9ebcba77e543774e749251147a-1200k.json",
+        "retrieved_docs": [
+            "SIIA_syllabus.pdf"
+        ],
+        "recommendation_hit": 0,
+        "recommendation_rank": null,
+        "recommendation_mrr": 0.0
+    },
+    {
+        "question": "Qual è la principale frustrazione dell'autore riguardo all'uso delle informazioni e dei dati durante la sua esperienza con la creazione del World Wide Web?",
+        "semantic_similarity": 0.7150456309318542,
+        "target_doc": "2009-tim-berners-lee-009-fallback-84ea51342ae313c2e49f86da9b59d564-1200k.json",
+        "retrieved_docs": [
+            "Lesson_01_The_Web_is_still_a_DARPA_weapon.pdf"
+        ],
+        "recommendation_hit": 0,
+        "recommendation_rank": null,
+        "recommendation_mrr": 0.0
+    },
+    {
+        "question": "Quali esempi vengono forniti nel testo per dimostrare come l'apertura dei dati possa generare impatti significativi nelle comunità e nei governi?",
+        "semantic_similarity": 0.5816832184791565,
+        "target_doc": "2010u-tim-berners-lee-003-fallback-2ac11ea6fd5b0a64ff2388b9ca79cc60-1200k.json",
+        "retrieved_docs": [
+            "llamantino_llama_2_models_for_effective_text_generation_in_italian_language.pdf",
+            "Book_on_Semantics_in_Adaptive_And_Personalized_Systems.pdf",
+            "adapting_bloom_to_a_new_language_a_case_study_for_the_italian.pdf"
+        ],
+        "recommendation_hit": 0,
+        "recommendation_rank": null,
+        "recommendation_mrr": 0.0
+    },
+    {
+        "question": "Quali sono le principali limitazioni del modello BLOOM in relazione alle lingue supportate, e come viene affrontata la questione dell'adattamento linguistico nel caso dell'italiano nel contesto di questo studio?",
+        "semantic_similarity": 0.8749758005142212,
+        "target_doc": "Adapting_BLOOM_to_a_new_language_A_case_study_for_the_Italian.json",
+        "retrieved_docs": [
+            "adapting_bloom_to_a_new_language_a_case_study_for_the_italian.pdf"
+        ],
+        "recommendation_hit": 1,
+        "recommendation_rank": 1,
+        "recommendation_mrr": 1.0
+    }
+]
