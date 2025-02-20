@@ -17,7 +17,7 @@ documents = []
 count = 0
 MAXDOCS = 100 # limit of processed documents
 for filename in os.listdir(json_folder):
-    if filename.endswith(".json"):
+    if filename.endswith(".json") and not filename.startswith("base_"):
         with open(os.path.join(json_folder, filename), 'r', encoding="utf-8") as f:
             data = json.load(f)
             doc = {

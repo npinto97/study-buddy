@@ -41,24 +41,26 @@ mrrs = []
 precision_scores = []
 
 for item in data:
-    sim_score = semantic_similarity(item['expected_answer'], item['generated_answer'])
-    hit, rank, mrr, precision = evaluate_recommendation(item['target_doc'], item['retrieved_docs'])
 
-    similarity_scores.append(sim_score)
-    hits.append(hit)
-    mrrs.append(mrr)
-    precision_scores.append(precision)
+    if item["retrieved_docs"] is not []:
+        sim_score = semantic_similarity(item['expected_answer'], item['generated_answer'])
+        hit, rank, mrr, precision = evaluate_recommendation(item['target_doc'], item['retrieved_docs'])
 
-    results.append({
-        "question": item["question"],
-        "semantic_similarity": sim_score,
-        "target_doc": item["target_doc"],
-        "retrieved_docs": item["retrieved_docs"],
-        "recommendation_hit": hit,
-        "recommendation_rank": rank,
-        "recommendation_mrr": mrr,
-        "recommendation_precision": precision
-    })
+        similarity_scores.append(sim_score)
+        hits.append(hit)
+        mrrs.append(mrr)
+        precision_scores.append(precision)
+
+        results.append({
+            "question": item["question"],
+            "semantic_similarity": sim_score,
+            "target_doc": item["target_doc"],
+            "retrieved_docs": item["retrieved_docs"],
+            "recommendation_hit": hit,
+            "recommendation_rank": rank,
+            "recommendation_mrr": mrr,
+            "recommendation_precision": precision
+        })
 
 avg_similarity = sum(similarity_scores) / len(similarity_scores) if similarity_scores else 0.0
 hit_rate = sum(hits) / len(hits) if hits else 0.0
