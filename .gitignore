@@ -181,8 +181,6 @@ data/
 
 notebooks/
 
-images/
-
 .vscode/
 
 .langgraph_api/
