@@ -21,11 +21,11 @@ os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
 st.set_page_config(page_title="LangGraph Interface", layout="wide")
 
 
-st.logo(image=Path("images\\logo.png"), size="large", icon_image=Path("images\\logo_icon.png"))
+st.logo(image=Path("images\\new_unichat_icon_hd.png"), size="large", icon_image=Path("images\\new_unichat_icon_hd.png"))
 
 
 class ConfigChat:
-    def __init__(self, complexity_level="None", language="Engligh", course="None"):
+    def __init__(self, complexity_level="None", language="Italian", course="None"):
         self.complexity_level = complexity_level
         self.language = language
         self.course = course
@@ -466,7 +466,7 @@ def display_chat_history(thread_id):
 
 def main():
     """Main function to render the Streamlit app."""
-    st.title(":sparkles: UniChat: ci sono domande:question:")
+    st.title(":crystal_ball: UNIVOX: University Virtual Orchestrated eXpert")
 
     # Initialize session state
     initialize_session()
@@ -493,12 +493,12 @@ def main():
     # Display graph in column 1
     with col1:
         # display_graph()
-        st.header(":space_invader: Our Purpose")
+        st.header("🔬 Our Purpose")
         st.text("Inserire descrizione del progetto")
 
     # Chatbot response in column 2
     with col2:
-        st.header(":crystal_ball: Chatbot Response")
+        st.header("👩🏻‍🏫 Chatbot Response")
 
         if submit_button:
             handle_chatbot_response(user_input, config_thread_id, config_chat, user_file_path)
