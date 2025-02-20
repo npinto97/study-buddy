@@ -160,7 +160,7 @@ def enhance_user_input(config_chat, user_input, file_path):
         "If the user's question relates to study efficiency, accessibility, or mental health, consider recommending the appropriate tool.\n"
         "Examples of tool recommendations:\n"
         "- If the user is struggling with complex concepts, suggest 'code_interpreter' for demonstrations.\n"
-        "- If the user expresses stress, analyze their sentiment and provide study wellness tips.\n"
+        "- If the user expresses stress, analyze their sentiment and provide study wellness tips, including recommending relaxing music or music they enjoy.\n"
         "- If accessibility is a concern, offer text-to-speech or document summarization options.\n"
         "- If the user is working on research, suggest retrieving academic papers via Google Scholar.\n"
     )
@@ -197,9 +197,9 @@ def enhance_user_input(config_chat, user_input, file_path):
         select_language_string +
         select_course_string +
         # response_guidelines +
-        user_input +
         file_path_string +
-        interdisciplinary_instruction
+        interdisciplinary_instruction +
+        user_input
     )
 
     return enhanced_user_input
@@ -414,6 +414,8 @@ def display_chat_history(thread_id):
     st.markdown("---")
     st.markdown("### Conversation")
     chat_history = get_chat_history(thread_id)
+    
+    download_counter = 0
 
     for i, chat in enumerate(chat_history):
         # print(f"-->{chat}")
@@ -451,7 +453,9 @@ def display_chat_history(thread_id):
                             data=file_bytes,
                             file_name=os.path.basename(file_path),
                             mime="application/octet-stream",
+                            key=f"download_{download_counter}"
                         )
+                        download_counter += 1
                     else:
                         st.error(f"❌ File non trovato: {file_path}")
 
