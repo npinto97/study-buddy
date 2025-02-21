@@ -555,7 +555,7 @@ class ImageGenerationAPIWrapper:
     def __init__(self, model_name: str):
         self.client = Client(model_name)
 
-    def generate_image(self, prompt: str, seed: int = 0, randomize_seed: bool = True, width: int = 100, height: int = 100, num_inference_steps: int = 2):
+    def generate_image(self, prompt: str, seed: int = 0, randomize_seed: bool = True, width: int = 512, height: int = 512, num_inference_steps: int = 15):
         """Generates an image from a prompt using the Hugging Face API."""
         result = self.client.predict(
             prompt=prompt,
