@@ -124,10 +124,16 @@ def enhance_user_input(config_chat, user_input, file_path):
     - A clear and structured response according to user preferences.
     """
 
-    # Set response complexity level
+    # Complexity level customization
+    complexity_instructions = {
+        "Basic": "Keep the response simple and easy to understand, using everyday language and minimal technical jargon. Provide basic explanations with common examples.",
+        "Intermediate": "Provide a moderate level of detail, including some technical terms where appropriate. Use examples that demonstrate the concept but remain accessible.",
+        "Advanced": "Deliver an in-depth and comprehensive response, incorporating technical jargon, citations, and advanced examples when relevant. Provide critical analysis where applicable."
+    }
+
     select_complexity_string = (
-        f"Answer with a response of {config_chat.complexity_level} level of complexity.\n"
-        if config_chat.complexity_level != "None"
+        f"{complexity_instructions.get(config_chat.complexity_level, '')}\n"
+        if config_chat.complexity_level in complexity_instructions
         else ""
     )
 
@@ -414,7 +420,7 @@ def display_chat_history(thread_id):
     st.markdown("---")
     st.markdown("### Conversation")
     chat_history = get_chat_history(thread_id)
-    
+
     download_counter = 0
 
     for i, chat in enumerate(chat_history):
@@ -437,7 +443,7 @@ def display_chat_history(thread_id):
         # Messaggio del bot
         elif role == "bot" and content:
             st.markdown(f"**Bot:** {content}", unsafe_allow_html=True)
-            
+
             # Cerca link file:/// e crea pulsanti di download
             if "file:///" in content:
                 file_links = re.findall(r'\[([^\]]+)\]\((file:///.*?)\)', content)
@@ -496,9 +502,43 @@ def main():
 
     # Display graph in column 1
     with col1:
-        # display_graph()
-        st.header("🔬 Our Purpose")
-        st.text("Inserire descrizione del progetto")
+        st.header("🚀 Come utilizzare UNIVOX")
+
+        with st.expander("📖 Clicca qui per vedere la guida"):
+            st.markdown(
+                """
+                Questo tutor virtuale basato sull'intelligenza artificiale è progettato per supportarti nel tuo percorso accademico.  
+                Ecco come puoi interagire con il chatbot:
+
+                🔹 **Fai domande**: Digita la tua domanda nella casella di input per ricevere una risposta generata dall'AI.
+
+                🔹 **Carica file**: Condividi PDF o immagini per estrarre e analizzare contenuti.
+
+                🔹 **Usa l'input vocale**: Carica un file audio per trascrivere e processare la tua richiesta.
+
+                🔹 **Supporto multi-tool**: Il sistema integra diversi strumenti AI per attività come riassunti, analisi del sentiment e riconoscimento testuale.  
+
+                🔹 **Monitora la conversazione**: Visualizza le interazioni precedenti per tenere traccia delle discussioni.
+                
+                **Gestione delle conversazioni**  
+                - **Thread ID**: Ogni chat ha un identificativo univoco (*Thread ID*).  
+                - **Nuova chat**: Cambia il numero del *Thread ID* per avviare una nuova conversazione.  
+                - **Riapri una chat precedente**: Inserisci un *Thread ID* già usato per riprendere la discussione da dove l'avevi lasciata.  
+
+
+                **Consigli per un'esperienza ottimale**
+                - Sii chiaro e specifico nelle tue domande.
+                - Se necessario, fornisci contesto o documenti di supporto.
+                - Sperimenta diverse formulazioni per esplorare al meglio le funzionalità.
+
+                **Limitazioni**
+                - Le risposte possono variare a causa della natura non deterministica dell'AI.
+                - Alcune funzionalità avanzate sono state disabilitate per motivi di stabilità.
+                - Il sistema è in continuo miglioramento: il tuo feedback è prezioso!
+
+                🏆 *Migliora la tua esperienza di studio con UNIVOX!*
+                """
+            )
 
     # Chatbot response in column 2
     with col2:
