@@ -322,7 +322,7 @@ def save_file(user_file_input):
             elif file_type.startswith('video'):
                 # Salva i file video con estensione .mp4 o altro
                 tmp_file_path = save_video_file(user_file_input, temp_dir)
-            elif file_type.startswith('text'):
+            elif file_type.startswith('text') or file_type in ['application/vnd.ms-excel', 'text/csv']: 
                 # Salva i file testuali (txt, csv, json, xml, ecc.)
                 tmp_file_path = save_text_file(user_file_input, temp_dir)
             elif file_type == 'application/pdf':
@@ -335,7 +335,8 @@ def save_file(user_file_input):
             st.error("Tipo di file non riconosciuto.")
             return ""
 
-        return tmp_file_path
+        return repr(os.path.normpath(tmp_file_path))  # return tmp_file_path 
+
     except Exception as e:
         st.error(f"Errore durante il salvataggio del file: {str(e)}")
         return ""
@@ -444,26 +445,29 @@ def display_chat_history(thread_id):
         elif role == "bot" and content:
             st.markdown(f"**Bot:** {content}", unsafe_allow_html=True)
 
-            # Cerca link file:/// e crea pulsanti di download
-            if "file:///" in content:
-                file_links = re.findall(r'\[([^\]]+)\]\((file:///.*?)\)', content)
-                for text, link in file_links:
-                    file_path = link.replace("file:///", "")  # Rimuove il prefisso per ottenere il percorso locale
+            # Cerca sia percorsi locali (C:\...) sia file:/// nei messaggi
+            file_paths = re.findall(r'([A-Za-z]:\\[^\s]+)', content)  # Trova percorsi tipo C:\Users\...
+            file_paths += re.findall(r'\[([^\]]+)\]\((file:///.*?)\)', content)  # Trova file:/// links
 
-                    if os.path.exists(file_path):
-                        with open(file_path, "rb") as file:
-                            file_bytes = file.read()
+            for file_path in file_paths:
+                if isinstance(file_path, tuple):  # Se è una tupla da file:/// link
+                    text, link = file_path
+                    file_path = link.replace("file:///", "")
 
-                        st.download_button(
-                            label=f"📥 Scarica {text}",
-                            data=file_bytes,
-                            file_name=os.path.basename(file_path),
-                            mime="application/octet-stream",
-                            key=f"download_{download_counter}"
-                        )
-                        download_counter += 1
-                    else:
-                        st.error(f"❌ File non trovato: {file_path}")
+                if os.path.exists(file_path):
+                    with open(file_path, "rb") as file:
+                        file_bytes = file.read()
+
+                    st.download_button(
+                        label=f"📥 Scarica {os.path.basename(file_path)}",
+                        data=file_bytes,
+                        file_name=os.path.basename(file_path),
+                        mime="application/octet-stream",
+                        key=f"download_{download_counter}"
+                    )
+                    download_counter += 1
+                else:
+                    st.error(f"❌ File non trovato: {file_path}")
 
             play_text_to_speech(content, key=f"tts_button_{i}")
 
