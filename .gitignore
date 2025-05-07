@@ -2,6 +2,8 @@
 __pycache__/
 *.py[cod]
 *$py.class
+*.pyc
+*.pyo
 
 # C extensions
 *.so
@@ -169,3 +171,20 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+# Exclude system files
+.DS_Store
+Thumbs.db
+
+# Exclude local databases and protected material
+data/
+
+notebooks/
+
+.vscode/
+
+.langgraph_api/
+
+faiss_index/
+
+siia-450317-4cc1f1da5b72.json
