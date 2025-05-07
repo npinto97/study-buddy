@@ -1,0 +1,72 @@
+# Aggiornamento di base
+pip
+setuptools
+wheel
+
+# Librerie fondamentali per AI
+torch
+torchvision
+torchaudio
+
+# Librerie di sistema e utilità
+python-dotenv
+PyYAML
+tqdm
+typing_extensions
+loguru
+
+# Librerie per HTTP e asincronia
+aiohttp
+asyncio
+httpx
+google-api-python-client
+
+# Elaborazione di documenti e immagini
+pdfplumber
+pypdf
+unstructured_inference
+pi-heif
+pillow-heif
+xmltodict
+pytesseract
+unstructured_pytesseract
+pymupdf
+pdf2image 
+
+# Gestione di audio e video
+ffmpeg-python
+pydub
+mutagen
+git+https://github.com/openai/whisper.git
+
+
+# NLP e AI
+textblob
+wikipedia
+wolframalpha
+arxiv
+
+# Ricerca e API per LLM
+google-search-results
+serpapi
+
+# LangChain e componenti
+langchain_core
+langchain_community
+langchain
+langchain_text_splitters
+langchain_docling
+langchain_openai
+unstructured
+
+# Librerie avanzate per AI e orchestrazione
+langgraph
+faiss-cpu
+e2b-code-interpreter
+
+# Librerie per interfacce e API
+streamlit
+gradio-client
+
+# YouTube e trascrizione
+youtube_transcript_api
