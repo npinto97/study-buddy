@@ -37,7 +37,8 @@ pdf2image
 ffmpeg-python
 pydub
 mutagen
-openai-whisper
+git+https://github.com/openai/whisper.git
+
 
 # NLP e AI
 textblob
