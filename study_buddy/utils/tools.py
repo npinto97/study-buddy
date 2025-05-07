@@ -1,4 +1,6 @@
 import os
+import io
+import pandas as pd
 import fitz  # PyMuPDF per estrazione testo da PDF
 import pytesseract
 from pdf2image import convert_from_path
@@ -6,8 +8,12 @@ from PIL import Image
 import requests
 import tempfile
 from openai import OpenAI
-from typing import Union
+from typing import Union, List, Optional
 from textblob import TextBlob
+import matplotlib.pyplot as plt
+import base64
+from langchain.prompts import PromptTemplate
+from langchain.chains import LLMChain
 
 from pydantic import BaseModel, Field
 
@@ -31,6 +37,11 @@ from langchain_community.utilities.google_scholar import GoogleScholarAPIWrapper
 from langchain_community.tools.tavily_search import TavilySearchResults
 from langchain_community.tools.arxiv.tool import ArxivQueryRun
 from e2b_code_interpreter import Sandbox
+
+from langchain.schema import HumanMessage
+from langchain_community.document_loaders import CSVLoader
+from langchain.text_splitter import CharacterTextSplitter
+
 
 # from gradio_tools import (StableDiffusionTool,
 #                           ImageCaptioningTool,
@@ -727,7 +738,85 @@ extract_text_tool = Tool(
     func=extract_text_from_wrapper
 )
 
+# Static analysis of CSV files
+class CSVHybridAnalyzer:
+    def __init__(self, file_path: str):
+        self.file_path = file_path
+        self.df = self.load_dataframe()
+        self.documents = self.load_documents()
 
+    def load_dataframe(self):
+        """
+        Carica il CSV in un DataFrame pandas.
+        """
+        return pd.read_csv(self.file_path)
+
+    def load_documents(self):
+        """
+        Carica il CSV come Documenti LangChain per analisi testuale.
+        """
+        loader = CSVLoader(file_path=self.file_path)
+        raw_docs = loader.load()
+
+        # Suddivide se necessario (utile per file grandi)
+        splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=50)
+        return splitter.split_documents(raw_docs)
+
+    def analyze_dataset(self) -> str:
+        """
+        Crea una breve descrizione del dataset.
+        """
+        info = f"Colonne: {list(self.df.columns)}\n"
+        info += f"Numero di righe: {len(self.df)}\n"
+        info += f"Prime righe:\n{self.df.head(3).to_string(index=False)}\n"
+        stats = self.df.describe(include='all').fillna("").to_string()
+
+        return f"{info}\nStatistiche descrittive:\n{stats}"
+
+
+    def summarize_with_llm(self) -> str:
+        """
+        Usa GPT per generare un riassunto ragionato del contenuto.
+        """
+        llm = ChatOpenAI(model_name="gpt-4", temperature=0)
+        base_text = "\n\n".join([doc.page_content for doc in self.documents[:3]])  # Max 3 chunks per sintesi rapida
+
+        prompt = f"""Hai ricevuto un dataset in formato CSV. Ecco una parte del contenuto:
+        
+        {base_text}
+        
+        Fornisci un riassunto del contenuto, identificando eventuali pattern, informazioni interessanti o anomalie."""
+                        
+        response = llm([HumanMessage(content=prompt)])
+        return response.content
+
+    def full_report(self) -> str:
+        """
+        Combina analisi descrittiva e ragionamento testuale.
+        """
+        analysis = self.analyze_dataset()
+        llm_summary = self.summarize_with_llm()
+        return f"""[ANALISI_DESCRITTIVA]
+        {analysis}
+
+        [ANALISI_SEMANTICA]
+        {llm_summary}
+        """
+
+
+def hybrid_csv_analysis(file_path: str) -> str:
+    analyzer = CSVHybridAnalyzer(file_path)
+    return analyzer.full_report()
+
+
+csv_hybrid_tool = Tool(
+    name="CSVHybridAnalyzer",
+    description="Esegue una doppia analisi su un CSV: statistica (pandas) e testuale (LLM) per insight utili.",
+    func=hybrid_csv_analysis
+)
+
+
+# ------------------------------------------------------------------------------
 tools = [
     retrieve_tool,
     web_search_tool,
@@ -744,9 +833,10 @@ tools = [
     speech_to_text_tool,
     google_lens_tool,           # per analizzare immagini da url
     image_generation_tool,
-    image_interrogator_tool,  # per analizzare immagini caricate in locale
+    image_interrogator_tool,    # per analizzare immagini caricate in locale
     # text_analysis_tool,       # funziona ma non so come trattare la risposta
     summarize_tool,
     sentiment_tool,
-    extract_text_tool
+    extract_text_tool,
+    csv_hybrid_tool
 ]  # + base_tool   # + o365_tools
