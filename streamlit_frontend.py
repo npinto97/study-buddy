@@ -104,16 +104,16 @@ def sidebar_configuration():
     return user_input, user_file_input, user_audio_input, config_thread_id, submit_button, config_chat
 
 
-def display_graph():
-    """Display the compiled LangGraph image."""
-    st.header("Graph Visualization")
-    graph_path = "images/agents_graph.png"
+# def display_graph():
+#     """Display the compiled LangGraph image."""
+#     st.header("Graph Visualization")
+#     graph_path = "images/agents_graph.png"
 
-    if os.path.exists(graph_path):
-        graph_image = Image.open(graph_path)
-        st.image(graph_image, caption="Compiled LangGraph", use_container_width=True)
-    else:
-        st.error("Graph image not found. Please check the path.")
+#     if os.path.exists(graph_path):
+#         graph_image = Image.open(graph_path)
+#         st.image(graph_image, caption="Compiled LangGraph", use_container_width=True)
+#     else:
+#         st.error("Graph image not found. Please check the path.")
 
 
 def enhance_user_input(config_chat, user_input, file_path):
@@ -154,10 +154,9 @@ def enhance_user_input(config_chat, user_input, file_path):
         )
 
     # Handle attached files
-    file_path_string = (
-        f"The user has uploaded a file for analysis: {file_path}.\n"
-        if file_path else ""
-    )
+    file_path_string = ""
+    if file_path:
+        file_path_string = f"The user has uploaded a file for analysis: {file_path}.\n"
 
     # Retrieval preference instructions
     retrieval_instruction = (
@@ -499,7 +498,8 @@ def main():
     user_file_path = None
     if user_file_input is not None:
         st.info("📤 Caricando il file...")
-        user_file_path = save_file(user_file_input)
+        saved_path = save_file(user_file_input)
+        user_file_path = Path(saved_path).as_posix()
 
     # Define layout columns
     col1, col2 = st.columns([1, 2])
@@ -508,7 +508,7 @@ def main():
     with col1:
         st.header("🚀 Come utilizzare UNIVOX")
 
-        with st.expander("📖 Clicca qui per vedere la guida"):
+        with st.expander("📖 Clicca qui per leggere la guida"):
             st.markdown(
                 """
                 Questo tutor virtuale basato sull'intelligenza artificiale è progettato per supportarti nel tuo percorso accademico.  
