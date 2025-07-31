@@ -64,9 +64,18 @@ google_api_key = os.getenv("GOOGLE_API_KEY")
 def retrieve_tool(query: str):
     """Retrieve information related to a query."""
     vector_store = get_vector_store(FAISS_INDEX_DIR)
+
+    embedding_dim = vector_store.index.d
+    test_embedding = vector_store.embeddings.embed_query("test")
+    if len(test_embedding) != embedding_dim:
+        raise ValueError(
+            f"Dimensione embedding ({len(test_embedding)}) diversa da quella dell'indice FAISS ({embedding_dim}). "
+            "Rigenera l'indice FAISS con lo stesso modello di embedding."
+        )
+
     retrieved_docs = vector_store.similarity_search(query, k=2)
     serialized = "\n\n".join(
-        (f"Source: {doc.metadata}\n" f"Content: {doc.page_content}")
+        f"Source: {doc.metadata}\nContent: {doc.page_content}"
         for doc in retrieved_docs
     )
     return serialized, retrieved_docs
