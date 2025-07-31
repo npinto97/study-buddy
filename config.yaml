@@ -1,8 +1,8 @@
 llm:
-  model: "gpt-4o-mini"  # "gpt-4o"
+  model: "deepseek-ai/DeepSeek-V3"  # "gpt-4o"
 
 embeddings:
-  model: "text-embedding-3-small"
+  model: "sentence-transformers/all-MiniLM-L6-v2"
 
 vector_store:
   type: "faiss"  # Opzioni: "in_memory", "faiss"
