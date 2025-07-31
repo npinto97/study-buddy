@@ -1,5 +1,4 @@
 import os
-import io
 import pandas as pd
 import fitz  # PyMuPDF per estrazione testo da PDF
 import pytesseract
@@ -7,14 +6,8 @@ from pdf2image import convert_from_path
 from PIL import Image
 import requests
 import tempfile
-from typing import Union, List, Optional
+from typing import Union
 from textblob import TextBlob
-import matplotlib.pyplot as plt
-import base64
-
-from langchain.prompts import PromptTemplate
-
-from langchain.chains import LLMChain
 
 from pydantic import BaseModel, Field
 
@@ -466,11 +459,13 @@ class ElevenLabsTTSWrapper:
         save(audio, tmp_path)
         return tmp_path
 
+
 text_to_speech_tool = Tool(
     name="text_to_speech",
     description="Converte testo in voce utilizzando l'API ElevenLabs.",
     func=ElevenLabsTTSWrapper().text_to_speech,
 )
+
 
 class AssemblyAISpeechToText:
     """Wrapper for AssemblyAI transcription API."""
@@ -511,6 +506,7 @@ class AssemblyAISpeechToText:
         transcript = self.client.transcribe(audio_path)
         os.remove(audio_path)
         return transcript.text
+
 
 speech_to_text_tool = Tool(
     name="speech_to_text",
@@ -700,6 +696,7 @@ extract_text_tool = Tool(
     func=extract_text_from_wrapper
 )
 
+
 # Static analysis of CSV files
 class CSVHybridAnalyzer:
     def __init__(self, file_path: str):
@@ -759,137 +756,17 @@ Fornisci un riassunto del contenuto, identificando eventuali pattern, informazio
 {llm_summary}
 """
 
+
 def hybrid_csv_analysis(file_path: str) -> str:
     analyzer = CSVHybridAnalyzer(file_path)
     return analyzer.full_report()
+
 
 csv_hybrid_tool = Tool(
     name="CSVHybridAnalyzer",
     description="Esegue una doppia analisi su un CSV: statistica (pandas) e testuale (LLM) per insight utili.",
     func=hybrid_csv_analysis
 )
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-from e2b import Sandbox
-from langchain.schema import HumanMessage
-from langchain.tools import Tool
-import os
-
-class CSVQuerySandbox:
-    def __init__(self, file_path: str):
-        self.file_path = file_path
-        self.sandbox = Sandbox(template="python3")  # Puoi personalizzare il template
-        self.remote_path = self.upload_file()
-
-    def upload_file(self):
-        # Carica il CSV sul sandbox
-        return self.sandbox.upload(self.file_path)
-
-    def generate_code_from_question(self, question: str) -> str:
-        llm = ChatOpenAI(model_name="gpt-4", temperature=0)
-
-        prompt = f"""Hai a disposizione un file CSV chiamato '{self.remote_path}', caricato in un ambiente Python.
-        Devi scrivere codice Python per rispondere alla seguente domanda:
-
-        {question}
-
-        Il codice deve:
-        - Caricare il CSV con pandas.
-        - Stampare sempre un output leggibile con `print()`.
-        - Se è utile, creare un grafico usando matplotlib o seaborn.
-        - Se viene generato un grafico, salvarlo sempre con `plt.savefig("output.png")`.
-
-        Rispondi solo con il codice Python eseguibile, senza spiegazioni."""
-        
-        code_response = llm([HumanMessage(content=prompt)]).content
-        return code_response
-
-    def ask_question(self, question: str) -> str:
-        code = self.generate_code_from_question(question)
-        print(f"Eseguo il seguente codice nel sandbox:\n{code}\n")  # Per debug
-
-        result = self.sandbox.run(code, timeout=60)
-
-        output_text = result.output.strip()
-        output_image_path = None
-
-        if "output.png" in result.files:
-            local_path = f"./output_{os.path.basename(self.file_path)}.png"
-            self.sandbox.download("output.png", local_path)
-            output_image_path = local_path
-
-        if output_image_path:
-            return f"📊 **Output:**\n{output_text}\n\nGrafico salvato in: `{output_image_path}`"
-        else:
-            return f"📊 **Output:**\n{output_text}"
-
-    def close(self):
-        self.sandbox.close()
-
-
-# Funzione eseguibile come tool LangChain
-def query_csv_in_sandbox(file_path: str, question: str) -> str:
-    try:
-        agent = CSVQuerySandbox(file_path)
-        result = agent.ask_question(question)
-        return result
-    finally:
-        agent.close()
-
-
-# Tool per LangChain
-csv_query_tool = Tool(
-    name="CSVQuerySandbox",
-    description="Interroga un CSV con linguaggio naturale ed esegue query Python nel sandbox, con grafici opzionali.",
-    func=lambda file_path, question: query_csv_in_sandbox(file_path, question)
-)
-
-
-
-
-
-
-
-
-
-
-
 
 
 # ------------------------------------------------------------------------------
@@ -915,5 +792,5 @@ tools = [
     sentiment_tool,
     extract_text_tool,
     csv_hybrid_tool,
-    csv_query_tool
+    # csv_query_tool
 ]  # + base_tool   # + o365_tools
