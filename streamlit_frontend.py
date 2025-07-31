@@ -10,7 +10,7 @@ import json
 import torch
 
 from study_buddy.agent import compiled_graph
-from study_buddy.utils.tools import OpenAITTSWrapper, OpenAISpeechToText
+from study_buddy.utils.tools import ElevenLabsTTSWrapper, AssemblyAISpeechToText
 
 torch.classes.__path__ = [os.path.join(torch.__path__[0], torch.classes.__file__)]
 
@@ -279,26 +279,24 @@ def handle_chatbot_response(user_input, thread_id, config_chat, user_file_path):
 
 
 def transcribe_audio(audio_file):
-    """Use OpenAI's Whisper to transcribe audio."""
+    """Use AssemblyAI to transcribe audio."""
     try:
-        # Salva il file audio in un file temporaneo
         with tempfile.NamedTemporaryFile(delete=False, suffix='.tmp') as tmp_audio_file:
             tmp_audio_file.write(audio_file.getvalue())
             tmp_audio_file.close()
-            wav_audio_path = tmp_audio_file.name
 
             audio = AudioSegment.from_file(tmp_audio_file.name)
             wav_audio_path = tmp_audio_file.name.replace(".tmp", ".wav")
-
             audio.export(wav_audio_path, format="wav")
 
-            transcriber = OpenAISpeechToText()
+            transcriber = AssemblyAISpeechToText()
             transcribed_audio = transcriber.transcribe_audio(wav_audio_path)
 
             return transcribed_audio
     except Exception as e:
         st.error(f"Audio transcription error: {str(e)}")
         return ""
+
 
 
 def save_file(user_file_input):
@@ -406,11 +404,10 @@ def save_pdf_file(user_file_input, temp_dir):
         return ""
 
 
-def play_text_to_speech(text, key=None):
-    """Call OpenAI's TTS tool and play the generated speech."""
+def play_text_to_speech(text, key):
+    """Call ElevenLabs TTS tool and play the generated speech."""
     if st.button("🔊", key=key):
-        tts_wrapper = OpenAITTSWrapper()
-        audio_path = tts_wrapper.text_to_speech(text)
+        audio_path = ElevenLabsTTSWrapper().text_to_speech(text)
         st.audio(audio_path, format="audio/mp3")
 
 
