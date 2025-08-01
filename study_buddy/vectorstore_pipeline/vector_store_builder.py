@@ -106,7 +106,7 @@ def initialize_faiss_store() -> Optional[FAISS]:
         save_temp_docs(new_docs, new_hashes) # se fallisce l'aggiornamento dell'indice, non devo aspettare altre X ore... :-(
 
         vector_store = FAISS(embedding_function=embeddings, # https://github.com/langchain-ai/langchain/discussions/13773
-                             index=IndexFlatL2(1536),
+                             index=IndexFlatL2(384),
                              docstore=InMemoryDocstore(),
                              index_to_docstore_id={})
         vector_store = index_documents(new_docs, new_hashes, load_processed_hashes(PROCESSED_DOCS_FILE), vector_store)
@@ -212,9 +212,9 @@ def index_documents(new_docs: list, new_hashes: set, processed_hashes: set, vect
         save_processed_hashes(PROCESSED_DOCS_FILE, processed_hashes)
 
     # Remove temporary file after successful indexing
-    if os.path.exists(TEMP_DOCS_FILE):
-        os.remove(TEMP_DOCS_FILE)
-        logger.info("Temporary documents file deleted successfully.")
+    # if os.path.exists(TEMP_DOCS_FILE):
+    #     os.remove(TEMP_DOCS_FILE)
+    #     logger.info("Temporary documents file deleted successfully.")
 
     return vector_store
 
