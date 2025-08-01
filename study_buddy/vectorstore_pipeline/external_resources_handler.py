@@ -35,7 +35,8 @@ def extract_transcript_from_youtube(youtube_url):
     """Ottiene la trascrizione automatica di un video YouTube."""
     try:
         video_id = youtube_url.split("v=")[-1].split("&")[0]
-        transcript = YouTubeTranscriptApi.get_transcript(video_id, languages=["it", "en"])
+        api = YouTubeTranscriptApi()
+        transcript = api.fetch(video_id)
         return " ".join([entry['text'] for entry in transcript])
     except Exception as e:
         logger.error(f"Errore nella trascrizione del video {youtube_url}: {e}")
@@ -67,6 +68,3 @@ def extract_external_resources(lesson_data):
             extracted_docs.append(document)
 
     return extracted_docs
-
-# ESEMPIO USO:
-# process_lesson("path/to/lesson.json")
