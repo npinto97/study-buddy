@@ -1,4 +1,4 @@
-import os
+import tempfile, os, base64
 import pandas as pd
 import fitz  # PyMuPDF per estrazione testo da PDF
 import pytesseract
@@ -8,11 +8,15 @@ import requests
 import tempfile
 from typing import Union
 from textblob import TextBlob
+import matplotlib.pyplot as plt
 
 from pydantic import BaseModel, Field
+from langchain_together import ChatTogether
 
-from langchain_core.tools import tool, Tool
+from langchain_core.tools import Tool
 # from langchain_community.agent_toolkits.load_tools import load_tools
+
+from langchain.tools import StructuredTool
 
 # from langchain_community.agent_toolkits import O365Toolkit
 from langchain.chains.summarize import load_summarize_chain
@@ -35,6 +39,8 @@ from e2b_code_interpreter import Sandbox
 from langchain.schema import HumanMessage
 from langchain_community.document_loaders import CSVLoader
 from langchain.text_splitter import CharacterTextSplitter
+
+from langchain_core.language_models import BaseChatModel
 
 from elevenlabs.client import ElevenLabs
 from elevenlabs import save
@@ -60,7 +66,6 @@ google_api_key = os.getenv("GOOGLE_API_KEY")
 # base_tool = load_tools(["human", "pubmed"])
 
 
-@tool(response_format="content_and_artifact")
 def retrieve_tool(query: str):
     """Retrieve information related to a query."""
     vector_store = get_vector_store(FAISS_INDEX_DIR)
@@ -338,14 +343,12 @@ wikidata_tool = Tool(
 
 
 class CodeInterpreterInput(BaseModel):
-    """Input schema for the Code Interpreter."""
+    """Input schema for the Code Interpreter tool."""
     code: str = Field(description="Python code to execute.")
 
 
-class CodeInterpreterFunctionTool:
-    """Tool to execute Python code in a Jupyter environment using E2B."""
-
-    tool_name: str = "code_interpreter"
+class CodeInterpreterWrapper:
+    """Wrapper for running Python code inside an E2B sandbox."""
 
     def __init__(self):
         self._initialize_sandbox()
@@ -353,16 +356,12 @@ class CodeInterpreterFunctionTool:
     def _initialize_sandbox(self):
         """Initialize or restart the E2B sandbox."""
         if "E2B_API_KEY" not in os.environ:
-            raise Exception("E2B API key is missing. Set the E2B_API_KEY environment variable.")
+            raise EnvironmentError("E2B_API_KEY is not set in the environment variables.")
         self.code_interpreter = Sandbox()
-        self.code_interpreter.set_timeout(60)  # Extend timeout to 60 seconds
+        self.code_interpreter.set_timeout(60)
 
-    def close(self):
-        """Kill the sandbox."""
-        self.code_interpreter.kill()
-
-    def call(self, parameters: dict):
-        code = parameters.get("code", "")
+    def run(self, code: str) -> dict:
+        """Execute Python code and return results, stdout, stderr, and any errors."""
         try:
             execution = self.code_interpreter.run_code(code)
             return {
@@ -372,26 +371,24 @@ class CodeInterpreterFunctionTool:
                 "error": execution.error,
             }
         except Exception as e:
-            if "502 Bad Gateway" in str(e) or "sandbox timeout" in str(e).lower():
-                print("Sandbox timed out. Restarting...")
-                self._initialize_sandbox()  # Restart the sandbox
-                return self.call(parameters)  # Retry execution
+            if "502 Bad Gateway" in str(e) or "timeout" in str(e).lower():
+                print("Timeout or gateway error. Restarting sandbox...")
+                self._initialize_sandbox()
+                return self.run(code)  # Retry once
             else:
-                raise e
+                raise RuntimeError(f"Error while executing code: {e}")
 
-    def langchain_call(self, code: str):
-        return self.call({"code": code})
-
-    def to_langchain_tool(self) -> Tool:
-        return Tool(
-            name=self.tool_name,
-            description="Executes Python code and returns stdout, stderr, and results.",
-            func=self.langchain_call,
-            args_schema=CodeInterpreterInput
-        )
+    def close(self):
+        """Shut down the E2B sandbox."""
+        self.code_interpreter.kill()
 
 
-execute_python_tool = CodeInterpreterFunctionTool().to_langchain_tool()
+execute_python_tool = Tool(
+    name="code_interpreter",
+    description="Executes Python code in a secure sandbox and returns stdout, stderr, and results.",
+    func=CodeInterpreterWrapper().run,
+)
+
 
 
 # ------------------------------------------------------------------------------
@@ -778,6 +775,125 @@ csv_hybrid_tool = Tool(
 )
 
 
+
+
+
+
+
+import os
+import base64
+import json
+from langchain.tools import Tool
+from e2b_code_interpreter import Sandbox
+
+
+class DataVisualizationTool:
+    """Tool to perform data analysis and visualization using E2B Code Interpreter."""
+
+    tool_name: str = "data_visualization"
+
+    def __init__(self):
+        self._initialize_sandbox()
+
+    def _initialize_sandbox(self):
+        if "E2B_API_KEY" not in os.environ:
+            raise Exception("E2B_API_KEY environment variable not set.")
+        self.sandbox = Sandbox()
+        self.sandbox.set_timeout(60)  # Optional timeout config
+
+    def close(self):
+        """Terminate the sandbox."""
+        self.sandbox.kill()
+
+    def call(self, input_str: str) -> str:
+        """
+        Accepts a JSON string with fields:
+        {
+            "file_path": "<local CSV path>",
+            "question": "<instruction for analysis/visualization>"
+        }
+        """
+        try:
+            params = json.loads(input_str)
+        except json.JSONDecodeError:
+            return "❌ Invalid input format. Must be a JSON string with 'file_path' and 'question'."
+
+        file_path = params.get("file_path")
+        question = params.get("question")
+
+        if not file_path or not question:
+            return "❌ Missing required fields: 'file_path' and 'question'."
+
+        if not os.path.exists(file_path):
+            return f"❌ File not found at path: {file_path}"
+
+        try:
+            with open(file_path, "rb") as f:
+                self.sandbox.files.write("/workspace/dataset.csv", f)
+        except Exception as e:
+            return f"❌ Failed to upload file: {str(e)}"
+
+        # Code to be executed inside the sandbox
+        code = f'''
+import pandas as pd
+import matplotlib.pyplot as plt
+
+df = pd.read_csv('/workspace/dataset.csv')
+
+# User instruction:
+# {question}
+
+try:
+    exec(\"\"\"{question}\"\"\")
+except Exception as e:
+    df.hist(figsize=(20, 12))
+    plt.tight_layout()
+    plt.suptitle("Generated Chart", y=1.02)
+    print(f"Failed to execute user query. Fallback used.\\nError: {{e}}")
+
+plt.show()
+'''
+
+        try:
+            execution = self.sandbox.run_code(code)
+            result = execution.results[0]
+
+            if result.png:
+                output_dir = "streamlit_outputs"
+                os.makedirs(output_dir, exist_ok=True)
+
+                image_path = os.path.join(output_dir, "data_viz_output.png")
+
+                with open(image_path, "wb") as f:
+                    f.write(base64.b64decode(result.png))
+                return {
+                    "text": "✅ Chart generated.",
+                    "image_path": os.path.abspath(image_path)
+                }
+
+            return "⚠️ Code executed, but no chart was generated."
+
+        except Exception as e:
+            return f"❌ Error running code: {str(e)}"
+
+    def to_tool(self) -> Tool:
+        return Tool(
+            name=self.tool_name,
+            description=(
+                "Performs data visualization and analysis on a CSV dataset. "
+                "Input must be a JSON string with 'file_path' and 'question'."
+            ),
+            func=self.call
+        )
+
+
+# Exported tool for use in the agent
+data_visualization_tool = DataVisualizationTool().to_tool()
+
+
+
+
+
 # ------------------------------------------------------------------------------
 tools = [
     retrieve_tool,
@@ -800,6 +916,6 @@ tools = [
     doc_summary_tool,
     sentiment_tool,
     extract_text_tool,
-    csv_hybrid_tool,
-    # csv_query_tool
+    # csv_hybrid_tool,
+    data_visualization_tool,
 ]  # + base_tool   # + o365_tools
