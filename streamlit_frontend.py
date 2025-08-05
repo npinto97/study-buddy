@@ -248,8 +248,8 @@ def handle_chatbot_response(user_input, thread_id, config_chat, user_file_path):
 
             # Controlla se l'evento ha un messaggio ToolMessage che contiene il percorso dell'immagine
             tool_messages = [
-                msg.content for msg in last_event.get("messages", [])
-                if type(msg).__name__ == "ToolMessage" and msg.name == "image_generator"
+                msg for msg in last_event.get("messages", [])
+                if type(msg).__name__ == "ToolMessage" and msg.name in ["image_generator", "data_visualization"]
             ]
 
             if ai_messages:
@@ -261,8 +261,8 @@ def handle_chatbot_response(user_input, thread_id, config_chat, user_file_path):
 
             if tool_messages:
                 try:
-                    tool_output = json.loads(tool_messages[-1])
-                    image_path = tool_output[0]
+                    tool_output = json.loads(tool_messages[-1].content)
+                    image_path = tool_output.get("image_path") or tool_output.get("path") or tool_output[0]
 
                     if image_path:
                         # Controlla se l'immagine è già stata aggiunta alla cronologia
@@ -439,13 +439,37 @@ def display_chat_history(thread_id):
 
         # Messaggio del bot
         elif role == "bot" and content:
-            st.markdown(f"**Bot:** {content}", unsafe_allow_html=True)
+            # Trova tutte le immagini embeddate via Markdown: ![alt](path)
+            image_markdown_matches = re.findall(r'!\[.*?\]\((.*?)\)', content)
+
+            # Rimuove quelle parti dal testo per evitare doppia visualizzazione
+            cleaned_content = re.sub(r'!\[.*?\]\((.*?)\)', '', content).strip()
+
+            # Mostra il testo pulito
+            if cleaned_content:
+                st.markdown(f"**Bot:** {cleaned_content}", unsafe_allow_html=True)
+
+            # image_paths_list = chat.get("image_paths", [])
+            # for img_path in image_paths_list:
+            #     if os.path.exists(img_path):
+            #         st.image(img_path, use_container_width=True)
+            #     else:
+            #         st.warning(f"⚠️ Immagine non trovata: {img_path}")
+
+            # Visualizza ogni immagine Markdown incorporata
+            for img_path in image_markdown_matches:
+                if os.path.exists(img_path):
+                    st.image(img_path, use_container_width=True)
+                else:
+                    st.warning(f"⚠️ Immagine non trovata: {img_path}")
 
             # Cerca sia percorsi locali (C:\...) sia file:/// nei messaggi
             file_paths = re.findall(r'([A-Za-z]:\\[^\s]+)', content)  # Trova percorsi tipo C:\Users\...
             file_paths += re.findall(r'\[([^\]]+)\]\((file:///.*?)\)', content)  # Trova file:/// links
 
             for file_path in file_paths:
+                file_path = file_path.strip().rstrip(").,]\"'")
+
                 if isinstance(file_path, tuple):  # Se è una tupla da file:/// link
                     text, link = file_path
                     file_path = link.replace("file:///", "")
@@ -466,12 +490,6 @@ def display_chat_history(thread_id):
                     st.error(f"❌ File non trovato: {file_path}")
 
             play_text_to_speech(content, key=f"tts_button_{i}")
-
-        elif role == "tool" and image_path:
-            if os.path.exists(image_path):
-                st.image(image_path, caption="Immagine generata", width=500)
-            else:
-                st.error(f"Errore: immagine non trovata in {image_path}")
 
 
 def main():
