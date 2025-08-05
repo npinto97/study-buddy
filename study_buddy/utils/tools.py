@@ -10,6 +10,12 @@ from typing import Union
 from textblob import TextBlob
 import matplotlib.pyplot as plt
 
+import os
+import base64
+import uuid
+from typing import List
+from together import Together
+
 from pydantic import BaseModel, Field
 from langchain_together import ChatTogether
 
@@ -41,6 +47,8 @@ from langchain_community.document_loaders import CSVLoader
 from langchain.text_splitter import CharacterTextSplitter
 
 from langchain_core.language_models import BaseChatModel
+
+from langchain.tools import StructuredTool
 
 from elevenlabs.client import ElevenLabs
 from elevenlabs import save
@@ -383,8 +391,8 @@ class CodeInterpreterWrapper:
         self.code_interpreter.kill()
 
 
-execute_python_tool = Tool(
-    name="code_interpreter",
+code_intertpreter = Tool(
+    name="code_intertpreter",
     description="Executes Python code in a secure sandbox and returns stdout, stderr, and results.",
     func=CodeInterpreterWrapper().run,
 )
@@ -526,55 +534,55 @@ speech_to_text_tool = Tool(
 google_lens_tool = GoogleLensQueryRun(api_wrapper=GoogleLensAPIWrapper())
 
 
-class ImageGenerationAPIWrapper:
-    def __init__(self, model_name: str):
-        self.client = Client(model_name)
+# class ImageGenerationAPIWrapper:
+#     def __init__(self, model_name: str):
+#         self.client = Client(model_name)
 
-    def generate_image(self, prompt: str, seed: int = 0, randomize_seed: bool = True, width: int = 512, height: int = 512, num_inference_steps: int = 15):
-        """Generates an image from a prompt using the Hugging Face API."""
-        result = self.client.predict(
-            prompt=prompt,
-            seed=seed,
-            randomize_seed=randomize_seed,
-            width=width,
-            height=height,
-            num_inference_steps=num_inference_steps,
-            api_name="/infer"
-        )
-        return result  # This could be an image URL or file path depending on the API response
-
-
-image_generation_wrapper = ImageGenerationAPIWrapper("black-forest-labs/FLUX.1-schnell")
-
-image_generation_tool = Tool(
-    name="image_generator",
-    description="Generates an image following a given prompt and returns the result.",
-    func=image_generation_wrapper.generate_image
-)
+#     def generate_image(self, prompt: str, seed: int = 0, randomize_seed: bool = True, width: int = 512, height: int = 512, num_inference_steps: int = 15):
+#         """Generates an image from a prompt using the Hugging Face API."""
+#         result = self.client.predict(
+#             prompt=prompt,
+#             seed=seed,
+#             randomize_seed=randomize_seed,
+#             width=width,
+#             height=height,
+#             num_inference_steps=num_inference_steps,
+#             api_name="/infer"
+#         )
+#         return result  # This could be an image URL or file path depending on the API response
 
 
-class CLIPInterrogatorAPIWrapper:
-    def __init__(self, api_url: str):
-        self.client = Client(api_url)
+# image_generation_wrapper = ImageGenerationAPIWrapper("black-forest-labs/FLUX.1-schnell")
 
-    def interrogate_image(self, image_url: str, model: str = "ViT-L (best for Stable Diffusion 1.*)", mode: str = "classic"):
-        """Interrogate the image to get information using CLIP-Interrogator."""
-        result = self.client.predict(
-            image_url,         # Image URL
-            model,             # Model to use
-            mode,              # Mode ('best', 'fast', 'classic', 'negative')
-            fn_index=3         # Function index for image interrogation
-        )
-        return result
+# image_generation_tool = Tool(
+#     name="image_generator",
+#     description="Generates an image following a given prompt and returns the result.",
+#     func=image_generation_wrapper.generate_image
+# )
 
 
-image_interrogator_wrapper = CLIPInterrogatorAPIWrapper("https://pharmapsychotic-clip-interrogator.hf.space/")
+# class CLIPInterrogatorAPIWrapper:
+#     def __init__(self, api_url: str):
+#         self.client = Client(api_url)
 
-image_interrogator_tool = Tool(
-    name="image_interrogator",
-    description="Interrogate an image and return artistic information, movement, and more.",
-    func=image_interrogator_wrapper.interrogate_image
-)
+#     def interrogate_image(self, image_url: str, model: str = "ViT-L (best for Stable Diffusion 1.*)", mode: str = "classic"):
+#         """Interrogate the image to get information using CLIP-Interrogator."""
+#         result = self.client.predict(
+#             image_url,         # Image URL
+#             model,             # Model to use
+#             mode,              # Mode ('best', 'fast', 'classic', 'negative')
+#             fn_index=3         # Function index for image interrogation
+#         )
+#         return result
+
+
+# image_interrogator_wrapper = CLIPInterrogatorAPIWrapper("https://pharmapsychotic-clip-interrogator.hf.space/")
+
+# image_interrogator_tool = Tool(
+#     name="image_interrogator",
+#     description="Interrogate an image and return artistic information, movement, and more.",
+#     func=image_interrogator_wrapper.interrogate_image
+# )
 
 # ------------------------------------------------------------------------------
 # Other tools (sentiment analysis, ocr, ...)
@@ -739,8 +747,8 @@ class CSVHybridAnalyzer:
             together_api_key=os.getenv("TOGETHER_API_KEY")
         )
 
-        # Prendi i primi 3 chunk testuali dal CSV
-        base_text = "\n\n".join([doc.page_content for doc in self.documents[:3]])
+        # Prendi i primi 10 chunk testuali dal CSV
+        base_text = "\n\n".join([doc.page_content for doc in self.documents[:10]])
 
         prompt = f"""Hai ricevuto un dataset in formato CSV. Ecco una parte del contenuto:
 
@@ -780,115 +788,132 @@ csv_hybrid_tool = Tool(
 
 
 
-import os
-import base64
-import json
-from langchain.tools import Tool
-from e2b_code_interpreter import Sandbox
 
 
-class DataVisualizationTool:
-    """Tool to perform data analysis and visualization using E2B Code Interpreter."""
 
-    tool_name: str = "data_visualization"
 
-    def __init__(self):
-        self._initialize_sandbox()
+class DataVizInput(BaseModel):
+    csv_path: str = Field(description="Absolute path to the CSV file")
+    query: str = Field(description="Natural language question about the dataset")
 
-    def _initialize_sandbox(self):
-        if "E2B_API_KEY" not in os.environ:
-            raise Exception("E2B_API_KEY environment variable not set.")
+
+class DataVizTool:
+    def __init__(self, output_dir: str = "./output"):
+        self.output_dir = output_dir
+        os.makedirs(self.output_dir, exist_ok=True)
         self.sandbox = Sandbox()
-        self.sandbox.set_timeout(60)  # Optional timeout config
+        self.llm = Together()
 
-    def close(self):
-        """Terminate the sandbox."""
-        self.sandbox.kill()
+    def _upload_dataset(self, local_path: str) -> str:
+        with open(local_path, "rb") as f:
+            return self.sandbox.files.write("dataset.csv", f).path
 
-    def call(self, input_str: str) -> str:
-        """
-        Accepts a JSON string with fields:
-        {
-            "file_path": "<local CSV path>",
-            "question": "<instruction for analysis/visualization>"
-        }
-        """
-        try:
-            params = json.loads(input_str)
-        except json.JSONDecodeError:
-            return "❌ Invalid input format. Must be a JSON string with 'file_path' and 'question'."
+    def _generate_prompt(self, query: str, dataset_path_in_sandbox: str) -> str:
+    # Leggi il dataset dal percorso LOCALE, non quello nella sandbox
+    # perché pandas non può leggere dalla sandbox
+    # Quindi: leggi una preview locale, solo per ottenere info sulle colonne
+        local_df = pd.read_csv(self.temp_local_csv, nrows=300)
+        column_info = local_df.dtypes.astype(str).to_dict()
 
-        file_path = params.get("file_path")
-        question = params.get("question")
+        return f"""
+You are a Python data scientist working in a sandboxed environment.
 
-        if not file_path or not question:
-            return "❌ Missing required fields: 'file_path' and 'question'."
+The dataset is already uploaded and available at the following absolute path: `{dataset_path_in_sandbox}`
 
-        if not os.path.exists(file_path):
-            return f"❌ File not found at path: {file_path}"
+Here are the columns of the dataset and their data types:
+{column_info}
 
-        try:
-            with open(file_path, "rb") as f:
-                self.sandbox.files.write("/workspace/dataset.csv", f)
-        except Exception as e:
-            return f"❌ Failed to upload file: {str(e)}"
+User question:
+\"{query}\"
 
-        # Code to be executed inside the sandbox
-        code = f'''
-import pandas as pd
-import matplotlib.pyplot as plt
+Instructions:
+- Load the dataset using `pd.read_csv("{dataset_path_in_sandbox}")`
+- Do not hardcode any other path.
+- Use matplotlib or seaborn to generate visualizations as needed.
+- Save all plots using `plt.savefig("chart-<anything>.png")` (do NOT use `plt.show()`)
+- Output only Python code — no text, no explanations.
+"""
 
-df = pd.read_csv('/workspace/dataset.csv')
 
-# User instruction:
-# {question}
-
-try:
-    exec(\"\"\"{question}\"\"\")
-except Exception as e:
-    df.hist(figsize=(20, 12))
-    plt.tight_layout()
-    plt.suptitle("Generated Chart", y=1.02)
-    print(f"Failed to execute user query. Fallback used.\\nError: {{e}}")
-
-plt.show()
-'''
-
-        try:
-            execution = self.sandbox.run_code(code)
-            result = execution.results[0]
-
-            if result.png:
-                output_dir = "streamlit_outputs"
-                os.makedirs(output_dir, exist_ok=True)
-
-                image_path = os.path.join(output_dir, "data_viz_output.png")
-
-                with open(image_path, "wb") as f:
-                    f.write(base64.b64decode(result.png))
-                return {
-                    "text": "✅ Chart generated.",
-                    "image_path": os.path.abspath(image_path)
-                }
-
-            return "⚠️ Code executed, but no chart was generated."
-
-        except Exception as e:
-            return f"❌ Error running code: {str(e)}"
-
-    def to_tool(self) -> Tool:
-        return Tool(
-            name=self.tool_name,
-            description=(
-                "Performs data visualization and analysis on a CSV dataset. "
-                "Input must be a JSON string with 'file_path' and 'question'."
-            ),
-            func=self.call
+    def _call_llm(self, prompt: str) -> str:
+        response = self.llm.chat.completions.create(
+            model="meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo",
+            messages=[
+                {"role": "system", "content": "You are a helpful Python data scientist."},
+                {"role": "user", "content": prompt},
+            ],
+            max_tokens=1024,
+            temperature=0.4,
+            top_p=0.9
         )
 
+        return response.choices[0].message.content.strip()
+    
+    def _clean_code(self, code: str) -> str:
+    # Rimuove blocchi markdown (```python ... ```)
+        if code.startswith("```"):
+            code = code.strip("```")
+            if code.startswith("python"):
+                code = code[len("python"):].lstrip()
+        code = code.strip("```").strip()
+        return code
 
-# Exported tool for use in the agent
-data_visualization_tool = DataVisualizationTool().to_tool()
+    def _run_code(self, code: str) -> List[str]:
+        print("@@@@@@@@@@@@@@@@@@@@@ ----------------------> Generated code:\n", code)
+
+        execution = self.sandbox.run_code(code)
+        if execution.error:
+            raise RuntimeError(f"Code execution error: {execution.error.value}")
+
+        saved_paths = []
+        for i, result in enumerate(execution.results):
+            if result.png:
+                filename = f"{uuid.uuid4().hex}.png"
+                file_path = os.path.join(self.output_dir, filename)
+                with open(file_path, "wb") as f:
+                    f.write(base64.b64decode(result.png))
+                saved_paths.append(os.path.abspath(file_path))
+
+        if not saved_paths:
+            raise RuntimeError("No charts were produced by the generated code.")
+        return saved_paths
+
+    def run(self, input: DataVizInput) -> dict:
+        try:
+            print("[*] Uploading dataset...")
+            self.temp_local_csv = input.csv_path  # Salviamo per il prompt
+            dataset_path_in_sandbox = self._upload_dataset(input.csv_path)
+
+            print("[*] Generating code via LLM...")
+            prompt = self._generate_prompt(input.query, dataset_path_in_sandbox)
+            code = self._call_llm(prompt)
+
+            print("[*] Cleaning generated code...")
+            code = self._clean_code(code)
+
+            print("[*] Executing code in sandbox...")
+            image_paths = self._run_code(code)
+
+            markdown_images = "\n".join([f"![Chart]({path})" for path in image_paths])
+
+            return {
+                "content": f"Ecco il grafico richiesto:\n\n{markdown_images}",
+                "image_paths": image_paths
+            }
+
+        except Exception as e:
+            raise RuntimeError(f"Visualization error: {e}")
+
+
+data_viz_tool = StructuredTool.from_function(
+    func=DataVizTool().run,
+    name="data_viz_tool",
+    description="Generates data visualizations from a CSV file and a natural language query.",
+)
+
+
+
+
 
 
 
@@ -899,7 +924,7 @@ tools = [
     retrieve_tool,
     web_search_tool,
     arxive_tool,
-    execute_python_tool,
+    code_intertpreter,
     google_books_tool,
     google_scholar_tool,
     wikidata_tool,
@@ -910,12 +935,12 @@ tools = [
     text_to_speech_tool,
     speech_to_text_tool,
     google_lens_tool,           # per analizzare immagini da url
-    image_generation_tool,
-    image_interrogator_tool,    # per analizzare immagini caricate in locale
+    # image_generation_tool,
+    # image_interrogator_tool,    # per analizzare immagini caricate in locale
     # text_analysis_tool,       # funziona ma non so come trattare la risposta
     doc_summary_tool,
     sentiment_tool,
     extract_text_tool,
     # csv_hybrid_tool,
-    data_visualization_tool,
+    data_viz_tool,
 ]  # + base_tool   # + o365_tools
