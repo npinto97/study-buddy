@@ -1,5 +1,5 @@
 llm:
-  model: "deepseek-ai/DeepSeek-V3"  # "gpt-4o"
+  model: "meta-llama/Llama-3.3-70B-Instruct-Turbo"  # "gpt-4o"
 
 embeddings:
   model: "sentence-transformers/all-MiniLM-L6-v2"
