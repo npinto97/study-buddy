@@ -1,8 +1,8 @@
-from study_buddy.utils.tools import OpenAISpeechToText
+from study_buddy.utils.tools import AssemblyAISpeechToText
 
 print("Test manuale della trascrizione...")
 test_file_path = "c:/Users/Ningo/AppData/Local/Temp/tmpnc3vzbe_.wav"
-transcriber = OpenAISpeechToText()
+transcriber = AssemblyAISpeechToText()
 try:
     result = transcriber.transcribe_audio(test_file_path)
     print(f"Test OK! Testo trascritto: {result}")

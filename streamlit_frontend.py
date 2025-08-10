@@ -10,7 +10,7 @@ import json
 import torch
 
 from study_buddy.agent import compiled_graph
-from study_buddy.utils.tools import OpenAITTSWrapper, OpenAISpeechToText
+from study_buddy.utils.tools import ElevenLabsTTSWrapper, AssemblyAISpeechToText
 
 torch.classes.__path__ = [os.path.join(torch.__path__[0], torch.classes.__file__)]
 
@@ -102,18 +102,6 @@ def sidebar_configuration():
         submit_button = st.button("Submit")
 
     return user_input, user_file_input, user_audio_input, config_thread_id, submit_button, config_chat
-
-
-# def display_graph():
-#     """Display the compiled LangGraph image."""
-#     st.header("Graph Visualization")
-#     graph_path = "images/agents_graph.png"
-
-#     if os.path.exists(graph_path):
-#         graph_image = Image.open(graph_path)
-#         st.image(graph_image, caption="Compiled LangGraph", use_container_width=True)
-#     else:
-#         st.error("Graph image not found. Please check the path.")
 
 
 def enhance_user_input(config_chat, user_input, file_path):
@@ -210,13 +198,20 @@ def enhance_user_input(config_chat, user_input, file_path):
     return enhanced_user_input
 
 
+def save_chat_history(thread_id, chat_history):
+    # Crea la cartella se non esiste
+    os.makedirs("history", exist_ok=True)
+
+    with open(f"history/{thread_id}.json", "w", encoding="utf-8") as f:
+        json.dump(chat_history, f, ensure_ascii=False, indent=2)
+
+
 def handle_chatbot_response(user_input, thread_id, config_chat, user_file_path):
     """Handle chatbot response and update conversation history."""
     if not (user_input.strip() or user_file_path):
         st.warning("Please enter a valid input.")
         return
 
-    # modify user input based on config_complexity_level
     enhanced_user_input = enhance_user_input(config_chat, user_input, user_file_path)
     config = {"configurable": {"thread_id": thread_id}}
     chat_history = get_chat_history(thread_id)
@@ -234,22 +229,19 @@ def handle_chatbot_response(user_input, thread_id, config_chat, user_file_path):
 
         last_event = None
 
-        # Iterate over events and store the last one
         for count, event in enumerate(events, start=1):
             print(f"event {count}: {event}\n")
             last_event = event
 
-        # Extract the last AI message
         if last_event is not None:
             ai_messages = [
                 msg.content for msg in last_event.get("messages", [])
                 if type(msg).__name__ == "AIMessage"
             ]
 
-            # Controlla se l'evento ha un messaggio ToolMessage che contiene il percorso dell'immagine
             tool_messages = [
-                msg.content for msg in last_event.get("messages", [])
-                if type(msg).__name__ == "ToolMessage" and msg.name == "image_generator"
+                msg for msg in last_event.get("messages", [])
+                if type(msg).__name__ == "ToolMessage" and msg.name in ["image_generator", "data_viz_tool"]
             ]
 
             if ai_messages:
@@ -257,48 +249,58 @@ def handle_chatbot_response(user_input, thread_id, config_chat, user_file_path):
             else:
                 st.write("No AI message found.")
 
-            image_path = None
-
+            # Process image from tool message
             if tool_messages:
                 try:
-                    tool_output = json.loads(tool_messages[-1])
-                    image_path = tool_output[0]
+                    tool_output = json.loads(tool_messages[-1].content)
+                    image_paths = tool_output.get("image_paths")
 
-                    if image_path:
-                        # Controlla se l'immagine è già stata aggiunta alla cronologia
-                        last_image = next((msg for msg in reversed(chat_history) if msg.get("role") == "tool"), None)
+                    if image_paths is None:  # fallback per retrocompatibilità
+                        image_path = tool_output.get("image_path") or tool_output.get("path")
+                        if image_path:
+                            image_paths = [image_path]
+                        elif isinstance(tool_output, list):
+                            image_paths = tool_output
+                        else:
+                            image_paths = []
 
-                        # Aggiunge solo se è una nuova immagine e non è già presente
-                        if not last_image or last_image.get("image") != image_path:
-                            chat_history.append({"role": "tool", "image": image_path})
+                    if image_paths:
+                        chat_history.append({
+                            "role": "bot",
+                            "content": "Ecco la visualizzazione generata:",
+                            "image_paths": image_paths
+                        })
+
                 except Exception as e:
                     st.error(f"Errore nell'estrazione dell'immagine: {str(e)}")
 
     except Exception as e:
         st.error(f"An error occurred: {str(e)}")
 
+    # Salva la cronologia aggiornata
+    save_chat_history(thread_id, chat_history)
+
+
 
 def transcribe_audio(audio_file):
-    """Use OpenAI's Whisper to transcribe audio."""
+    """Use AssemblyAI to transcribe audio."""
     try:
-        # Salva il file audio in un file temporaneo
         with tempfile.NamedTemporaryFile(delete=False, suffix='.tmp') as tmp_audio_file:
             tmp_audio_file.write(audio_file.getvalue())
             tmp_audio_file.close()
-            wav_audio_path = tmp_audio_file.name
 
             audio = AudioSegment.from_file(tmp_audio_file.name)
             wav_audio_path = tmp_audio_file.name.replace(".tmp", ".wav")
-
             audio.export(wav_audio_path, format="wav")
 
-            transcriber = OpenAISpeechToText()
+            transcriber = AssemblyAISpeechToText()
             transcribed_audio = transcriber.transcribe_audio(wav_audio_path)
 
             return transcribed_audio
     except Exception as e:
         st.error(f"Audio transcription error: {str(e)}")
         return ""
+
 
 
 def save_file(user_file_input):
@@ -406,11 +408,10 @@ def save_pdf_file(user_file_input, temp_dir):
         return ""
 
 
-def play_text_to_speech(text, key=None):
-    """Call OpenAI's TTS tool and play the generated speech."""
+def play_text_to_speech(text, key):
+    """Call ElevenLabs TTS tool and play the generated speech."""
     if st.button("🔊", key=key):
-        tts_wrapper = OpenAITTSWrapper()
-        audio_path = tts_wrapper.text_to_speech(text)
+        audio_path = ElevenLabsTTSWrapper().text_to_speech(text)
         st.audio(audio_path, format="audio/mp3")
 
 
@@ -424,32 +425,51 @@ def display_chat_history(thread_id):
     download_counter = 0
 
     for i, chat in enumerate(chat_history):
-        # print(f"-->{chat}")
         role = chat["role"]
         content = chat.get("content", None)
-        image_path = chat.get("image", None)
 
-        # Se il messaggio contiene un link Markdown a un'immagine, lo rimuoviamo
+        # Rimuove Markdown immagini da contenuto testuale
         if content:
             content = re.sub(r"!\[.*?\]\(sandbox:.*?\)", "", content).strip()
 
-        # Messaggio dell'utente
+        # Utente
         if role == "user":
             st.markdown(
                 f'<p style="color: #613980;"><strong>Utente:</strong> {content if content else "[Messaggio vuoto]"}</p>',
                 unsafe_allow_html=True,
             )
 
-        # Messaggio del bot
-        elif role == "bot" and content:
-            st.markdown(f"**Bot:** {content}", unsafe_allow_html=True)
+        # Bot
+        elif role == "bot":
+            if content:
+                image_markdown_matches = re.findall(r'!\[.*?\]\((.*?)\)', content)
+                cleaned_content = re.sub(r'!\[.*?\]\((.*?)\)', '', content).strip()
 
-            # Cerca sia percorsi locali (C:\...) sia file:/// nei messaggi
-            file_paths = re.findall(r'([A-Za-z]:\\[^\s]+)', content)  # Trova percorsi tipo C:\Users\...
-            file_paths += re.findall(r'\[([^\]]+)\]\((file:///.*?)\)', content)  # Trova file:/// links
+                if cleaned_content:
+                    st.markdown(f"**Bot:** {cleaned_content}", unsafe_allow_html=True)
+
+                for img_path in image_markdown_matches:
+                    if os.path.exists(img_path):
+                        st.image(img_path, use_container_width=True)
+                    else:
+                        st.warning(f"⚠️ Immagine non trovata: {img_path}")
+
+            # Mostra immagini da image_paths
+            image_paths_list = chat.get("image_paths", [])
+            for img_path in image_paths_list:
+                if os.path.exists(img_path):
+                    st.image(img_path, use_container_width=True)
+                else:
+                    st.warning(f"⚠️ Immagine non trovata: {img_path}")
+
+            # Cerca percorsi file (es. C:\Users...) e file:///...
+            file_paths = re.findall(r'([A-Za-z]:\\[^\s]+)', content or "")
+            file_paths += re.findall(r'\[([^\]]+)\]\((file:///.*?)\)', content or "")
 
             for file_path in file_paths:
-                if isinstance(file_path, tuple):  # Se è una tupla da file:/// link
+                file_path = file_path.strip().rstrip(").,]\"'")
+
+                if isinstance(file_path, tuple):
                     text, link = file_path
                     file_path = link.replace("file:///", "")
 
@@ -468,13 +488,7 @@ def display_chat_history(thread_id):
                 else:
                     st.error(f"❌ File non trovato: {file_path}")
 
-            play_text_to_speech(content, key=f"tts_button_{i}")
-
-        elif role == "tool" and image_path:
-            if os.path.exists(image_path):
-                st.image(image_path, caption="Immagine generata", width=500)
-            else:
-                st.error(f"Errore: immagine non trovata in {image_path}")
+            play_text_to_speech(content or "", key=f"tts_button_{i}")
 
 
 def main():

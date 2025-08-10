@@ -128,6 +128,8 @@ def parse_all_courses_metadata():
             logger.warning(f"Nessun metadato trovato per il corso: {course.name}")
 
     # Salvataggio del file JSON finale
+    os.makedirs(os.path.dirname(PARSED_COURSES_DATA_FILE), exist_ok=True)
+
     with open(PARSED_COURSES_DATA_FILE, "w", encoding="utf-8") as out_file:
         json.dump(all_parsed_data, out_file, indent=4, ensure_ascii=False)
 
@@ -135,5 +137,5 @@ def parse_all_courses_metadata():
 
 
 # Esegui il parsing di tutti i corsi
-# if __name__ == "__main__":
-#     parse_all_courses_metadata()
+if __name__ == "__main__":
+    parse_all_courses_metadata()
