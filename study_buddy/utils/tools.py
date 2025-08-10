@@ -905,12 +905,9 @@ Instructions:
             print("[*] Executing code in sandbox...")
             image_paths = self._run_code(code)
 
-            markdown_images = "\n".join([f"![Chart]({path})" for path in image_paths])
+            # markdown_images = "\n".join([f"![Chart]({path})" for path in image_paths])
 
-            return {
-                "content": f"Ecco il grafico richiesto:\n\n{markdown_images}",
-                "image_paths": image_paths
-            }
+            return {"image_paths": image_paths}
 
         except Exception as e:
             raise RuntimeError(f"Visualization error: {e}")
