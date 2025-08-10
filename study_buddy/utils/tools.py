@@ -806,7 +806,7 @@ class DataVizInput(BaseModel):
 
 
 class DataVizTool:
-    def __init__(self, output_dir: str = "./output"):
+    def __init__(self, output_dir: str = "./streamlit_outputs"):
         self.output_dir = output_dir
         os.makedirs(self.output_dir, exist_ok=True)
         self.sandbox = Sandbox()
@@ -839,8 +839,11 @@ Instructions:
 - Do not hardcode any other path.
 - Use matplotlib or seaborn to generate visualizations as needed.
 - Save all plots using `plt.savefig("chart-<anything>.png")` (do NOT use `plt.show()`)
+- After each `plt.savefig(...)`, always call `plt.close()` to prevent extra figures being captured
+- When using `plt.pie`, always ensure that `labels` matches the index of the Series being plotted (e.g., use `.value_counts().index` for labels).
 - Output only Python code — no text, no explanations.
 """
+
 
 
     def _call_llm(self, prompt: str) -> str:
