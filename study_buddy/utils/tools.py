@@ -1,5 +1,4 @@
-import os
-import io
+import tempfile, os, base64
 import pandas as pd
 import fitz  # PyMuPDF per estrazione testo da PDF
 import pytesseract
@@ -7,23 +6,28 @@ from pdf2image import convert_from_path
 from PIL import Image
 import requests
 import tempfile
-from openai import OpenAI
-from typing import Union, List, Optional
+from typing import Union
 from textblob import TextBlob
 import matplotlib.pyplot as plt
+
+import os
 import base64
-from langchain.prompts import PromptTemplate
-from langchain.chains import LLMChain
+import uuid
+from typing import List
+from together import Together
 
 from pydantic import BaseModel, Field
+from langchain_together import ChatTogether
 
-from langchain_core.tools import tool, Tool
+from langchain_core.tools import Tool
 # from langchain_community.agent_toolkits.load_tools import load_tools
 
+from langchain.tools import StructuredTool
+
 # from langchain_community.agent_toolkits import O365Toolkit
-from langchain_openai import ChatOpenAI
 from langchain.chains.summarize import load_summarize_chain
 from langchain_community.document_loaders import PyPDFLoader, TextLoader
+from langchain_community.llms import Together
 from langchain_community.tools.google_lens import GoogleLensQueryRun
 from langchain_community.utilities.google_lens import GoogleLensAPIWrapper
 from langchain_community.tools import YouTubeSearchTool
@@ -34,13 +38,21 @@ from langchain_community.tools.google_books import GoogleBooksQueryRun
 from langchain_community.utilities.google_books import GoogleBooksAPIWrapper
 from langchain_community.tools.google_scholar import GoogleScholarQueryRun
 from langchain_community.utilities.google_scholar import GoogleScholarAPIWrapper
-from langchain_community.tools.tavily_search import TavilySearchResults
+from langchain_tavily import TavilySearch
 from langchain_community.tools.arxiv.tool import ArxivQueryRun
 from e2b_code_interpreter import Sandbox
 
 from langchain.schema import HumanMessage
 from langchain_community.document_loaders import CSVLoader
 from langchain.text_splitter import CharacterTextSplitter
+
+from langchain_core.language_models import BaseChatModel
+
+from langchain.tools import StructuredTool
+
+from elevenlabs.client import ElevenLabs
+from elevenlabs import save
+import assemblyai as aai
 
 
 # from gradio_tools import (StableDiffusionTool,
@@ -62,19 +74,27 @@ google_api_key = os.getenv("GOOGLE_API_KEY")
 # base_tool = load_tools(["human", "pubmed"])
 
 
-@tool(response_format="content_and_artifact")
 def retrieve_tool(query: str):
     """Retrieve information related to a query."""
     vector_store = get_vector_store(FAISS_INDEX_DIR)
+
+    embedding_dim = vector_store.index.d
+    test_embedding = vector_store.embeddings.embed_query("test")
+    if len(test_embedding) != embedding_dim:
+        raise ValueError(
+            f"Dimensione embedding ({len(test_embedding)}) diversa da quella dell'indice FAISS ({embedding_dim}). "
+            "Rigenera l'indice FAISS con lo stesso modello di embedding."
+        )
+
     retrieved_docs = vector_store.similarity_search(query, k=2)
     serialized = "\n\n".join(
-        (f"Source: {doc.metadata}\n" f"Content: {doc.page_content}")
+        f"Source: {doc.metadata}\nContent: {doc.page_content}"
         for doc in retrieved_docs
     )
     return serialized, retrieved_docs
 
 
-web_search_tool = TavilySearchResults(
+web_search_tool = TavilySearch(
     max_results=5,
     search_depth="advanced",
     include_answer=True,
@@ -127,30 +147,30 @@ def wolfram_tool(query: str):
 wikipedia_tool = WikipediaQueryRun(api_wrapper=WikipediaAPIWrapper())
 
 
-class QwenTextAnalysis:
-    """Wrapper per l'analisi del testo tramite il modello di Hugging Face."""
+# class QwenTextAnalysis:
+#     """Wrapper per l'analisi del testo tramite il modello di Hugging Face."""
 
-    def __init__(self, api_url: str = "Qwen/Qwen2.5-Turbo-1M-Demo"):
-        self.client = Client(api_url)
+#     def __init__(self, api_url: str = "Qwen/Qwen2.5-Turbo-1M-Demo"):
+#         self.client = Client(api_url)
 
-    def analyze_text(self, text: str, files: list = []):
-        """Invia il testo e i file per l'analisi."""
-        try:
-            result = self.client.predict(
-                _input={"files": files, "text": text},
-                _chatbot=[],
-                api_name="/add_text"
-            )
-            return result
-        except Exception as e:
-            return {"error": str(e)}
+#     def analyze_text(self, text: str, files: list = []):
+#         """Invia il testo e i file per l'analisi."""
+#         try:
+#             result = self.client.predict(
+#                 _input={"files": files, "text": text},
+#                 _chatbot=[],
+#                 api_name="/add_text"
+#             )
+#             return result
+#         except Exception as e:
+#             return {"error": str(e)}
 
 
-text_analysis_tool = Tool(
-    name="text_analysis",
-    description="Analyze text or files (pdf/docx/pptx/txt/html) using Qwen model.",
-    func=QwenTextAnalysis().analyze_text
-)
+# text_analysis_tool = Tool(
+#     name="text_analysis",
+#     description="Analyze text or files (pdf/docx/pptx/txt/html) using Qwen model.",
+#     func=QwenTextAnalysis().analyze_text
+# )
 
 
 class DocumentSummarizerWrapper:
@@ -159,42 +179,33 @@ class DocumentSummarizerWrapper:
         self.documents = self.load_documents()
 
     def load_documents(self):
-        """
-        Carica il documento dal percorso fornito (supporta PDF e TXT).
-        """
+        """Carica il documento dal percorso fornito (supporta PDF e TXT)."""
         if self.file_path.endswith(".pdf"):
             loader = PyPDFLoader(self.file_path)
         else:
             loader = TextLoader(self.file_path)
-
         return loader.load()
 
     def summarize_document(self) -> str:
-        """
-        Riassume il contenuto del documento utilizzando il modello di linguaggio.
-        """
-        # Inizializza il modello di linguaggio
-        llm = ChatOpenAI(model_name="gpt-4", temperature=0)
+        """Riassume il contenuto del documento utilizzando un LLM open-source via Together.ai."""
 
-        # Crea la catena di riassunto
+        llm = Together(
+            model="mistralai/Mistral-7B-Instruct-v0.2",
+            temperature=0.3,
+            max_tokens=1024,
+            together_api_key=os.getenv("TOGETHER_API_KEY")
+        )
+
         chain = load_summarize_chain(llm, chain_type="map_reduce")
 
-        # Esegui il riassunto
         summary = chain.invoke(self.documents)
         return summary
 
 
-# Funzione di supporto per l'integrazione con LangChain
-def summarize_document_from_wrapper(file_path: str) -> str:
-    summarizer = DocumentSummarizerWrapper(file_path)
-    return summarizer.summarize_document()
-
-
-# Creazione del Tool per LangChain
-summarize_tool = Tool(
-    name="DocumentSummarizer",
-    description="Riassume un documento testuale dato un file path (PDF o TXT)",
-    func=summarize_document_from_wrapper  # Funzione che invoca il riassunto dal wrapper
+doc_summary_tool = Tool(
+    name="summarize_document",
+    description="Riassume un documento PDF o TXT fornito tramite file path.",
+    func=lambda path: DocumentSummarizerWrapper(path).summarize_document()
 )
 
 
@@ -340,14 +351,12 @@ wikidata_tool = Tool(
 
 
 class CodeInterpreterInput(BaseModel):
-    """Input schema for the Code Interpreter."""
+    """Input schema for the Code Interpreter tool."""
     code: str = Field(description="Python code to execute.")
 
 
-class CodeInterpreterFunctionTool:
-    """Tool to execute Python code in a Jupyter environment using E2B."""
-
-    tool_name: str = "code_interpreter"
+class CodeInterpreterWrapper:
+    """Wrapper for running Python code inside an E2B sandbox."""
 
     def __init__(self):
         self._initialize_sandbox()
@@ -355,16 +364,12 @@ class CodeInterpreterFunctionTool:
     def _initialize_sandbox(self):
         """Initialize or restart the E2B sandbox."""
         if "E2B_API_KEY" not in os.environ:
-            raise Exception("E2B API key is missing. Set the E2B_API_KEY environment variable.")
+            raise EnvironmentError("E2B_API_KEY is not set in the environment variables.")
         self.code_interpreter = Sandbox()
-        self.code_interpreter.set_timeout(60)  # Extend timeout to 60 seconds
+        self.code_interpreter.set_timeout(60)
 
-    def close(self):
-        """Kill the sandbox."""
-        self.code_interpreter.kill()
-
-    def call(self, parameters: dict):
-        code = parameters.get("code", "")
+    def run(self, code: str) -> dict:
+        """Execute Python code and return results, stdout, stderr, and any errors."""
         try:
             execution = self.code_interpreter.run_code(code)
             return {
@@ -374,26 +379,24 @@ class CodeInterpreterFunctionTool:
                 "error": execution.error,
             }
         except Exception as e:
-            if "502 Bad Gateway" in str(e) or "sandbox timeout" in str(e).lower():
-                print("Sandbox timed out. Restarting...")
-                self._initialize_sandbox()  # Restart the sandbox
-                return self.call(parameters)  # Retry execution
+            if "502 Bad Gateway" in str(e) or "timeout" in str(e).lower():
+                print("Timeout or gateway error. Restarting sandbox...")
+                self._initialize_sandbox()
+                return self.run(code)  # Retry once
             else:
-                raise e
+                raise RuntimeError(f"Error while executing code: {e}")
 
-    def langchain_call(self, code: str):
-        return self.call({"code": code})
-
-    def to_langchain_tool(self) -> Tool:
-        return Tool(
-            name=self.tool_name,
-            description="Executes Python code and returns stdout, stderr, and results.",
-            func=self.langchain_call,
-            args_schema=CodeInterpreterInput
-        )
+    def close(self):
+        """Shut down the E2B sandbox."""
+        self.code_interpreter.kill()
 
 
-execute_python_tool = CodeInterpreterFunctionTool().to_langchain_tool()
+code_intertpreter = Tool(
+    name="code_intertpreter",
+    description="Executes Python code in a secure sandbox and returns stdout, stderr, and results.",
+    func=CodeInterpreterWrapper().run,
+)
+
 
 
 # ------------------------------------------------------------------------------
@@ -451,110 +454,98 @@ spotify_music_tool = Tool(
 # ------------------------------------------------------------------------------
 # Tools for accessibility and inclusivity
 
+# Convert text into spoken voice
+class ElevenLabsTTSWrapper:
 
-# Convert audio (lectures, meetings) into text
-class OpenAISpeechToText:
-    """Wrapper for the OpenAI Whisper API to transcribe or translate audio from files, paths, or URLs."""
+    def __init__(self, api_key: str = None):
+        self.api_key = api_key or os.getenv("ELEVEN_API_KEY")
+        if not self.api_key:
+            raise ValueError("ELEVEN_API_KEY must be set in environment variables.")
+        self.client = ElevenLabs(api_key=self.api_key)
 
-    def __init__(self):
-        self.client = OpenAI()
+    def _get_voice_id(self, voice_name: str) -> str:
+        """Find the voice_id for a given name, or return the first available voice."""
+        voices = self.client.voices.get_all().voices
+        for v in voices:
+            if v.name.lower() == voice_name.lower():
+                return v.voice_id
+        if voices:
+            print(f"[WARN] Voice '{voice_name}' not found. Using '{voices[0].name}'.")
+            return voices[0].voice_id
+        raise ValueError("No voices available in your ElevenLabs account.")
 
-    def _download_audio(self, audio_url: str) -> str:
-        """Download a temporary audio file from a URL and return the local path."""
-        response = requests.get(audio_url, stream=True)
-        if response.status_code != 200:
-            raise ValueError("Error downloading the audio file.")
+    def text_to_speech(
+        self,
+        text: str,
+        voice: str = "Piper",
+        model_id: str = "eleven_multilingual_v2",
+        output_format: str = "mp3_44100_128"
+    ) -> str:
+        """Convert text to speech and save it as a temporary MP3 file."""
+        voice_id = self._get_voice_id(voice)
+        audio = self.client.text_to_speech.convert(
+            text=text,
+            voice_id=voice_id,
+            model_id=model_id,
+            output_format=output_format
+        )
+        tmp_path = tempfile.NamedTemporaryFile(delete=False, suffix=".mp3").name
+        save(audio, tmp_path)
+        return tmp_path
 
-        temp_audio = tempfile.NamedTemporaryFile(delete=False, suffix=".mp3")
-        for chunk in response.iter_content(chunk_size=1024):
-            if chunk:
-                temp_audio.write(chunk)
-        temp_audio.close()
-        return temp_audio.name
+text_to_speech_tool = Tool(
+    name="text_to_speech",
+    description="Converts text to speech using the ElevenLabs TTS API.",
+    func=ElevenLabsTTSWrapper().text_to_speech
+)
+
+
+class AssemblyAISpeechToText:
+    """Wrapper for AssemblyAI transcription API."""
+
+    def __init__(self, api_key: str = None):
+        self.api_key = api_key or os.getenv("ASSEMBLYAI_API_KEY")
+        settings = aai.Settings(api_key=self.api_key)
+        self.client = aai.Client(settings=settings)
 
     def _get_audio_path(self, audio_input: Union[str, bytes]) -> str:
-        """Determine the audio file path based on the input type."""
-        print(f"Ricevuto input audio: {audio_input}")
+        """Download or prepare local audio file path from various input types."""
         if isinstance(audio_input, str):
-            if audio_input.startswith("http"):  # Remote URL
-                return self._download_audio(audio_input)
-            elif os.path.exists(audio_input):  # Local path
-                print(f"Path audio esistente: {audio_input}")
+            if audio_input.startswith("http"):
+                response = requests.get(audio_input, stream=True)
+                if response.status_code != 200:
+                    raise ValueError("Failed to download audio from URL.")
+                tmp_file = tempfile.NamedTemporaryFile(delete=False, suffix=".mp3")
+                for chunk in response.iter_content(chunk_size=1024):
+                    if chunk:
+                        tmp_file.write(chunk)
+                tmp_file.close()
+                return tmp_file.name
+            elif os.path.exists(audio_input):
                 return audio_input
             else:
-                raise ValueError("The audio file path does not exist.")
-        elif isinstance(audio_input, bytes):  # File uploaded as binary object
-            temp_audio = tempfile.NamedTemporaryFile(delete=False, suffix=".mp3")
-            temp_audio.write(audio_input)
-            temp_audio.close()
-            return temp_audio.name
-        elif isinstance(audio_input, tempfile.NamedTemporaryFile):
-            # Ritorna il percorso del file temporaneo esistente
-            return audio_input.name
+                raise ValueError("Audio path is invalid.")
+        elif isinstance(audio_input, bytes):
+            tmp_file = tempfile.NamedTemporaryFile(delete=False, suffix=".mp3")
+            tmp_file.write(audio_input)
+            tmp_file.close()
+            return tmp_file.name
         else:
-            raise TypeError("Invalid input. Provide a URL, file path, or binary file.")
+            raise TypeError("Unsupported audio input type.")
 
-    def transcribe_audio(self, audio_input: Union[str, bytes], task: str = "transcribe") -> str:
-        """Transcribe or translate a local audio file, URL, or binary file."""
+    def transcribe_audio(self, audio_input: Union[str, bytes]) -> str:
+        """Transcribes audio input and returns text."""
         audio_path = self._get_audio_path(audio_input)
-
-        with open(audio_path, "rb") as audio_file:
-            if task == "translate":
-                response = self.client.audio.translations.create(
-                    model="whisper-1",
-                    file=audio_file
-                )
-            else:
-                response = self.client.audio.transcriptions.create(
-                    model="whisper-1",
-                    file=audio_file
-                )
-
-        os.remove(audio_path)  # Delete the temporary file if created
-        return response.text  # Return the transcribed/translated text
+        transcript = self.client.transcribe(audio_path)
+        os.remove(audio_path)
+        return transcript.text
 
 
 speech_to_text_tool = Tool(
     name="speech_to_text",
-    description="Trascrive o traduce audio da file, percorsi locali o URL utilizzando OpenAI Whisper.",
-    func=OpenAISpeechToText().transcribe_audio,
+    description="Trascrive file audio utilizzando l'API AssemblyAI.",
+    func=AssemblyAISpeechToText().transcribe_audio,
 )
-
-
-# Convert text into spoken voice
-class OpenAITTSWrapper:
-    """Wrapper for OpenAI's Text-to-Speech API."""
-
-    def __init__(self, api_key: str = None):
-        self.client = OpenAI(api_key=api_key or os.getenv("OPENAI_API_KEY"))
-
-    def text_to_speech(self, text: str, model: str = "tts-1", voice: str = "sage", output_filename: str = "speech.mp3"):
-        """Converts text to speech and saves the audio file in a temporary dictionary."""
-
-        temp_audio_file = tempfile.NamedTemporaryFile(delete=False, suffix=".mp3")
-        temp_audio_path = temp_audio_file.name
-
-        response = self.client.audio.speech.create(
-            model=model,
-            voice=voice,
-            input=text,
-        )
-        with open(temp_audio_path, "wb") as audio_file:
-            audio_file.write(response.content)
-
-        return str(temp_audio_path)
-
-
-# Instantiate the wrapper
-tts_wrapper = OpenAITTSWrapper()
-
-# Define the tool
-tts_tool = Tool(
-    name="text_to_speech",
-    description="Converts text to speech using OpenAI's TTS API and returns an audio file.",
-    func=tts_wrapper.text_to_speech,
-)
-
 
 # ------------------------------------------------------------------------------
 # Advanced tools (multimodal, ...)
@@ -562,55 +553,55 @@ tts_tool = Tool(
 google_lens_tool = GoogleLensQueryRun(api_wrapper=GoogleLensAPIWrapper())
 
 
-class ImageGenerationAPIWrapper:
-    def __init__(self, model_name: str):
-        self.client = Client(model_name)
+# class ImageGenerationAPIWrapper:
+#     def __init__(self, model_name: str):
+#         self.client = Client(model_name)
 
-    def generate_image(self, prompt: str, seed: int = 0, randomize_seed: bool = True, width: int = 512, height: int = 512, num_inference_steps: int = 15):
-        """Generates an image from a prompt using the Hugging Face API."""
-        result = self.client.predict(
-            prompt=prompt,
-            seed=seed,
-            randomize_seed=randomize_seed,
-            width=width,
-            height=height,
-            num_inference_steps=num_inference_steps,
-            api_name="/infer"
-        )
-        return result  # This could be an image URL or file path depending on the API response
-
-
-image_generation_wrapper = ImageGenerationAPIWrapper("black-forest-labs/FLUX.1-schnell")
-
-image_generation_tool = Tool(
-    name="image_generator",
-    description="Generates an image following a given prompt and returns the result.",
-    func=image_generation_wrapper.generate_image
-)
+#     def generate_image(self, prompt: str, seed: int = 0, randomize_seed: bool = True, width: int = 512, height: int = 512, num_inference_steps: int = 15):
+#         """Generates an image from a prompt using the Hugging Face API."""
+#         result = self.client.predict(
+#             prompt=prompt,
+#             seed=seed,
+#             randomize_seed=randomize_seed,
+#             width=width,
+#             height=height,
+#             num_inference_steps=num_inference_steps,
+#             api_name="/infer"
+#         )
+#         return result  # This could be an image URL or file path depending on the API response
 
 
-class CLIPInterrogatorAPIWrapper:
-    def __init__(self, api_url: str):
-        self.client = Client(api_url)
+# image_generation_wrapper = ImageGenerationAPIWrapper("black-forest-labs/FLUX.1-schnell")
 
-    def interrogate_image(self, image_url: str, model: str = "ViT-L (best for Stable Diffusion 1.*)", mode: str = "classic"):
-        """Interrogate the image to get information using CLIP-Interrogator."""
-        result = self.client.predict(
-            image_url,         # Image URL
-            model,             # Model to use
-            mode,              # Mode ('best', 'fast', 'classic', 'negative')
-            fn_index=3         # Function index for image interrogation
-        )
-        return result
+# image_generation_tool = Tool(
+#     name="image_generator",
+#     description="Generates an image following a given prompt and returns the result.",
+#     func=image_generation_wrapper.generate_image
+# )
 
 
-image_interrogator_wrapper = CLIPInterrogatorAPIWrapper("https://pharmapsychotic-clip-interrogator.hf.space/")
+# class CLIPInterrogatorAPIWrapper:
+#     def __init__(self, api_url: str):
+#         self.client = Client(api_url)
 
-image_interrogator_tool = Tool(
-    name="image_interrogator",
-    description="Interrogate an image and return artistic information, movement, and more.",
-    func=image_interrogator_wrapper.interrogate_image
-)
+#     def interrogate_image(self, image_url: str, model: str = "ViT-L (best for Stable Diffusion 1.*)", mode: str = "classic"):
+#         """Interrogate the image to get information using CLIP-Interrogator."""
+#         result = self.client.predict(
+#             image_url,         # Image URL
+#             model,             # Model to use
+#             mode,              # Mode ('best', 'fast', 'classic', 'negative')
+#             fn_index=3         # Function index for image interrogation
+#         )
+#         return result
+
+
+# image_interrogator_wrapper = CLIPInterrogatorAPIWrapper("https://pharmapsychotic-clip-interrogator.hf.space/")
+
+# image_interrogator_tool = Tool(
+#     name="image_interrogator",
+#     description="Interrogate an image and return artistic information, movement, and more.",
+#     func=image_interrogator_wrapper.interrogate_image
+# )
 
 # ------------------------------------------------------------------------------
 # Other tools (sentiment analysis, ocr, ...)
@@ -738,6 +729,7 @@ extract_text_tool = Tool(
     func=extract_text_from_wrapper
 )
 
+
 # Static analysis of CSV files
 class CSVHybridAnalyzer:
     def __init__(self, file_path: str):
@@ -746,62 +738,56 @@ class CSVHybridAnalyzer:
         self.documents = self.load_documents()
 
     def load_dataframe(self):
-        """
-        Carica il CSV in un DataFrame pandas.
-        """
+        """Carica il CSV in un DataFrame pandas."""
         return pd.read_csv(self.file_path)
 
     def load_documents(self):
-        """
-        Carica il CSV come Documenti LangChain per analisi testuale.
-        """
+        """Carica il CSV come Documenti LangChain per analisi testuale."""
         loader = CSVLoader(file_path=self.file_path)
         raw_docs = loader.load()
-
-        # Suddivide se necessario (utile per file grandi)
         splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=50)
         return splitter.split_documents(raw_docs)
 
     def analyze_dataset(self) -> str:
-        """
-        Crea una breve descrizione del dataset.
-        """
+        """Crea una breve descrizione del dataset."""
         info = f"Colonne: {list(self.df.columns)}\n"
         info += f"Numero di righe: {len(self.df)}\n"
         info += f"Prime righe:\n{self.df.head(3).to_string(index=False)}\n"
         stats = self.df.describe(include='all').fillna("").to_string()
-
         return f"{info}\nStatistiche descrittive:\n{stats}"
 
-
     def summarize_with_llm(self) -> str:
-        """
-        Usa GPT per generare un riassunto ragionato del contenuto.
-        """
-        llm = ChatOpenAI(model_name="gpt-4", temperature=0)
-        base_text = "\n\n".join([doc.page_content for doc in self.documents[:3]])  # Max 3 chunks per sintesi rapida
+        """Genera un riassunto ragionato del dataset via Together.ai."""
+        # Inizializza modello Together
+        llm = Together(
+            model="mistralai/Mistral-7B-Instruct-v0.2",  # Sostituibile con deepseek-ai/deepseek-llm-7b-instruct
+            temperature=0.3,
+            max_tokens=1024,
+            together_api_key=os.getenv("TOGETHER_API_KEY")
+        )
+
+        # Prendi i primi 10 chunk testuali dal CSV
+        base_text = "\n\n".join([doc.page_content for doc in self.documents[:10]])
 
         prompt = f"""Hai ricevuto un dataset in formato CSV. Ecco una parte del contenuto:
+
+{base_text}
+
+Fornisci un riassunto del contenuto, identificando eventuali pattern, informazioni interessanti o anomalie."""
         
-        {base_text}
-        
-        Fornisci un riassunto del contenuto, identificando eventuali pattern, informazioni interessanti o anomalie."""
-                        
-        response = llm([HumanMessage(content=prompt)])
-        return response.content
+        response = llm.invoke(prompt)
+        return response
 
     def full_report(self) -> str:
-        """
-        Combina analisi descrittiva e ragionamento testuale.
-        """
+        """Combina analisi descrittiva e semantica."""
         analysis = self.analyze_dataset()
         llm_summary = self.summarize_with_llm()
         return f"""[ANALISI_DESCRITTIVA]
-        {analysis}
+{analysis}
 
-        [ANALISI_SEMANTICA]
-        {llm_summary}
-        """
+[ANALISI_SEMANTICA]
+{llm_summary}
+"""
 
 
 def hybrid_csv_analysis(file_path: str) -> str:
@@ -816,12 +802,156 @@ csv_hybrid_tool = Tool(
 )
 
 
+
+
+
+
+
+import os
+import uuid
+import base64
+import pandas as pd
+import requests
+from typing import List
+from pydantic import BaseModel, Field
+from e2b_code_interpreter import Sandbox
+from together import Together
+
+
+
+class DataVizInput(BaseModel):
+    csv_path: str = Field(description="Absolute path to the CSV file")
+    query: str = Field(description="Natural language question about the dataset")
+
+
+class DataVizTool:
+    def __init__(self, output_dir: str = "./streamlit_outputs"):
+        self.output_dir = output_dir
+        os.makedirs(self.output_dir, exist_ok=True)
+        self.sandbox = Sandbox()
+        self.llm = Together()
+
+    def _upload_dataset(self, local_path: str) -> str:
+        with open(local_path, "rb") as f:
+            return self.sandbox.files.write("dataset.csv", f).path
+
+    def _generate_prompt(self, query: str, dataset_path_in_sandbox: str) -> str:
+    # Leggi il dataset dal percorso LOCALE, non quello nella sandbox
+    # perché pandas non può leggere dalla sandbox
+    # Quindi: leggi una preview locale, solo per ottenere info sulle colonne
+        local_df = pd.read_csv(self.temp_local_csv, nrows=300)
+        column_info = local_df.dtypes.astype(str).to_dict()
+
+        return f"""
+You are a Python data scientist working in a sandboxed environment.
+
+The dataset is already uploaded and available at the following absolute path: `{dataset_path_in_sandbox}`
+
+Here are the columns of the dataset and their data types:
+{column_info}
+
+User question:
+\"{query}\"
+
+Instructions:
+- Load the dataset using `pd.read_csv("{dataset_path_in_sandbox}")`
+- Do not hardcode any other path.
+- Use matplotlib or seaborn to generate visualizations as needed.
+- Save all plots using `plt.savefig("chart-<anything>.png")` (do NOT use `plt.show()`)
+- After each `plt.savefig(...)`, always call `plt.close()` to prevent extra figures being captured
+- When using `plt.pie`, always ensure that `labels` matches the index of the Series being plotted (e.g., use `.value_counts().index` for labels).
+- Output only Python code — no text, no explanations.
+"""
+
+
+
+    def _call_llm(self, prompt: str) -> str:
+        response = self.llm.chat.completions.create(
+            model="meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo",
+            messages=[
+                {"role": "system", "content": "You are a helpful Python data scientist."},
+                {"role": "user", "content": prompt},
+            ],
+            max_tokens=1024,
+            temperature=0.4,
+            top_p=0.9
+        )
+
+        return response.choices[0].message.content.strip()
+    
+    def _clean_code(self, code: str) -> str:
+    # Rimuove blocchi markdown (```python ... ```)
+        if code.startswith("```"):
+            code = code.strip("```")
+            if code.startswith("python"):
+                code = code[len("python"):].lstrip()
+        code = code.strip("```").strip()
+        return code
+
+    def _run_code(self, code: str) -> List[str]:
+        print("@@@@@@@@@@@@@@@@@@@@@ ----------------------> Generated code:\n", code)
+
+        execution = self.sandbox.run_code(code)
+        if execution.error:
+            raise RuntimeError(f"Code execution error: {execution.error.value}")
+
+        saved_paths = []
+        for i, result in enumerate(execution.results):
+            if result.png:
+                filename = f"{uuid.uuid4().hex}.png"
+                file_path = os.path.join(self.output_dir, filename)
+                with open(file_path, "wb") as f:
+                    f.write(base64.b64decode(result.png))
+                saved_paths.append(os.path.abspath(file_path))
+
+        if not saved_paths:
+            raise RuntimeError("No charts were produced by the generated code.")
+        return saved_paths
+
+    def run(self, input: DataVizInput) -> dict:
+        try:
+            print("[*] Uploading dataset...")
+            self.temp_local_csv = input.csv_path  # Salviamo per il prompt
+            dataset_path_in_sandbox = self._upload_dataset(input.csv_path)
+
+            print("[*] Generating code via LLM...")
+            prompt = self._generate_prompt(input.query, dataset_path_in_sandbox)
+            code = self._call_llm(prompt)
+
+            print("[*] Cleaning generated code...")
+            code = self._clean_code(code)
+
+            print("[*] Executing code in sandbox...")
+            image_paths = self._run_code(code)
+
+            # markdown_images = "\n".join([f"![Chart]({path})" for path in image_paths])
+
+            return {"image_paths": image_paths}
+
+        except Exception as e:
+            raise RuntimeError(f"Visualization error: {e}")
+
+
+data_viz_tool = StructuredTool.from_function(
+    func=DataVizTool().run,
+    name="data_viz_tool",
+    description="Generates data visualizations from a CSV file and a natural language query.",
+)
+
+
+
+
+
+
+
+
+
 # ------------------------------------------------------------------------------
 tools = [
     retrieve_tool,
     web_search_tool,
     arxive_tool,
-    execute_python_tool,
+    code_intertpreter,
     google_books_tool,
     google_scholar_tool,
     wikidata_tool,
@@ -829,14 +959,15 @@ tools = [
     wolfram_tool,
     youtube_search_tool,
     spotify_music_tool,
-    tts_tool,
+    text_to_speech_tool,
     speech_to_text_tool,
     google_lens_tool,           # per analizzare immagini da url
-    image_generation_tool,
-    image_interrogator_tool,    # per analizzare immagini caricate in locale
+    # image_generation_tool,
+    # image_interrogator_tool,    # per analizzare immagini caricate in locale
     # text_analysis_tool,       # funziona ma non so come trattare la risposta
-    summarize_tool,
+    doc_summary_tool,
     sentiment_tool,
     extract_text_tool,
-    csv_hybrid_tool
+    # csv_hybrid_tool,
+    data_viz_tool,
 ]  # + base_tool   # + o365_tools
