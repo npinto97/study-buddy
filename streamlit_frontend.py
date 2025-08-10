@@ -104,18 +104,6 @@ def sidebar_configuration():
     return user_input, user_file_input, user_audio_input, config_thread_id, submit_button, config_chat
 
 
-# def display_graph():
-#     """Display the compiled LangGraph image."""
-#     st.header("Graph Visualization")
-#     graph_path = "images/agents_graph.png"
-
-#     if os.path.exists(graph_path):
-#         graph_image = Image.open(graph_path)
-#         st.image(graph_image, caption="Compiled LangGraph", use_container_width=True)
-#     else:
-#         st.error("Graph image not found. Please check the path.")
-
-
 def enhance_user_input(config_chat, user_input, file_path):
     """
     Generates an optimized prompt for the chatbot, ensuring:
@@ -253,7 +241,7 @@ def handle_chatbot_response(user_input, thread_id, config_chat, user_file_path):
 
             tool_messages = [
                 msg for msg in last_event.get("messages", [])
-                if type(msg).__name__ == "ToolMessage" and msg.name in ["image_generator", "data_visualization"]
+                if type(msg).__name__ == "ToolMessage" and msg.name in ["image_generator", "data_viz_tool"]
             ]
 
             if ai_messages:
@@ -265,13 +253,16 @@ def handle_chatbot_response(user_input, thread_id, config_chat, user_file_path):
             if tool_messages:
                 try:
                     tool_output = json.loads(tool_messages[-1].content)
-                    image_path = tool_output.get("image_path") or tool_output.get("path")
+                    image_paths = tool_output.get("image_paths")
 
-                    # Se è una lista, prendi tutti i path
-                    if not image_path and isinstance(tool_output, list):
-                        image_paths = tool_output
-                    else:
-                        image_paths = [image_path] if image_path else []
+                    if image_paths is None:  # fallback per retrocompatibilità
+                        image_path = tool_output.get("image_path") or tool_output.get("path")
+                        if image_path:
+                            image_paths = [image_path]
+                        elif isinstance(tool_output, list):
+                            image_paths = tool_output
+                        else:
+                            image_paths = []
 
                     if image_paths:
                         chat_history.append({
@@ -498,8 +489,6 @@ def display_chat_history(thread_id):
                     st.error(f"❌ File non trovato: {file_path}")
 
             play_text_to_speech(content or "", key=f"tts_button_{i}")
-
-
 
 
 def main():
