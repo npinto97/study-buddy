@@ -456,28 +456,47 @@ spotify_music_tool = Tool(
 
 # Convert text into spoken voice
 class ElevenLabsTTSWrapper:
-    """Wrapper aggiornato per ElevenLabs Text-to-Speech API."""
 
     def __init__(self, api_key: str = None):
-        self.api_key = api_key or os.getenv("ELEVENLABS_API_KEY")
+        self.api_key = api_key or os.getenv("ELEVEN_API_KEY")
+        if not self.api_key:
+            raise ValueError("ELEVEN_API_KEY must be set in environment variables.")
         self.client = ElevenLabs(api_key=self.api_key)
 
-    def text_to_speech(self, text: str, voice: str = "Rachel", model: str = "eleven_monolingual_v1") -> str:
-        """Converte testo in voce e salva l'audio in un file MP3 temporaneo."""
-        audio = self.client.generate(
+    def _get_voice_id(self, voice_name: str) -> str:
+        """Find the voice_id for a given name, or return the first available voice."""
+        voices = self.client.voices.get_all().voices
+        for v in voices:
+            if v.name.lower() == voice_name.lower():
+                return v.voice_id
+        if voices:
+            print(f"[WARN] Voice '{voice_name}' not found. Using '{voices[0].name}'.")
+            return voices[0].voice_id
+        raise ValueError("No voices available in your ElevenLabs account.")
+
+    def text_to_speech(
+        self,
+        text: str,
+        voice: str = "Piper",
+        model_id: str = "eleven_multilingual_v2",
+        output_format: str = "mp3_44100_128"
+    ) -> str:
+        """Convert text to speech and save it as a temporary MP3 file."""
+        voice_id = self._get_voice_id(voice)
+        audio = self.client.text_to_speech.convert(
             text=text,
-            voice=voice,
-            model=model
+            voice_id=voice_id,
+            model_id=model_id,
+            output_format=output_format
         )
         tmp_path = tempfile.NamedTemporaryFile(delete=False, suffix=".mp3").name
         save(audio, tmp_path)
         return tmp_path
 
-
 text_to_speech_tool = Tool(
     name="text_to_speech",
-    description="Converte testo in voce utilizzando l'API ElevenLabs.",
-    func=ElevenLabsTTSWrapper().text_to_speech,
+    description="Converts text to speech using the ElevenLabs TTS API.",
+    func=ElevenLabsTTSWrapper().text_to_speech
 )
 
 
