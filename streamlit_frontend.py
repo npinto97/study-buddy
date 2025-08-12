@@ -11,6 +11,8 @@ import torch
 import asyncio
 from typing import AsyncGenerator
 
+from streamlit_float import *
+
 from study_buddy.agent import compiled_graph
 from study_buddy.utils.tools import ElevenLabsTTSWrapper, AssemblyAISpeechToText
 
@@ -442,7 +444,7 @@ def handle_chatbot_response(user_input, thread_id, config_chat, user_files=None)
             
             # Raccoglie tutti gli eventi per processare i tool messages
             all_events = []
-            has_image_tools = False  # Flag per controllare se ci sono strumenti che generano immagini
+            has_image_tools = False
             
             try:
                 loop = asyncio.get_event_loop()
@@ -480,20 +482,12 @@ def handle_chatbot_response(user_input, thread_id, config_chat, user_files=None)
                                             await asyncio.sleep(0.01)
                                     else:
                                         full_response += message.content
-                                
-                                if hasattr(message, 'tool_calls') and message.tool_calls:
-                                    tool_info = f"\n\n🔧 **Utilizzo strumenti:** {len(message.tool_calls)} tool(s)"
-                                    if not has_image_tools:
-                                        full_response += tool_info
-                                        message_placeholder.markdown(full_response + "▌")
-                
-                # Se non ci sono strumenti immagine, mostra solo il testo finale
+                                         
                 if not has_image_tools:
                     message_placeholder.markdown(full_response)
                 
                 return full_response
             
-            # Esegui lo streaming
             full_response = loop.run_until_complete(run_streaming())
             
             # Process tool messages for images after streaming is complete
@@ -785,112 +779,8 @@ def play_text_to_speech(text, key):
 
 
 def voice_chat_input():
-    """Chat input con microfono posizionata in basso"""
-    
-    # CSS per styling personalizzato e posizionamento in basso
-    st.markdown("""
-    <style>
-    /* Container principale fisso in basso */
-    .bottom-chat-container {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        background: rgba(255, 255, 255, 0.95);
-        backdrop-filter: blur(10px);
-        border-top: 1px solid rgba(0, 0, 0, 0.1);
-        padding: 15px 20px;
-        z-index: 1000;
-        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
-    }
-    
-    .chat-container {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        max-width: 1200px;
-        margin: 0 auto;
-    }
-    
-    /* Bottone microfono minimale */
-    .voice-button {
-        background: none !important;
-        border: none !important;
-        box-shadow: none !important;
-        outline: none !important;
-        width: 44px !important;
-        height: 44px !important;
-        border-radius: 50% !important;
-        font-size: 20px !important;
-        cursor: pointer !important;
-        transition: all 0.2s ease !important;
-        color: #666 !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-    }
-    
-    .voice-button:hover {
-        background: rgba(0, 0, 0, 0.05) !important;
-        color: #333 !important;
-        transform: scale(1.1) !important;
-    }
-    
-    .voice-button.active {
-        color: #ff4444 !important;
-        animation: pulse-mic 1.5s infinite !important;
-    }
-    
-    @keyframes pulse-mic {
-        0% { 
-            color: #ff4444;
-            transform: scale(1);
-        }
-        50% { 
-            color: #ff6666;
-            transform: scale(1.1);
-        }
-        100% { 
-            color: #ff4444;
-            transform: scale(1);
-        }
-    }
-    
-    /* Nascondere i bottoni Streamlit predefiniti nel microfono */
-    .stButton > button {
-        background: none !important;
-        border: none !important;
-        box-shadow: none !important;
-        outline: none !important;
-        padding: 0 !important;
-        margin: 0 !important;
-    }
-    
-    /* Spazio per il contenuto principale */
-    .main .block-container {
-        padding-bottom: 100px !important;
-    }
-    
-    /* Responsive design */
-    @media (max-width: 768px) {
-        .bottom-chat-container {
-            padding: 12px 15px;
-        }
-        
-        .chat-container {
-            gap: 8px;
-        }
-        
-        .voice-button {
-            width: 40px !important;
-            height: 40px !important;
-            font-size: 18px !important;
-        }
-    }
-    </style>
-    """, unsafe_allow_html=True)
-    
-    # Container per input e microfono
+
+    float_init()
     chat_container = st.container()
     
     with chat_container:
@@ -898,14 +788,13 @@ def voice_chat_input():
         
         with col1:
             user_submission = st.chat_input(
-                placeholder="💬 Scrivi qui o usa il microfono →",
+                placeholder="Scrivi qui o usa il microfono →",
                 key="main_chat_input_bottom",
                 accept_file="multiple",
                 file_type=['txt', 'pdf', 'png', 'jpg', 'jpeg', 'mp3', 'wav', 'mp4', 'csv', 'json', 'xml']
             )
         
         with col2:
-            # Bottone microfono minimale
             voice_active = st.session_state.get('voice_mode', False)
             button_emoji = "🔴" if voice_active else "🎤"
             
@@ -915,53 +804,14 @@ def voice_chat_input():
                 help="🎤 Registra messaggio vocale" if not voice_active else "🔴 Modalità vocale attiva",
                 use_container_width=True
             )
-    
-    # Posiziona il container in basso usando float
-    try:
-        from streamlit_float import float_init
-        chat_container.float(
-            css_string="""
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-top: 1px solid rgba(0, 0, 0, 0.1);
-            padding: 15px 20px;
-            z-index: 1000;
-            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
-            """
-        )
-    except:
-        # Fallback se float non funziona - usa solo CSS
-        pass
-    
+
+    chat_container.float("display:flex; align-items:center;justify-content:center; overflow:hidden visible;flex-direction:column; position:fixed;bottom:20px;")
+
     return user_submission, voice_button
 
 
 def main():
-    """Main function con una sola chat input in basso"""
 
-    # Layout logo + titolo affiancati
-    col1, col2 = st.columns([1, 6])
-    
-    with col1:
-        try:
-            st.image("images/new_unichat_icon_hd.png", width=70)
-        except:
-            st.markdown("🤖")  # Emoji fallback se l'immagine non esiste
-    
-    with col2:
-        st.markdown("""
-        <h1 style='margin-top: 15px; color: #667eea; font-size: 2.2rem; font-weight: bold;'>
-            UNIVOX: University Virtual Orchestrated eXpert
-        </h1>
-        """, unsafe_allow_html=True)
-    
-    st.markdown("---")  # Linea separatrice
-
-    # Initialize session state
     initialize_session()
     
     try:
@@ -970,14 +820,10 @@ def main():
     except:
         pass
 
-    # Sidebar configuration
     config_thread_id, config_chat = sidebar_configuration()
-   
-    # Display chat history
-    st.header("💬 Chat")
+
     display_chat_history(config_thread_id)
 
-    # UNICA chat input con microfono in basso
     user_submission, voice_button = voice_chat_input()
 
     # Gestisci il toggle della modalità vocale
@@ -1007,19 +853,15 @@ def main():
                     if transcribed_text:
                         st.success(f"Testo trascritto: {transcribed_text}")
                         
-                        # Mostra il messaggio dell'utente
                         with st.chat_message("user"):
                             st.write(f"🎤 {transcribed_text}")
                         
-                        # Processa la risposta del chatbot
                         with st.chat_message("assistant"):
                             handle_chatbot_response(transcribed_text, config_thread_id, config_chat, None)
                         
-                        # Disattiva modalità vocale dopo l'uso
                         st.session_state.voice_mode = False
                         st.rerun()
     
-    # Gestisci l'input testuale dalla chat in basso
     if user_submission:
         # Estrai testo e file dalla submission
         if hasattr(user_submission, 'text') and hasattr(user_submission, 'files'):
@@ -1035,16 +877,13 @@ def main():
             user_input = str(user_submission) if user_submission else ""
             user_files = []
         
-        # Mostra il messaggio dell'utente
         with st.chat_message("user"):
             if user_input:
                 st.write(user_input)
-            # Mostra i file caricati se presenti
             if user_files:
                 for file in user_files:
                     st.write(f"📎 {file.name}")
         
-        # Processa la risposta del chatbot
         with st.chat_message("assistant"):
             if st.session_state.get('streaming_enabled', True):
                 with st.spinner("🤔 Sto pensando..."):
