@@ -49,13 +49,8 @@ from elevenlabs.client import ElevenLabs
 from elevenlabs import save
 import assemblyai as aai
 
-from together import Together
-
-# from gradio_tools import (StableDiffusionTool,
-#                           ImageCaptioningTool,
-#                           StableDiffusionPromptGeneratorTool,
-#                           TextToVideoTool,
-#                           WhisperAudioTranscriptionTool)
+# FIXED: Import corretto per Together client
+from together import Together as TogetherClient
 
 from gradio_client import Client
 
@@ -143,32 +138,6 @@ def wolfram_tool(query: str):
 wikipedia_tool = WikipediaQueryRun(api_wrapper=WikipediaAPIWrapper())
 
 
-# class QwenTextAnalysis:
-#     """Wrapper per l'analisi del testo tramite il modello di Hugging Face."""
-
-#     def __init__(self, api_url: str = "Qwen/Qwen2.5-Turbo-1M-Demo"):
-#         self.client = Client(api_url)
-
-#     def analyze_text(self, text: str, files: list = []):
-#         """Invia il testo e i file per l'analisi."""
-#         try:
-#             result = self.client.predict(
-#                 _input={"files": files, "text": text},
-#                 _chatbot=[],
-#                 api_name="/add_text"
-#             )
-#             return result
-#         except Exception as e:
-#             return {"error": str(e)}
-
-
-# text_analysis_tool = Tool(
-#     name="text_analysis",
-#     description="Analyze text or files (pdf/docx/pptx/txt/html) using Qwen model.",
-#     func=QwenTextAnalysis().analyze_text
-# )
-
-
 class DocumentSummarizerWrapper:
     def __init__(self, file_path: str):
         self.file_path = file_path
@@ -184,7 +153,7 @@ class DocumentSummarizerWrapper:
 
     def summarize_document(self) -> str:
         """Riassume il contenuto del documento utilizzando un LLM open-source via Together.ai."""
-
+        # FIXED: Inizializzazione corretta di Together
         llm = Together(
             model="mistralai/Mistral-7B-Instruct-v0.2",
             temperature=0.3,
@@ -394,7 +363,6 @@ code_intertpreter = Tool(
 )
 
 
-
 # ------------------------------------------------------------------------------
 # Tools for emotional support and mental health
 
@@ -444,8 +412,6 @@ spotify_music_tool = Tool(
     func=SpotifyAPIWrapper().search_music
 )
 
-# aggiungi music lofi generator
-
 
 # ------------------------------------------------------------------------------
 # Tools for accessibility and inclusivity
@@ -459,26 +425,13 @@ class ElevenLabsTTSWrapper:
             raise ValueError("ELEVEN_API_KEY must be set in environment variables.")
         self.client = ElevenLabs(api_key=self.api_key)
 
-    # def _get_voice_id(self, voice_name: str) -> str:
-    #     """Find the voice_id for a given name, or return the first available voice."""
-    #     voices = self.client.voices.get_all().voices
-    #     for v in voices:
-    #         if v.name.lower() == voice_name.lower():
-    #             return v.voice_id
-    #     if voices:
-    #         print(f"[WARN] Voice '{voice_name}' not found. Using '{voices[0].name}'.")
-    #         return voices[0].voice_id
-    #     raise ValueError("No voices available in your ElevenLabs account.")
-
     def text_to_speech(
         self,
         text: str,
-        # voice: str = "Piper",
         model_id: str = "eleven_multilingual_v2",
         output_format: str = "mp3_44100_128"
     ) -> str:
         """Convert text to speech and save it as a temporary MP3 file."""
-        # voice_id = self._get_voice_id(voice)
         voice_id = "paraDwhkbSkX4FhBkAzc"
         audio = self.client.text_to_speech.convert(
             text=text,
@@ -557,56 +510,6 @@ speech_to_text_tool = Tool(
 
 google_lens_tool = GoogleLensQueryRun(api_wrapper=GoogleLensAPIWrapper())
 
-
-# class ImageGenerationAPIWrapper:
-#     def __init__(self, model_name: str):
-#         self.client = Client(model_name)
-
-#     def generate_image(self, prompt: str, seed: int = 0, randomize_seed: bool = True, width: int = 512, height: int = 512, num_inference_steps: int = 15):
-#         """Generates an image from a prompt using the Hugging Face API."""
-#         result = self.client.predict(
-#             prompt=prompt,
-#             seed=seed,
-#             randomize_seed=randomize_seed,
-#             width=width,
-#             height=height,
-#             num_inference_steps=num_inference_steps,
-#             api_name="/infer"
-#         )
-#         return result  # This could be an image URL or file path depending on the API response
-
-
-# image_generation_wrapper = ImageGenerationAPIWrapper("black-forest-labs/FLUX.1-schnell")
-
-# image_generation_tool = Tool(
-#     name="image_generator",
-#     description="Generates an image following a given prompt and returns the result.",
-#     func=image_generation_wrapper.generate_image
-# )
-
-
-# class CLIPInterrogatorAPIWrapper:
-#     def __init__(self, api_url: str):
-#         self.client = Client(api_url)
-
-#     def interrogate_image(self, image_url: str, model: str = "ViT-L (best for Stable Diffusion 1.*)", mode: str = "classic"):
-#         """Interrogate the image to get information using CLIP-Interrogator."""
-#         result = self.client.predict(
-#             image_url,         # Image URL
-#             model,             # Model to use
-#             mode,              # Mode ('best', 'fast', 'classic', 'negative')
-#             fn_index=3         # Function index for image interrogation
-#         )
-#         return result
-
-
-# image_interrogator_wrapper = CLIPInterrogatorAPIWrapper("https://pharmapsychotic-clip-interrogator.hf.space/")
-
-# image_interrogator_tool = Tool(
-#     name="image_interrogator",
-#     description="Interrogate an image and return artistic information, movement, and more.",
-#     func=image_interrogator_wrapper.interrogate_image
-# )
 
 # ------------------------------------------------------------------------------
 # Other tools (sentiment analysis, ocr, ...)
@@ -763,9 +666,9 @@ class CSVHybridAnalyzer:
 
     def summarize_with_llm(self) -> str:
         """Genera un riassunto ragionato del dataset via Together.ai."""
-        # Inizializza modello Together
+        # FIXED: Inizializzazione corretta di Together
         llm = Together(
-            model="mistralai/Mistral-7B-Instruct-v0.2",  # Sostituibile con deepseek-ai/deepseek-llm-7b-instruct
+            model="mistralai/Mistral-7B-Instruct-v0.2",
             temperature=0.3,
             max_tokens=1024,
             together_api_key=os.getenv("TOGETHER_API_KEY")
@@ -807,23 +710,6 @@ csv_hybrid_tool = Tool(
 )
 
 
-
-
-
-
-
-import os
-import uuid
-import base64
-import pandas as pd
-import requests
-from typing import List
-from pydantic import BaseModel, Field
-from e2b_code_interpreter import Sandbox
-from together import Together
-
-
-
 class DataVizInput(BaseModel):
     csv_path: str = Field(description="Absolute path to the CSV file")
     query: str = Field(description="Natural language question about the dataset")
@@ -834,16 +720,17 @@ class DataVizTool:
         self.output_dir = output_dir
         os.makedirs(self.output_dir, exist_ok=True)
         self.sandbox = Sandbox()
-        self.llm = Together()
+        # FIXED: Inizializzazione corretta di Together client
+        self.llm = TogetherClient(api_key=os.getenv("TOGETHER_API_KEY"))
 
     def _upload_dataset(self, local_path: str) -> str:
         with open(local_path, "rb") as f:
             return self.sandbox.files.write("dataset.csv", f).path
 
     def _generate_prompt(self, query: str, dataset_path_in_sandbox: str) -> str:
-    # Leggi il dataset dal percorso LOCALE, non quello nella sandbox
-    # perché pandas non può leggere dalla sandbox
-    # Quindi: leggi una preview locale, solo per ottenere info sulle colonne
+        # Leggi il dataset dal percorso LOCALE, non quello nella sandbox
+        # perché pandas non può leggere dalla sandbox
+        # Quindi: leggi una preview locale, solo per ottenere info sulle colonne
         local_df = pd.read_csv(self.temp_local_csv, nrows=300)
         column_info = local_df.dtypes.astype(str).to_dict()
 
@@ -868,8 +755,6 @@ Instructions:
 - Output only Python code — no text, no explanations.
 """
 
-
-
     def _call_llm(self, prompt: str) -> str:
         response = self.llm.chat.completions.create(
             model="meta-llama/Meta-Llama-3.1-8B-Instruct-Turbo",
@@ -885,7 +770,7 @@ Instructions:
         return response.choices[0].message.content.strip()
     
     def _clean_code(self, code: str) -> str:
-    # Rimuove blocchi markdown (```python ... ```)
+        # Rimuove blocchi markdown (```python ... ```)
         if code.startswith("```"):
             code = code.strip("```")
             if code.startswith("python"):
@@ -929,8 +814,6 @@ Instructions:
             print("[*] Executing code in sandbox...")
             image_paths = self._run_code(code)
 
-            # markdown_images = "\n".join([f"![Chart]({path})" for path in image_paths])
-
             return {"image_paths": image_paths}
 
         except Exception as e:
@@ -942,13 +825,6 @@ data_viz_tool = StructuredTool.from_function(
     name="data_viz_tool",
     description="Generates data visualizations from a CSV file and a natural language query.",
 )
-
-
-
-
-
-
-
 
 
 # ------------------------------------------------------------------------------
@@ -967,12 +843,9 @@ tools = [
     text_to_speech_tool,
     speech_to_text_tool,
     google_lens_tool,           # per analizzare immagini da url
-    # image_generation_tool,
-    # image_interrogator_tool,    # per analizzare immagini caricate in locale
-    # text_analysis_tool,       # funziona ma non so come trattare la risposta
     doc_summary_tool,
     sentiment_tool,
     extract_text_tool,
-    # csv_hybrid_tool,
+    csv_hybrid_tool,
     data_viz_tool,
 ]  # + base_tool   # + o365_tools
