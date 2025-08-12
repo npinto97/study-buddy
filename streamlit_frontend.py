@@ -12,6 +12,7 @@ import asyncio
 from typing import AsyncGenerator
 
 from streamlit_float import *
+from streamlit_extras.bottom_container import bottom
 
 from study_buddy.agent import compiled_graph
 from study_buddy.utils.tools import ElevenLabsTTSWrapper, AssemblyAISpeechToText
@@ -561,7 +562,7 @@ def handle_chatbot_response(user_input, thread_id, config_chat, user_files=None)
                     chat_history.append({"role": "bot", "content": full_response})
                 
         else:
-            # Modalità tradizionale (senza streaming) - rimane uguale
+            # Modalità senza streaming
             file_path_for_prompt = user_file_paths[0] if user_file_paths else None
             enhanced_user_input = enhance_user_input(config_chat, input_text, file_path_for_prompt)
             config = {"configurable": {"thread_id": thread_id}}
@@ -777,13 +778,10 @@ def play_text_to_speech(text, key):
         audio_path = ElevenLabsTTSWrapper().text_to_speech(text)
         st.audio(audio_path, format="audio/mp3")
 
-
 def voice_chat_input():
-
     float_init()
-    chat_container = st.container()
-    
-    with chat_container:
+
+    with bottom():
         col1, col2 = st.columns([10, 1])
         
         with col1:
@@ -805,8 +803,6 @@ def voice_chat_input():
                 use_container_width=True
             )
 
-    chat_container.float("display:flex; align-items:center;justify-content:center; overflow:hidden visible;flex-direction:column; position:fixed;bottom:20px;")
-
     return user_submission, voice_button
 
 
@@ -822,11 +818,15 @@ def main():
 
     config_thread_id, config_chat = sidebar_configuration()
 
-    display_chat_history(config_thread_id)
+    chat_history = get_chat_history(config_thread_id)
+
+    if not chat_history:
+        st.title("Come posso aiutarti oggi?")
+    else:
+        display_chat_history(config_thread_id)
 
     user_submission, voice_button = voice_chat_input()
 
-    # Gestisci il toggle della modalità vocale
     if voice_button:
         st.session_state.voice_mode = not st.session_state.get('voice_mode', False)
         
@@ -837,7 +837,6 @@ def main():
         
         st.rerun()
 
-    # Voice input quando attivata
     if st.session_state.get('voice_mode', False):
         # Mostra l'audio input nella parte principale (non in basso)
         with st.container():
@@ -885,10 +884,7 @@ def main():
                     st.write(f"📎 {file.name}")
         
         with st.chat_message("assistant"):
-            if st.session_state.get('streaming_enabled', True):
-                with st.spinner("🤔 Sto pensando..."):
-                    handle_chatbot_response(user_input, config_thread_id, config_chat, user_files)
-            else:
+            with st.spinner("🤔 Sto pensando..."):
                 handle_chatbot_response(user_input, config_thread_id, config_chat, user_files)
         
         st.rerun()
