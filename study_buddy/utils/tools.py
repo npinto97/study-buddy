@@ -14,7 +14,7 @@ import os
 import base64
 import uuid
 from typing import List
-from together import Together
+
 
 from pydantic import BaseModel, Field
 from langchain_together import ChatTogether
@@ -39,21 +39,17 @@ from langchain_community.utilities.google_books import GoogleBooksAPIWrapper
 from langchain_community.tools.google_scholar import GoogleScholarQueryRun
 from langchain_community.utilities.google_scholar import GoogleScholarAPIWrapper
 from langchain_tavily import TavilySearch
-from langchain_community.tools.arxiv.tool import ArxivQueryRun
 from e2b_code_interpreter import Sandbox
 
-from langchain.schema import HumanMessage
+from langchain_community.tools.arxiv.tool import ArxivQueryRun
 from langchain_community.document_loaders import CSVLoader
 from langchain.text_splitter import CharacterTextSplitter
-
-from langchain_core.language_models import BaseChatModel
-
-from langchain.tools import StructuredTool
 
 from elevenlabs.client import ElevenLabs
 from elevenlabs import save
 import assemblyai as aai
 
+from together import Together
 
 # from gradio_tools import (StableDiffusionTool,
 #                           ImageCaptioningTool,
@@ -463,26 +459,27 @@ class ElevenLabsTTSWrapper:
             raise ValueError("ELEVEN_API_KEY must be set in environment variables.")
         self.client = ElevenLabs(api_key=self.api_key)
 
-    def _get_voice_id(self, voice_name: str) -> str:
-        """Find the voice_id for a given name, or return the first available voice."""
-        voices = self.client.voices.get_all().voices
-        for v in voices:
-            if v.name.lower() == voice_name.lower():
-                return v.voice_id
-        if voices:
-            print(f"[WARN] Voice '{voice_name}' not found. Using '{voices[0].name}'.")
-            return voices[0].voice_id
-        raise ValueError("No voices available in your ElevenLabs account.")
+    # def _get_voice_id(self, voice_name: str) -> str:
+    #     """Find the voice_id for a given name, or return the first available voice."""
+    #     voices = self.client.voices.get_all().voices
+    #     for v in voices:
+    #         if v.name.lower() == voice_name.lower():
+    #             return v.voice_id
+    #     if voices:
+    #         print(f"[WARN] Voice '{voice_name}' not found. Using '{voices[0].name}'.")
+    #         return voices[0].voice_id
+    #     raise ValueError("No voices available in your ElevenLabs account.")
 
     def text_to_speech(
         self,
         text: str,
-        voice: str = "Piper",
+        # voice: str = "Piper",
         model_id: str = "eleven_multilingual_v2",
         output_format: str = "mp3_44100_128"
     ) -> str:
         """Convert text to speech and save it as a temporary MP3 file."""
-        voice_id = self._get_voice_id(voice)
+        # voice_id = self._get_voice_id(voice)
+        voice_id = "paraDwhkbSkX4FhBkAzc"
         audio = self.client.text_to_speech.convert(
             text=text,
             voice_id=voice_id,
@@ -505,8 +502,10 @@ class AssemblyAISpeechToText:
 
     def __init__(self, api_key: str = None):
         self.api_key = api_key or os.getenv("ASSEMBLYAI_API_KEY")
-        settings = aai.Settings(api_key=self.api_key)
-        self.client = aai.Client(settings=settings)
+        if not self.api_key:
+            raise ValueError("API key non fornita e variabile d'ambiente ASSEMBLYAI_API_KEY mancante.")
+        aai.settings.api_key = self.api_key
+        self.transcriber = aai.Transcriber()
 
     def _get_audio_path(self, audio_input: Union[str, bytes]) -> str:
         """Download or prepare local audio file path from various input types."""
@@ -536,9 +535,15 @@ class AssemblyAISpeechToText:
     def transcribe_audio(self, audio_input: Union[str, bytes]) -> str:
         """Transcribes audio input and returns text."""
         audio_path = self._get_audio_path(audio_input)
-        transcript = self.client.transcribe(audio_path)
-        os.remove(audio_path)
-        return transcript.text
+        try:
+            config = aai.TranscriptionConfig(speech_model=aai.SpeechModel.best)
+            transcript = self.transcriber.transcribe(audio_path, config)
+            if transcript.status == aai.TranscriptStatus.error:
+                raise RuntimeError(f"Transcription failed: {transcript.error}")
+            return transcript.text
+        finally:
+            if os.path.exists(audio_path):
+                os.remove(audio_path)
 
 
 speech_to_text_tool = Tool(
