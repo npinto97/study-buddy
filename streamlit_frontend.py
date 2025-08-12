@@ -325,76 +325,47 @@ def sidebar_configuration():
 
 def enhance_user_input(config_chat, user_input, file_path):
     """
-    Generates an optimized prompt for the chatbot, ensuring:
-    - A hierarchical retrieval strategy (first within the selected course, then other courses, finally the web).
-    - Security measures to prevent harmful or unethical responses.
-    - A clear and structured response according to user preferences.
+    Generates an optimized prompt for the chatbot with focused instructions.
     """
-
-    # Complexity level customization
-    complexity_instructions = {
-        "Basic": "Keep the response simple and easy to understand, using everyday language and minimal technical jargon. Provide basic explanations with common examples.",
-        "Intermediate": "Provide a moderate level of detail, including some technical terms where appropriate. Use examples that demonstrate the concept but remain accessible.",
-        "Advanced": "Deliver an in-depth and comprehensive response, incorporating technical jargon, citations, and advanced examples when relevant. Provide critical analysis where applicable."
+    
+    # Core instructions - sempre presenti ma concise
+    core_instructions = []
+    
+    # Language requirement (sempre primo)
+    if config_chat.language:
+        core_instructions.append(f"Respond in {config_chat.language}.")
+    
+    # Complexity level - versione semplificata
+    complexity_map = {
+        "Basic": "Use simple language and basic explanations.",
+        "Intermediate": "Provide moderate detail with some technical terms.",
+        "Advanced": "Give comprehensive analysis with technical depth."
     }
-
-    select_complexity_string = (
-        f"{complexity_instructions.get(config_chat.complexity_level, '')}\n"
-        if config_chat.complexity_level in complexity_instructions
-        else ""
-    )
-
-    # Set response language
-    select_language_string = f"The answer must be in {config_chat.language}.\n"
-
-    # Define course context
-    if config_chat.course == "None":
-        select_course_string = ""
-        course_info_string = ""
-    else:
-        select_course_string = f"The user is studying the course '{config_chat.course}'.\n"
-        course_info_string = (
-            f"Prioritize retrieving information from course materials related to '{config_chat.course}'.\n"
-            "If no relevant course materials are found, expand the search to other courses.\n"
-            "If there are still no relevant documents, use an appropriate web search tool.\n"
-            "Structure your response with clarity, using examples where needed.\n"
-        )
-
-    # Handle attached files
-    file_path_string = ""
+    
+    if config_chat.complexity_level in complexity_map:
+        core_instructions.append(complexity_map[config_chat.complexity_level])
+    
+    # Course context - solo se rilevante
+    if config_chat.course and config_chat.course != "None":
+        core_instructions.append(f"Context: User is studying {config_chat.course}. Prioritize course-related materials, then expand if needed.")
+    
+    # File attachment - conciso
     if file_path:
-        file_path_string = f"The user has uploaded a file for analysis: {file_path}.\n"
-
-    # Retrieval preference instructions
-    retrieval_instruction = (
-        "For document-related queries, prioritize using the 'retrieve_tool' to find relevant information.\n"
-        "Always provide a source or a link where the user can access the referenced material.\n"
-        "If the user's question relates to study efficiency, accessibility, or mental health, consider recommending the appropriate tool.\n"
-        "Examples of tool recommendations:\n"
-        "- If the user is struggling with complex concepts, suggest 'code_interpreter' for demonstrations.\n"
-        "- If the user expresses stress, analyze their sentiment and provide study wellness tips, including recommending relaxing music or music they enjoy.\n"
-        "- If accessibility is a concern, offer text-to-speech or document summarization options.\n"
-        "- If the user is working on research, suggest retrieving academic papers via Google Scholar.\n"
-    )
-
-    # Interdisciplinary awareness
-    interdisciplinary_instruction = (
-        "Encourage an interdisciplinary approach when beneficial.\n"
-        "For example, if a student is studying Natural Language Processing but struggles with mathematical models, offer insights from linear algebra.\n"
-    )
-
-    # Compose the final meta-prompt
-    enhanced_user_input = (
-        retrieval_instruction +
-        course_info_string +
-        select_complexity_string +
-        select_language_string +
-        select_course_string +
-        file_path_string +
-        interdisciplinary_instruction +
-        user_input
-    )
-
+        core_instructions.append(f"Analyze uploaded file: {file_path}")
+    
+    # Academic integrity - sempre presente
+    core_instructions.append("Academic support agent: Never invent information. Use retrieve_tool for documents, web_search for current info. Always cite sources.")
+    
+    # Fallback behavior
+    core_instructions.append("If no reliable sources found, clearly state limitations rather than guessing.")
+    
+    # Assembla il prompt finale
+    if core_instructions:
+        instruction_block = "\n".join(f"• {instr}" for instr in core_instructions)
+        enhanced_user_input = f"{instruction_block}\n\nQuery: {user_input}"
+    else:
+        enhanced_user_input = user_input
+    
     return enhanced_user_input
 
 def save_chat_history(thread_id, chat_history):
