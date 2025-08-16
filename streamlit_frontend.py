@@ -393,7 +393,8 @@ def enhance_user_input(config_chat, user_input, file_path):
         core_instructions.append(f"Analyze uploaded file: {file_path}")
     
     core_instructions.extend([
-        "Academic support agent: Never invent information. Use retrieve_tool for documents, web_search for current info. Always cite sources. Always provide files paths if available.",
+        "Academic support agent: Never invent information. Use retrieve_tool for documents, web_search for current info. Always provide files paths if available.",
+        "For mathematical formulas, use LaTeX notation: inline formulas with $formula$ and display formulas with $$formula$$.",
         "If no reliable sources found, clearly state limitations rather than guessing."
     ])
     
@@ -541,7 +542,7 @@ def voice_chat_input():
         
         with col1:
             user_submission = st.chat_input(
-                placeholder="Scrivi qui o usa il microfono →",
+                placeholder="Scrivi qui o usa il microfono",
                 key="main_chat_input_bottom",
                 accept_file="multiple",
                 file_type=['txt', 'pdf', 'png', 'jpg', 'jpeg', 'mp3', 'wav', 'mp4', 'csv', 'json', 'xml']
