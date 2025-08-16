@@ -9,7 +9,7 @@ import tempfile
 import json
 import torch
 import asyncio
-from typing import AsyncGenerator
+from typing import AsyncGenerator, List, Optional
 
 from streamlit_float import *
 from streamlit_extras.bottom_container import bottom
@@ -49,11 +49,19 @@ def initialize_session():
         st.session_state.streaming_enabled = True
 
 def get_chat_history(thread_id):
-    """Retrieves the chat history associated to a specific thread_id.
-    If not exists, it is initialized as an empty list"""
+    """Retrieves the chat history associated to a specific thread_id."""
     if thread_id not in st.session_state.chat_histories:
         st.session_state.chat_histories[thread_id] = []
     return st.session_state.chat_histories[thread_id]
+
+def add_message_to_history(thread_id: str, role: str, content: str, image_paths: Optional[List[str]] = None):
+    """Centralizes adding messages to chat history."""
+    chat_history = get_chat_history(thread_id)
+    message = {"role": role, "content": content}
+    if image_paths:
+        message["image_paths"] = image_paths
+    chat_history.append(message)
+    save_chat_history(thread_id, chat_history)
 
 def format_message_content(message):
     """Formatta il contenuto del messaggio per la visualizzazione"""
@@ -82,159 +90,201 @@ def format_tool_calls(message):
         return "\n".join(tool_info)
     return None
 
-def display_images_and_files(content, image_paths_list=None, message_index=0):
-    """Gestisce la visualizzazione di immagini e file"""
+def display_images_and_files(content, file_paths_list=None, message_index=0):
+    """Mostra immagini inline e pulsanti di download per qualsiasi file."""
     download_counter = 0
     
-    # Gestisce immagini dal contenuto markdown
-    if content:
-        image_markdown_matches = re.findall(r'!\[.*?\]\((.*?)\)', content)
-        
-        for img_path in image_markdown_matches:
-            if os.path.exists(img_path):
-                st.image(img_path, use_container_width=True)
-            else:
-                st.warning(f"⚠️ Immagine non trovata: {img_path}")
-    
-    # Mostra immagini da image_paths
-    if image_paths_list:
-        for img_path in image_paths_list:
-            if os.path.exists(img_path):
-                st.image(img_path, use_container_width=True)
-            else:
-                st.warning(f"⚠️ Immagine non trovata: {img_path}")
-    
-    # Cerca percorsi file (es. C:\Users...) e file:///...
-    if content:
-        file_paths = re.findall(r'([A-Za-z]:\\[^\s]+)', content)
-        file_paths += re.findall(r'\[([^\]]+)\]\((file:///.*?)\)', content)
-
-        for file_path in file_paths:
-            file_path = file_path.strip().rstrip(").,]\"'")
-
-            if isinstance(file_path, tuple):
-                text, link = file_path
-                file_path = link.replace("file:///", "")
-
-            if os.path.exists(file_path):
-                with open(file_path, "rb") as file:
-                    file_bytes = file.read()
-
+    # Mostra i file passati esplicitamente dal tool
+    if file_paths_list:
+        for raw_path in file_paths_list:
+            norm_path = raw_path.replace("\\\\", "\\").replace("\\", os.sep)
+            
+            if os.path.exists(norm_path):
+                ext = norm_path.lower()
+                
+                if ext.endswith((".png", ".jpg", ".jpeg", ".gif", ".bmp", ".webp")):
+                    st.image(norm_path, use_container_width=True)
+                
+                with open(norm_path, "rb") as f:
+                    file_bytes = f.read()
                 st.download_button(
-                    label=f"📥 Scarica {os.path.basename(file_path)}",
+                    label=f"📥 Scarica {os.path.basename(norm_path)}",
                     data=file_bytes,
-                    file_name=os.path.basename(file_path),
+                    file_name=os.path.basename(norm_path),
                     mime="application/octet-stream",
                     key=f"download_{message_index}_{download_counter}"
                 )
                 download_counter += 1
             else:
-                st.error(f"❌ File non trovato: {file_path}")
+                st.error(f"File non trovato: {norm_path}")
+    
+    # Mostra eventuali immagini inline dal contenuto markdown
+    if content:
+        image_markdown_matches = re.findall(r'!\[.*?\]\((.*?)\)', content)
+        for img_path in image_markdown_matches:
+            img_path = img_path.replace("file:///", "")
+            if os.path.exists(img_path):
+                st.image(img_path, use_container_width=True)
+            else:
+                st.warning(f"Immagine non trovata: {img_path}")
 
 def display_chat_history(thread_id):
     """Display the conversation history with streaming support."""
     chat_history = get_chat_history(thread_id)
     
-    # Container per i messaggi
     chat_container = st.container()
     
-    # Visualizzazione dei messaggi
     with chat_container:
         for i, message in enumerate(chat_history):
             role = message.get("role", "unknown")
             content = format_message_content(message)
             
-            # Messaggio utente
             if role == "user":
                 with st.chat_message("user"):
                     st.markdown(content if content else "[Messaggio vuoto]")
             
-            # Messaggio bot/assistant
             elif role == "bot" or role == "assistant":
                 with st.chat_message("assistant"):
-                    # Contenuto principale (senza immagini markdown)
                     if content:
                         cleaned_content = re.sub(r'!\[.*?\]\((.*?)\)', '', content).strip()
                         if cleaned_content:
                             st.markdown(cleaned_content)
                     
-                    # Gestisci immagini e file
                     image_paths_list = message.get("image_paths", [])
                     display_images_and_files(content, image_paths_list, i)
                     
-                    # Mostra le tool calls se presenti (per compatibilità con LangChain)
                     if hasattr(message, 'tool_calls') and message.tool_calls:
                         tool_calls_formatted = format_tool_calls(message)
                         if tool_calls_formatted:
                             with st.expander("🔧 Strumenti utilizzati"):
                                 st.markdown(tool_calls_formatted)
                     
-                    # TTS button
                     play_text_to_speech(content or "", key=f"tts_button_{i}")
             
-            # Messaggio tool (per LangChain ToolMessage)
             elif hasattr(message, 'name') and message.name:
                 with st.chat_message("assistant"):
                     with st.expander(f"📋 Risultato: {message.name}"):
                         st.code(format_message_content(message), language="text")
 
-# Funzione asincrona per gestire lo streaming della risposta
-async def stream_agent_response(user_input: str, thread_id: str, config_chat, user_file_paths=None) -> AsyncGenerator[str, None]:
-    """Gestisce lo streaming della risposta dell'agente"""
-    file_path_for_prompt = user_file_paths[0] if user_file_paths else None
-    enhanced_user_input = enhance_user_input(config_chat, user_input, file_path_for_prompt)
-    config = {"configurable": {"thread_id": thread_id}}
+def process_tool_messages_for_images(tool_messages):
+    """Processa i messaggi dei tool per estrarre percorsi delle immagini valide."""
+    all_image_paths = []
     
-    try:
-        # Stream della risposta dall'agente
-        async for event in compiled_graph.astream(
-            {"messages": [{"role": "user", "content": enhanced_user_input}]}, 
-            config=config
-        ):
-            # Gestisci diversi tipi di eventi
-            for node_name, node_output in event.items():
-                if node_name == "agent" and "messages" in node_output:
-                    for message in node_output["messages"]:
-                        # Per AIMessage di LangChain
-                        if hasattr(message, 'content') and message.content:
-                            # Stream del contenuto character by character
-                            for char in message.content:
-                                yield char
-                                await asyncio.sleep(0.01)  # Piccolo delay per effetto typing
-                        
-                        # Per messaggi dictionary
-                        elif isinstance(message, dict) and message.get('content'):
-                            for char in message['content']:
-                                yield char
-                                await asyncio.sleep(0.01)
-    
-    except Exception as e:
-        yield f"\n❌ **Errore:** {str(e)}"
+    for tool_msg in tool_messages:
+        try:
+            tool_output = json.loads(tool_msg.content)
+            image_paths = tool_output.get("image_paths")
 
-# Funzione di supporto per gestire lo streaming in Streamlit
-async def handle_streaming_response_async(user_input: str, thread_id: str, config_chat):
-    """Gestisce la risposta streaming in Streamlit"""
-    message_placeholder = st.empty()
-    full_response = ""
+            if image_paths is None:  # fallback per retrocompatibilità
+                image_path = tool_output.get("image_path") or tool_output.get("path")
+                if image_path:
+                    image_paths = [image_path]
+                elif isinstance(tool_output, list):
+                    image_paths = tool_output
+                else:
+                    image_paths = []
+
+            if image_paths:
+                all_image_paths.extend(image_paths)
+                
+        except (json.JSONDecodeError, AttributeError) as e:
+            st.error(f"Errore nel parsing del tool message: {e}")
+            continue
     
-    try:
-        async for chunk in stream_agent_response(user_input, thread_id, config_chat):
-            full_response += chunk
-            message_placeholder.markdown(full_response + "▌")
-        
-        # Rimuovi il cursore alla fine
+    # Ritorna solo i percorsi di immagini che esistono effettivamente
+    return [img_path for img_path in all_image_paths if os.path.exists(img_path)]
+
+async def handle_streaming_events(events_generator):
+    """Gestisce lo streaming in tempo reale degli eventi dell'agente."""
+    full_response = ""
+    tool_messages = []
+    message_placeholder = st.empty()
+    has_image_tools = False
+    
+    # Processa eventi in streaming
+    async for event in events_generator:
+        for node_name, node_output in event.items():
+            # Controlla se ci sono tool che generano immagini
+            if node_name == "tools" and "messages" in node_output:
+                for message in node_output["messages"]:
+                    if (hasattr(message, 'name') and 
+                        message.name in ["image_generator", "data_viz_tool"]):
+                        tool_messages.append(message)
+                        has_image_tools = True
+            
+            # Gestisce lo streaming del testo
+            elif node_name == "agent" and "messages" in node_output:
+                for message in node_output["messages"]:
+                    if hasattr(message, 'content') and message.content:
+                        # Streaming carattere per carattere
+                        for char in message.content:
+                            full_response += char
+                            message_placeholder.markdown(full_response + "▌")
+                            await asyncio.sleep(0.01)  # Effetto typing
+    
+    # Rimuove il cursore finale
+    if full_response:
         message_placeholder.markdown(full_response)
-        return full_response
+    
+    # Processa immagini dopo lo streaming del testo
+    valid_image_paths = process_tool_messages_for_images(tool_messages)
+    
+    if valid_image_paths:
+        # Se ci sono immagini, aggiorna il messaggio e mostra le immagini
+        if full_response:
+            message_placeholder.markdown(full_response + "\n\nEcco le visualizzazioni generate:")
+        else:
+            message_placeholder.markdown("Ecco le visualizzazioni generate:")
         
-    except Exception as e:
-        error_msg = f"Errore durante lo streaming: {str(e)}"
-        message_placeholder.markdown(error_msg)
-        return error_msg
+        for img_path in valid_image_paths:
+            st.image(img_path, use_container_width=True)
+        
+        return full_response + "\n\nEcco le visualizzazioni generate:", valid_image_paths
+    
+    return full_response, None
+
+def handle_non_streaming_events(events):
+    """Gestisce gli eventi dell'agente in modalità non-streaming."""
+    full_response = ""
+    tool_messages = []
+    
+    # Processa tutti gli eventi
+    for event in events:
+        for node_name, node_output in event.items():
+            if node_name == "tools" and "messages" in node_output:
+                for message in node_output["messages"]:
+                    if (hasattr(message, 'name') and 
+                        message.name in ["image_generator", "data_viz_tool"]):
+                        tool_messages.append(message)
+            
+            elif node_name == "agent" and "messages" in node_output:
+                for message in node_output["messages"]:
+                    if hasattr(message, 'content') and message.content:
+                        full_response += message.content
+    
+    # Mostra il testo
+    if full_response:
+        st.markdown(full_response)
+    
+    # Processa le immagini dai tool
+    valid_image_paths = process_tool_messages_for_images(tool_messages)
+    
+    if valid_image_paths:
+        if full_response:
+            st.markdown("Ecco le visualizzazioni generate:")
+        else:
+            st.markdown("Ecco le visualizzazioni generate:")
+        
+        for img_path in valid_image_paths:
+            st.image(img_path, use_container_width=True)
+        
+        return full_response + "\n\nEcco le visualizzazioni generate:", valid_image_paths
+    
+    return full_response, None
 
 def sidebar_configuration():
     """Render the sidebar for configuration and guide."""
     with st.sidebar:
-        # Sezione Thread ID
         new_thread_id = st.text_input(
             "Thread ID:",
             value="7",
@@ -253,7 +303,6 @@ def sidebar_configuration():
 
         config_thread_id = select_thread_id if select_thread_id and select_thread_id == new_thread_id else new_thread_id
 
-        # Sezione configurazione chat
         with st.expander(":gear: Chat configuration"):
             config_complexity_level = st.selectbox(
                 "Level of complexity of responses",
@@ -264,7 +313,6 @@ def sidebar_configuration():
                 ("None", "Semantics in Intelligent Information Access")
             )
             
-            # Opzione per abilitare/disabilitare streaming
             streaming_enabled = st.checkbox(
                 "Abilita streaming delle risposte",
                 value=st.session_state.streaming_enabled,
@@ -277,10 +325,9 @@ def sidebar_configuration():
                 course=config_course
             )
 
-        # Sezione guida spostata qui
-        st.divider()  # Separatore visivo
+        st.divider()
         
-        with st.expander("🚀 Come utilizzare UNIVOX"):
+        with st.expander("Come utilizzare UNIVOX"):
             st.markdown(
                 """
                 Questo tutor virtuale basato sull'intelligenza artificiale è progettato per supportarti nel tuo percorso accademico.  
@@ -316,7 +363,7 @@ def sidebar_configuration():
                 - Alcune funzionalità avanzate sono state disabilitate per motivi di stabilità.
                 - Il sistema è in continuo miglioramento: il tuo feedback è prezioso!
 
-                🏆 *Migliora la tua esperienza di studio con UNIVOX!*
+                *Migliora la tua esperienza di studio con UNIVOX!*
                 """,
                 unsafe_allow_html=True
             )
@@ -324,18 +371,12 @@ def sidebar_configuration():
     return config_thread_id, config_chat
 
 def enhance_user_input(config_chat, user_input, file_path):
-    """
-    Generates an optimized prompt for the chatbot with focused instructions.
-    """
-    
-    # Core instructions - sempre presenti ma concise
+    """Generates an optimized prompt for the chatbot with focused instructions."""
     core_instructions = []
     
-    # Language requirement (sempre primo)
     if config_chat.language:
         core_instructions.append(f"Respond in {config_chat.language}.")
     
-    # Complexity level - versione semplificata
     complexity_map = {
         "Basic": "Use simple language and basic explanations.",
         "Intermediate": "Provide moderate detail with some technical terms.",
@@ -345,38 +386,63 @@ def enhance_user_input(config_chat, user_input, file_path):
     if config_chat.complexity_level in complexity_map:
         core_instructions.append(complexity_map[config_chat.complexity_level])
     
-    # Course context - solo se rilevante
     if config_chat.course and config_chat.course != "None":
         core_instructions.append(f"Context: User is studying {config_chat.course}. Prioritize course-related materials, then expand if needed.")
     
-    # File attachment - conciso
     if file_path:
         core_instructions.append(f"Analyze uploaded file: {file_path}")
     
-    # Academic integrity - sempre presente
-    core_instructions.append("Academic support agent: Never invent information. Use retrieve_tool for documents, web_search for current info. Always cite sources.")
+    core_instructions.extend([
+        "Academic support agent: Never invent information. Use retrieve_tool for documents, web_search for current info. Always cite sources. Always provide files paths if available.",
+        "If no reliable sources found, clearly state limitations rather than guessing."
+    ])
     
-    # Fallback behavior
-    core_instructions.append("If no reliable sources found, clearly state limitations rather than guessing.")
-    
-    # Assembla il prompt finale
     if core_instructions:
         instruction_block = "\n".join(f"• {instr}" for instr in core_instructions)
-        enhanced_user_input = f"{instruction_block}\n\nQuery: {user_input}"
-    else:
-        enhanced_user_input = user_input
+        return f"{instruction_block}\n\nQuery: {user_input}"
     
-    return enhanced_user_input
+    return user_input
 
 def save_chat_history(thread_id, chat_history):
-    # Crea la cartella se non esiste
+    """Save chat history to file."""
     os.makedirs("history", exist_ok=True)
-
     with open(f"history/{thread_id}.json", "w", encoding="utf-8") as f:
         json.dump(chat_history, f, ensure_ascii=False, indent=2)
 
+def save_uploaded_file(user_file_input):
+    """Salva qualsiasi tipo di file caricato dall'utente."""
+    try:
+        temp_dir = tempfile.mkdtemp()
+        tmp_file_path = os.path.join(temp_dir, user_file_input.name)
+        
+        with open(tmp_file_path, 'wb') as f:
+            f.write(user_file_input.getvalue())
+        
+        file_type, _ = mimetypes.guess_type(user_file_input.name)
+        
+        # Messaggio di successo basato sul tipo
+        if file_type:
+            if file_type.startswith('audio'):
+                st.success("File audio caricato 📤")
+            elif file_type.startswith('image'):
+                st.success(f"File immagine caricato 📤")
+            elif file_type.startswith('video'):
+                st.success(f"File video caricato 📤")
+            elif file_type == 'application/pdf':
+                st.success("File PDF caricato 📤")
+            else:
+                st.success("File caricato 📤")
+        else:
+            st.success("File caricato 📤")
+        
+        return repr(os.path.normpath(tmp_file_path))
+        
+    except Exception as e:
+        st.error(f"Errore durante il salvataggio del file: {str(e)}")
+        return ""
+
 def handle_chatbot_response(user_input, thread_id, config_chat, user_files=None):
-    """Handle chatbot response with streaming support."""
+    """Handle chatbot response with unified streaming/non-streaming logic."""
     # Gestisci il caso in cui user_input sia un oggetto ChatInputValue
     if hasattr(user_input, 'text'):
         input_text = user_input.text
@@ -393,31 +459,23 @@ def handle_chatbot_response(user_input, thread_id, config_chat, user_files=None)
 
     # Save user message if not already the last one
     if not chat_history or chat_history[-1]["role"] != "user" or chat_history[-1]["content"] != input_text:
-        chat_history.append({"role": "user", "content": input_text})
+        add_message_to_history(thread_id, "user", input_text)
 
     # Process uploaded files if any
     user_file_paths = []
     if user_files:
         for uploaded_file in user_files:
-            file_path = save_file(uploaded_file)
+            file_path = save_uploaded_file(uploaded_file)
             if file_path:
                 user_file_paths.append(file_path)
-                st.success(f"File caricato: {uploaded_file.name}")
 
     try:
+        file_path_for_prompt = user_file_paths[0] if user_file_paths else None
+        enhanced_user_input = enhance_user_input(config_chat, input_text, file_path_for_prompt)
+        config = {"configurable": {"thread_id": thread_id}}
+        
         if st.session_state.streaming_enabled:
-            # Modalità streaming
-            file_path_for_prompt = user_file_paths[0] if user_file_paths else None
-            enhanced_user_input = enhance_user_input(config_chat, input_text, file_path_for_prompt)
-            config = {"configurable": {"thread_id": thread_id}}
-            
-            full_response = ""
-            message_placeholder = st.empty()
-            
-            # Raccoglie tutti gli eventi per processare i tool messages
-            all_events = []
-            has_image_tools = False
-            
+            # Modalità streaming - streaming in tempo reale
             try:
                 loop = asyncio.get_event_loop()
             except RuntimeError:
@@ -425,205 +483,29 @@ def handle_chatbot_response(user_input, thread_id, config_chat, user_files=None)
                 asyncio.set_event_loop(loop)
             
             async def run_streaming():
-                nonlocal full_response, all_events, has_image_tools
-                
-                async for event in compiled_graph.astream(
+                events_generator = compiled_graph.astream(
                     {"messages": [{"role": "user", "content": enhanced_user_input}]}, 
                     config=config
-                ):
-                    all_events.append(event)
-                    
-                    # Controlla se ci sono tool che generano immagini
-                    for node_name, node_output in event.items():
-                        if node_name == "tools" and "messages" in node_output:
-                            for message in node_output["messages"]:
-                                if (hasattr(message, 'name') and 
-                                    message.name in ["image_generator", "data_viz_tool"]):
-                                    has_image_tools = True
-                    
-                    for node_name, node_output in event.items():
-                        if node_name == "agent" and "messages" in node_output:
-                            for message in node_output["messages"]:
-                                if hasattr(message, 'content') and message.content:
-                                    # Se ci sono strumenti che generano immagini, non fare streaming del testo
-                                    # ma aspetta di mostrare tutto insieme
-                                    if not has_image_tools:
-                                        for char in message.content:
-                                            full_response += char
-                                            message_placeholder.markdown(full_response + "▌")
-                                            await asyncio.sleep(0.01)
-                                    else:
-                                        full_response += message.content
-                                         
-                if not has_image_tools:
-                    message_placeholder.markdown(full_response)
-                
-                return full_response
+                )
+                return await handle_streaming_events(events_generator)
             
-            full_response = loop.run_until_complete(run_streaming())
-            
-            # Process tool messages for images after streaming is complete
-            tool_messages = []
-            for event in all_events:
-                for node_name, node_output in event.items():
-                    if node_name == "tools" and "messages" in node_output:
-                        for message in node_output["messages"]:
-                            if (hasattr(message, 'name') and 
-                                message.name in ["image_generator", "data_viz_tool"]):
-                                tool_messages.append(message)
-            
-            # Se ci sono strumenti che generano immagini, mostra tutto insieme
-            if tool_messages:
-                try:
-                    all_image_paths = []
-                    
-                    for tool_msg in tool_messages:
-                        tool_output = json.loads(tool_msg.content)
-                        image_paths = tool_output.get("image_paths")
-
-                        if image_paths is None:  # fallback per retrocompatibilità
-                            image_path = tool_output.get("image_path") or tool_output.get("path")
-                            if image_path:
-                                image_paths = [image_path]
-                            elif isinstance(tool_output, list):
-                                image_paths = tool_output
-                            else:
-                                image_paths = []
-
-                        if image_paths:
-                            all_image_paths.extend(image_paths)
-                    
-                    if all_image_paths:
-                        # Verifica se le immagini esistono effettivamente
-                        valid_image_paths = [img_path for img_path in all_image_paths if os.path.exists(img_path)]
-                        
-                        if valid_image_paths:
-                            # Se i chart sono stati generati correttamente, mostra solo le immagini
-                            message_placeholder.markdown("Ecco le visualizzazioni generate:")
-                            
-                            # Display images
-                            for img_path in valid_image_paths:
-                                st.image(img_path, use_container_width=True)
-                            
-                            # Add only image message to chat history
-                            chat_history.append({
-                                "role": "bot",
-                                "content": "Ecco le visualizzazioni generate:",
-                                "image_paths": valid_image_paths
-                            })
-                        else:
-                            # Le immagini non esistono, mostra la risposta testuale
-                            message_placeholder.markdown(full_response)
-                            if full_response and not full_response.startswith("❌"):
-                                chat_history.append({"role": "bot", "content": full_response})
-                    else:
-                        # Nessuna immagine nei tool messages, mostra la risposta testuale
-                        message_placeholder.markdown(full_response)
-                        if full_response and not full_response.startswith("❌"):
-                            chat_history.append({"role": "bot", "content": full_response})
-
-                except Exception as e:
-                    st.error(f"Errore nell'estrazione dell'immagine: {str(e)}")
-                    # Fallback: salva solo la risposta testuale
-                    if full_response and not full_response.startswith("❌"):
-                        chat_history.append({"role": "bot", "content": full_response})
-            else:
-                # Nessuno strumento immagine, salva solo la risposta testuale
-                if full_response and not full_response.startswith("❌"):
-                    chat_history.append({"role": "bot", "content": full_response})
-                
+            bot_response, image_paths = loop.run_until_complete(run_streaming())
         else:
-            # Modalità senza streaming
-            file_path_for_prompt = user_file_paths[0] if user_file_paths else None
-            enhanced_user_input = enhance_user_input(config_chat, input_text, file_path_for_prompt)
-            config = {"configurable": {"thread_id": thread_id}}
-
-            events = compiled_graph.stream(
+            # Modalità normale - tutto insieme
+            events = list(compiled_graph.stream(
                 {"messages": [{"role": "user", "content": enhanced_user_input}]},
                 config,
                 stream_mode="values",
-            )
+            ))
+            
+            bot_response, image_paths = handle_non_streaming_events(events)
 
-            last_event = None
-
-            for count, event in enumerate(events, start=1):
-                print(f"event {count}: {event}\n")
-                last_event = event
-
-            if last_event is not None:
-                ai_messages = [
-                    msg.content for msg in last_event.get("messages", [])
-                    if type(msg).__name__ == "AIMessage"
-                ]
-
-                tool_messages = [
-                    msg for msg in last_event.get("messages", [])
-                    if type(msg).__name__ == "ToolMessage" and msg.name in ["image_generator", "data_viz_tool"]
-                ]
-
-                if ai_messages:
-                    bot_response = ai_messages[-1]
-                    
-                    # Process image from tool message
-                    if tool_messages:
-                        try:
-                            all_image_paths = []
-                            
-                            for tool_msg in tool_messages:
-                                tool_output = json.loads(tool_msg.content)
-                                image_paths = tool_output.get("image_paths")
-
-                                if image_paths is None:  # fallback per retrocompatibilità
-                                    image_path = tool_output.get("image_path") or tool_output.get("path")
-                                    if image_path:
-                                        image_paths = [image_path]
-                                    elif isinstance(tool_output, list):
-                                        image_paths = tool_output
-                                    else:
-                                        image_paths = []
-
-                                if image_paths:
-                                    all_image_paths.extend(image_paths)
-
-                            # Verifica se le immagini esistono effettivamente
-                            valid_image_paths = [img_path for img_path in all_image_paths if os.path.exists(img_path)]
-                            
-                            if valid_image_paths:
-                                # Se i chart sono stati generati correttamente, mostra solo le immagini
-                                st.markdown("Ecco le visualizzazioni generate:")
-                                
-                                # Display images
-                                for img_path in valid_image_paths:
-                                    st.image(img_path, use_container_width=True)
-                                
-                                chat_history.append({
-                                    "role": "bot",
-                                    "content": "Ecco le visualizzazioni generate:",
-                                    "image_paths": valid_image_paths
-                                })
-                            else:
-                                # Le immagini non esistono, mostra la risposta testuale
-                                st.markdown(bot_response)
-                                chat_history.append({"role": "bot", "content": bot_response})
-
-                        except Exception as e:
-                            st.error(f"Errore nell'estrazione dell'immagine: {str(e)}")
-                            # Fallback: mostra solo il testo
-                            st.markdown(bot_response)
-                            chat_history.append({"role": "bot", "content": bot_response})
-                    else:
-                        # Solo testo, nessuna immagine
-                        st.markdown(bot_response)
-                        chat_history.append({"role": "bot", "content": bot_response})
-                else:
-                    st.write("No AI message found.")
+        # Salva la risposta del bot
+        if bot_response and not bot_response.startswith("❌"):
+            add_message_to_history(thread_id, "bot", bot_response, image_paths)
 
     except Exception as e:
         st.error(f"An error occurred: {str(e)}")
-
-    # Salva la cronologia aggiornata
-    save_chat_history(thread_id, chat_history)
-
 
 def transcribe_audio(audio_file):
     """Use AssemblyAI to transcribe audio."""
@@ -644,105 +526,6 @@ def transcribe_audio(audio_file):
         st.error(f"Audio transcription error: {str(e)}")
         return ""
 
-def save_file(user_file_input):
-    """Salva il file caricato in base al tipo (audio, immagine, video, testo)"""
-    try:
-        file_name = user_file_input.name
-        file_type, encoding = mimetypes.guess_type(file_name)
-
-        # Crea una cartella temporanea per il salvataggio dei file
-        temp_dir = tempfile.mkdtemp()
-
-        # Verifica se il tipo di file è audio, immagine, video o testo
-        if file_type:
-            if file_type.startswith('audio'):
-                # Salva i file audio con estensione .wav o altro
-                tmp_file_path = save_audio_file(user_file_input, temp_dir)
-            elif file_type.startswith('image'):
-                # Salva i file immagine con estensione .jpg o altro
-                tmp_file_path = save_image_file(user_file_input, temp_dir)
-            elif file_type.startswith('video'):
-                # Salva i file video con estensione .mp4 o altro
-                tmp_file_path = save_video_file(user_file_input, temp_dir)
-            elif file_type.startswith('text') or file_type in ['application/vnd.ms-excel', 'text/csv']: 
-                # Salva i file testuali (txt, csv, json, xml, ecc.)
-                tmp_file_path = save_text_file(user_file_input, temp_dir)
-            elif file_type == 'application/pdf':
-                # Salva i file PDF
-                tmp_file_path = save_pdf_file(user_file_input, temp_dir)
-            else:
-                st.error(f"Tipo di file non supportato: {file_type}")
-                return ""
-        else:
-            st.error("Tipo di file non riconosciuto.")
-            return ""
-
-        return repr(os.path.normpath(tmp_file_path))  # return tmp_file_path 
-
-    except Exception as e:
-        st.error(f"Errore durante il salvataggio del file: {str(e)}")
-        return ""
-
-def save_audio_file(user_file_input, temp_dir):
-    """Salva i file audio nel formato appropriato"""
-    try:
-        tmp_file_path = os.path.join(temp_dir, user_file_input.name)
-        with open(tmp_file_path, 'wb') as f:
-            f.write(user_file_input.getvalue())
-        st.success("File audio caricato 📤")
-        return tmp_file_path
-    except Exception as e:
-        st.error(f"Errore durante il salvataggio del file audio: {str(e)}")
-        return ""
-
-def save_image_file(user_file_input, temp_dir):
-    """Salva i file immagine nel formato appropriato"""
-    try:
-        tmp_file_path = os.path.join(temp_dir, user_file_input.name)
-        with open(tmp_file_path, 'wb') as f:
-            f.write(user_file_input.getvalue())
-        st.success(f"File immagine caricato 📤 {tmp_file_path}")
-        return tmp_file_path
-    except Exception as e:
-        st.error(f"Errore durante il salvataggio del file immagine: {str(e)}")
-        return ""
-
-def save_video_file(user_file_input, temp_dir):
-    """Salva i file video nel formato appropriato"""
-    try:
-        tmp_file_path = os.path.join(temp_dir, user_file_input.name)
-        with open(tmp_file_path, 'wb') as f:
-            f.write(user_file_input.getvalue())
-        st.success(f"File video caricato 📤 {tmp_file_path}")
-        return tmp_file_path
-    except Exception as e:
-        st.error(f"Errore durante il salvataggio del file video: {str(e)}")
-        return ""
-
-def save_text_file(user_file_input, temp_dir):
-    """Salva i file testuali (txt, csv, json, xml)"""
-    try:
-        tmp_file_path = os.path.join(temp_dir, user_file_input.name)
-        with open(tmp_file_path, 'wb') as f:
-            f.write(user_file_input.getvalue())
-        st.success("File testuale caricato 📤")
-        return tmp_file_path
-    except Exception as e:
-        st.error(f"Errore durante il salvataggio del file testuale: {str(e)}")
-        return ""
-
-def save_pdf_file(user_file_input, temp_dir):
-    """Salva i file PDF"""
-    try:
-        tmp_file_path = os.path.join(temp_dir, user_file_input.name)
-        with open(tmp_file_path, 'wb') as f:
-            f.write(user_file_input.getvalue())
-        st.success("File PDF caricato 📤")
-        return tmp_file_path
-    except Exception as e:
-        st.error(f"Errore durante il salvataggio del file PDF: {str(e)}")
-        return ""
-
 def play_text_to_speech(text, key):
     """Call ElevenLabs TTS tool and play the generated speech."""
     if st.button("🔊", key=key):
@@ -750,6 +533,7 @@ def play_text_to_speech(text, key):
         st.audio(audio_path, format="audio/mp3")
 
 def voice_chat_input():
+    """Gestisce l'input vocale e testuale nella parte inferiore."""
     float_init()
 
     with bottom():
@@ -776,9 +560,7 @@ def voice_chat_input():
 
     return user_submission, voice_button
 
-
 def main():
-
     initialize_session()
     
     try:
@@ -788,7 +570,6 @@ def main():
         pass
 
     config_thread_id, config_chat = sidebar_configuration()
-
     chat_history = get_chat_history(config_thread_id)
 
     if not chat_history:
@@ -809,7 +590,6 @@ def main():
         st.rerun()
 
     if st.session_state.get('voice_mode', False):
-        # Mostra l'audio input nella parte principale (non in basso)
         with st.container():
             st.info("🎤 Modalità vocale attivata - Registra il tuo messaggio")
             user_audio_input = st.audio_input(
@@ -835,15 +615,12 @@ def main():
     if user_submission:
         # Estrai testo e file dalla submission
         if hasattr(user_submission, 'text') and hasattr(user_submission, 'files'):
-            # È un oggetto ChatInputValue
             user_input = user_submission.text
             user_files = user_submission.files
         elif isinstance(user_submission, str):
-            # È una stringa semplice
             user_input = user_submission
             user_files = []
         else:
-            # Fallback
             user_input = str(user_submission) if user_submission else ""
             user_files = []
         
