@@ -17,7 +17,6 @@ from typing import List
 
 
 from pydantic import BaseModel, Field
-from langchain_together import ChatTogether
 
 from langchain_core.tools import Tool
 # from langchain_community.agent_toolkits.load_tools import load_tools
@@ -63,10 +62,20 @@ google_api_key = os.getenv("GOOGLE_API_KEY")
 # ------------------------------------------------------------------------------
 # Basic tools
 # base_tool = load_tools(["human", "pubmed"])
+# wolfram_tool = load_tools(["wolfram-alpha"])[0]
+
+# wolfram_tool = Tool(
+#     name="WolframAlpha",
+#     description="Esegue query su WolframAlpha e restituisce i risultati.",
+#     func=WolframAlphaAPIWrapper().run
+# )
 
 
-def retrieve_tool(query: str):
-    """Retrieve information related to a query."""
+youtube_search_tool = YouTubeSearchTool()
+wikipedia_tool = WikipediaQueryRun(api_wrapper=WikipediaAPIWrapper())
+
+def retrieve_tool(query: str): 
+    """Retrieve information related to a query, returning both display text and file paths."""
     vector_store = get_vector_store(FAISS_INDEX_DIR)
 
     embedding_dim = vector_store.index.d
@@ -74,15 +83,28 @@ def retrieve_tool(query: str):
     if len(test_embedding) != embedding_dim:
         raise ValueError(
             f"Dimensione embedding ({len(test_embedding)}) diversa da quella dell'indice FAISS ({embedding_dim}). "
-            "Rigenera l'indice FAISS con lo stesso modello di embedding."
         )
 
     retrieved_docs = vector_store.similarity_search(query, k=2)
-    serialized = "\n\n".join(
-        f"Source: {doc.metadata}\nContent: {doc.page_content}"
-        for doc in retrieved_docs
-    )
-    return serialized, retrieved_docs
+
+    file_paths = []
+    serialized_parts = []
+
+    for doc in retrieved_docs:
+        # Prende il path se presente nei metadata
+        path = doc.metadata.get("file_path")
+        if path:
+            # Normalizza i backslash multipli
+            norm_path = path.replace("\\\\", "\\")
+            file_paths.append(norm_path)
+
+        serialized_parts.append(
+            f"Source: {doc.metadata}\nContent: {doc.page_content}"
+        )
+
+    serialized_text = "\n\n".join(serialized_parts)
+
+    return serialized_text, retrieved_docs, file_paths
 
 
 web_search_tool = TavilySearch(
@@ -125,19 +147,6 @@ google_books_tool = GoogleBooksQueryRun(api_wrapper=CustomGoogleBooksAPIWrapper(
 # ------------------------------------------------------------------------------
 # Tools for learning support
 
-youtube_search_tool = YouTubeSearchTool()
-
-wolfram = WolframAlphaAPIWrapper()
-
-
-def wolfram_tool(query: str):
-    """Query Wolfram Alpha and return the response."""
-    return wolfram.run(query)
-
-
-wikipedia_tool = WikipediaQueryRun(api_wrapper=WikipediaAPIWrapper())
-
-
 class DocumentSummarizerWrapper:
     def __init__(self, file_path: str):
         self.file_path = file_path
@@ -153,7 +162,6 @@ class DocumentSummarizerWrapper:
 
     def summarize_document(self) -> str:
         """Riassume il contenuto del documento utilizzando un LLM open-source via Together.ai."""
-        # FIXED: Inizializzazione corretta di Together
         llm = Together(
             model="mistralai/Mistral-7B-Instruct-v0.2",
             temperature=0.3,
@@ -666,7 +674,6 @@ class CSVHybridAnalyzer:
 
     def summarize_with_llm(self) -> str:
         """Genera un riassunto ragionato del dataset via Together.ai."""
-        # FIXED: Inizializzazione corretta di Together
         llm = Together(
             model="mistralai/Mistral-7B-Instruct-v0.2",
             temperature=0.3,
@@ -720,7 +727,6 @@ class DataVizTool:
         self.output_dir = output_dir
         os.makedirs(self.output_dir, exist_ok=True)
         self.sandbox = Sandbox()
-        # FIXED: Inizializzazione corretta di Together client
         self.llm = TogetherClient(api_key=os.getenv("TOGETHER_API_KEY"))
 
     def _upload_dataset(self, local_path: str) -> str:
@@ -729,7 +735,6 @@ class DataVizTool:
 
     def _generate_prompt(self, query: str, dataset_path_in_sandbox: str) -> str:
         # Leggi il dataset dal percorso LOCALE, non quello nella sandbox
-        # perché pandas non può leggere dalla sandbox
         # Quindi: leggi una preview locale, solo per ottenere info sulle colonne
         local_df = pd.read_csv(self.temp_local_csv, nrows=300)
         column_info = local_df.dtypes.astype(str).to_dict()
@@ -779,7 +784,7 @@ Instructions:
         return code
 
     def _run_code(self, code: str) -> List[str]:
-        print("@@@@@@@@@@@@@@@@@@@@@ ----------------------> Generated code:\n", code)
+        # print("@@@@@@@@@@@@@@@@@@@@@ ----------------------> Generated code:\n", code)
 
         execution = self.sandbox.run_code(code)
         if execution.error:
@@ -837,7 +842,7 @@ tools = [
     google_scholar_tool,
     wikidata_tool,
     wikipedia_tool,
-    wolfram_tool,
+    # wolfram_tool,
     youtube_search_tool,
     spotify_music_tool,
     text_to_speech_tool,
