@@ -54,14 +54,33 @@ def get_chat_history(thread_id):
         st.session_state.chat_histories[thread_id] = []
     return st.session_state.chat_histories[thread_id]
 
-def add_message_to_history(thread_id: str, role: str, content: str, image_paths: Optional[List[str]] = None):
-    """Centralizes adding messages to chat history."""
+def add_message_to_history(thread_id: str, role: str, content: str, file_paths: Optional[List[str]] = None):
+    """Centralizes adding messages to chat history with enhanced file path support (versione corretta)."""
     chat_history = get_chat_history(thread_id)
     message = {"role": role, "content": content}
-    if image_paths:
-        message["image_paths"] = image_paths
+    
+    if file_paths:
+        # Rimuovi duplicati mantenendo l'ordine
+        unique_file_paths = []
+        seen = set()
+        for fp in file_paths:
+            normalized_fp = fp.replace("\\\\", "\\").replace("\\", os.sep).strip("'\"")
+            if normalized_fp not in seen:
+                seen.add(normalized_fp)
+                unique_file_paths.append(normalized_fp)
+        
+        # Separa immagini da altri file
+        image_paths = [fp for fp in unique_file_paths if fp.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.bmp', '.webp', '.svg'))]
+        other_files = [fp for fp in unique_file_paths if not fp.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.bmp', '.webp', '.svg'))]
+        
+        if image_paths:
+            message["image_paths"] = image_paths
+        if other_files:
+            message["file_paths"] = other_files
+    
     chat_history.append(message)
     save_chat_history(thread_id, chat_history)
+
 
 def format_message_content(message):
     """Formatta il contenuto del messaggio per la visualizzazione"""
@@ -91,45 +110,72 @@ def format_tool_calls(message):
     return None
 
 def display_images_and_files(content, file_paths_list=None, message_index=0):
-    """Mostra immagini inline e pulsanti di download per qualsiasi file."""
+    """Mostra immagini inline e pulsanti di download per qualsiasi file (versione corretta)."""
+    if not file_paths_list:
+        return
+    
     download_counter = 0
+    processed_files = set()  # Per evitare duplicati
     
     # Mostra i file passati esplicitamente dal tool
-    if file_paths_list:
-        for raw_path in file_paths_list:
-            norm_path = raw_path.replace("\\\\", "\\").replace("\\", os.sep)
+    for raw_path in file_paths_list:
+        # Normalizza il path rimuovendo escape characters
+        norm_path = raw_path.replace("\\\\", "\\").replace("\\", os.sep)
+        # Rimuovi anche eventuali apici singoli o doppi all'inizio e fine
+        norm_path = norm_path.strip("'\"")
+        
+        if norm_path in processed_files:
+            continue
+        processed_files.add(norm_path)
+        
+        if os.path.exists(norm_path):
+            ext = norm_path.lower()
+            file_name = os.path.basename(norm_path)
             
-            if os.path.exists(norm_path):
-                ext = norm_path.lower()
-                
-                if ext.endswith((".png", ".jpg", ".jpeg", ".gif", ".bmp", ".webp")):
-                    st.image(norm_path, use_container_width=True)
-                
+            if ext.endswith((".png", ".jpg", ".jpeg", ".gif", ".bmp", ".webp", ".svg")):
+                st.image(norm_path, caption=file_name, use_container_width=True)
+            
+            mime_type = mimetypes.guess_type(norm_path)[0] or "application/octet-stream"
+            
+            try:
                 with open(norm_path, "rb") as f:
                     file_bytes = f.read()
+                
+                if ext.endswith((".png", ".jpg", ".jpeg", ".gif", ".bmp", ".webp", ".svg")):
+                    icon = "🖼️"
+                elif ext.endswith((".pdf",)):
+                    icon = "📄"
+                elif ext.endswith((".csv", ".xlsx", ".xls")):
+                    icon = "📊"
+                elif ext.endswith((".txt", ".md")):
+                    icon = "📝"
+                elif ext.endswith((".json", ".xml")):
+                    icon = "🗂️"
+                else:
+                    icon = "📥"
+                
+                # Key unica basata su hash del path per evitare conflitti
+                file_hash = hash(norm_path) % 10000  # Limita la lunghezza dell'hash
+                unique_key = f"download_{message_index}_{file_hash}_{download_counter}"
+                
                 st.download_button(
-                    label=f"📥 Scarica {os.path.basename(norm_path)}",
+                    label=f"{icon} Scarica {file_name}",
                     data=file_bytes,
-                    file_name=os.path.basename(norm_path),
-                    mime="application/octet-stream",
-                    key=f"download_{message_index}_{download_counter}"
+                    file_name=file_name,
+                    mime=mime_type,
+                    key=unique_key,
+                    use_container_width=True
                 )
                 download_counter += 1
-            else:
-                st.error(f"File non trovato: {norm_path}")
-    
-    # Mostra eventuali immagini inline dal contenuto markdown
-    if content:
-        image_markdown_matches = re.findall(r'!\[.*?\]\((.*?)\)', content)
-        for img_path in image_markdown_matches:
-            img_path = img_path.replace("file:///", "")
-            if os.path.exists(img_path):
-                st.image(img_path, use_container_width=True)
-            else:
-                st.warning(f"Immagine non trovata: {img_path}")
+                
+            except Exception as e:
+                st.error(f"Errore nella lettura del file {file_name}: {str(e)}")
+        else:
+            st.error(f"File non trovato: {norm_path}")
+
 
 def display_chat_history(thread_id):
-    """Display the conversation history with streaming support."""
+    """Display the conversation history with enhanced file download support (versione corretta)."""
     chat_history = get_chat_history(thread_id)
     
     chat_container = st.container()
@@ -150,111 +196,155 @@ def display_chat_history(thread_id):
                         if cleaned_content:
                             st.markdown(cleaned_content)
                     
-                    image_paths_list = message.get("image_paths", [])
-                    display_images_and_files(content, image_paths_list, i)
+                    all_file_paths = []
                     
+                    # Aggiungi image_paths se esistono
+                    if "image_paths" in message:
+                        all_file_paths.extend(message["image_paths"])
+                    
+                    # Aggiungi file_paths se esistono
+                    if "file_paths" in message:
+                        all_file_paths.extend(message["file_paths"])
+                    
+                    # Rimuovi duplicati
+                    unique_file_paths = []
+                    seen = set()
+                    for fp in all_file_paths:
+                        normalized = fp.replace("\\\\", "\\").replace("\\", os.sep).strip("'\"")
+                        if normalized not in seen:
+                            seen.add(normalized)
+                            unique_file_paths.append(normalized)
+                    
+                    if unique_file_paths:
+                        display_images_and_files(content, unique_file_paths, i)
+                    
+                    # Mostra informazioni sui tool utilizzati
                     if hasattr(message, 'tool_calls') and message.tool_calls:
                         tool_calls_formatted = format_tool_calls(message)
                         if tool_calls_formatted:
                             with st.expander("🔧 Strumenti utilizzati"):
                                 st.markdown(tool_calls_formatted)
                     
-                    play_text_to_speech(content or "", key=f"tts_button_{i}")
+                    if content:
+                        play_text_to_speech(content, key=f"tts_button_{i}")
             
             elif hasattr(message, 'name') and message.name:
                 with st.chat_message("assistant"):
                     with st.expander(f"📋 Risultato: {message.name}"):
                         st.code(format_message_content(message), language="text")
 
+
+
 def process_tool_messages_for_images(tool_messages):
-    """Processa i messaggi dei tool per estrarre percorsi delle immagini valide."""
-    all_image_paths = []
+    """Processa i messaggi dei tool per estrarre percorsi delle immagini e file validi (versione corretta)."""
+    all_file_paths = []
     
     for tool_msg in tool_messages:
         try:
-            tool_output = json.loads(tool_msg.content)
-            image_paths = tool_output.get("image_paths")
-
-            if image_paths is None:  # fallback per retrocompatibilità
-                image_path = tool_output.get("image_path") or tool_output.get("path")
-                if image_path:
-                    image_paths = [image_path]
-                elif isinstance(tool_output, list):
-                    image_paths = tool_output
-                else:
-                    image_paths = []
-
-            if image_paths:
-                all_image_paths.extend(image_paths)
-                
-        except (json.JSONDecodeError, AttributeError) as e:
+            # Prova a parsare come JSON
+            if hasattr(tool_msg, 'content'):
+                content = tool_msg.content
+            else:
+                content = str(tool_msg)
+            
+            try:
+                tool_output = json.loads(content)
+            except json.JSONDecodeError:
+                # Se non è JSON, tratta come stringa e cerca pattern di path
+                path_patterns = re.findall(r'["\']([^"\']+\.[a-zA-Z0-9]+)["\']', content)
+                for path in path_patterns:
+                    normalized_path = path.replace("\\\\", "\\").replace("\\", os.sep).strip("'\"")
+                    if os.path.exists(normalized_path):
+                        all_file_paths.append(normalized_path)
+                continue
+            
+            file_paths = []
+            
+            if "file_paths" in tool_output:
+                file_paths.extend(tool_output["file_paths"])
+            
+            if "image_paths" in tool_output:
+                file_paths.extend(tool_output["image_paths"])
+            
+            if "file_path" in tool_output:
+                file_paths.append(tool_output["file_path"])
+            elif "image_path" in tool_output:
+                file_paths.append(tool_output["image_path"])
+            elif "path" in tool_output:
+                file_paths.append(tool_output["path"])
+            
+            elif isinstance(tool_output, list):
+                file_paths.extend(tool_output)
+            
+            elif isinstance(tool_output, str) and "." in tool_output:
+                file_paths.append(tool_output)
+            
+            for file_path in file_paths:
+                if file_path:
+                    normalized_path = str(file_path).replace("\\\\", "\\").replace("\\", os.sep).strip("'\"")
+                    if os.path.exists(normalized_path):
+                        all_file_paths.append(normalized_path)
+                        
+        except Exception as e:
             st.error(f"Errore nel parsing del tool message: {e}")
             continue
     
-    # Ritorna solo i percorsi di immagini che esistono effettivamente
-    return [img_path for img_path in all_image_paths if os.path.exists(img_path)]
+    seen = set()
+    unique_paths = []
+    for path in all_file_paths:
+        normalized = path.replace("\\\\", "\\").replace("\\", os.sep).strip("'\"")
+        if normalized not in seen:
+            seen.add(normalized)
+            unique_paths.append(normalized)
+    
+    return unique_paths
+
 
 async def handle_streaming_events(events_generator):
-    """Gestisce lo streaming in tempo reale degli eventi dell'agente."""
+    """Gestisce lo streaming in tempo reale degli eventi dell'agente con download migliorato."""
     full_response = ""
     tool_messages = []
     message_placeholder = st.empty()
-    has_image_tools = False
     
-    # Processa eventi in streaming
     async for event in events_generator:
         for node_name, node_output in event.items():
-            # Controlla se ci sono tool che generano immagini
             if node_name == "tools" and "messages" in node_output:
                 for message in node_output["messages"]:
-                    if (hasattr(message, 'name') and 
-                        message.name in ["image_generator", "data_viz_tool"]):
+                    if hasattr(message, 'name'):
                         tool_messages.append(message)
-                        has_image_tools = True
             
-            # Gestisce lo streaming del testo
             elif node_name == "agent" and "messages" in node_output:
                 for message in node_output["messages"]:
                     if hasattr(message, 'content') and message.content:
-                        # Streaming carattere per carattere
                         for char in message.content:
                             full_response += char
                             message_placeholder.markdown(full_response + "▌")
                             await asyncio.sleep(0.01)  # Effetto typing
     
-    # Rimuove il cursore finale
     if full_response:
         message_placeholder.markdown(full_response)
     
-    # Processa immagini dopo lo streaming del testo
-    valid_image_paths = process_tool_messages_for_images(tool_messages)
+    valid_file_paths = process_tool_messages_for_images(tool_messages)
     
-    if valid_image_paths:
-        # Se ci sono immagini, aggiorna il messaggio e mostra le immagini
-        if full_response:
-            message_placeholder.markdown(full_response + "\n\nEcco le visualizzazioni generate:")
-        else:
-            message_placeholder.markdown("Ecco le visualizzazioni generate:")
+    if valid_file_paths:
+        st.markdown("---")
+        st.markdown("📁 **File generati:**")
+        display_images_and_files("", valid_file_paths, 999)
         
-        for img_path in valid_image_paths:
-            st.image(img_path, use_container_width=True)
-        
-        return full_response + "\n\nEcco le visualizzazioni generate:", valid_image_paths
+        return full_response, valid_file_paths
     
     return full_response, None
 
 def handle_non_streaming_events(events):
-    """Gestisce gli eventi dell'agente in modalità non-streaming."""
+    """Gestisce gli eventi dell'agente in modalità non-streaming con download migliorato."""
     full_response = ""
     tool_messages = []
     
-    # Processa tutti gli eventi
     for event in events:
         for node_name, node_output in event.items():
             if node_name == "tools" and "messages" in node_output:
                 for message in node_output["messages"]:
-                    if (hasattr(message, 'name') and 
-                        message.name in ["image_generator", "data_viz_tool"]):
+                    if hasattr(message, 'name'):
                         tool_messages.append(message)
             
             elif node_name == "agent" and "messages" in node_output:
@@ -262,25 +352,20 @@ def handle_non_streaming_events(events):
                     if hasattr(message, 'content') and message.content:
                         full_response += message.content
     
-    # Mostra il testo
     if full_response:
         st.markdown(full_response)
     
-    # Processa le immagini dai tool
-    valid_image_paths = process_tool_messages_for_images(tool_messages)
+    valid_file_paths = process_tool_messages_for_images(tool_messages)
     
-    if valid_image_paths:
-        if full_response:
-            st.markdown("Ecco le visualizzazioni generate:")
-        else:
-            st.markdown("Ecco le visualizzazioni generate:")
+    if valid_file_paths:
+        st.markdown("---")
+        st.markdown("📁 **File generati:**")
+        display_images_and_files("", valid_file_paths, 999)
         
-        for img_path in valid_image_paths:
-            st.image(img_path, use_container_width=True)
-        
-        return full_response + "\n\nEcco le visualizzazioni generate:", valid_image_paths
+        return full_response, valid_file_paths
     
     return full_response, None
+
 
 def sidebar_configuration():
     """Render the sidebar for configuration and guide."""
