@@ -2,7 +2,7 @@ llm:
   model: "meta-llama/Llama-3.3-70B-Instruct-Turbo"  # "gpt-4o"
 
 embeddings:
-  model: "sentence-transformers/all-MiniLM-L6-v2"
+  model: "BAAI/bge-m3"  # "sentence-transformers/all-MiniLM-L6-v2"
 
 vector_store:
   type: "faiss"  # Opzioni: "in_memory", "faiss"
