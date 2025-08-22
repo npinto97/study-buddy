@@ -6,6 +6,7 @@ logger.info(f"Initializing LLM with model: {CONFIG.llm.model}")
 llm = ChatTogether(
     model=CONFIG.llm.model,
     temperature=0.7,
+    streaming= True
 )
 
 logger.info(f"LLM with model {CONFIG.llm.model} successfully initialized.")
