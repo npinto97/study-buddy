@@ -395,7 +395,7 @@ def sidebar_configuration():
             )
             config_course = st.selectbox(
                 "Which course do you want to delve in?",
-                ("None", "Semantics in Intelligent Information Access")
+                ("None", "Semantics in Intelligent Information Access", "Metodi per il Ritrovamento dell'Informazione")
             )
             
             streaming_enabled = st.checkbox(
@@ -412,43 +412,63 @@ def sidebar_configuration():
 
         st.divider()
         
-        with st.expander("Come utilizzare UNIVOX"):
+        with st.expander("Cosa puoi fare con UNIVOX"):
             st.markdown(
                 """
-                Questo tutor virtuale basato sull'intelligenza artificiale è progettato per supportarti nel tuo percorso accademico.  
-                Ecco come puoi interagire con il chatbot:
+                **UNIVOX** è un agente AI con oltre 20 strumenti integrati per supportarti nel tuo percorso di studio e ricerca.
 
-                🔹 **Fai domande**: Digita la tua domanda nella casella di input per ricevere una risposta generata dall'AI.
+                ## **Ricerca e Studio**
+                - **Ricerca web avanzata** con Tavily per informazioni aggiornate
+                - **Ricerca accademica** su ArXiv, Google Scholar e PubMed
+                - **Consultazione** di Wikipedia, Wikidata e Google Books
+                - **Recupero documenti** dal tuo archivio personale indicizzato
 
-                🔹 **Carica file**: Trascina file PDF o immagini direttamente nella chat per estrarre e analizzare contenuti.
+                ## **Elaborazione Documenti**
+                - **Riassunti automatici** di PDF e file di testo
+                - **Estrazione testo** da PDF scansionati e immagini (OCR)
+                - **Analisi del sentiment** per valutare il tono emotivo dei contenuti
+                - **Analisi CSV** con statistiche descrittive e insight semantici
 
-                🔹 **Usa l'input vocale**: Clicca sul pulsante del microfono per registrare la tua voce.
+                ## **Visualizzazione Dati**
+                - **Generazione grafici** automatica da dataset CSV
+                - **Codice Python** eseguibile in sandbox sicuro
+                - **Interpretazione** di query in linguaggio naturale per creare visualizzazioni
 
-                🔹 **Supporto multi-tool**: Il sistema integra diversi strumenti AI per attività come riassunti, analisi del sentiment e riconoscimento testuale.  
+                ## **Strumenti Multimodali**
+                - **Riconoscimento immagini** con Google Lens
+                - **Text-to-Speech** con voci naturali ElevenLabs
+                - **Speech-to-Text** per trascrizioni accurate
+                - **Input vocale** integrato nell'interfaccia
 
-                🔹 **Monitora la conversazione**: Visualizza le interazioni precedenti per tenere traccia delle discussioni.
-                
-                **Gestione delle conversazioni**  
-                - **Thread ID**: Ogni chat ha un identificativo univoco (*Thread ID*).  
-                - **Nuova chat**: Cambia il numero del *Thread ID* per avviare una nuova conversazione.  
-                - **Riapri una chat precedente**: Inserisci un *Thread ID* già usato per riprendere la discussione da dove l'avevi lasciata.  
+                ## **Funzionalità Avanzate**
+                - **Esecuzione codice** in tempo reale per calcoli e analisi
+                - **Ricerca musicale** su Spotify per il benessere mentale
+                - **Ricerca video** su YouTube per contenuti educativi
+                - **Supporto multilingua** per utenti internazionali
 
-                **Modalità Streaming**
-                - **Abilita streaming**: Nelle impostazioni puoi attivare le risposte in tempo reale
-                - **Effetto typing**: Vedi il testo apparire carattere per carattere
-                - **Indicatori tool**: Visualizza quando vengono utilizzati gli strumenti
+                ## **Come Utilizzare UNIVOX**
 
-                **Consigli per un'esperienza ottimale**
-                - Sii chiaro e specifico nelle tue domande.
-                - Se necessario, fornisci contesto o documenti di supporto.
-                - Sperimenta diverse formulazioni per esplorare al meglio le funzionalità.
+                ### **Interazione Base**
+                - Digita domande in linguaggio naturale
+                - Carica file trascinandoli nella chat
+                - Usa comandi vocali cliccando il microfono
 
-                **Limitazioni**
-                - Le risposte possono variare a causa della natura non deterministica dell'AI.
-                - Alcune funzionalità avanzate sono state disabilitate per motivi di stabilità.
-                - Il sistema è in continuo miglioramento: il tuo feedback è prezioso!
+                ### **Gestione Conversazioni**
+                - **Thread ID**: Identificativo univoco per ogni conversazione
+                - **Nuova chat**: Modifica il Thread ID per iniziare da capo
+                - **Riprendi chat**: Inserisci un Thread ID esistente per continuare
 
-                *Migliora la tua esperienza di studio con UNIVOX!*
+                ### **Suggerimenti per Risultati Ottimali**
+                - Sii **specifico** nelle richieste ("Analizza questo PDF e creami un riassunto di 200 parole")
+                - **Combina strumenti** ("Cerca su ArXiv articoli su ML e riassumi i primi 3")
+                - **Fornisci contesto** per domande complesse
+                - **Sperimenta** con diverse formulazioni
+
+                ## **Note Tecniche**
+                - Sandbox isolato per l'esecuzione sicura del codice
+                - Archivio vettoriale per ricerca semantica nei documenti
+                - API multiple integrate per massima copertura informativa
+                - Risposte non deterministiche per natura dell'AI
                 """,
                 unsafe_allow_html=True
             )
