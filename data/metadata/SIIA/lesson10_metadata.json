@@ -1,0 +1,66 @@
+{
+    "lesson_number": 10,
+    "title": "Natural Language Explanations for Recommender Systems",
+    "keywords": [
+      "Explanations",
+      "Context-aware Explanations",
+      "Content-based Explanations"
+    ],
+    "slides": [
+      "slides/Lesson_10_natural_language_explanations_for_recommender_systems.pdf"
+    ],
+    "notes": [],
+    "references": [
+      {
+        "title": "Combining Text Summarization and Aspect-based Sentiment Analysis of Users Reviews to Justify Recommendations",
+        "filename": "references/combining_text_summarization_and_aspect_based_sentiment_analysis_of_users_reviews_to_justify_recommendations.pdf",
+        "description": "This paper presents a methodology for justifying recommendations by extracting relevant information from user reviews. The approach uses natural language processing techniques like aspect extraction, sentiment analysis, and summarization to create a concise summary highlighting key characteristics of the item. A user study in the movie domain showed that this method enhances the transparency, engagement, and trustworthiness of the recommendation process. It provides users with a clear justification for why an item is recommended based on its reviews."
+      },
+      {
+        "title": "Designing and Evaluating Explanations for'Recommender Systems",
+        "filename": "references/designing_and_evaluating_explanations_for_recommender_systems.pdf",
+        "description": "This chapter discusses the role of explanations in recommender systems, focusing on how to evaluate their effectiveness. It identifies seven benefits explanations can offer, such as increasing transparency, trust, and user engagement. The chapter also examines the impact of presentation and interaction on explanations, and links different explanation styles to the algorithms used. Various examples from existing systems are provided throughout to illustrate these points. It aims to guide the design and evaluation of explanations in practical recommender systems."
+      },
+      {
+        "title": "Explaining Collaborative Filtering Recommendations",
+        "filename": "references/explaining_collaborative_filtering_recommendations.pdf",
+        "description": "This paper explores explanation interfaces for Automated Collaborative Filtering (ACF) systems, focusing on how to implement and why explanations are crucial. It presents a model for explanations based on the user's understanding of the recommendation process. Experimental results highlight which explanation components are most compelling. The paper also demonstrates that providing explanations can increase user acceptance of ACF systems and improve user filtering performance. It emphasizes the importance of transparency in recommendation processes for enhancing trust and effectiveness."
+      },
+      {
+        "title": "Exploiting Distributional Semantics Models for Natural Language Context-aware Justifications for Recommender Systems",
+        "filename": "references/exploiting_distributional_semantics_models_for_natural_language_context_aware_justifications_for_recommender_systems.pdf",
+        "description": "This paper introduces a methodology for generating context-aware natural language justifications for recommendations. By utilizing distributional semantics models and analyzing reviews, the approach identifies relevant aspects for each consumption context. These aspects are then used to create justifications tailored to the specific context. A user study in the movie domain validates the effectiveness of this approach, confirming that context-sensitive justifications enhance the recommendation experience."
+      },
+      {
+        "title": "Exploring the Effects of Natural Language Justifications in Food Recommender Systems",
+        "filename": "references/exploring_the_effects_of_natural_language_justifications_in_food_recommender_systems.pdf",
+        "description": "This study introduces a methodology for generating natural language justifications in food recommender systems, focusing on nutritional content and health impacts. The framework provides personalized justifications based on user preferences and recipe features. The evaluation, conducted through an online study, compared popularity-based and health-aware recommendation algorithms. It found that comparative justifications effectively influenced users' food choices, encouraging healthier decisions."
+      },
+      {
+        "title": "Generating post hoc review-based natural language justifcations for recommender systems",
+        "filename": "references/generating_post_hoc_review_based_natural_language_justifications_for_recommender_systems.pdf",
+        "description": "This article presents a framework for generating post hoc natural language justifications for recommendations. The methodology relies on extracting relevant information from item reviews and creating transparent, independent justifications. Three implementations are explored: sentiment analysis-based, automatic aspect extraction with summarization, and context-aware justifications that adjust based on varying settings. The results of user studies across different domains demonstrate that these justifications enhance user trust and engagement with the recommendation process."
+      }
+    ],
+    "supplementary_materials": [],
+    "exercises": [],
+    "multimedia": {
+      "videos": [],
+      "images": [],
+      "audio": []
+    },
+    "external_resources": [
+      {
+        "type": "website",
+        "title": "XAI: Explainable Artificial Intelligence",
+        "url": "https://www.darpa.mil/research/programs/explainable-artificial-intelligence",
+        "description": "The Department of Defense's Explainable AI (XAI) program seeks to develop machine learning techniques that not only maintain high performance but also make AI systems more transparent and understandable for human users. This is crucial for fostering trust and enabling effective collaboration between human operators and autonomous AI systems in various applications, especially for military purposes. The goal is to create AI systems that future warfighters can reliably manage and interact with."
+      },
+      {
+        "type": "website",
+        "title": "Explanation (Britannica)",
+        "url": "https://www.britannica.com/topic/explanation",
+        "description": "A detailed article from Britannica explaining the concept of explanation, its types, and significance in various fields."
+      }
+    ]
+  }

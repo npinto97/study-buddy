@@ -1,0 +1,23 @@
+{
+    "lesson_number": 7,
+    "title": "Link Analysis, PageRank",
+    "keywords": [
+      "Graph",
+      "Link analysis",
+      "Page Rank",
+      "Stationary Distribution"
+    ],
+    "slides": [
+      "slides/Link_Analysis_and_Page_Rank.pdf"
+    ],
+    "notes": [],
+    "references": [],
+    "supplementary_materials": [],
+    "exercises": [],
+    "multimedia": {
+      "videos": [],
+      "images": [],
+      "audio": []
+    },
+    "external_resources": []
+  }

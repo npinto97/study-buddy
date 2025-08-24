@@ -1,0 +1,91 @@
+{
+    "course_name": "Metodi per il Ritrovamento dell'Informazione (MRI)",
+    "description": "L'insegnamento si propone di introdurre: i fondamenti teorici e pratici per la realizzazione di sistemi di ritrovamento efiltraggio delle informazioni.",
+    "keywords": [
+        "Information Retrieval System",
+        "Relevance Feedback",
+        "PageRank",
+        "NLP",
+        "recommendation systems",
+        "Rank Correlation",
+        "Text Classification",
+        "Collaborative Filtering",
+        "Content-based Filtering"
+    ],
+    "instructor": [
+        "Prof. Pasquale Lops",
+        "Prof. Cataldo Musto"
+    ],
+    "last_updated": "2025-8-22",
+    "syllabus": "syllabuses/MRI_syllabus.pdf",
+    "books": [
+        {
+            "title": "Semantics in Adaptive and Personalized Systems",
+            "filename": "books/Book_on_Semantics_in_Adaptive_And_Personalized_Systems.pdf",
+            "description": "The book first introduces the problem of information overload and the reasons why content-based information needs to be taken into account. Next, the basics of Natural Language Processing are provided, by describing operations such as tokenization, stopword removal, lemmatization, stemming, part-of-speech tagging, along with the main problems and issues. Finally, the book describes the different approaches for semantics-aware content representation: such approaches are split into ‘exogenous’ and ‘endogenous’ ones, depending on whether external knowledge sources as DBpedia or geometrical models and distributional semantics are used, respectively. To conclude, several successful use cases and an extensive list of available tools and resources to implement the approaches are shown.",
+            "author": "Pasquale Lops, Cataldo Musto, Fedelucio Narducci, Giovanni Semeraro",
+            "publisher": "Springer Cham",
+            "year": 2019,
+            "isbn": "9783030056179"
+        },
+        {
+            "title": "Introduction to Information Retrieval",
+            "filename": "books/Book_on_introduction_to_Information_Retrieval.pdf",
+            "description": "This textbook teaches classical and web information retrieval, including web search and the related areas of text classification and text clustering from basic concepts. It gives an up-to-date treatment of all aspects of the design and implementation of systems for gathering, indexing, and searching documents; methods for evaluating systems; and an introduction to the use of machine learning methods on text collections.",
+            "author": "Christopher D. Manning, Prabhakar Raghavan, Hinrich Schütze",
+            "publisher": "Cambridge University Press",
+            "year": 2008,
+            "isbn": "9781139472104"
+        }
+    ],
+    "lessons": [
+        {
+            "lesson_number": 1,
+            "metadata": "lesson1_metadata.json"
+        },
+        {
+            "lesson_number": 2,
+            "metadata": "lesson2_metadata.json"
+        },
+        {
+            "lesson_number": 3,
+            "metadata": "lesson3_metadata.json"
+        },
+        {
+            "lesson_number": 4,
+            "metadata": "lesson4_metadata.json"
+        },
+        {
+            "lesson_number": 5,
+            "metadata": "lesson5_metadata.json"
+        },
+        {
+            "lesson_number": 6,
+            "metadata": "lesson6_metadata.json"
+        },
+        {
+            "lesson_number": 7,
+            "metadata": "lesson7_metadata.json"
+        },
+        {
+            "lesson_number": 8,
+            "metadata": "lesson8_metadata.json"
+        },
+        {
+            "lesson_number": 9,
+            "metadata": "lesson9_metadata.json"
+        },
+        {
+            "lesson_number": 10,
+            "metadata": "lesson10_metadata.json"
+        },
+        {
+            "lesson_number": 11,
+            "metadata": "lesson11_metadata.json"
+        },
+        {
+            "lesson_number": 12,
+            "metadata": "lesson12_metadata.json"
+        }
+    ]
+}

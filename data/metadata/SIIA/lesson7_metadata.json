@@ -1,0 +1,135 @@
+{
+    "lesson_number": 7,
+    "title": "Multimodal KARS, Neuro-symbolic RS and Carbon Footprint analysis",
+    "keywords": [
+      "Graph Encoder",
+      "First Order Logic (FOL)",
+      "Sustainability"
+    ],
+    "slides": [
+      "slides/lesson_07_13_nov_2024_multi_modal_knowledge_aware_recommender_systems.pdf",
+      "slides/lesson_07_13_nov_2024_recommender_systems_based_on_neuro-symbolic_graph_embedding_with_fol_rules.pdf",
+      "slides/lesson_07_13_Nov_2024_Sustainable_RecSys.pdf"
+    ],
+    "notes": [],
+    "references": [
+      {
+        "title": "A Closer Look at Spatiotemporal Convolutions for Action Recognition",
+        "filename": "references/a_closer_look_at_spatiotemporal_convolutions_for_action_recognition.pdf",
+        "description": "This paper investigates spatiotemporal convolutions for video analysis, focusing on their effect on action recognition. The authors show that 3D CNNs outperform 2D CNNs when applied within residual learning frameworks. Additionally, factorizing 3D convolutional filters into spatial and temporal components leads to better accuracy. The study proposes the \"R(2+1)D\" convolutional block, which achieves state-of-the-art results in datasets like Sports-1M, Kinetics, UCF101, and HMDB51."
+      },
+      {
+        "title": "A Comprehensive Survey of Knowledge Graph-Based Recommender Systems: Technologies, Development and Contributions",
+        "filename": "references/a_comprehensive_survey_of_knowledge_graph_based_recommender_systems_technologies_development_and_contributions.pdf",
+        "description": "This paper surveys the evolution of recommender systems, focusing on the shift from traditional methods to knowledge graph-based approaches. It explores advancements in filtering methods, analyzes knowledge graph applications, and highlights domain-specific contributions. The main finding is that knowledge graphs efficiently connect user and item data, enhancing recommendation accuracy. The paper also suggests future research directions in the field."
+      },
+      {
+        "title": "A Survey on Long Text Modeling with Transformers",
+        "filename": "references/a_survey_on_long_text_modeling_with_transformers.pdf",
+        "description": "This paper provides an overview of recent advances in modeling long texts using Transformer models. It explores methods for processing long inputs within length limitations and presents improvements to extend context length. It also addresses how Transformers can be adapted to handle the unique characteristics of long texts. Additionally, the paper covers four typical applications of long text modeling and discusses future research directions. The survey aims to guide researchers in understanding the advancements and related work in this area."
+      },
+      {
+        "title": "An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale",
+        "filename": "references/an_image_is_worth_16x16_words_transformers_for_image_recognition_at_scale.pdf",
+        "description": "The Vision Transformer (ViT) demonstrates that a pure transformer, applied directly to sequences of image patches, can perform exceptionally well on image classification tasks. When pre-trained on large datasets and transferred to smaller benchmarks like ImageNet and CIFAR-100, ViT outperforms state-of-the-art convolutional networks, requiring fewer computational resources for training. This challenges the conventional reliance on convolutional networks in vision tasks. For more details, you can explore the full study."
+      },
+      {
+        "title": "BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding",
+        "filename": "references/bert_pre_training_of_deep_bidirectional_transformers_for_language_understanding.pdf",
+        "description": "BERT (Bidirectional Encoder Representations from Transformers) is a language representation model that pre-trains deep bidirectional representations by conditioning on both left and right context in all layers. It achieves state-of-the-art performance across various tasks, including question answering and language inference, with minimal task-specific modifications. BERT outperforms previous models in several benchmarks, such as GLUE, MultiNLI, and SQuAD, significantly improving task accuracies."
+      },
+      {
+        "title": "Combining Graph Neural Networks and Sentence Encoders for Knowledge-aware Recommendations",
+        "filename": "references/Combining_Graph_Neural_Networks_and_Sentence_ecnoders_for_knowledge_aware_recommendations.pdf",
+        "description": "This paper presents a knowledge-aware recommendation strategy combining graph neural networks and sentence encoders. The approach utilizes graph neural networks for encoding collaborative features and item properties, alongside transformer-based sentence encoders to learn representations from textual descriptions. A deep neural network with attention mechanisms refines these representations to predict user interest and generate recommendations. Experimental results demonstrate that the proposed method outperforms competitive baselines on two datasets."
+      },
+      {
+        "title": "Composition-based Multi-Relational Graph Convolutional Networks",
+        "filename": "references/composition_based_multi_relational_graph_convolutional_networks.pdf",
+        "description": "CompGCN is a novel Graph Convolutional Network (GCN) designed to model multi-relational graphs, which involve nodes connected by labeled, directed edges. Unlike traditional GCNs that focus only on node representations, CompGCN embeds both nodes and relations using entity-relation composition techniques. It scales efficiently with the number of relations and outperforms existing methods in tasks such as node classification, link prediction, and graph classification. The framework's source code is available for reproducible research."
+      },
+      {
+        "title": "Conversational Recommender System",
+        "filename": "references/Conversational_Recommender_System.pdf",
+        "description": "This paper proposes a novel framework that combines dialogue systems and recommender systems to create a personalized conversational recommendation agent. Using deep reinforcement learning, the agent optimizes per-session utility functions based on user interactions and preferences. The framework tracks user queries with facet-value pairs and utilizes past ratings for personalized recommendations. The agent interacts with users to gather preference data and provides recommendations once sufficient information is collected. The effectiveness of the approach is demonstrated through both simulation and real user studies."
+      },
+      {
+        "title": "Fast and Exact Rule Mining with AMIE 3",
+        "filename": "references/fast_and_exact_rule_mining_with_amie_3.pdf",
+        "description": "AMIE 3 is a system designed for efficient rule mining in large knowledge bases (KBs). By using advanced pruning strategies and optimizations, AMIE 3 can mine exact rules and compute confidence and support without resorting to approximations or sampling. It significantly outperforms previous systems, achieving more than 15 times better runtime on datasets like DBpedia, YAGO, and Wikidata. This makes it an efficient solution for handling the challenges of rule mining in large-scale KBs."
+      },
+      {
+        "title": "Formalizing Multimedia Recommendation through Multimodal Deep Learning",
+        "filename": "references/formalizing_multimedia_recommendations_through_multimodal_deep_learning.pdf",
+        "description": "This work reviews multimodal techniques for multimedia recommendation, particularly focusing on the integration of various content types like images, audio, and text. It discusses the need for a universal schema in multimodal recommender systems and highlights the theoretical foundations and practical application of such systems. The paper also benchmarks recent algorithms and identifies key challenges in multimodal deep learning, proposing future avenues for improvement. The goal is to guide the development of next-generation multimodal recommendation systems."
+      },
+      {
+        "title": "Jointly Embedding Knowledge Graphs and Logical Rules",
+        "filename": "references/jointly_embedding_knowledge_graphs_and_logical_rules.pdf",
+        "description": "This paper proposes a novel method for embedding knowledge graphs by jointly incorporating logical rules alongside fact triples. It represents triples as atomic formulae and rules as complex formulae, modeled using fuzzy logic. The approach minimizes a global loss function to optimize embeddings for both types of information. Experimental results on link prediction and triple classification demonstrate significant improvements over existing methods, highlighting the effectiveness of joint embeddings in enhancing prediction and knowledge inference."
+      },
+      {
+        "title": "MiniLM: Deep Self-Attention Distillation for Task-Agnostic Compression of Pre-Trained Transformers",
+        "filename": "references/minilm-deep-self-attention-distillation-for-task-agnostic-compression-of-pre-trained-transformers.pdf",
+        "description": "This paper proposes deep self-attention distillation for compressing large Transformer-based models like BERT. By training a smaller student model to mimic the self-attention mechanism of a larger teacher model, this approach reduces model size while maintaining performance. The method introduces new knowledge, such as the scaled dot-product between values, to improve distillation. Experimental results show that the student model retains over 99% accuracy on tasks like SQuAD 2.0 and GLUE with significantly reduced parameters and computations. The method also applies successfully to multilingual models."
+      },
+      {
+        "title": "Neuro-symbolic artificial intelligence",
+        "filename": "references/neuro-symbolic-artificial-intelligence-current-trends.pdf",
+        "description": "Neuro-Symbolic AI combines symbolic methods with artificial neural networks. This paper offers an overview of current trends, categorizing recent publications from major conferences to serve as a helpful resource for research in the field. The focus is on providing a structured understanding of the ongoing developments in this interdisciplinary area of AI."
+      },
+      {
+        "title": "RecBole 2.0: Towards a More Up-to-Date Recommendation Library",
+        "filename": "references/recbole_2_towards_a_more_up_to_date_recommendation_library.pdf",
+        "description": "This paper presents an extended library for recommender systems, featuring eight packages addressing key topics like sparsity, bias, and distribution shift. It includes packages for meta-learning, data augmentation, debiasing, fairness, and cross-domain recommendation. Additionally, there are benchmarking packages for Transformer-based and GNN-based models. Built on the RecBole framework, the library provides comprehensive implementations for data loading, experimental setup, evaluation, and algorithm development, offering a valuable resource for advancing research in recommender systems. The project is available on GitHub: [RecBole 2.0](https://github.com/RUCAIBox/RecBole2.0)."
+      },
+      {
+        "title": "Sentence-BERT: Sentence Embeddings using Siamese BERT-Networks",
+        "filename": "references/sentence_bert_sentence_embeddings_using_siamese_bert_networks.pdf",
+        "description": "BERT and RoBERTa achieve state-of-the-art performance on tasks like semantic textual similarity but require significant computational resources for sentence pair regression. Sentence-BERT (SBERT) improves upon this by using siamese and triplet networks to generate semantically meaningful sentence embeddings that can be compared quickly via cosine similarity. SBERT dramatically reduces the time required for semantic similarity tasks, from 65 hours to just 5 seconds, while maintaining accuracy. It outperforms other methods in sentence embedding tasks."
+      },
+      {
+        "title": "Together is Better: Hybrid Recommendations Combining Graph Embeddings and Contextualized Word Representations",
+        "filename": "references/together_is_better_hybrid_recommendations_combining_graphs_embeddings_and_contestualized_word_representations.pdf",
+        "description": "This paper proposes a hybrid recommendation framework combining graph embeddings and contextual word representations. The approach generates graph embeddings and contextual word representations separately using state-of-the-art techniques, then combines them using a deep architecture to learn a hybrid representation. The resulting embedding is used to make recommendations. Experimental results show that this hybrid representation improves predictive accuracy and outperforms competitive baselines, demonstrating the effectiveness of the approach."
+      },
+      {
+        "title": "Very Deep Convolutional Networks for Large-Scale Image Recognition",
+        "filename": "references/very_deep_convolutional_networks_for_large_scale_image_recognition.pdf",
+        "description": "This paper investigates the impact of network depth on accuracy in large-scale image recognition. It evaluates networks with 16-19 layers using small (3x3) convolution filters, showing significant improvements over prior architectures. These findings contributed to a top performance in the ImageNet Challenge 2014, securing first and second places in localization and classification. The models are made publicly available for further research on deep visual representations in computer vision."
+      }
+    ],
+    "supplementary_materials": [],
+    "exercises": [
+        {
+          "title": "Towards Sustainability-aware Recommender Systems: Analyzing the Trade-off Between Algorithms Performance and Carbon Footprint",
+          "filename": "exercises/notebooks/Lesson_07_Notebook_Carbon_Footprint_of_Recommendation_algorithms.ipynb",
+          "description": "In this notebook, we will evaluate the trade-off between the carbon footprint and the performances of some recommendation algorithms, following the workflow we used in the paper 'Towards Sustainability-aware Recommender Systems: Analyzing the Trade-off Between Algorithms Performance and Carbon Footprint'**', presented at the [17th ACM Conference on Recommender Systems](https://recsys.acm.org/recsys23/), in Singapore."
+        }
+      ],
+    "multimedia": {
+      "videos": [],
+      "images": [],
+      "audio": []
+    },
+    "external_resources": [
+      {
+        "type": "video",
+        "title": "The Third AI Summer, Henry Kautz, AAAI 2020 Robert S. Engelmore Memorial Award Lecture",
+        "url": "https://www.youtube.com/watch?v=_cQITY0SPiw&t=1770s&ab_channel=HenryKautz",
+        "description": "A video lecture by Henry Kautz on the future of artificial intelligence. The third AI summer brings significant promise and concern. While AI's advances could lead to prosperity, knowledge, and freedom, there is a danger that it could also be misused to undermine human dignity and freedom. This era is marked by powerful scientific, social, and geopolitical forces, with the potential to shape our future in ways that can either be dystopian or transformative. The talk explores these dynamics, emphasizing the stakes of AI's current trajectory."
+      },
+      {
+        "type": "website",
+        "title": "Kahneman fast and slow thinking explained",
+        "url": "https://suebehaviouraldesign.com/kahneman-fast-slow-thinking/",
+        "description": "An overview of Daniel Kahneman's book 'Thinking, Fast and Slow', explaining the two systems of thinking that drive human decision-making and behavior."
+      },
+      {
+        "type": "website",
+        "title": "SentenceTransformers (SBERT) Documentation",
+        "url": "https://www.sbert.net/docs/sentence_transformer/training_overview.html",
+        "description": "Sentence Transformers (a.k.a. SBERT) is the go-to Python module for accessing, using, and training state-of-the-art text and image embedding models. It can be used to compute embeddings using Sentence Transformer models or to calculate similarity scores using Cross-Encoder models. This unlocks a wide range of applications, including semantic search, semantic textual similarity, and paraphrase mining."
+      }
+    ]
+  }
