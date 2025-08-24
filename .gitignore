@@ -179,6 +179,7 @@ Thumbs.db
 # Exclude local databases and protected material
 data/processed/
 data/raw/
+data/temp/
 
 history/
 
