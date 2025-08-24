@@ -85,7 +85,7 @@ def retrieve_tool(query: str):
             f"Dimensione embedding ({len(test_embedding)}) diversa da quella dell'indice FAISS ({embedding_dim}). "
         )
 
-    retrieved_docs = vector_store.similarity_search(query, k=2)
+    retrieved_docs = vector_store.similarity_search(query, k=4)
 
     file_paths = []
     serialized_parts = []
