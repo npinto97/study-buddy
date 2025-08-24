@@ -1,0 +1,84 @@
+{
+    "lesson_number": 5,
+    "title": "Knowledge-aware Representations for Recommender Systems",
+    "keywords": [
+      "Knowledge Graph",
+      "Vector-Space Representations",
+      "Open Data"
+    ],
+    "slides": [
+      "slides/Lesson_05_KARS_Representations.pdf"
+    ],
+    "notes": [],
+    "references": [
+      {
+        "title": "Entity Linking meets Word Sense Disambiguation: a Unified Approach",
+        "filename": "references/entity_linking_meets_word_sense_disambiguation_a_unified_approach.pdf",
+        "description": "This paper introduces **Babelfy**, a unified graph-based approach addressing both **Entity Linking (EL)** and **Word Sense Disambiguation (WSD)**. It leverages a loose identification of candidate meanings and a **densest subgraph heuristic** to select high-coherence semantic interpretations. Unlike WSD, EL handles cases where mentions don't perfectly match a named entity. Babelfy demonstrates **state-of-the-art performance** across six datasets, including multilingual evaluations. It is available for public use at [Babelfy](http://babelfy.org)."
+      },
+      {
+        "title": "Graph embedding techniques, applications, and performance: A survey",
+        "filename": "references/graph_embedding_techniques_applications_and_performance_a_survey.pdf",
+        "description": "This paper surveys graph embedding techniques, which analyze graph structures like social networks or communication networks by representing graph nodes in vector space. It categorizes methods into three types: **factorization methods**, **random walks**, and **deep learning approaches**. The study highlights challenges like scalability and feature preservation and evaluates methods across tasks using common datasets. Applications and future directions are suggested, alongside an open-source Python library, **GEM**, offering a unified interface for these techniques. GEM is available at [GitHub](https://github.com/palash1992/GEM)."
+      },
+      {
+        "title": "An Introduction to Latent Semantic Analysis",
+        "filename": "references/intro_to_Latent_Semantic_Analysis.pdf",
+        "description": "Latent Semantic Analysis (LSA) is a computational technique to capture the contextual meaning of words by analyzing large text corpora. It posits that word meaning is determined by the contexts in which words appear or do not appear. LSA has shown human-like performance in tasks like vocabulary tests, word categorization, and lexical priming. It also evaluates text coherence, individual learnability, and essay quality, making it valuable for educational and semantic analysis applications."
+      },
+      {
+        "title": "Introducing linked open data in graph-based recommender systems",
+        "filename": "references/introducing_linked_open_data_in_graph_based_recommender_systems.pdf",
+        "description": "The study explores the impact of Linked Open Data (LOD) on graph-based recommendation systems (RS). By leveraging LOD to enhance item representation through feature selection techniques, the research demonstrates significant performance improvements in metrics like accuracy and diversity. Experiments on three datasets reveal that incorporating LOD-based features into a graph-based RS outperforms traditional methods like collaborative filtering and matrix factorization, highlighting the value of semantic data in improving recommendations."
+      },
+      {
+        "title": "Knowledge Graph Embedding for Link Prediction: A Comparative Analysis",
+        "filename": "references/knowledge_graph_embedding_for_link_prediction_a_comparative_analysis.pdf",
+        "description": "This analysis examines the effectiveness of embedding-based link prediction (LP) methods in addressing knowledge graph (KG) incompleteness. It evaluates 16 state-of-the-art techniques and a rule-based baseline, focusing on the influence of design choices and efficiency in standard benchmarks. The study highlights biases in evaluation practices, where over-representation of certain entities skews performance results. By providing a broader comparison framework, the research offers deeper insights into LP method performance and uncovers areas for improvement in KG completion tasks."
+      },
+      {
+        "title": "Learning and Revising User Profiles: The Identification of Interesting Web Sites",
+        "filename": "references/learning_and_revising_user_profiles_the_identification_of_interesting_web_sites.pdf",
+        "description": "The article explores algorithms for learning and updating user profiles to identify World Wide Web sites of interest. A naïve Bayesian classifier is used to incrementally learn profiles from user feedback and can also revise user-provided profiles. Experimental comparisons show the classifier's performance matches or surpasses computationally intensive methods across domains. Additionally, the study finds that incorporating user-defined profiles and lexical knowledge for feature selection significantly improves prediction accuracy, making the Bayesian approach efficient and effective in diverse applications."
+      },
+      {
+        "title": "Learning Word Embeddings from Wikipedia for Content-Based Recommender Systems",
+        "filename": "references/learning_word_embeddings_from_wikipedia_for_content_based_recommender_systems.pdf",
+        "description": "This paper explores the application of Word Embedding techniques in content-based recommendation systems (CBRS). It compares Latent Semantic Indexing, Random Indexing, and Word2Vec for learning vector space representations of user profiles and items. Using Wikipedia textual features, the CBRS framework was tested on two datasets, showing results comparable to Collaborative Filtering and Matrix Factorization methods, especially in sparse recommendation settings. These findings highlight the potential of Word Embedding techniques in improving the effectiveness of CBRS, particularly in scenarios with limited user-item interactions."
+      },
+      {
+        "title": "Linked Open Data to support Content-based Recommender Systems",
+        "filename": "references/linked_open_data_to_support_content-based_recommender_systems.pdf",
+        "description": "This paper highlights how the transition to a Web of Linked Data, driven by the Semantic Web and Linked Open Data (LOD) initiatives, can be harnessed for developing effective recommender systems (RS). Using RDF datasets like DBpedia, Freebase, and LinkedMDB, the authors implemented a content-based RS for movie recommendations. The system leverages structured data from the LOD cloud to provide recommendations and was extensively evaluated using precision and recall metrics, validating its effectiveness and demonstrating the potential of LOD-powered applications in recommendation scenarios."
+      },
+      {
+        "title": "Non-Negative Tensor Factorization with RESCAL",
+        "filename": "references/non_negative_tensor_factorization_with_rescal.pdf",
+        "description": "This work extends the RESCAL tensor factorization method for multi-relational learning to incorporate a non-negativity constraint using multiplicative update rules. The extension is designed for datasets with naturally non-negative relational data, such as protein interaction networks or social networks. Experiments on benchmark datasets demonstrate that introducing non-negativity leads to a significant increase in factor sparsity while maintaining comparable predictive quality to the original RESCAL algorithm, offering interpretable latent factors suitable for various applications."
+      },
+      {
+        "title": "Ontology-based Recommender Systems",
+        "filename": "references/Ontology-based_Recommender_Systems_preview.pdf",
+        "description": "This paper explores an ontology-driven approach to user profiling for recommending academic research papers. Two systems, Quickstep and Foxtrot, create profiles from user behavior and feedback, representing them using a topic-based research paper ontology. Papers are categorized into ontological classes, and collaborative recommendation methods are used to suggest papers aligned with user interests. Ontological inference enhances profiling, external knowledge bootstraps recommendations, and profile visualization improves accuracy. Experiments with over 260 participants highlight the approach's effectiveness, outperforming comparable systems in the literature."
+      },
+      {
+        "title": "Together is Better: Hybrid Recommendations Combining Graph Embeddings and Contextualized Word Representations",
+        "filename": "references/together_is_better_hybrid_recommendations_combining_graph_embeddings_and_contextualized_word_representations.pdf",
+        "description": "This paper proposes a hybrid recommendation framework that combines graph embeddings and contextual word representations. The process involves generating both types of embeddings separately, then using them to train a deep architecture that creates a hybrid representation. This combined embedding is used for generating recommendations. Experiments on two datasets show that this approach improves predictive accuracy and outperforms competitive baselines, validating its effectiveness in recommendation tasks."
+      }
+    ],
+    "supplementary_materials": [
+      {
+        "title": "The Semantic Web",
+        "filename": "supplementary_materials/Lesson_04_TBL-Hendler-Lassila_The_Semantic_Web_ Scientific_American_May_2001.pdf",
+        "description": "In this scenario, Lucy and Pete use their Semantic Web agents to coordinate medical appointments for their mother. Lucy's agent checks for providers that are in-network, highly rated, and geographically convenient, while Pete's agent refines the search to ensure a closer location and suitable times. The agents communicate, trust each other, and handle technical details like insurance verification and appointment scheduling. This illustrates the potential of Semantic Web agents in facilitating everyday tasks by understanding and acting upon user-defined preferences and verified data."
+      }
+    ],
+    "exercises": [],
+    "multimedia": {
+      "videos": [],
+      "images": [],
+      "audio": []
+    },
+    "external_resources": []
+  }

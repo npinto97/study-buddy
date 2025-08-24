@@ -1,0 +1,27 @@
+{
+    "lesson_number": 3,
+    "title": "Relevance Feedback",
+    "keywords": [
+      "Rocchio Algorithm",
+      "Query Expansion"
+    ],
+    "slides": [
+      "slides/InformationRetrieval_3_Relevance_Feedback.pdf"
+    ],
+    "notes": [],
+    "references": [],
+    "supplementary_materials": [],
+    "exercises": [
+      {
+        "title": "Esercizio sul calcolo del relevance feedback",
+        "filename": "exercises/solved_exercises/TFIDF_Ranking_Solved_Exercise_2.pdf",
+        "description": "Esercizio svolto sul calcolo del relevance feedback con TF-IDF."
+      }
+    ],
+    "multimedia": {
+      "videos": [],
+      "images": [],
+      "audio": []
+    },
+    "external_resources": []
+  }

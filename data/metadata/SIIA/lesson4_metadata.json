@@ -1,0 +1,116 @@
+{
+    "lesson_number": 4,
+    "title": "Advances in Content-based RecSys",
+    "keywords": [
+      "Explanation",
+      "Conversational",
+      "Natural Language Processing"
+    ],
+    "slides": [
+      "slides/Lesson_04_RS_Advances_in_CBRS_Gotheborg_2019_Part_1.pdf",
+      "slides/Lesson_04_RS_Advances_in_CBRS_Gotheborg_2019_Part_2_Exogenous_Semantics.pdf"
+    ],
+    "notes": [],
+    "references": [
+      {
+        "title": "Combining Learning and Word Sense Disambiguation for Intelligent User Profiling",
+        "filename": "references/combining_learning_and_word_sense_disambiguation_for_intelligent_user_profiling.pdf",
+        "description": "This work proposes integrating linguistic knowledge into user profile learning for personalized recommendation systems. It uses a two-step approach: first, word sense disambiguation via WordNet to identify the correct meaning of polysemous words, followed by a naive Bayes classifier to create sense-based user profiles. The results show that while classification accuracy improves with this approach, ranking effectiveness remains unchanged. This method is especially beneficial for documents where classification is uncertain, offering better decision-making in such cases."
+      },
+      {
+        "title": "Content-Based Recommendation Systems",
+        "filename": "references/Content-Based_Recommendation_Systems.pdf",
+        "description": "Content-based recommendation systems suggest items to users based on item descriptions and the user's interest profile. These systems are used in various domains, including web pages, news articles, and e-commerce. They rely on creating user profiles, comparing items to those profiles, and updating the profile based on user feedback. The core of these systems is the item description, the user's interest profile, and the comparison method used to determine relevant recommendations."
+      },
+      {
+        "title": "Introducing linked open data in graph-based recommender systems",
+        "filename": "references/Lesson_04_Introducing_linked_open_data_in_graph-based_recommender_systems.pdf",
+        "description": "The article explores how knowledge from the Linked Open Data (LOD) cloud can enhance graph-based recommender systems (RS). By feeding graph-based RS with features from the LOD cloud, the study reveals that such knowledge significantly boosts RS performance. Additionally, the choice of feature selection technique impacts metrics like accuracy and diversity. The results show that LOD-based features outperform traditional approaches like collaborative filtering and matrix factorization in several scenarios."
+      },
+      {
+        "title": "Semantics-aware Recommender Systems exploiting Linked Open Data and graph-based features",
+        "filename": "references/Lesson_04_Semantics-aware_Recommender_Systems_exploiting_Linked_Open_Data_and_graph-based_features.pdf",
+        "description": "This article investigates how Linked Open Data (LOD) features can improve hybrid recommendation systems, particularly by enhancing item representations with new, relevant attributes such as movie genres or book authors. By incorporating LOD-based and graph-based features into classification algorithms like Random Forests, Naïve Bayes, and Logistic Regression, the study finds that these features can significantly boost recommendation accuracy. The approach outperforms several state-of-the-art recommendation techniques, validating the effectiveness of integrating LOD data in recommender systems."
+      },
+      {
+        "title": "The PageRank Citation Ranking: Bringing Order to the Web",
+        "filename": "references/the_page_rank_citation_ranking_bringing_order_to_the_wild.pdf",
+        "description": "The PageRank Citation Ranking algorithm, introduced by Larry Page and Sergey Brin, is a method for ranking web pages based on their citation structure. It operates by evaluating the number and quality of links to a page, under the assumption that more important pages are likely to be linked to by other significant pages. This approach brought order to the chaotic structure of the web, improving the accuracy of search engine results by prioritizing authoritative content."
+      },
+      {
+        "title": "Topic Sensitive PageRank: A Context-Sensitive Ranking Algorithm for Web Search",
+        "filename": "references/topic_sensitive_pagerank_a_context_sensitive_ranking_algorithm_for_web_search.pdf",
+        "description": "The paper proposes an enhancement to the PageRank algorithm, known as topic-sensitive PageRank, to improve search results. Instead of using a single generic PageRank vector, the algorithm computes multiple vectors, biased according to topics relevant to the query. For keyword-based searches, it uses the topic of the query, and for contextual searches, it uses the topic from the context. By combining these vectors, the system generates more accurate rankings, improving search results by reflecting specific topic importance. Efficient implementation techniques for large-scale systems based on this method are also discussed."
+      },
+      {
+        "title": "UNIBA: JIGSAW algorithm for Word Sense Disambiguation",
+        "filename": "references/uniba_jigsaw_algorithm_for_word_sense_disambiguation.pdf",
+        "description": "The paper presents JIGSAW, a knowledge-based Word Sense Disambiguation (WSD) system that utilizes WordNet to disambiguate words in a text. It suggests that employing specific strategies for each Part-of-Speech (POS) leads to better performance than using a single strategy. JIGSAW's effectiveness was evaluated in the SemEval-2007 task, focusing on cross-lingual information retrieval. The system assigns WordNet senses and evaluates its success based on how well it expands across languages for document indexing and retrieval."
+      },
+      {
+        "title": "WordNet: A Lexical Database for English",
+        "filename": "references/wordnet_a_lexical_database_for_english.pdf",
+        "description": "WordNet is an online lexical database that organizes English nouns, verbs, adjectives, and adverbs into sets of synonyms, each representing a distinct lexical concept. It provides a richer combination of traditional lexicographic data and modern computing, offering more structured information for machine processing than traditional dictionaries. It also includes semantic relations that link these synonym sets, making it a valuable resource for tasks like natural language processing."
+      }
+    ],
+    "supplementary_materials": [
+      {
+        "title": "The Semantic Web",
+        "filename": "supplementary_materials/Lesson_04_TBL-Hendler-Lassila_The_Semantic_Web_ Scientific_American_May_2001.pdf",
+        "description": "In this scenario, Lucy and Pete use their Semantic Web agents to coordinate medical appointments for their mother. Lucy's agent checks for providers that are in-network, highly rated, and geographically convenient, while Pete's agent refines the search to ensure a closer location and suitable times. The agents communicate, trust each other, and handle technical details like insurance verification and appointment scheduling. This illustrates the potential of Semantic Web agents in facilitating everyday tasks by understanding and acting upon user-defined preferences and verified data."
+      },
+      {
+        "title": "Semantic Web",
+        "filename": "supplementary_materials/semantic-web.pdf",
+        "description": "A short introduction to the semantic web."
+      }
+    ],
+    "exercises": [],
+    "multimedia": {
+      "videos": [
+        "multimedia/videos/2006-hans-rosling-005-fallback-c3d98a9ebcba77e543774e749251147a-1200k.mp4",
+        "multimedia/videos/2009-tim-berners-lee-009-fallback-84ea51342ae313c2e49f86da9b59d564-1200k.mp4",
+        "multimedia/videos/2010u-tim-berners-lee-003-fallback-2ac11ea6fd5b0a64ff2388b9ca79cc60-1200k.mp4"
+      ],
+      "images": [],
+      "audio": []
+    },
+    "external_resources": [
+      {
+        "type": "website",
+        "title": "WordNet",
+        "url": "https://wordnet.princeton.edu/",
+        "description": "WordNet is a lexical database of English, providing a large network of words connected by semantic relations."
+      },
+      {
+        "type": "website",
+        "title": "TagMe",
+        "url": "https://tagme.d4science.org/tagme/",
+        "description": "TagMe is a system for named entity recognition and disambiguation in texts."
+      },
+      {
+        "type": "website",
+        "title": "BabelFy",
+        "url": "http://babelfy.org/",
+        "description": "BabelFy is a tool for disambiguation of named entities based on knowledge bases like DBpedia."
+      },
+      {
+        "type": "dataset",
+        "title": "Movies Ontology (Explicit Semantics Neo4j)",
+        "url": "https://github.com/jbarrasa/explicitsemanticsneo4j/blob/master/moviesontology.owl",
+        "description": "This is an ontology for movies using Neo4j and explicit semantics, available on GitHub."
+      },
+      {
+        "type": "website",
+        "title": "DBpedia",
+        "url": "https://www.dbpedia.org/",
+        "description": "DBpedia is a community-driven project that extracts structured information from Wikipedia and makes it available on the web."
+      },
+      {
+        "type": "video",
+        "title": "Intro to the Semantic Web",
+        "url": "https://www.youtube.com/watch?v=OGg8A2zfWKg&ab_channel=ManuSporny",
+        "description": "A short introduction to the semantic web."
+      }
+    ]
+  }
