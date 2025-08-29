@@ -15,7 +15,7 @@ from streamlit_float import *
 from streamlit_extras.bottom_container import bottom
 
 from study_buddy.agent import compiled_graph
-from study_buddy.utils.tools import ElevenLabsTTSWrapper, AssemblyAISpeechToText
+from study_buddy.utils.tools import AudioProcessor
 
 torch.classes.__path__ = [os.path.join(torch.__path__[0], torch.classes.__file__)]
 
@@ -498,7 +498,7 @@ def enhance_user_input(config_chat, user_input, file_path):
         core_instructions.append(f"Analyze uploaded file: {file_path}")
     
     core_instructions.extend([
-        "Academic support agent: Never invent information. Use retrieve_tool for documents, web_search for current info. Always provide files paths if available.",
+        "Academic support agent: Never invent information. Use retrieve_tool for documents, web_search for current info. Don't provide files paths if available.",
         "For mathematical formulas, use LaTeX notation: inline formulas with $formula$ and display formulas with $$formula$$.",
         "If no reliable sources found, clearly state limitations rather than guessing."
     ])
@@ -620,14 +620,19 @@ def transcribe_audio(audio_file):
             tmp_audio_file.write(audio_file.getvalue())
             tmp_audio_file.close()
 
+            # Convert to WAV format
             audio = AudioSegment.from_file(tmp_audio_file.name)
             wav_audio_path = tmp_audio_file.name.replace(".tmp", ".wav")
             audio.export(wav_audio_path, format="wav")
 
-            transcriber = AssemblyAISpeechToText()
-            transcribed_audio = transcriber.transcribe_audio(wav_audio_path)
+            # Use the new AudioProcessor class
+            processor = AudioProcessor()
+            transcribed_text = processor.speech_to_text(wav_audio_path)
 
-            return transcribed_audio
+            return transcribed_text
+    except ValueError as e:
+        st.error(f"Audio transcription setup error: {str(e)}")
+        return ""
     except Exception as e:
         st.error(f"Audio transcription error: {str(e)}")
         return ""
@@ -635,8 +640,19 @@ def transcribe_audio(audio_file):
 def play_text_to_speech(text, key):
     """Call ElevenLabs TTS tool and play the generated speech."""
     if st.button("🔊", key=key):
-        audio_path = ElevenLabsTTSWrapper().text_to_speech(text)
-        st.audio(audio_path, format="audio/mp3")
+        try:
+            # Use the new AudioProcessor class
+            processor = AudioProcessor()
+            audio_path = processor.text_to_speech(text)
+            
+            if audio_path and not audio_path.startswith("Error"):
+                st.audio(audio_path, format="audio/mp3")
+            else:
+                st.error(f"TTS error: {audio_path}")
+        except ValueError as e:
+            st.error(f"TTS setup error: {str(e)}")
+        except Exception as e:
+            st.error(f"TTS error: {e}")
 
 def voice_chat_input():
     """Gestisce l'input vocale e testuale nella parte inferiore."""

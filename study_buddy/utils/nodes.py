@@ -1,4 +1,4 @@
-from study_buddy.utils.tools import tools
+from study_buddy.utils.tools import get_all_tools
 from langgraph.prebuilt import ToolNode
 
 from study_buddy.utils.llm import llm
@@ -17,18 +17,18 @@ from study_buddy.utils.llm import llm
 #         return "continue"
 
 
-system_prompt = """Be a helpful assistant"""
+system_prompt = """You are Study Buddy, an advanced AI assistant designed to help with learning, research, and analysis."""
 
 
 # Define the function that calls the model
 def call_model(state, config):
     messages = state["messages"]
     messages = [{"role": "system", "content": system_prompt}] + messages
-    model = llm.bind_tools(tools)
+    model = llm.bind_tools(get_all_tools())
     response = model.invoke(messages)
     # We return a list, because this will get added to the existing list
     return {"messages": [response]}
 
 
 # Define the function to execute tools
-tool_node = ToolNode(tools)
+tool_node = ToolNode(get_all_tools())
