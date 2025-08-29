@@ -361,26 +361,43 @@ class AudioProcessor(BaseWrapper):
             return f"Error in text-to-speech: {str(e)}"
     
     def speech_to_text(self, audio_input: Union[str, bytes]) -> str:
-        """Convert speech to text using AssemblyAI."""
+        """Convert speech to text using AssemblyAI with Italian language support."""
         try:
+            import assemblyai as aai
+            import os
+
+            # Imposta la chiave API
             aai.settings.api_key = Config.ASSEMBLYAI_API_KEY
             transcriber = aai.Transcriber()
-            
+
+            # Prepara il file audio
             audio_path = self._prepare_audio_path(audio_input)
-            
-            config = aai.TranscriptionConfig(speech_model=aai.SpeechModel.best)
+
+            # Configurazione della trascrizione
+            config = aai.TranscriptionConfig(
+                language_code="it",                     
+                punctuate=True,                         
+                format_text=True,                       
+                speech_model=aai.SpeechModel.best       
+            )
+
+            # Avvia la trascrizione
             transcript = transcriber.transcribe(audio_path, config)
-            
+
+            # Controlla se c'è stato un errore
             if transcript.status == aai.TranscriptStatus.error:
                 raise RuntimeError(f"Transcription failed: {transcript.error}")
-            
+
             return transcript.text
-            
+
         except Exception as e:
             return f"Error in speech-to-text: {str(e)}"
+
         finally:
+            # Rimuove il file temporaneo se esiste
             if isinstance(audio_input, (str, bytes)) and os.path.exists(audio_path):
                 os.remove(audio_path)
+
     
     def _prepare_audio_path(self, audio_input: Union[str, bytes]) -> str:
         """Prepare audio file path from various input types."""
