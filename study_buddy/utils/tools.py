@@ -117,7 +117,7 @@ class LLMFactory:
     @staticmethod
     def create_together_llm(
         model: str = Config.DEFAULT_LLM_MODEL,
-        temperature: float = 0.3,
+        temperature: float = 0.2,
         max_tokens: int = 1024
     ):
         """Create Together LLM instance."""
@@ -188,7 +188,7 @@ class VectorStoreRetriever(BaseWrapper):
         if not os.path.exists(FAISS_INDEX_DIR):
             raise ValueError(f"FAISS index directory not found: {FAISS_INDEX_DIR}")
     
-    def retrieve(self, query: str, k: int = 2) -> tuple[str, list, list]:
+    def retrieve(self, query: str, k: int = 4) -> tuple[str, list, list]:
         """Retrieve information with validation and error handling."""
         try:
             vector_store = get_vector_store(FAISS_INDEX_DIR)
@@ -285,32 +285,53 @@ class DocumentProcessor(BaseWrapper):
 
 
 class DocumentSummarizer(BaseWrapper):
-    """Document summarization with LLM."""
+    """Document summarization using Gradio API."""
     
     def validate_dependencies(self):
-        """Validate LLM dependencies."""
-        Config.validate_key("TOGETHER_API_KEY")
-    
-    def summarize(self, file_path: str) -> str:
-        """Summarize document content."""
+        """Validate Gradio client dependencies."""
         try:
+            from gradio_client import Client, handle_file
+        except ImportError:
+            raise ValueError("gradio_client not installed. Run: pip install gradio_client")
+    
+    def __init__(self):
+        super().__init__()
+        from gradio_client import Client
+        self.client = Client("Tulika2000/ai-pdf-summarizer")
+    
+    def summarize(self, file_path: str, length: str = "Medium", style: str = "Key Takeaways") -> str:
+        """
+        Summarize document content using Gradio API.
+        
+        Args:
+            file_path: Path to the PDF file
+            length: Summary length ("Short", "Medium", "Long")  
+            style: Summary style ("Key Takeaways", "Executive Summary", "Detailed Analysis")
+        """
+        try:
+            from gradio_client import handle_file
+            
+            print(f"Summarizing document: {file_path}")
             resolved_path = resolve_file_path(file_path)
+            print(f"Resolved file path: {resolved_path}")
+            
+            # Verify file exists and is PDF
+            if not os.path.exists(resolved_path):
+                return f"Error: File not found at {resolved_path}"
             
             ext = FileProcessor.get_file_extension(resolved_path)
-            if ext == ".pdf":
-                loader = PyPDFLoader(resolved_path)
-            elif ext == ".txt":
-                loader = TextLoader(resolved_path)
-            else:
-                raise ValueError(f"Unsupported file type: {ext}")
+            if ext != ".pdf":
+                return f"Error: Only PDF files are supported. Got: {ext}"
             
-            documents = loader.load()
+            # Call Gradio API
+            result = self.client.predict(
+                file=handle_file(resolved_path),
+                length=length,
+                style=style,
+                api_name="/predict"
+            )
             
-            llm = LLMFactory.create_together_llm()
-            chain = load_summarize_chain(llm, chain_type="map_reduce")
-            
-            summary = chain.invoke(documents)
-            return summary.get("output_text", str(summary))
+            return result
             
         except Exception as e:
             return f"Error summarizing document: {str(e)}"
@@ -684,6 +705,7 @@ Code:"""
     
     def _execute_and_save(self, code: str) -> List[str]:
         """Execute code and save generated images."""
+        print(f"Executing code:\n{code}\n{'-'*40}")
         execution = self.sandbox.run_code(code)
         
         if execution.error:
@@ -991,7 +1013,7 @@ def create_document_tools() -> List[Tool]:
         ),
         Tool(
             name="summarize_document",
-            description="Generate a summary of a PDF or text document",
+            description="Generate a summary of a PDF document with Medium length and Key Takeaways style",
             func=summarizer.summarize
         ),
         Tool(
@@ -1070,7 +1092,9 @@ def create_data_analysis_tools() -> List[Tool]:
 
         def safe_visualization(file_path, query=None):
             """Wrapper to robustly handle file paths."""
+            print(f"--------------------------Creating visualization for file: {file_path} with query: {query}")
             resolved_path = resolve_file_path(file_path)
+            print(f"----------------------------Resolved file path: {resolved_path}")
             if not os.path.exists(resolved_path):
                 return {
                     "error": f"The file '{resolved_path}' doesn't exist. Upload a valid CSV file.",
