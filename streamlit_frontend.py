@@ -83,7 +83,7 @@ def add_message_to_history(thread_id: str, role: str, content: str, file_paths: 
 
 
 def format_message_content(message):
-    """Formatta il contenuto del messaggio per la visualizzazione"""
+    """Formats the message content for display"""
     if hasattr(message, 'content'):
         content = message.content
     elif isinstance(message, dict):
@@ -98,7 +98,7 @@ def format_message_content(message):
     return content
 
 def format_tool_calls(message):
-    """Formatta le chiamate ai tool per la visualizzazione"""
+    """Formats tool calls for display"""
     if hasattr(message, 'tool_calls') and message.tool_calls:
         tool_info = []
         for tool_call in message.tool_calls:
@@ -110,7 +110,7 @@ def format_tool_calls(message):
     return None
 
 def display_images_and_files(content, file_paths_list=None, message_index=0):
-    """Mostra immagini inline e pulsanti di download per qualsiasi file (versione corretta)."""
+    """Displays images inline and download buttons for any file."""
     if not file_paths_list:
         return
     
@@ -169,9 +169,9 @@ def display_images_and_files(content, file_paths_list=None, message_index=0):
                 download_counter += 1
                 
             except Exception as e:
-                st.error(f"Errore nella lettura del file {file_name}: {str(e)}")
+                st.error(f"Error in reading the file {file_name}: {str(e)}")
         else:
-            st.error(f"File non trovato: {norm_path}")
+            st.error(f"File not found: {norm_path}")
 
 
 def display_chat_history(thread_id):
@@ -234,9 +234,8 @@ def display_chat_history(thread_id):
                         st.code(format_message_content(message), language="text")
 
 
-
 def process_tool_messages_for_images(tool_messages):
-    """Processa i messaggi dei tool per estrarre percorsi delle immagini e file validi (versione corretta)."""
+    """Processes tool messages to extract valid image and file paths."""
     all_file_paths = []
     
     for tool_msg in tool_messages:
@@ -286,7 +285,7 @@ def process_tool_messages_for_images(tool_messages):
                         all_file_paths.append(normalized_path)
                         
         except Exception as e:
-            st.error(f"Errore nel parsing del tool message: {e}")
+            st.error(f"Error in parsing the tool's message: {e}")
             continue
     
     seen = set()
@@ -301,7 +300,7 @@ def process_tool_messages_for_images(tool_messages):
 
 
 async def handle_streaming_events(events_generator):
-    """Gestisce lo streaming in tempo reale degli eventi dell'agente con download migliorato."""
+    """Handles real-time streaming of agent events with improved download support."""
     full_response = ""
     tool_messages = []
     message_placeholder = st.empty()
@@ -319,7 +318,7 @@ async def handle_streaming_events(events_generator):
                         for char in message.content:
                             full_response += char
                             message_placeholder.markdown(full_response + "▌")
-                            await asyncio.sleep(0.01)  # Effetto typing
+                            await asyncio.sleep(0.01)
     
     if full_response:
         message_placeholder.markdown(full_response)
@@ -336,7 +335,7 @@ async def handle_streaming_events(events_generator):
     return full_response, None
 
 def handle_non_streaming_events(events):
-    """Gestisce gli eventi dell'agente in modalità non-streaming con download migliorato."""
+    """Handles agent events in non-streaming mode with improved download support."""
     full_response = ""
     tool_messages = []
     
@@ -388,7 +387,7 @@ def sidebar_configuration():
 
         config_thread_id = select_thread_id if select_thread_id and select_thread_id == new_thread_id else new_thread_id
 
-        with st.expander(":gear: Chat configuration"):
+        with st.expander("Chat configuration"):
             config_complexity_level = st.selectbox(
                 "Level of complexity of responses",
                 ('None', 'Base', 'Intermediate', 'Advanced')
@@ -517,17 +516,14 @@ def save_chat_history(thread_id, chat_history):
         json.dump(chat_history, f, ensure_ascii=False, indent=2)
 
 def save_uploaded_file(user_file_input):
-    """Salva qualsiasi file caricato dall'utente in una cartella dedicata e restituisce un percorso pulito."""
+    """Saves any file uploaded by the user to a dedicated folder and returns a clean path."""
     try:
-        # Creiamo una cartella unica e centralizzata per i file caricati
         upload_dir = os.path.join(os.getcwd(), "uploaded_files")
         os.makedirs(upload_dir, exist_ok=True)
 
-        # Percorso finale del file
         tmp_file_path = os.path.join(upload_dir, user_file_input.name)
         print(f"Saving uploaded file to: {tmp_file_path}")
 
-        # Salvataggio del file
         with open(tmp_file_path, 'wb') as f:
             f.write(user_file_input.getvalue())
 
@@ -550,12 +546,12 @@ def save_uploaded_file(user_file_input):
         return os.path.normpath(tmp_file_path)
 
     except Exception as e:
-        st.error(f"Errore durante il salvataggio del file: {str(e)}")
+        st.error(f"Error in saving the file: {str(e)}")
         return ""
 
 
 def get_clean_path(file_path: str) -> str:
-    """Restituisce un percorso assoluto, normalizzato e sicuro."""
+    """Returns an absolute, normalized, and safe path."""
     # Rimuove eventuali apici e normalizza i separatori
     cleaned_path = file_path.replace("\\\\", "\\").replace("\\", os.sep).strip("'\"")
     # Converte sempre in percorso assoluto
@@ -593,7 +589,7 @@ def handle_chatbot_response(user_input, thread_id, config_chat, user_files=None)
                 if os.path.exists(cleaned_path):
                     user_file_paths.append(cleaned_path)
                 else:
-                    st.error(f"❌ File non trovato: {cleaned_path}")
+                    st.error(f"File not found: {cleaned_path}")
 
 
     try:
@@ -627,7 +623,6 @@ def handle_chatbot_response(user_input, thread_id, config_chat, user_files=None)
             
             bot_response, image_paths = handle_non_streaming_events(events)
 
-        # Salva la risposta del bot
         if bot_response and not bot_response.startswith("❌"):
             add_message_to_history(thread_id, "bot", bot_response, image_paths)
 
@@ -676,7 +671,7 @@ def play_text_to_speech(text, key):
             st.error(f"TTS error: {e}")
 
 def voice_chat_input():
-    """Gestisce l'input vocale e testuale nella parte inferiore."""
+    """Handles voice and text input at the bottom of the interface."""
     float_init()
 
     with bottom():
@@ -697,7 +692,7 @@ def voice_chat_input():
             voice_button = st.button(
                 button_emoji,
                 key="voice_button_bottom",
-                help="🎤 Registra messaggio vocale" if not voice_active else "🔴 Modalità vocale attiva",
+                help="Registra messaggio vocale" if not voice_active else "Modalità vocale attiva",
                 use_container_width=True
             )
 
