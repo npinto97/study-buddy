@@ -1,0 +1,80 @@
+{
+    "lesson_number": 2,
+    "title": "Recommender Systems (Part I)",
+    "keywords": [
+      "Information Retrieval",
+      "Information Filtering",
+      "Natural Language Processing"
+    ],
+    "slides": [
+      "slides/Lesson_02_RS_1_Recommender_Systems-Basic_concepts.pdf"
+    ],
+    "notes": [],
+    "references": [
+      {
+        "title": "Hybrid Recommender Systems: Survey and Experiments",
+         "filename": "references/Lesson_02_RS_1_Burke2002_Article_HybridRecommenderSystemsSurvey.pdf",
+        "description": "Recommender systems are essential in e-commerce, helping users navigate large information spaces to find items tailored to their preferences. Various methods, like content-based, collaborative, and knowledge-based techniques, are used, and hybrid systems combine them to improve performance. The paper introduces EntreeC, a hybrid system for restaurant recommendations that merges knowledge-based and collaborative filtering, enhancing the effectiveness of recommendations through semantic ratings."
+      },
+      {
+        "title": "E-Commerce Product Recommendation Agents: Use, Characteristics, And Impact",
+         "filename": "references/Lesson_02_RS_1_Xiao_Benbasat_E-Commerce_Product_Recommendation_Agents_Use_Characteristics_and_Impact.pdf",
+        "description": "Recommender Agents (RAs) help consumers by eliciting preferences and suggesting products, thereby reducing information overload and search complexity. This paper identifies key factors influencing RA effectiveness, including RA use, characteristics, provider credibility, and user interactions. It proposes a model that highlights how these factors impact consumer decision-making and RA evaluations. Additionally, it suggests areas for future research and offers practical advice for designing effective RAs."
+      },
+      {
+        "title": "Recommending new movies: Even a few ratings are more valuable than metadata",
+         "filename": "references/Lesson_02_paper_ACM_RecSys_2009-PilszyTikk.pdf",
+        "description": "This paper links collaborative filtering (CF) and content-based filtering (CBF) by using a linear transformation to align user or item descriptions with CF-generated feature vectors. It evaluates methods for explicit feedback and demonstrates that movie metadata can match CF prediction performance for new movies. It also compares the predictive value of movie metadata versus ratings, showing that even a small number of ratings (10) outperform metadata in predicting user ratings."
+      },
+      {
+        "title": "Information Seeking: Convergence of Search, Recommendations and Advertising",
+         "filename": "references/Lesson_02_RS_1_Garcia-Molina_Koutrika_Parameswaran_IRIF_CACMpaper.pdf",
+        "description": "This paper examines how search, recommendation, and advertisement mechanisms share a common goal: matching user context to a collection of information objects. Despite their differences, these mechanisms could benefit from using similar approaches. The study highlights the potential for designing systems that integrate these mechanisms, improving user experience by better aligning context with relevant information. It explores how context is described, how matches are made, and how these mechanisms can be applied across various types of information (e.g., ads, product descriptions, or web pages)."
+      },
+      {
+        "title": "Information Filtering: Overview of Issues, Research, and Systems",
+         "filename": "references/Lesson_02_RS_2_Hanani_Shapira_and_P_Shoval_Information_Filtering_Overview_of_Issues_Research_and_Systems_UMUAI_2001.pdf",
+        "description": "Information Filtering (IF) systems are designed to manage large information flows by providing users with only relevant content. These systems are used in various domains like e-commerce, email, search engines, and more. They utilize techniques from Information Retrieval, Artificial Intelligence, and Behavioral Science. The paper distinguishes IF systems from other related systems like IR and extraction systems, and provides a framework for classifying IF systems. It also addresses evaluation methods and research issues such as user modeling and standardization in IF systems."
+      }
+    ],
+    "supplementary_materials": [
+      {
+        "title": "How Much Information?",
+        "filename": "supplementary_materials/Lesson_02_Berkeley_How_much_info_2003_printable_report.pdf",
+        "description": "The study examines how much new information is created and stored each year across various media (print, film, magnetic, optical) and through electronic channels (telephone, radio, TV, Internet). It specifically focuses on the year 2002, comparing it to a previous 2000 study, highlighting trends in the growth rate of information. The research provides estimates of the annual size of information stored and communicated via different methods, though exact figures and trends would be detailed in the full report."
+      },
+      {
+        "title": "Information filtering and information retrieval: two sides of the same coin?",
+        "filename": "supplementary_materials/Lesson_02_Information_filtering_and_information_retrieval_2_sides_of_the_same_coin.pdf",
+        "description": "Information filtering involves delivering relevant content to individuals who need it, used in applications like email, multimedia systems, and office documents. However, it is often confused with related processes such as retrieval, routing, categorization, and extraction. Clarifying the differences between these processes is essential to addressing the unique research challenges associated with filtering. Understanding these distinctions is crucial for advancing the development of more effective filtering systems."
+      },
+      {
+        "title": "Netflix vs. Blockbuster",
+        "filename": "supplementary_materials/Lesson_02_The_NETFLIX_case_NETFLIXvsBlockbuster.pdf",
+        "description": "The Netflix case"
+      }
+    ],
+    "exercises": [],
+    "multimedia": {
+      "videos": [
+        "multimedia/videos/Barry_Schwartz_The_paradox_of_choice_TED_Talk.mp4",
+        "multimedia/videos/Lesson_02_Eli_Pariser_2011_Beware_online_filter_bubbles.mp4"
+      ],
+      "images": [],
+      "audio": []
+    },
+    "external_resources": [
+      {
+        "type": "video",
+        "title": "Web 2.0 Expo NY: Clay Shirky (shirky.com) It's Not Information Overload. It's Filter Failure.",
+        "url": "https://www.youtube.com/watch?v=LabqeJEOQyI&ab_channel=O%27Reilly",
+        "description": "It's Not Information Overload. It's Filter Failure."
+      },
+      {
+        "type": "articles",
+        "title": "Papa Francesco: Fratelli tutti, \"la connessione digitale non è in grado di unire l'umanità\"",
+        "url": "https://www.agensir.it/quotidiano/2020/10/4/papa-francesco-fratelli-tutti-la-connessione-digitale-non-e-in-grado-di-unire-lumanita/",
+        "description": "La connessione digitale non basta per gettare ponti, non è in grado di unire l'umanità."
+      }
+    ]
+  }

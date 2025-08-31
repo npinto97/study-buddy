@@ -13,7 +13,7 @@ def parse_course_metadata(course_metadata_path: Path, course: Path):
     course_description = data.get("description", "No description available")
     extracted_data = []
 
-    # Estrarre syllabus
+    # Extracting syllabus
     if "syllabus" in data:
         extracted_data.append({
             "path": os.path.join(RAW_DATA_DIR, data["syllabus"]),
@@ -22,7 +22,7 @@ def parse_course_metadata(course_metadata_path: Path, course: Path):
             "course_description": course_description
         })
 
-    # Estrarre libri
+    # Extracting books
     for book in data.get("books", []):
         extracted_data.append({
             "path": os.path.join(RAW_DATA_DIR, book["filename"]),
@@ -35,7 +35,7 @@ def parse_course_metadata(course_metadata_path: Path, course: Path):
             "isbn": book.get("isbn")
         })
 
-    # Estrarre note
+    # Extracting notes
     for note in data.get("notes", []):
         extracted_data.append({
             "path": os.path.join(RAW_DATA_DIR, note),
@@ -44,7 +44,7 @@ def parse_course_metadata(course_metadata_path: Path, course: Path):
             "course_description": course_description
         })
 
-    # Estrarre informazioni dalle lezioni
+    # Extracting lessons and their components
     for lesson in data.get("lessons", []):
         lesson_number = lesson.get("lesson_number")
         lesson_metadata_path = os.path.join(course, lesson.get("metadata"))
@@ -54,7 +54,9 @@ def parse_course_metadata(course_metadata_path: Path, course: Path):
             with open(lesson_metadata_path, "r", encoding="utf-8") as f:
                 lesson_data = json.load(f)
             lesson_title = lesson_data.get("title", "No title")
+            lesson_keywords = lesson_data.get("keywords", [])
 
+            # Extracting slides
             for slide in lesson_data.get("slides", []):
                 extracted_data.append({
                     "path": os.path.join(RAW_DATA_DIR, slide),
@@ -62,9 +64,23 @@ def parse_course_metadata(course_metadata_path: Path, course: Path):
                     "course_name": course_name,
                     "course_description": course_description,
                     "lesson_number": lesson_number,
-                    "lesson_title": lesson_title
+                    "lesson_title": lesson_title,
+                    "keywords": lesson_keywords
                 })
 
+            # Extracting lesson notes
+            for note in lesson_data.get("notes", []):
+                extracted_data.append({
+                    "path": os.path.join(RAW_DATA_DIR, note),
+                    "type": "lesson_note",
+                    "course_name": course_name,
+                    "course_description": course_description,
+                    "lesson_number": lesson_number,
+                    "lesson_title": lesson_title,
+                    "keywords": lesson_keywords
+                })
+
+            # Extracting references
             for ref in lesson_data.get("references", []):
                 extracted_data.append({
                     "path": os.path.join(RAW_DATA_DIR, ref["filename"]),
@@ -72,9 +88,13 @@ def parse_course_metadata(course_metadata_path: Path, course: Path):
                     "course_name": course_name,
                     "course_description": course_description,
                     "lesson_number": lesson_number,
-                    "lesson_title": lesson_title
+                    "lesson_title": lesson_title,
+                    "keywords": lesson_keywords,
+                    "title": ref.get("title"),
+                    "description": ref.get("description")
                 })
 
+            # Extracting supplementary materials
             for material in lesson_data.get("supplementary_materials", []):
                 extracted_data.append({
                     "path": os.path.join(RAW_DATA_DIR, material["filename"]),
@@ -82,19 +102,72 @@ def parse_course_metadata(course_metadata_path: Path, course: Path):
                     "course_name": course_name,
                     "course_description": course_description,
                     "lesson_number": lesson_number,
-                    "lesson_title": lesson_title
+                    "lesson_title": lesson_title,
+                    "keywords": lesson_keywords,
+                    "title": material.get("title"),
+                    "description": material.get("description")
                 })
 
-            for video in lesson_data.get("multimedia", {}).get("videos", []):
+            # Extracting exercises
+            for exercise in lesson_data.get("exercises", []):
+                # The exercise can have multiple files
+                filenames = exercise.get("filename", [])
+                if isinstance(filenames, str):
+                    filenames = [filenames]
+                
+                for filename in filenames:
+                    extracted_data.append({
+                        "path": os.path.join(RAW_DATA_DIR, filename),
+                        "type": "exercise",
+                        "course_name": course_name,
+                        "course_description": course_description,
+                        "lesson_number": lesson_number,
+                        "lesson_title": lesson_title,
+                        "keywords": lesson_keywords,
+                        "title": exercise.get("title"),
+                        "description": exercise.get("description")
+                    })
+
+            # Extracting multimedia content
+            multimedia = lesson_data.get("multimedia", {})
+            
+            # Video
+            for video in multimedia.get("videos", []):
                 extracted_data.append({
                     "path": os.path.join(RAW_DATA_DIR, video),
                     "type": "video",
                     "course_name": course_name,
                     "course_description": course_description,
                     "lesson_number": lesson_number,
-                    "lesson_title": lesson_title
+                    "lesson_title": lesson_title,
+                    "keywords": lesson_keywords
+                })
+            
+            # Images
+            for image in multimedia.get("images", []):
+                extracted_data.append({
+                    "path": os.path.join(RAW_DATA_DIR, image),
+                    "type": "image",
+                    "course_name": course_name,
+                    "course_description": course_description,
+                    "lesson_number": lesson_number,
+                    "lesson_title": lesson_title,
+                    "keywords": lesson_keywords
+                })
+            
+            # Audio
+            for audio in multimedia.get("audio", []):
+                extracted_data.append({
+                    "path": os.path.join(RAW_DATA_DIR, audio),
+                    "type": "audio",
+                    "course_name": course_name,
+                    "course_description": course_description,
+                    "lesson_number": lesson_number,
+                    "lesson_title": lesson_title,
+                    "keywords": lesson_keywords
                 })
 
+            # Extracting external resources
             for resource in lesson_data.get("external_resources", []):
                 extracted_data.append({
                     "url": resource["url"],
@@ -102,40 +175,43 @@ def parse_course_metadata(course_metadata_path: Path, course: Path):
                     "course_name": course_name,
                     "course_description": course_description,
                     "lesson_number": lesson_number,
-                    "lesson_title": lesson_title
+                    "lesson_title": lesson_title,
+                    "keywords": lesson_keywords,
+                    "resource_type": resource.get("type"),
+                    "title": resource.get("title"),
+                    "description": resource.get("description")
                 })
         else:
-            print(f"Errore: File della lezione non trovato -> {lesson_metadata_path}")
+            logger.warning(f"Lesson file not found: {lesson_metadata_path}")
 
     return extracted_data
 
 
 def parse_all_courses_metadata():
-    """Scansiona tutti i corsi nella cartella METADATA_DIR e salva i dati in un file JSON."""
+    """Scans all courses in the METADATA_DIR folder and saves the data to a JSON file."""
     all_parsed_data = []
 
     metadata_dir = Path(METADATA_DIR)
     if not metadata_dir.exists():
-        logger.error(f"La cartella METADATA_DIR '{metadata_dir}' non esiste.")
+        logger.error(f"The folder METADATA_DIR '{metadata_dir}' doesn't exists.")
         return
 
     for course in metadata_dir.iterdir():
         course_metadata_path = course / "course_metadata.json"
         if course.is_dir() and course_metadata_path.exists():
-            logger.info(f"Parsing metadati per il corso: {course.name}")
+            logger.info(f"Parsing metadata for course: {course.name}")
             all_parsed_data.extend(parse_course_metadata(course_metadata_path, course))
         else:
-            logger.warning(f"Nessun metadato trovato per il corso: {course.name}")
+            logger.warning(f"No metadata found for course: {course.name}")
 
-    # Salvataggio del file JSON finale
     os.makedirs(os.path.dirname(PARSED_COURSES_DATA_FILE), exist_ok=True)
 
     with open(PARSED_COURSES_DATA_FILE, "w", encoding="utf-8") as out_file:
         json.dump(all_parsed_data, out_file, indent=4, ensure_ascii=False)
 
-    logger.info(f"Parsing completato! Dati salvati in '{PARSED_COURSES_DATA_FILE}'.")
+    logger.info(f"Parsing completed! Data saved in '{PARSED_COURSES_DATA_FILE}'.")
+    logger.info(f"Total items processed: {len(all_parsed_data)}")
 
 
-# Esegui il parsing di tutti i corsi
 if __name__ == "__main__":
     parse_all_courses_metadata()

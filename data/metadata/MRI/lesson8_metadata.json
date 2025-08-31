@@ -1,0 +1,79 @@
+{
+    "lesson_number": 8,
+    "title": "Collaborative Filtering",
+    "keywords": [
+      "Pearson correlation",
+      "Item-based nearest-neighbor",
+      "Data sparsity",
+      "Memory-based"
+    ],
+    "slides": [
+      "slides/InformationFiltering_2_Collaborative_Filtering.pdf"
+    ],
+    "notes": [],
+    "references": [
+      {
+        "title": "Towards the Next Generation of Recommender Systems A Survey of the State-of-the-Art and Possible Extensions",
+         "filename": "references/Towards_the_Next_Generation_of_Recommender_Systems.pdf",
+        "description": "The paper presents an overview of the field of recommender systems and describes the current generation of recommendation methods that are usually classified into the following three main categories: content-based, collaborative, and hybrid recommendation approaches."
+      },
+      {
+        "title": "Empirical Analysis of Predictive Algorithms for Collaborative Filtering",
+        "filename": "references/Empirical_Analysis_of_Predictive_Algorithms_for_Collaborative_Filtering.pdf",
+        "description": "In this paper we describe several algorithms designed for this task, in cluding techniques based on correlation coefficients, vector-based similarity calculations, and statistical Bayesian methods."
+      },
+      {
+        "title": "RF-Rec: Fast and Accurate Computation of Recommendations Based on Rating Frequencies",
+        "filename": "references/RF-Rec:_Fast_and_Accurate_Computation_of_Recommendations_Based_on_Rating_Frequencies.pdf",
+        "description": "This survey proposes a novel recommendation scheme called RF-Rec, which generates predictions simply by counting and combining the frequencies of the different rating values in the usual user-item rating matrix."
+      },
+      {
+        "title": "Eigentaste: A Constant Time Collaborative Filtering Algorithm",
+        "filename": "references/Eigentaste:_A_Constant_Time_Collaborative_Filtering_Algorithm.pdf",
+        "description": "Eigentaste is a collaborative filtering algorithm that uses universal queries to elicit real-valued user ratings on a common set of items and applies principal component analysis (PCA) to the resulting dense subset of the ratings matrix."
+      },
+      {
+        "title": "An Empirical Analysis of Design Choices in Neighborhood-Based Collaborative Filtering Algorithms",
+        "filename": "references/An_Empirical_Analysis_of_Design_Choices_in_Neighborhood-Based_Collaborative_Filtering_Algorithms.pdf",
+        "description": "This article provides a set of recommendations to guide design of neighborhood-based prediction systems, based on the results of an empirical study."
+      },
+      {
+        "title": "Evaluating Collaborative Filtering Recommender Systems",
+        "filename": "references/Evaluating_Collaborative_Filtering_Recommender_Systems.pdf",
+        "description": ". In this article, we review the key decisions in evaluating collaborative filtering recommender systems: the user tasks being evaluated, the types of analysis and datasets being used, the ways in which prediction quality is measured, the evaluation of prediction attributes other than quality, and the user-based evaluation of the system as a whole."
+      },
+      {
+        "title": "Latent Semantic Models for Collaborative Filtering",
+        "filename": "references/Latent_Semantic_Models_for_Collaborative_Filtering.pdf",
+        "description": "In this article, we describe a new family of model-based algorithms designed for this task."
+      },
+      {
+        "title": "Applying Associative Retrieval Techniques to Alleviate the Sparsity Problem in Collaborative Filtering",
+        "filename": "references/Applying_Associative_Retrieval_Techniques_to_Alleviate_the_Sparsity_Problem_in_Collaborative_Filtering.pdf",
+        "description": "In this article, we propose to deal with this sparsity problem by applying an associative retrieval framework and related spreading activation algorithms to explore transitive associations among consumers through their past transactions and feedback."
+      },
+      {
+        "title": "Slope One Predictors for Online Rating-Based Collaborative Filtering",
+        "filename": "references/Slope_One_Predictors_for_Online_Rating-Based_Collaborative_Filtering.pdf",
+        "description": "We propose three related slope one schemes with predictors of the form f (x) = x + b, which precompute the average difference between the ratings of one item and another for users who rated both."
+      },
+      {
+        "title": "Application of Dimensionality Reduction in Recommender System",
+        "filename": "references/Application_of_Dimensionality_Reduction_in_Recommender_System.pdf",
+        "description": "This paper presents two different experiments where we have explored one technology called Singular Value Decomposition (SVD) to reduce the dimensionality of recommender system databases."
+      },
+      {
+        "title": "A Recursive Prediction Algorithm for Collaborative Filtering Recommender Systems",
+        "filename": "references/A_Recursive_Prediction_Algorithm_for_Collaborative_Filtering_Recommender_Systems.pdf",
+        "description": "In this paper we present a recursive prediction algorithm, which allows those nearest-neighbor users to join the prediction process even if they have not rated the given item."
+      }
+    ],
+    "supplementary_materials": [],
+    "exercises": [],
+    "multimedia": {
+      "videos": [],
+      "images": [],
+      "audio": []
+    },
+    "external_resources": []
+  }
