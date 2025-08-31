@@ -133,7 +133,7 @@ def display_images_and_files(content, file_paths_list=None, message_index=0):
             file_name = os.path.basename(norm_path)
             
             if ext.endswith((".png", ".jpg", ".jpeg", ".gif", ".bmp", ".webp", ".svg")):
-                st.image(norm_path, caption=file_name, use_container_width=True)
+                st.image(norm_path, caption=file_name, use_container_width=False)
             
             mime_type = mimetypes.guess_type(norm_path)[0] or "application/octet-stream"
             
@@ -498,10 +498,11 @@ def enhance_user_input(config_chat, user_input, file_path):
         core_instructions.append(f"Analyze uploaded file: {file_path}")
     
     core_instructions.extend([
-        "Academic support agent: Never invent information. Use retrieve_tool for documents, web_search for current info. Don't provide files paths if available.",
+        "Academic support agent: Never invent information. Use retrieve_tool to find relevant documents, as well as information about professors, the university, and the selected course. Use web_search for external info. Don't provide file paths if available. Don't modify file paths.",
         "For mathematical formulas, use LaTeX notation: inline formulas with $formula$ and display formulas with $$formula$$.",
-        "If no reliable sources found, clearly state limitations rather than guessing."
+        "If no reliable sources are found, clearly state limitations rather than guessing."
     ])
+
     
     if core_instructions:
         instruction_block = "\n".join(f"• {instr}" for instr in core_instructions)
@@ -516,36 +517,51 @@ def save_chat_history(thread_id, chat_history):
         json.dump(chat_history, f, ensure_ascii=False, indent=2)
 
 def save_uploaded_file(user_file_input):
-    """Salva qualsiasi tipo di file caricato dall'utente."""
+    """Salva qualsiasi file caricato dall'utente in una cartella dedicata e restituisce un percorso pulito."""
     try:
-        temp_dir = tempfile.mkdtemp()
-        tmp_file_path = os.path.join(temp_dir, user_file_input.name)
-        
+        # Creiamo una cartella unica e centralizzata per i file caricati
+        upload_dir = os.path.join(os.getcwd(), "uploaded_files")
+        os.makedirs(upload_dir, exist_ok=True)
+
+        # Percorso finale del file
+        tmp_file_path = os.path.join(upload_dir, user_file_input.name)
+        print(f"Saving uploaded file to: {tmp_file_path}")
+
+        # Salvataggio del file
         with open(tmp_file_path, 'wb') as f:
             f.write(user_file_input.getvalue())
-        
+
+        # Controlliamo il tipo di file per mostrare un messaggio coerente
         file_type, _ = mimetypes.guess_type(user_file_input.name)
-        
-        # Messaggio di successo basato sul tipo
         if file_type:
             if file_type.startswith('audio'):
-                st.success("File audio caricato 📤")
+                st.success("File audio caricato")
             elif file_type.startswith('image'):
-                st.success(f"File immagine caricato 📤")
+                st.success("File immagine caricato")
             elif file_type.startswith('video'):
-                st.success(f"File video caricato 📤")
+                st.success("File video caricato")
             elif file_type == 'application/pdf':
-                st.success("File PDF caricato 📤")
+                st.success("File PDF caricato")
             else:
-                st.success("File caricato 📤")
+                st.success("File caricato")
         else:
-            st.success("File caricato 📤")
-        
-        return repr(os.path.normpath(tmp_file_path))
-        
+            st.success("File caricato")
+
+        return os.path.normpath(tmp_file_path)
+
     except Exception as e:
         st.error(f"Errore durante il salvataggio del file: {str(e)}")
         return ""
+
+
+def get_clean_path(file_path: str) -> str:
+    """Restituisce un percorso assoluto, normalizzato e sicuro."""
+    # Rimuove eventuali apici e normalizza i separatori
+    cleaned_path = file_path.replace("\\\\", "\\").replace("\\", os.sep).strip("'\"")
+    # Converte sempre in percorso assoluto
+    abs_path = os.path.abspath(cleaned_path)
+    return abs_path
+
 
 def handle_chatbot_response(user_input, thread_id, config_chat, user_files=None):
     """Handle chatbot response with unified streaming/non-streaming logic."""
@@ -573,10 +589,15 @@ def handle_chatbot_response(user_input, thread_id, config_chat, user_files=None)
         for uploaded_file in user_files:
             file_path = save_uploaded_file(uploaded_file)
             if file_path:
-                user_file_paths.append(file_path)
+                cleaned_path = get_clean_path(file_path)
+                if os.path.exists(cleaned_path):
+                    user_file_paths.append(cleaned_path)
+                else:
+                    st.error(f"❌ File non trovato: {cleaned_path}")
+
 
     try:
-        file_path_for_prompt = user_file_paths[0] if user_file_paths else None
+        file_path_for_prompt = get_clean_path(user_file_paths[0]) if user_file_paths else None
         enhanced_user_input = enhance_user_input(config_chat, input_text, file_path_for_prompt)
         config = {"configurable": {"thread_id": thread_id}}
         
