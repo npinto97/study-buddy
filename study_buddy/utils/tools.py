@@ -127,6 +127,23 @@ class LLMFactory:
             max_tokens=max_tokens,
             together_api_key=Config.validate_key("TOGETHER_API_KEY")
         )
+        
+
+def resolve_file_path(file_path: str) -> str:
+    """
+    Risolve automaticamente il percorso del file.
+    Se riceve solo il nome del file, lo cerca nella cartella uploaded_files.
+    """
+    if os.path.isabs(file_path) and os.path.exists(file_path):
+        return file_path
+    
+    if not os.path.isabs(file_path):
+        upload_dir = os.path.join(os.getcwd(), "uploaded_files")
+        potential_path = os.path.join(upload_dir, file_path)
+        if os.path.exists(potential_path):
+            return potential_path
+    
+    return file_path
 
 
 # =============================================================================
@@ -171,7 +188,7 @@ class VectorStoreRetriever(BaseWrapper):
         if not os.path.exists(FAISS_INDEX_DIR):
             raise ValueError(f"FAISS index directory not found: {FAISS_INDEX_DIR}")
     
-    def retrieve(self, query: str, k: int = 4) -> tuple[str, list, list]:
+    def retrieve(self, query: str, k: int = 2) -> tuple[str, list, list]:
         """Retrieve information with validation and error handling."""
         try:
             vector_store = get_vector_store(FAISS_INDEX_DIR)
@@ -214,14 +231,17 @@ class DocumentProcessor(BaseWrapper):
     
     def extract_text(self, file_path: str) -> str:
         """Extract text from various document types."""
-        ext = FileProcessor.get_file_extension(file_path)
+        
+        resolved_path = resolve_file_path(file_path)
+        
+        ext = FileProcessor.get_file_extension(resolved_path)
         
         if ext == ".pdf":
-            return self._extract_from_pdf(file_path)
+            return self._extract_from_pdf(resolved_path)
         elif ext in [".png", ".jpg", ".jpeg", ".tiff", ".bmp"]:
-            return self._extract_from_image(file_path)
+            return self._extract_from_image(resolved_path)
         elif ext == ".txt":
-            return self._extract_from_text(file_path)
+            return self._extract_from_text(resolved_path)
         else:
             raise ValueError(f"Unsupported file format: {ext}")
     
@@ -274,18 +294,18 @@ class DocumentSummarizer(BaseWrapper):
     def summarize(self, file_path: str) -> str:
         """Summarize document content."""
         try:
-            # Load documents
-            ext = FileProcessor.get_file_extension(file_path)
+            resolved_path = resolve_file_path(file_path)
+            
+            ext = FileProcessor.get_file_extension(resolved_path)
             if ext == ".pdf":
-                loader = PyPDFLoader(file_path)
+                loader = PyPDFLoader(resolved_path)
             elif ext == ".txt":
-                loader = TextLoader(file_path)
+                loader = TextLoader(resolved_path)
             else:
                 raise ValueError(f"Unsupported file type: {ext}")
             
             documents = loader.load()
             
-            # Create summarization chain
             llm = LLMFactory.create_together_llm()
             chain = load_summarize_chain(llm, chain_type="map_reduce")
             
@@ -306,8 +326,10 @@ class SentimentAnalyzer(BaseWrapper):
     def analyze(self, file_path: str) -> str:
         """Analyze sentiment from file."""
         try:
+            resolved_path = resolve_file_path(file_path)
+            
             processor = DocumentProcessor()
-            text = processor.extract_text(file_path)
+            text = processor.extract_text(resolved_path)
             
             if text.startswith("Error"):
                 return text
@@ -521,7 +543,7 @@ class CSVAnalyzer(BaseWrapper):
     
     def __init__(self, file_path: str):
         super().__init__()
-        self.file_path = file_path
+        self.file_path = resolve_file_path(file_path)
         self.df = self._load_dataframe()
         self.documents = self._load_documents()
     
@@ -596,12 +618,14 @@ class DataVisualizer(BaseWrapper):
     def create_visualization(self, csv_path: str, query: str) -> dict:
         """Generate visualization from natural language query."""
         try:
+            resolved_path = resolve_file_path(csv_path)
+            
             # Upload dataset to sandbox
-            with open(csv_path, "rb") as f:
+            with open(resolved_path, "rb") as f:
                 sandbox_path = self.sandbox.files.write("dataset.csv", f).path
             
             # Generate analysis code
-            code = self._generate_code(query, sandbox_path, csv_path)
+            code = self._generate_code(query, sandbox_path, resolved_path)
             
             # Execute code and save results
             image_paths = self._execute_and_save(code)
@@ -1021,7 +1045,7 @@ def create_multimedia_tools() -> List[Tool]:
 def create_data_analysis_tools() -> List[Tool]:
     """Create data analysis and visualization tools."""
     tools = []
-    
+
     # Code interpreter
     try:
         interpreter = CodeInterpreter()
@@ -1032,26 +1056,39 @@ def create_data_analysis_tools() -> List[Tool]:
         ))
     except ValueError as e:
         print(f"Warning: Code interpreter not available - {e}")
-    
+
     # CSV analysis
     tools.append(Tool(
         name="analyze_csv",
         description="Perform statistical and semantic analysis on CSV files",
-        func=lambda file_path: CSVAnalyzer(file_path).full_analysis()
+        func=lambda file_path: CSVAnalyzer(file_path).full_analysis() if os.path.exists(file_path) else {"error": f"File not found: {file_path}", "success": False}
     ))
-    
+
     # Data visualization
     try:
         visualizer = DataVisualizer()
+
+        def safe_visualization(file_path, query=None):
+            """Wrapper to robustly handle file paths."""
+            resolved_path = resolve_file_path(file_path)
+            if not os.path.exists(resolved_path):
+                return {
+                    "error": f"The file '{resolved_path}' doesn't exist. Upload a valid CSV file.",
+                    "success": False
+                }
+            return visualizer.create_visualization(resolved_path, query)
+
         tools.append(StructuredTool.from_function(
-            func=visualizer.create_visualization,
+            func=safe_visualization,
             name="create_visualization",
             description="Generate data visualizations from CSV files using natural language queries"
         ))
+
     except ValueError as e:
         print(f"Warning: Data visualizer not available - {e}")
-    
+
     return tools
+
 
 
 # =============================================================================
