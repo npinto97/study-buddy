@@ -475,12 +475,14 @@ def sidebar_configuration():
     return config_thread_id, config_chat
 
 def enhance_user_input(config_chat, user_input, file_path):
-    """Generates an optimized prompt for the chatbot with focused instructions."""
-    core_instructions = []
+    """Versione semplificata che non interferisce con il sistema prompt principale."""
+    context_instructions = []
     
+    # Lingua
     if config_chat.language:
-        core_instructions.append(f"Respond in {config_chat.language}.")
+        context_instructions.append(f"Respond in {config_chat.language}.")
     
+    # Livello di complessità
     complexity_map = {
         "Basic": "Use simple language and basic explanations.",
         "Intermediate": "Provide moderate detail with some technical terms.",
@@ -488,24 +490,23 @@ def enhance_user_input(config_chat, user_input, file_path):
     }
     
     if config_chat.complexity_level in complexity_map:
-        core_instructions.append(complexity_map[config_chat.complexity_level])
+        context_instructions.append(complexity_map[config_chat.complexity_level])
     
+    # Contesto del corso
     if config_chat.course and config_chat.course != "None":
-        core_instructions.append(f"Context: User is studying {config_chat.course}. Prioritize course-related materials, then expand if needed.")
+        context_instructions.append(f"Context: User is studying {config_chat.course}. Prioritize course-related materials, then expand if needed.")
     
+    # File da analizzare
     if file_path:
-        core_instructions.append(f"Analyze uploaded file: {file_path}")
+        context_instructions.append(f"User has uploaded a file for analysis: {file_path}")
     
-    core_instructions.extend([
-        "Academic support agent: Never invent information. Use retrieve_tool to find relevant documents, as well as information about professors, the university, and the selected course. Use web_search for external info. Don't provide file paths if available. Don't modify file paths.",
-        "For mathematical formulas, use LaTeX notation: inline formulas with $formula$ and display formulas with $$formula$$.",
-        "If no reliable sources are found, clearly state limitations rather than guessing."
-    ])
-
+    # Istruzioni per formule matematiche
+    context_instructions.append("For mathematical formulas, use LaTeX notation: inline formulas with $formula$ and display formulas with $$formula$$.")
     
-    if core_instructions:
-        instruction_block = "\n".join(f"• {instr}" for instr in core_instructions)
-        return f"{instruction_block}\n\nQuery: {user_input}"
+    # Costruisci il prompt finale
+    if context_instructions:
+        context_block = "\n".join(f"• {instr}" for instr in context_instructions)
+        return f"{context_block}\n\nUser Query: {user_input}"
     
     return user_input
 
