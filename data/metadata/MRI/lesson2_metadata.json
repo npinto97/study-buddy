@@ -1,0 +1,46 @@
+{
+    "lesson_number": 2,
+    "title": "Boolean and Vector Space Retrieval Models",
+    "keywords": [
+      "Tokenization",
+      "Lemmatization",
+      "Stemming",
+      "Wordnet"
+    ],
+    "slides": [
+      "slides/InformationRetrieval_2_Boolean_Vector_Space_Models.pdf"
+    ],
+    "notes": [],
+    "references": [
+      {
+        "title": "Knowledge Discovery in Textual Databases (KDT)",
+         "filename": "references/Knowledge_Discovery_in_Textual_Databases_(KDT).pdf",
+        "description": "A text categorization paradigm to annotate text articles with meaningful concepts that are organized in hierarchical structure."
+      },
+      {
+        "title": "Text Mining as Integration of Several Related Research Areas: Report on KDD'2000 Workshop on Text Mining",
+        "filename": "references/Text_mining_as_integration_of_several_re.pdf",
+        "description": "A report on the research issues covered in the papers presented at the KDD'2000 Workshop on Text Mining"
+      }
+    ],
+    "supplementary_materials": [
+      {
+        "title": "A comprehensive survey of neighborhood-based recommendation methods",
+        "filename": "supplementary_materials/Suggested_reading_Collaborative_Filtering.pdf",
+        "description": "This chapter presents a comprehensive survey of neighborhood-based methods for the item recommendation problem. In particular, the main benefits of such methods, as well as their principal characteristics, are described. Furthermore, this document addresses the essential decisions that are required while implementing a neighborhood-based recommender system, and gives practical information on how to make such decisions"
+      }
+    ],
+    "exercises": [
+      {
+        "title": "Esercizio sul calcolo delle similarità",
+        "filename": "exercises/solved_exercises/Cosine_Similarity_Solved_Exercise_2.pdf",
+        "description": "Esercizio svolto sul calcolo della similarità del coseno."
+      }
+    ],
+    "multimedia": {
+      "videos": [],
+      "images": [],
+      "audio": []
+    },
+    "external_resources": []
+  }

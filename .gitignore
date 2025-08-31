@@ -177,7 +177,11 @@ cython_debug/
 Thumbs.db
 
 # Exclude local databases and protected material
-data/
+data/processed/
+data/raw/
+data/temp/
+
+history/
 
 notebooks/
 

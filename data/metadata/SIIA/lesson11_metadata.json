@@ -1,0 +1,324 @@
+{
+    "lesson_number": 11,
+    "title": "Conversational Recommender Systems",
+    "keywords": [
+      "Conversational Recommender Systems (CRS)",
+      "User Modeling",
+      "Output Processing"
+    ],
+    "slides": [
+      "slides/Lesson_11_conversational_recommender_systems.pdf",
+      "slides/Lesson_11_the_long_journey_to_large_language_models_the_nlp_breakthrough.pdf"
+    ],
+    "notes": [],
+    "references": [
+      {
+        "title": "A Neural Probabilistic Language Model",
+        "filename": "references/references/a_neural_probabilistic_language_model.pdf",
+        "description": "This approach to statistical language modeling simultaneously learns distributed word representations and the probability function for word sequences. The key idea is that unseen sequences are given high probability if composed of words similar to those in already observed sequences. Neural networks are used to model the probability function, significantly improving upon traditional trigram models, as demonstrated in experiments with two text corpora. This method provides better generalization by leveraging word similarity."
+      },
+      {
+        "title": "A Personalized System for Conversational Recommendations",
+        "filename": "references/a_personalized_system_for_conversational_recommendations.pdf",
+        "description": "The Adaptive Place Advisor is a recommendation system that integrates personalized recommendations with interactive dialogues. It dynamically learns user preferences over time through conversational interactions, improving item search efficiency. By using a novel user model, the system tailors both item suggestions and the questions asked, reducing the time and interactions needed to find satisfactory recommendations. In tests, this approach significantly outperformed a non-adaptive version of the system in terms of efficiency."
+      },
+      {
+        "title": "A Spreading Activation Theory of Memory",
+        "filename": "references/a_spreading_activation_theory_of_memory.pdf",
+        "description": "The ACT theory of factual memory suggests that information is encoded as cognitive units, which strengthen with practice and weaken over time. Memory retrieval operates through spreading activation across an interconnected network of units, with the level of activation determining recall probability. The theory explains various memory phenomena, including interference, associative relatedness, the effects of practice, and differences between recognition and recall, as well as reconstructive recall."
+      },
+      {
+        "title": "A Survey on Conversational Recommender Systems",
+        "filename": "references/a_survey_on_conversational_recommender_systems.pdf",
+        "description": "Conversational recommender systems (CRS) enable richer user interactions beyond traditional one-shot recommendations, allowing users to refine preferences, ask questions, and give feedback. With advancements in natural language processing and the rise of voice-controlled assistants and chatbots, CRS have gained popularity. This paper surveys existing CRS approaches, categorizing them by user intents, background knowledge, and technological methods. It also evaluates how CRS are assessed and highlights areas for further research, aiming to address gaps in this growing field."
+      },
+      {
+        "title": "A Systematic Review on Implicit and Explicit Aspect Extraction in Sentiment Analysis",
+        "filename": "references/a_systematic_review_on_implicit_and_explicit_aspect_extraction_in_sentiment_analysis.pdf",
+        "description": "This systematic review focuses on aspect-based sentiment analysis (ABSA), particularly the extraction of implicit, explicit, or both types of aspects. It examines techniques used for aspect extraction, evaluates various metrics, data domains, and languages involved, and identifies challenges and opportunities for future research. The review aims to assist researchers in understanding both implicit and explicit aspects in ABSA. The study covers literature from 2008 to 2019, providing insights into the field's evolution and current trends."
+      },
+      {
+        "title": "A Virtual Assistant for the Movie Domain Exploiting Natural Language Preference Elicitation Strategies",
+        "filename": "references/a_virtual_assistant_for_the_movie_domain_exploiting_natural_language_preference_elicitation_strategies.pdf",
+        "description": "This paper presents a strategy for natural language preference elicitation in a virtual assistant for movie recommendations. Users express preferences on both objective features (e.g., actors, directors) and subjective features (extracted from movie reviews). The approach was tested in a user study, revealing that while users face challenges in articulating subjective preferences, doing so improves recommendation accuracy when successful."
+      },
+      {
+        "title": "Adapting BLOOM to a new language: A case study for the Italian",
+        "filename": "references/adapting_bloom_to_a_new_language_a_case_study_for_the_italian.pdf",
+        "description": "The BLOOM Large Language Model excels in natural language understanding but lacks support for some languages, including Italian. This study explores a language adaptation strategy by continuing training on language-specific data. Additionally, BLOOM and its adapted models are fine-tuned on various instruction datasets and classification tasks. Results demonstrate that language adaptation, followed by instruction-based fine-tuning, effectively enables the model to address previously unseen tasks in new languages, particularly through specialized language data."
+      },
+      {
+        "title": "Advanced Natural-based interaction for the ITAlian language: LLaMAntino-3-ANITA",
+        "filename": "references/advanced_natural_based_interaction_for_the_italian_language_llamantino_3_anita.pdf",
+        "description": "The LLaMAntino-3-ANITA-8B-Inst-DPO-ITA is a fine-tuned Italian language model built on Meta's LLaMA-3. It leverages Supervised Fine-tuning (SFT) on both English and Italian datasets, using QLoRA for parameter efficiency. The Dynamic Preference Optimization (DPO) process refines output to ensure high-quality, contextually accurate responses. The model excels in tasks like text completion, zero-shot classification, and contextual understanding. Extensive evaluations show significant improvements in performance and computational efficiency. The model is available on HuggingFace and GitHub for use."
+      },
+      {
+        "title": "ALBERTO: Italian BERT Language Understanding Model for NLP Challenging Tasks Based on Tweets",
+        "filename": "references/alberto_italian_bert_language_understanding_model_for_nlp_challenging_tasks_based_on_tweets.pdf",
+        "description": "Recent studies in natural language processing (NLP) highlight the effectiveness of context-dependent models like ELMo, GPT, and BERT. This paper introduces **AlBERTo**, a BERT-based model specifically trained for Italian, focusing on social media language, particularly Twitter. AlBERTo was evaluated on the **SENTIPOLC** task, achieving state-of-the-art results in sentiment polarity, subjectivity, and irony detection in Italian tweets. The pre-trained model is available for public use on GitHub to support future research. For more details, visit: [AlBERTo GitHub](https://github.com/marcopoli/AlBERTo-it)."
+      },
+      {
+        "title": "ARES: Alternating Reinforcement Learning and Supervised Fine-Tuning for Enhanced Multi-Modal Chain-of-Thought Reasoning Through Diverse AI Feedback",
+        "filename": "references/ares_alternating_reinforcement_learning_and_supervised_fine_tuning_for_enhanced_multi_modal_chain_of_thought_reasoning_through_diverse_ai_feedback.pdf",
+        "description": "The ARES algorithm enhances Large Multimodal Models (LMMs) by combining Reinforcement Learning (RL) with Supervised Fine-Tuning (SFT). It involves two stages: scoring sentence contributions in a Chain-of-Thought (CoT) and correcting reasoning errors post-RL, stabilizing the model. Experiments on multi-modal datasets like ScienceQA and A-OKVQA showed ARES achieves a 70% win rate and improves inference accuracy by 2.5%. This method provides more granular feedback, refining model performance."
+      },
+      {
+        "title": "AutoGen: Enabling Next-Gen LLM Applications via Multi-Agent Conversation",
+        "filename": "references/autogen_enabling_next_gen_llm_applications_via_multi_agent_conversation.pdf",
+        "description": "AutoGen is an open-source framework that enables the development of LLM-based applications with multiple customizable agents. These agents can interact using LLMs, human input, and tools to accomplish tasks in diverse domains like mathematics, coding, and decision-making. The framework allows developers to define flexible conversation behaviors, integrating natural language and computer code to suit various application complexities. Empirical studies show its effectiveness in multiple use cases, enhancing flexibility and scalability for LLM applications."
+      },
+      {
+        "title": "CALAMITA: Challenge the Abilities of LAnguage Models i ITAlian",
+        "filename": "references/calamita_challenge_the_abilities_of_language_models_in_italian.pdf",
+        "description": "The paper introduces \"Challenge the Abilities of LAnguage Models in ITAlian\" (CALAMITA), a benchmark aimed at evaluating Large Language Models (LLMs) in Italian. Unlike existing benchmarks which primarily focus on English, CALAMITA tests LLM capabilities through a variety of tasks designed with Italian resources. It provides a shared platform, live leaderboard, and centralized evaluation framework. This initiative aims to address the gap in LLM evaluation for non-English languages, specifically Italian, and highlights the collaborative effort involved in its development."
+      },
+      {
+        "title": "Conversational recommendation based on end-to-end learning: How far are we?",
+        "filename": "references/conversational_recommendation_based_on_end_to_end_learning_how_far_are_we.pdf",
+        "description": "This paper evaluates two recent end-to-end learning-based conversational recommender systems (CRS) against a rule-based approach. A first study found that one-third of the responses from the learning systems were considered meaningless, raising concerns about their practical applicability. In a second study, human judges rated the rule-based system's responses higher than those of the learning-based systems. The findings highlight challenges in current CRS and suggest that evaluation methodologies need improvement to ensure progress in this field."
+      },
+      {
+        "title": "CRITIC: Large Language Models Can Self-Correct with Tool-Interactive Critiquing",
+        "filename": "references/critic_large_language_models_can_self_correct_with_tool_interactive_critiquing.pdf",
+        "description": "The CRITIC framework enables large language models (LLMs) to self-validate and improve outputs by interacting with external tools, much like how humans use tools for fact-checking or debugging. This process helps address issues like hallucination and flawed outputs. Evaluations in tasks like question answering and toxicity reduction show that CRITIC enhances LLM performance by leveraging external feedback, underscoring the importance of such feedback for continuous model improvement."
+      },
+      {
+        "title": "Distributed artificial intelligence: Taxonomy, review, framework, and reference architecture",
+        "filename": "references/distributed_artificial_intelligence_taxonomy_review_framework_and_reference_architecture.pdf",
+        "description": "This paper explores Distributed Artificial Intelligence (DAI), highlighting advancements in communication and networking that enable its development. The authors review DAI literature (2016-2022) and propose a framework for provisioning DAI as a service (DAIaaS) over cloud, fog, and edge layers. They introduce Imtidad, a software reference architecture for designing and deploying DAI services, emphasizing the need for future networking infrastructure transformations to support DAI. This work aims to advance DAI research and facilitate the development of smart applications."
+      },
+      {
+        "title": "Gender Bias in Large Language Models across Multiple Languages",
+        "filename": "references/gender_bias_in_large_language_models_across_multiple_languages.pdf",
+        "description": "This work examines gender biases in large language models (LLMs), such as GPT, across multiple languages. The study measures bias in three ways: 1) selection of gender-related words, 2) choice of gender pronouns (he/she), and 3) gender bias in dialogue topics. The findings reveal significant gender biases in LLM outputs across various languages, highlighting the importance of addressing these biases in NLP systems."
+      },
+      {
+        "title": "Generating post hoc review-based natural language justifcations for recommender systems",
+        "filename": "references/generating_post_hoc_review_based_natural_language_justifications_for_recommender_systems.pdf",
+        "description": "This article presents a framework for generating post hoc natural language justifications for recommendations, based on user reviews. The framework uses NLP and sentiment analysis to extract relevant aspects, summarizes them, and presents a transparent, context-aware justification. Three implementations are discussed: the first integrates review excerpts, the second incorporates aspect extraction and summarization, and the third adapts the justification to different contexts using a learned lexicon. Experimental results from three user studies demonstrate that the approach enhances trust, transparency, and engagement."
+      },
+      {
+        "title": "Generation-based vs. Retrieval-based Conversational Recommendation: A User-Centric Comparison",
+        "filename": "references/generation_based_vs_retrieval_based_conversational_recommendation_a_user_centric_comparison.pdf",
+        "description": "This paper revisits the potential of retrieval-based methods for conversational recommender systems (CRS). It compares two deep learning models with a retrieval-based approach, which selects response candidates using a nearest-neighbor technique and reranks them heuristically. In a user study with 60 participants, the retrieval-based system outperformed both language generation methods in response quality. The study suggests that retrieval-based approaches could serve as an effective alternative or complement to modern language generation methods for CRS."
+      },
+      {
+        "title": "Gorilla: Large Language Model Connected with Massive APIs",
+        "filename": "references/gorilla_large_language_model_connected_with_massive_apis.pdf",
+        "description": "Gorilla is a fine-tuned LLaMA-based model designed to improve Large Language Models' (LLMs) ability to make accurate API calls. It surpasses GPT-4 in generating API call inputs and mitigates common issues like hallucination. Integrated with a document retriever, Gorilla can adapt to changes in documentation, making it more reliable and flexible. The model, along with the dataset APIBench, enables better tool usage and reduces errors. Gorilla's resources are available at [https://gorilla.cs.berkeley.edu](https://gorilla.cs.berkeley.edu)."
+      },
+      {
+        "title": "IMAGEBIND: One Embedding Space To Bind Them All",
+        "filename": "references/imagebind_one_embedding_space_to_bind_them_all.pdf",
+        "description": "IMAGEBIND is a model that learns a joint embedding across six modalities: images, text, audio, depth, thermal, and IMU data. It demonstrates that only image-paired data is necessary to connect these modalities. By leveraging large-scale vision-language models, IMAGEBIND extends zero-shot capabilities to new modalities, enabling cross-modal retrieval, detection, and generation. The approach outperforms specialist models on emergent zero-shot recognition tasks and improves with stronger image encoders. It also shows strong few-shot recognition performance and offers a new evaluation method for vision models."
+      },
+      {
+        "title": "Improving Conversational Recommender Systems via Transformer-based Sequential Modelling",
+        "filename": "references/improving_conversational_recommender_systems_via_transformer_based_sequential_modelling.pdf",
+        "description": "This paper introduces TSCR, a Transformer-based conversational recommendation model that accounts for sequential dependencies in conversations. Unlike traditional models, TSCR represents conversations as sequences of items and entities, using a Cloze task to predict recommendations. By modeling user preferences over time, the method improves the accuracy of recommendations in conversational recommender systems, outperforming existing baselines in experimental tests."
+      },
+      {
+        "title": "Interactive Critiquing for Catalog Navigation in E-Commerce",
+        "filename": "references/interactive_critiquing_for_catalog_navigation_in_e_commerce.pdf",
+        "description": "This paper discusses an interactive and incremental case-based approach to improving e-commerce catalogs. The system helps buyers with complex or vague needs by allowing them to critique product examples. The case-based method prioritizes products over features and refines product recommendations through user feedback. This approach enables more accurate product mapping without requiring a fully defined need from the user. It aims to address challenges in catalog navigation, especially for casual buyers and complex products."
+      },
+      {
+        "title": "INTERVENOR: Prompting the Coding Ability of Large Language Models with the Interactive Chain of Repair",
+        "filename": "references/intervenor_prompting_the_coding_ability_of_large_language_models_with_the_interactive_chain_of_repair.pdf",
+        "description": "This paper presents INTERVENOR, a system that simulates human-like code repair by using Large Language Models (LLMs). It employs two roles: the Code Learner, which generates or fixes code, and the Code Teacher, which creates a Chain-of-Repair (CoR) to guide the learner. The CoR aids in diagnosing and fixing errors based on compiler feedback. INTERVENOR outperforms GPT-3.5, improving code generation and translation tasks by 18% and 4.3%, respectively. The system effectively identifies syntax and assertion errors, providing clear repair instructions."
+      },
+      {
+        "title": "KECRS: Towards Knowledge-Enriched Conversational Recommendation System",
+        "filename": "references/kecrs_towards_knowledge_enriched_conversational_recommendation_system.pdf",
+        "description": "The paper introduces the Knowledge-Enriched Conversational Recommendation System (KECRS) to address issues in chit-chat-based CRS, such as repetitive recommendations and poor integration of external knowledge graphs (KG). KECRS incorporates Bag-of-Entity (BOE) loss and infusion loss to enhance recommendation diversity and informativeness. It also builds a high-quality KG, The Movie Domain Knowledge Graph (TMDKG), to improve the model's performance. Experiments show KECRS outperforms existing systems in both recommendation accuracy and response generation quality."
+      },
+      {
+        "title": "Knowledge Solver: Teaching LLMs to Search for Domain Knowledge from Knowledge Graphs",
+        "filename": "references/knowledge_solver_teaching_llms_to_search_for_domain_knowledge_from_knowledge_graphs.pdf",
+        "description": "The Knowledge Solver (KSL) approach enhances large language models (LLMs) like GPT-4 by enabling them to search external knowledge bases in a zero-shot manner. Instead of relying on additional modules like graph neural networks (GNNs), KSL leverages LLMs' generalizability to retrieve essential knowledge. It also provides clear, multi-hop retrieval paths, improving reasoning transparency. Experiments on CommonsenseQA, OpenbookQA, and MedQA-USMLE datasets show substantial performance improvement compared to LLM baselines."
+      },
+      {
+        "title": "Language Models are Few-Shot Learners",
+        "filename": "references/language_models_are_few_shot_learners.pdf",
+        "description": "GPT-3, a 175-billion parameter autoregressive language model, shows remarkable task-agnostic, few-shot learning performance, rivaling state-of-the-art fine-tuning methods. It excels in NLP tasks like translation, question answering, and cloze tasks with no gradient updates or fine-tuning, using only text interaction for task specification. However, it still faces challenges on some datasets, particularly due to issues in training with large web corpora."
+      },
+      {
+        "title": "LLaMAntino: LLaMA 2 Models for Effective Text Generation in Italian Language",
+        "filename": "references/llamantino_llama_2_models_for_effective_text_generation_in_italian_language.pdf",
+        "description": "This work investigates adapting LLaMA models for Italian language tasks, exploring various tuning methods to improve text generation quality in Italian. The study introduces the LLaMAntino family, a set of Italian-focused LLMs, aiming to enhance performance in underrepresented languages. By adopting an open science approach, the research seeks to provide strong linguistic capabilities for Italian, contributing to language adaptation strategies and addressing challenges in multilingual and general-purpose LLMs."
+      },
+      {
+        "title": "Logically Consistent Language Models via Neuro-Symbolic Integration",
+        "filename": "references/logically_consistent_language_models_via_neuro_symbolic_integration.pdf",
+        "description": "This work introduces a method to enhance the consistency of large language models (LLMs) by incorporating neuro-symbolic reasoning. The proposed approach helps LLMs maintain logical consistency with external facts and rules, improving their self-consistency, even with limited fine-tuning. By using logical constraints, the method enables better performance across multiple constraints and allows for extrapolation to unseen factual knowledge. The approach aims to strike a balance between large-scale fine-tuning and using external tools for reasoning."
+      },
+      {
+        "title": "MemoryBank: Enhancing Large Language Models with Long-Term Memory",
+        "filename": "references/memorybank_enhancing_large_language_models_with_long_term_memory.pdf",
+        "description": "The paper proposes \"MemoryBank\" a memory mechanism for large language models (LLMs), addressing their lack of long-term memory. MemoryBank allows models to recall relevant memories, evolve over time, and adapt to users' personalities. It uses the Ebbinghaus Forgetting Curve to selectively forget and reinforce memories based on time and significance. The concept is validated through an AI chatbot, SiliconFriend, which displays empathy, personality understanding, and long-term companionship in psychological dialogue settings, showing promising results in both qualitative and quantitative analyses."
+      },
+      {
+        "title": "MetaGPT: Meta Programming for A Multi-Agent Collaborative Framework",
+        "filename": "references/metagpt_meta_programming_for_a_multi_agent_collaborative_framework.pdf",
+        "description": "MetaGPT is a multi-agent framework that improves LLM-based problem-solving by reducing logic inconsistencies and errors. It incorporates Standardized Operating Procedures (SOPs) to streamline workflows, enabling agents to collaborate more effectively by verifying intermediate results. By assigning roles in an assembly-line format, MetaGPT breaks complex tasks into manageable subtasks, enhancing coherence in collaborative software engineering. It outperforms previous chat-based systems in generating reliable solutions. More details can be found at [MetaGPT GitHub](https://github.com/geekan/MetaGPT)."
+      },
+      {
+        "title": "On the impact of Language Adaptation for Large Language Models: A case study for the Italian language using only open resources",
+        "filename": "references/on_the_impact_of_language_adaptation_for_large_language_models_a_case_study_for_the_italian_language_using_only_open_resources.pdf",
+        "description": "The BLOOM Large Language Model, while powerful in natural language understanding, does not initially support Italian. This study explores Language Adaptation strategies for BLOOM, focusing on improving its zero-shot performance in Italian for downstream tasks. The research demonstrates that language adaptation, followed by instruction-based fine-tuning, enhances BLOOM's ability to handle new tasks in Italian, even with limited data examples. This approach shows promise for improving BLOOM's performance in languages not included in its original training datasets."
+      },
+      {
+        "title": "OpenDialKG: Explainable Conversational Reasoning with Attention-based Walks over Knowledge Graphs",
+        "filename": "references/opendialkg_explainable_conversational_reasoning_with_attention_based_walks_over_knowledge_graphs.pdf",
+        "description": "The study introduces DialKG Walker, a conversational reasoning model that navigates a large-scale knowledge graph (KG) for dynamic, contextually rich dialogues. The model utilizes a novel attention-based graph path decoder to predict relevant entities based on prior dialog contexts. By leveraging a new OpenDialKG dataset, the model outperforms previous baselines, both in-domain and cross-domain tasks. Additionally, it provides a KG walk path for each entity, offering a natural explanation for its conversational reasoning."
+      },
+      {
+        "title": "PersonalLLM: Tailoring LLMs to Individual Preferences",
+        "filename": "references/personalllm_tailoring_llms_to_individual_preferences.pdf",
+        "description": "The PersonalLLM benchmark aims to tailor large language models (LLMs) to individual user preferences by simulating diverse user profiles with pre-trained reward models. Unlike traditional alignment benchmarks, it addresses the challenge of personalized interactions through varied, open-ended prompts and a dataset reflecting heterogeneous preferences. By leveraging historical data, it explores methods like in-context learning and meta-learning to adapt LLMs to sparse feedback. The benchmark is designed to foster advancements in personalization algorithms. You can access the dataset at [HuggingFace](https://huggingface.co/datasets/namkoong-lab/PersonalLLM)."
+      },
+      {
+        "title": "Pre-train, Prompt, and Predict: A Systematic Survey of Prompting Methods in Natural Language Processing",
+        "filename": "references/pre_train_prompt_and_predict_a_systematic_survey_of_prompting_methods_in_natural_language_processing.pdf",
+        "description": "This article introduces \"prompt-based learning\" a paradigm in natural language processing where language models use prompts to predict outputs. Unlike traditional supervised learning, which requires labeled data, prompt-based learning leverages pre-trained models and enables few-shot or zero-shot learning by filling in slots in prompts. The review organizes existing work and provides a unified framework, making the topic accessible to beginners. It also includes a constantly updated resource, NLPedia–Pretrain, offering additional surveys and paper lists."
+      },
+      {
+        "title": "Questioning the Survey Responses of Large Language Models",
+        "filename": "references/questioning_the_survey_responses_of_large_language_models.pdf",
+        "description": "This work critically examines survey-based methodologies for studying large language models. It finds that responses from models are often influenced by biases, such as ordering and labeling, leading to inconsistent results across different model sizes. When adjusting for these biases, models tend to show random responses. The study suggests that models are more likely to align with subgroups whose statistics are close to uniform, challenging previous assumptions about survey-derived alignment measures."
+      },
+      {
+        "title": "Rapid Development of Knowledge-Based Conversational Recommender Applications with Advisor Suite.",
+        "filename": "references/rapid_development_of_knowledge_based_conversational_recommender_applications_with_advisor_suite.pdf",
+        "description": "ADVISOR SUITE is a domain-independent platform for creating interactive, personalized recommender systems. It features an integrated, model-driven approach for designing recommendation, personalization, and interaction knowledge. Additionally, it automates the generation of web applications, making it ideal for prototyping and iterative development. Based on industry project experiences, the paper provides best practices for efficiently developing high-quality recommender systems with ADVISOR SUITE."
+      },
+      {
+        "title": "Reflexion: Language Agents with Verbal Reinforcement Learning",
+        "filename": "references/reflexion_language_agents_with_verbal_reinforcement_learning.pdf",
+        "description": "Reflexion is a novel framework that enhances language agents by using linguistic feedback instead of updating model weights. Agents reflect on task feedback, storing it in an episodic memory buffer to improve decision-making in subsequent trials. This method enables fast learning from trial-and-error without extensive training. Reflexion has shown significant improvements in various tasks, including coding (91% pass rate on HumanEval), outperforming prior models like GPT-4. The framework is flexible and adaptable to various feedback types and sources. For more details, visit [Reflexion GitHub](https://github.com/noahshinn024/reflexion)."
+      },
+      {
+        "title": "Retrieval-Augmented Generation for Large Language Models: A Survey",
+        "filename": "references/retrieval_augmented_generation_for_large_language_models_a_survey.pdf",
+        "description": "Retrieval-Augmented Generation (RAG) integrates external knowledge with Large Language Models (LLMs) to enhance performance, addressing challenges like hallucinations and outdated knowledge. This paper explores the evolution of RAG paradigms (Naive, Advanced, Modular), focusing on the retrieval, generation, and augmentation processes. It offers an overview of state-of-the-art technologies and introduces new evaluation frameworks. The paper concludes with a discussion on current challenges and future research directions."
+      },
+      {
+        "title": "SELF-REFINE: Iterative Refinement with Self-Feedback",
+        "filename": "references/self_refine_iterative_refinement_with_self_feedback.pdf",
+        "description": "SELF-REFINE is a technique for improving the output of Large Language Models (LLMs) through iterative feedback and refinement. The approach uses the LLM itself to generate, critique, and enhance its output without needing additional training. Evaluations show that SELF-REFINE improves LLM performance by about 20% across diverse tasks, including dialog generation and mathematical reasoning, outperforming one-step generation methods. This approach highlights how even advanced models like GPT-4 can be improved post-generation."
+      },
+      {
+        "title": "Think-in-Memory: Recalling and Post-thinking Enable LLMs with Long-Term Memory",
+        "filename": "references/think_in_memory_recalling_and_post_thinking_enable_llms_with_long_term_memory.pdf",
+        "description": "The TiM (Think-in-Memory) framework enhances LLMs by maintaining an evolved memory for long-term interactions, allowing them to recall and update thoughts dynamically. Unlike traditional memory mechanisms that rely on repeated reasoning, TiM stores historical thoughts for efficient retrieval and post-thinking. This reduces biases in reasoning and improves response quality during prolonged dialogues. The framework includes operations for memory management and uses Locality-Sensitive Hashing for efficient retrieval, leading to significant performance improvements in real-world and simulated conversations."
+      },
+      {
+        "title": "Towards Question-based Recommender Systems",
+        "filename": "references/towards_question_based_recommender_systems.pdf",
+        "description": "The Qrec model enhances question-based recommendation systems by focusing on user preferences over descriptive item features, rather than just items or item facets. Trained using matrix factorization, it updates user and item factors online through user responses. The model utilizes Generalized Binary Search to optimize question-asking strategies. Experimental results show Qrec outperforms traditional methods and significantly improves state-of-the-art baselines, even for cold-start users and items."
+      },
+      {
+        "title": "Understanding the planning of LLM agents: A survey",
+        "filename": "references/understanding_the_planning_of_llm_agents_a_survey.pdf",
+        "description": "This survey provides a systematic review of LLM-based planning for autonomous agents. It introduces a taxonomy categorizing existing work into five areas: Task Decomposition, Plan Selection, External Modules, Reflection, and Memory. The analysis explores each area in depth and discusses the challenges facing the field of research, offering insights into ways to enhance LLMs' planning capabilities for autonomous agents. The article emphasizes advancements and ongoing challenges in improving these systems."
+      },
+      {
+        "title": "WikiChat: Stopping the Hallucination of Large Language Model Chatbots by Few-Shot Grounding on Wikipedia",
+        "filename": "references/wikichat_stopping_the_hallucination_of_large_language_model_chatbots_by_few_shot_grounding_on_wikipedia.pdf",
+        "description": "WikiChat is a few-shot LLM-based chatbot grounded on the English Wikipedia, designed to minimize hallucination, reduce latency, and improve factual accuracy. Using a hybrid evaluation method, it achieves 97.3% factual accuracy and outperforms GPT-4 in terms of head, tail, and recent knowledge. The model is distilled from GPT-4 into a smaller LLaMA model for better cost-efficiency, privacy, and deployment. In human-user conversations, WikiChat surpasses GPT-4 in accuracy and user ratings by a significant margin."
+      }
+    ],
+    "supplementary_materials": [],
+    "exercises": [],
+    "multimedia": {
+      "videos": [],
+      "images": [],
+      "audio": []
+    },
+    "external_resources": [
+      {
+        "type": "article",
+        "title": "ChatGPT sets record for fastest-growing user base - analyst note",
+        "url": "https://www.reuters.com/technology/chatgpt-sets-record-fastest-growing-user-base-analyst-note-2023-02-01/",
+        "description": "ChatGPT reached 100 million monthly active users in January, just two months after its launch, making it the fastest-growing consumer app, according to a UBS study. The study, using data from Similarweb, shows that ChatGPT had around 13 million daily unique visitors in January, more than double the December figure. This rapid growth underscores the platform's popularity and increasing engagement."
+      },
+      {
+        "type": "article",
+        "title": "ChatGPT reaches 100 million users two months after launch",
+        "url": "https://www.theguardian.com/technology/2023/feb/02/chatgpt-100-million-users-open-ai-fastest-growing-app",
+        "description": "The Guardian article covering ChatGPT's rapid growth and its achievement of 100 million users."
+      },
+      {
+        "type": "article",
+        "title": "Meta Warns Its Latest Large Language Model ‘May Not Be Suitable' for Non-English Use",
+        "url": "https://slator.com/meta-warns-large-language-model-may-not-be-suitable-non-english-use/",
+        "description": "Slator article on Meta's warning regarding the limitations of large language models for non-English languages."
+      },
+      {
+        "type": "repository",
+        "title": "LLaMAntino-2-70B UltraChat ITA (Hugging Face)",
+        "url": "https://huggingface.co/swap-uniba/LLaMAntino-2-70b-hf-UltraChat-ITA",
+        "description": "A pre-trained model on Hugging Face based on LLaMAntino-2-70B for Italian language chat applications."
+      },
+      {
+        "type": "repository",
+        "title": "UltraChat GitHub Repository",
+        "url": "https://github.com/thunlp/UltraChat",
+        "description": "GitHub repository for UltraChat, a framework designed for efficient conversation AI models."
+      },
+      {
+        "type": "repository",
+        "title": "LLaMAntino-3 ANITA-8B Inst-DPO ITA (Hugging Face)",
+        "url": "https://huggingface.co/swap-uniba/LLaMAntino-3-ANITA-8B-Inst-DPO-ITA",
+        "description": "Hugging Face model LLaMAntino-3 with ANITA-8B, a model for Italian conversational tasks."
+      },
+      {
+        "type": "website",
+        "title": "An introduction to AI agents",
+        "url": "https://blog.ori.co/ai-agent-introduction",
+        "description": "Agentic AI is the next frontier in AI adoption. Discover more about AI agents in this blog post: what are they, types of agents, benefits, AI agents vs LLMs, and how agents can transform business workflows."
+      },
+      {
+        "type": "paper",
+        "title": "Autonomous Agents as Embodied AI",
+        "url": "https://ccrg.cs.memphis.edu/assets/papers/Autonomous%20Agents%20as%20Embodied%20AI.htm",
+        "description": "This paper discusses the key components of embodied architectures for cognitive agents and suggests a dual approach for studying them: engineering and scientific methods. It proposes exploring design and niche spaces while outlining a general architecture for cognitive agents. The work emphasizes the importance of autonomous, cognitive agents as the focus of embodied AI research."
+      },
+      {
+        "type": "article",
+        "title": "What's Emerging in AI: Autonomous Multi-Agents and Large Action/Agentic Models (LAMs)",
+        "url": "https://pub.towardsai.net/whats-emerging-in-ai-autonomous-multi-agents-and-large-action-agentic-models-lams-7e882a659565",
+        "description": "The field of Large Language Models (LLMs) is rapidly advancing, showcasing remarkable abilities to generate human-like text and comprehend complex language patterns. These innovations are reshaping industries, enabling machines to better understand and produce language. As LLMs evolve, they push the boundaries of artificial intelligence, offering exciting possibilities for communication, creativity, and problem-solving across various domains. The pace of progress is truly exhilarating, as new breakthroughs and improvements in LLMs continue to emerge."
+      },
+      {
+        "type": "article",
+        "title": "Agentic Design Patterns Part 1",
+        "url": "https://www.deeplearning.ai/the-batch/how-agents-can-improve-llm-performance/?utm_campaign=The%20Batch&utm_source=hs_email&utm_medium=email&_hsenc=p2ANqtz--9ARMthd09q0ABUi-abo6BH62BLbcwPo13LrXs9hUezs-L050Ay7b_rHdWuRIqBVOD6k_S",
+        "description": "DeepLearning.AI article discussing how agents can enhance the performance of large language models."
+      },
+      {
+        "type": "website",
+        "title": "The Shift from Models to Compound AI Systems",
+        "url": "https://bair.berkeley.edu/blog/2024/02/18/compound-ai-systems/",
+        "description": "In 2023, Large Language Models (LLMs) captured significant attention, demonstrating capabilities in general tasks like translation and coding. However, the focus is shifting. As more developers create applications with LLMs, it's clear that cutting-edge AI results are now driven by compound systems, integrating multiple components rather than relying solely on monolithic models. This marks a shift in how AI is being developed and utilized."
+      },
+      {
+        "type": "paper",
+        "title": "Multi-Agent System: An Introduction to Distributed Artificial Intelligence",
+        "url": "https://jasss.soc.surrey.ac.uk/4/2/reviews/rouchier.html",
+        "description": "The book provides a foundational overview of Multi-Agent Systems (MAS), detailing their theoretical origins and applications. It highlights the idea that Decentralized Artificial Intelligence complements both AI and Artificial Life. The author defines agents as entities capable of perceiving, acting, and communicating autonomously, each with specific goals. MAS involves agents interacting within an environment, acting on objects and affecting changes over time. This work is considered a key reference in MAS research, especially within the French academic community."
+      },
+      {
+        "type": "website",
+        "title": "Zalando to launch a fashion assistant powered by ChatGPT",
+        "url": "https://corporate.zalando.com/en/technology/zalando-launch-fashion-assistant-powered-chatgpt",
+        "description": "Zalando announces the launch of a fashion assistant powered by ChatGPT to help users with fashion advice."
+      },
+      {
+        "type": "website",
+        "title": "And Chill",
+        "url": "https://www.andchill.io/",
+        "description": "AndChill is a platform for AI-powered content recommendation and personalized entertainment."
+      }
+    ]
+  }

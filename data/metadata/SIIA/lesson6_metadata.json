@@ -1,0 +1,113 @@
+{
+    "lesson_number": 6,
+    "title": "Large Language Models (LLMs) and Large Multimodal Models (LMMs)",
+    "keywords": [
+      "Transformers",
+      "prompt engineering",
+      "evaluation"
+    ],
+    "slides": [
+      "slides/Lesson_06_Large_Language_Models.pdf",
+      "slides/Lesson_06_Large_Multimodal_Models.pdf"
+    ],
+    "notes": [],
+    "references": [
+      {
+        "title": "Advanced Natural-based interaction for the ITAlian language: LLaMAntino-3-ANITA",
+        "filename": "references/advanced_natural_based_interaction_for_the_italian_language_llamantino_3_anita.pdf",
+        "description": "The LLaMAntino-3-ANITA-8B-Inst-DPO-ITA is a fine-tuned Italian language model built on Meta's LLaMA-3. It leverages Supervised Fine-tuning (SFT) on both English and Italian datasets, using QLoRA for parameter efficiency. The Dynamic Preference Optimization (DPO) process refines output to ensure high-quality, contextually accurate responses. The model excels in tasks like text completion, zero-shot classification, and contextual understanding. Extensive evaluations show significant improvements in performance and computational efficiency. The model is available on [HuggingFace](https://huggingface.co/swap-uniba/LLaMAntino-3-ANITA-8B-Inst-DPO-ITA) and [GitHub](https://github.com/marcopoli/LLaMAntino-3-ANITA) for use."
+      },
+      {
+        "title": "Attention Is All You Need",
+        "filename": "references/attention_is_all_you_need.pdf",
+        "description": "The Transformer model, based entirely on attention mechanisms, removes the need for recurrence and convolutions in sequence transduction tasks. It achieves superior performance on machine translation tasks, surpassing previous models in quality while being more parallelizable and requiring less training time. On the WMT 2014 English-to-German task, it achieved 28.4 BLEU, and 41.8 BLEU on the English-to-French task. The Transformer also generalizes well to other tasks, including constituency parsing, with fewer training costs."
+      },
+      {
+        "title": "Direct Preference Optimization: Your Language Model is Secretly a Reward Model",
+        "filename": "references/direct_preference_optimization_your_language_model_is_secretly_a_reward_model.pdf",
+        "description": "Direct Preference Optimization (DPO) is a new method that improves the steerability of large-scale unsupervised language models. Unlike traditional reinforcement learning from human feedback (RLHF), DPO allows for closed-form extraction of the optimal policy, making it stable, computationally efficient, and easier to implement. It outperforms previous RLHF approaches, especially in controlling sentiment and improving response quality for tasks like summarization and dialogue, while being simpler to train and requiring less hyperparameter tuning."
+      },
+      {
+        "title": "GLUE: A Multi-Task Benchmark and Analysis Platform for Natural Language Understanding",
+        "filename": "references/glue_a_multi_task_benchmark_and_analysis_platform_for_natural_language_understanding.pdf",
+        "description": "The General Language Understanding Evaluation (GLUE) benchmark is designed to evaluate natural language understanding (NLU) models across a variety of tasks, encouraging models to generalize linguistic knowledge. It includes a set of tasks with limited training data and a diagnostic test suite for in-depth linguistic analysis. The evaluation reveals that multi-task training outperforms task-specific models, but the overall performance indicates the need for further advancements in general NLU systems."
+      },
+      {
+        "title": "HellaSwag: Can a Machine Really Finish Your Sentence?",
+        "filename": "references/hellaswag_can_machine_really_finish_your_sentece.pdf",
+        "description": "The HellaSwag dataset highlights the challenge of commonsense natural language inference. While human accuracy exceeds 95%, state-of-the-art models struggle, with accuracy below 48%. This discrepancy arises from the dataset's use of Adversarial Filtering (AF), which selects adversarial wrong answers by scaling the length and complexity of examples to a \"Goldilocks\" zone where machines misclassify while humans easily understand. HellaSwag emphasizes the ongoing difficulty of commonsense inference and suggests the evolution of benchmarks in adversarial ways to keep up with advancing NLP models. For more details, you can visit the original work [here](https://arxiv.org/abs/1905.09785)."
+      },
+      {
+        "title": "Neural Machine Translation by Jointly Learning to Align and Translate",
+        "filename": "references/neural_machine_translation_by_jointly_learning_to_align_and_translate.pdf",
+        "description": "Neural machine translation (NMT) aims to build a unified model that directly maximizes translation performance. Traditional encoder-decoder models face challenges due to their reliance on a fixed-length vector. This paper suggests improving performance by allowing the model to automatically search for relevant parts of a source sentence during translation. This approach provides translation performance comparable to state-of-the-art phrase-based systems and aligns well with human intuition based on qualitative analysis."
+      },
+      {
+        "title": "Sequence to Sequence Learning with Neural Networks",
+        "filename": "references/sequence-to-sequence-learning-with-neural-networks-Paper.pdf",
+        "description": "This paper presents an end-to-end sequence learning method using multilayered Long Short-Term Memory (LSTM) networks. The model achieved a BLEU score of 34.8 on English-to-French translation, surpassing traditional phrase-based systems. The LSTM handled long sentences well and even improved its performance when reranking SMT hypotheses, reaching a BLEU score of 36.5. The model demonstrated strong phrase and sentence representations sensitive to word order, with improvements when word order in source sentences was reversed."
+      },
+      {
+        "title": "SuperGLUE: A Stickier Benchmark for General-Purpose Language Understanding Systems",
+        "filename": "references/superglue.pdf",
+        "description": "SuperGLUE is a benchmark designed to evaluate and advance performance on challenging language understanding tasks. Building on the GLUE benchmark, it introduces more difficult tasks, a software toolkit, and a public leaderboard to encourage further research in natural language understanding. With SuperGLUE, the focus is on pushing the boundaries of pretraining and transfer learning methods, which have already demonstrated significant progress in recent times. More information can be found at [super.gluebenchmark.com](https://super.gluebenchmark.com)."
+      }
+    ],
+    "supplementary_materials": [],
+    "exercises": [],
+    "multimedia": {
+      "videos": [],
+      "images": [],
+      "audio": []
+    },
+    "external_resources": [
+      {
+        "type": "website",
+        "title": "Multimodal AI Research",
+        "url": "https://huyenchip.com/2023/10/10/multimodal.html",
+        "description": "A blog post discussing recent advancements in multimodal AI research, focusing on various applications and methodologies."
+      },
+      {
+        "type": "website",
+        "title": "Illustrated Transformer",
+        "url": "https://jalammar.github.io/illustrated-transformer/",
+        "description": "A visual and intuitive guide to understanding the Transformer model architecture, an essential component in modern deep learning."
+      },
+      {
+        "type": "dataset",
+        "title": "TruthfulQA",
+        "url": "https://github.com/sylinrl/TruthfulQA",
+        "description": "A dataset for evaluating the factual accuracy of QA models, focusing on identifying misleading or false responses."
+      },
+      {
+        "type": "dataset",
+        "title": "Test (Hendrycks)",
+        "url": "https://github.com/hendrycks/test",
+        "description": "A dataset designed to test the generalization and robustness of AI models, used for evaluating their performance in unseen tasks."
+      },
+      {
+        "type": "website",
+        "title": "LLaMAntino-2-70b UltraChat-ITA",
+        "url": "https://huggingface.co/swap-uniba/LLaMAntino-2-70b-hf-UltraChat-ITA",
+        "description": "A large Italian language model designed for conversational AI applications, optimized for the Italian language on Hugging Face."
+      },
+      {
+        "type": "website",
+        "title": "LLaMAntino-3-ANITA-8B-Inst-DPO-ITA",
+        "url": "https://huggingface.co/swap-uniba/LLaMAntino-3-ANITA-8B-Inst-DPO-ITA",
+        "description": "An advanced Italian language model with 8 billion parameters, fine-tuned for better natural language understanding and generation."
+      },
+      {
+        "type": "website",
+        "title": "LLaMAntino Chat",
+        "url": "https://chat.llamantino.it/",
+        "description": "A web interface for interacting with the LLaMAntino conversational AI model, offering natural dialogues in Italian."
+      },
+      {
+        "type": "website",
+        "title": "Open ITA LLM Leaderboard",
+        "url": "https://huggingface.co/spaces/mii-llm/open_ita_llm_leaderboard",
+        "description": "A leaderboard showcasing the top Italian language models (LLMs) based on various performance metrics and evaluations."
+      }
+    ]
+  }

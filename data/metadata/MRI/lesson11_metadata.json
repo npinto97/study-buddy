@@ -1,0 +1,41 @@
+{
+    "lesson_number": 11,
+    "title": "Information Access with Apache Lucene",
+    "keywords": [
+      "Search engine",
+      "Bag-of-words",
+      "Inverted Index "
+    ],
+    "slides": [
+      "slides/Information_Access_with_Apache_Lucene.pdf"
+    ],
+    "notes": [],
+    "references": [],
+    "supplementary_materials": [],
+    "exercises": [
+      {
+        "title": "Natural Language Processing con spaCy",
+        "filename": "exercises/notebooks/Jupyter_Notebook_MRI_with_spaCy.ipynb",
+        "description": "In questo notebook, esploreremo le funzionalità della libreria pyhton SpaCy per l'analisi e la comprensione del linguaggio naturale."
+      }
+    ],
+    "multimedia": {
+      "videos": [],
+      "images": [],
+      "audio": []
+    },
+    "external_resources": [
+      {
+        "type": "repository",
+        "title": "MRI_2024_25",
+        "url": "https://github.com/swapUnibaAcademy/MRI_2024_25",
+        "description": "Repository GitHub per il corso di Metodi per il Ritrovamento dell'Informazione (MRI) 2024/25."
+      },
+      {
+        "type": "repository",
+        "title": "MRI-24-25_CBRS",
+        "url": "https://github.com/giuspillo/MRI-24-25_CBRS",
+        "description": "Notebook e dati per le esercitazioni sui Content-based RecSys, per il corso Metodi per il Ritrovamento dell'Informazione, anno accademico 2024-2025."
+      }
+    ]
+  }
