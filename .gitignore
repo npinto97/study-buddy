@@ -189,8 +189,10 @@ notebooks/
 
 .langgraph_api/
 
-faiss_index/
-
 siia-450317-4cc1f1da5b72.json
 
 streamlit_outputs/
+
+uploaded_files/
+
+visualizations/
