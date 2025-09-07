@@ -1,0 +1,106 @@
+# Univox Performance Testing Suite
+
+The suite includes tools for both single-endpoint benchmarking and multi-user load testing, and it can generate visual reports to help you analyze the results.
+
+## Prerequisites
+
+Before running the tests, ensure you have the following:
+
+  * The StudyBuddy API is running locally on `http://127.0.0.1:8000`:
+    ```bash
+    uvicorn main:app --host 127.0.0.1 --port 8000
+    ```
+  * All required environment variables (e.g., API keys for Tavily and ElevenLabs) are set for the API.
+  * Required Python packages are installed:
+    ```bash
+    pip install -r requirements.txt
+    ```
+  * Test files are available in the `./test_files` directory. The `benchmark_tools.py` script requires `sample.pdf` and `sample.csv`.
+
+
+## API Endpoints Tested
+
+The testing suite focuses on the core tools integrated into the Univox API:
+
+  * **Vector Search**: `/test/vector-search`
+  * **Web Search**: `/test/web-search`
+  * **Summarizer**: `/test/summarize`
+  * **Text-to-Speech**: `/test/text-to-speech`
+  * **Visualizer**: `/test/visualization`
+
+
+## Benchmark Tools
+
+The `benchmark_tools.py` script runs a series of sequential tests to measure the performance of each individual API endpoint. It makes a configurable number of calls to each endpoint and reports metrics like average response time and success rate.
+
+### How to Run
+
+To run a full benchmark on all available tools:
+
+```bash
+python benchmark_tools.py
+```
+
+To run a benchmark on specific tools:
+
+```bash
+python benchmark_tools.py vector_search summarize text_to_speech
+```
+
+### Output
+
+Results are saved in the `./benchmark_reports` directory as a JSON file, named `benchmark_results_YYYYMMDD_HHMMSS.json`. A summary is also printed to the console.
+
+
+## Load Testing with Locust
+
+The `run_load_tests.py` script uses Locust to simulate multiple users concurrently accessing the API. This helps identify performance bottlenecks under different load scenarios.
+
+### How to Run
+
+To run all predefined scenarios (light, medium, heavy, and stress):
+
+```bash
+python run_load_tests.py
+```
+
+To run a specific scenario:
+
+```bash
+python run_load_tests.py medium
+```
+
+### Output
+
+Locust generates detailed HTML reports and CSV files in the `./load_test_reports` directory for each scenario. These files contain comprehensive metrics like response times, requests per second, and error rates.
+
+
+## 5 Generating Graphs
+
+The `generate_graphs.py` script processes the data from both benchmark and load tests to create comparative performance graphs. It can load the most recent benchmark results and Locust stats to create visualizations.
+
+### How to Run
+
+To generate graphs, you must first run at least one benchmark and one Locust load test. Then execute:
+
+```bash
+python generate_graphs.py
+```
+
+### Generated Graphs
+
+The script creates the following PDF graphs in the `./graphs` directory:
+
+1.  **Benchmark Only**: Compares the average response times of all tools under a single-user benchmark test.
+2.  **Locust - Light vs. Medium Load**: Compares average response times between the light and medium load test scenarios.
+3.  **Comparative Benchmark vs. Load**: Compares average response times of each tool across the benchmark, light, and medium load scenarios to show how performance changes under load.
+
+
+## Full Workflow
+
+For a complete performance analysis, follow these steps:
+
+1.  **Start the API**: Ensure your FastAPI application is running.
+2.  **Run Benchmarks**: Execute `python benchmark_tools.py` to establish a performance baseline for each tool.
+3.  **Run Load Tests**: Execute `python run_load_tests.py` to simulate various user loads and measure performance under stress.
+4.  **Generate Reports**: Execute `python generate_graphs.py` to create visual reports of your findings.
