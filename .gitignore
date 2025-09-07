@@ -198,3 +198,5 @@ uploaded_files/
 visualizations/
 
 conversations/
+
+tests/performance/logs/
