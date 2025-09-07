@@ -3,26 +3,21 @@ from pydantic import BaseModel
 import asyncio
 import time
 import os
-from typing import Optional, List
+from typing import Optional
 import uvicorn
 from contextlib import asynccontextmanager
 
 from study_buddy.utils.tools import (
     VectorStoreRetriever,
-    DocumentProcessor, 
     DocumentSummarizer,
-    CodeInterpreter,
     DataVisualizer,
-    TavilySearch
+    TavilySearch,
+    AudioProcessor
 )
 
-# Pydantic models for requests
 class QueryRequest(BaseModel):
     query: str
     k: Optional[int] = 4
-
-class CodeRequest(BaseModel):
-    code: str
 
 class VisualizationRequest(BaseModel):
     csv_path: str
@@ -30,6 +25,9 @@ class VisualizationRequest(BaseModel):
 
 class FilePathRequest(BaseModel):
     file_path: str
+
+class TextToSpeechRequest(BaseModel):
+    text: str
 
 tools = {}
 
@@ -42,24 +40,20 @@ async def lifespan(app: FastAPI):
     try:
         tools['retriever'] = VectorStoreRetriever()
         tools['web_search'] = TavilySearch(max_results=3)
-        tools['doc_processor'] = DocumentProcessor()
         tools['summarizer'] = DocumentSummarizer()
-        tools['code_interpreter'] = CodeInterpreter()
+        tools['text_to_speech'] = AudioProcessor()
         tools['visualizer'] = DataVisualizer()
         print("All tools initialized")
     except Exception as e:
         print(f"Error initializing tools: {e}")
-        # Continue anyway for partial testing
     
     yield
     
-    if 'code_interpreter' in tools:
-        tools['code_interpreter'].close()
     print("Cleanup completed")
 
 app = FastAPI(
     title="StudyBuddy Load Test API",
-    description="API endpoints for load testing critical StudyBuddy tools",
+    description="API endpoints for load testing StudyBuddy core tools",
     version="1.0.0",
     lifespan=lifespan
 )
@@ -83,7 +77,8 @@ def track_request(tool_name: str, success: bool, duration: float):
     # Update average response time
     current_avg = request_metrics['avg_response_time']
     total = request_metrics['total_requests']
-    request_metrics['avg_response_time'] = ((current_avg * (total - 1)) + duration) / total
+    if total > 0:
+        request_metrics['avg_response_time'] = ((current_avg * (total - 1)) + duration) / total
     
     # Track tool usage
     if tool_name not in request_metrics['tool_usage']:
@@ -97,7 +92,8 @@ def track_request(tool_name: str, success: bool, duration: float):
     # Update tool average time
     current_tool_avg = tool_stats['avg_time']
     tool_calls = tool_stats['calls']
-    tool_stats['avg_time'] = ((current_tool_avg * (tool_calls - 1)) + duration) / tool_calls
+    if tool_calls > 0:
+        tool_stats['avg_time'] = ((current_tool_avg * (tool_calls - 1)) + duration) / tool_calls
 
 @app.get("/")
 async def root():
@@ -134,7 +130,7 @@ async def test_vector_search(request: QueryRequest):
             "query": request.query,
             "result_length": len(result),
             "docs_found": len(docs),
-            "file_paths": file_paths[:3],  # Limit output for performance
+            "file_paths": file_paths[:3],
             "execution_time": time.time() - start_time
         }
     
@@ -169,39 +165,6 @@ async def test_web_search(request: QueryRequest):
     finally:
         track_request("web_search", success, time.time() - start_time)
 
-@app.post("/test/extract-text")
-async def test_extract_text(request: FilePathRequest):
-    """Test document text extraction"""
-    start_time = time.time()
-    success = False
-    
-    try:
-        if 'doc_processor' not in tools:
-            raise HTTPException(status_code=503, detail="Document processor not available")
-        
-        if not os.path.exists(request.file_path):
-            raise HTTPException(status_code=404, detail="File not found")
-        
-        result = tools['doc_processor'].extract_text(request.file_path)
-        success = not result.startswith("Error")
-        
-        if not success:
-            raise HTTPException(status_code=500, detail=result)
-        
-        return {
-            "file_path": request.file_path,
-            "text_length": len(result),
-            "execution_time": time.time() - start_time
-        }
-    
-    except HTTPException:
-        raise
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
-    
-    finally:
-        track_request("extract_text", success, time.time() - start_time)
-
 @app.post("/test/summarize")
 async def test_summarize(request: FilePathRequest):
     """Test document summarization"""
@@ -235,32 +198,50 @@ async def test_summarize(request: FilePathRequest):
     finally:
         track_request("summarize", success, time.time() - start_time)
 
-@app.post("/test/execute-code")
-async def test_execute_code(request: CodeRequest):
-    """Test code execution in sandbox"""
+@app.post("/test/text-to-speech")
+async def test_text_to_speech(request: TextToSpeechRequest):
+    """Test text-to-speech conversion"""
     start_time = time.time()
     success = False
     
     try:
-        if 'code_interpreter' not in tools:
-            raise HTTPException(status_code=503, detail="Code interpreter not available")
+        if 'text_to_speech' not in tools:
+            raise HTTPException(status_code=503, detail="Text-to-speech not available")
         
-        result = tools['code_interpreter'].run_code(request.code)
-        success = not result.get('error')
+        # Validate text length (ElevenLabs has limits)
+        if len(request.text) > 5000:
+            raise HTTPException(status_code=400, detail="Text too long (max 5000 characters)")
+        
+        if not request.text.strip():
+            raise HTTPException(status_code=400, detail="Text cannot be empty")
+        
+        result = tools['text_to_speech'].text_to_speech(request.text)
+        success = not result.startswith("Error")
+        
+        if not success:
+            raise HTTPException(status_code=500, detail=result)
+        
+        # Check if file was created successfully
+        if not os.path.exists(result):
+            raise HTTPException(status_code=500, detail="Audio file was not created")
+        
+        file_size = os.path.getsize(result)
         
         return {
-            "code_length": len(request.code),
-            "has_results": len(result.get('results', [])) > 0,
-            "has_stdout": bool(result.get('stdout')),
-            "has_error": bool(result.get('error')),
-            "execution_time": time.time() - start_time
+            "text_length": len(request.text),
+            "audio_file_path": result,
+            "audio_file_size": file_size,
+            "execution_time": time.time() - start_time,
+            "success": True
         }
     
+    except HTTPException:
+        raise
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
     
     finally:
-        track_request("execute_code", success, time.time() - start_time)
+        track_request("text_to_speech", success, time.time() - start_time)
 
 @app.post("/test/visualization")
 async def test_visualization(request: VisualizationRequest):
@@ -296,72 +277,11 @@ async def test_visualization(request: VisualizationRequest):
     finally:
         track_request("visualization", success, time.time() - start_time)
 
-@app.post("/test/batch")
-async def test_batch_operations(background_tasks: BackgroundTasks):
-    """Execute multiple operations in parallel to test concurrent load"""
-    start_time = time.time()
-    
-    async def run_concurrent_tests():
-        # Create test tasks
-        tasks = []
-        
-        # Vector search tasks
-        for i in range(3):
-            tasks.append(asyncio.create_task(
-                test_vector_search(QueryRequest(query=f"machine learning test {i}"))
-            ))
-        
-        # Web search tasks  
-        for i in range(2):
-            tasks.append(asyncio.create_task(
-                test_web_search(QueryRequest(query=f"AI research {i}"))
-            ))
-        
-        # Execute all tasks concurrently
-        results = await asyncio.gather(*tasks, return_exceptions=True)
-        
-        successful = sum(1 for r in results if not isinstance(r, Exception))
-        failed = len(results) - successful
-        
-        return {
-            "total_operations": len(results),
-            "successful": successful,
-            "failed": failed,
-            "execution_time": time.time() - start_time
-        }
-    
-    # Run in background
-    background_tasks.add_task(run_concurrent_tests)
-    
-    return {"message": "Batch test started", "timestamp": time.time()}
-
-# Endpoint to upload test files
-@app.post("/upload-test-file")
-async def upload_test_file(file: UploadFile = File(...)):
-    """Upload a file for testing document processing"""
-    try:
-        upload_dir = "./test_files"
-        os.makedirs(upload_dir, exist_ok=True)
-        
-        file_path = os.path.join(upload_dir, file.filename)
-        with open(file_path, "wb") as f:
-            content = await file.read()
-            f.write(content)
-        
-        return {
-            "filename": file.filename,
-            "file_path": file_path,
-            "size": len(content)
-        }
-    
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
-
 if __name__ == "__main__":
     uvicorn.run(
         "main:app",
         host="0.0.0.0",
         port=8000,
-        reload=False,  # Disable for load testing
-        workers=1      # Single worker for consistent metrics
+        reload=False,
+        workers=1
     )
