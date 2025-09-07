@@ -1,0 +1,75 @@
+{
+  "timestamp": "20250908_001445",
+  "benchmark_duration": 84.82133865356445,
+  "tools_tested": [
+    "vector_search",
+    "web_search",
+    "text_to_speech",
+    "summarize",
+    "visualization"
+  ],
+  "calls_per_tool": 3,
+  "overall_stats": {
+    "total_calls": 15,
+    "total_successes": 15,
+    "overall_success_rate": 100.0,
+    "total_duration": 84.82133865356445
+  },
+  "individual_results": {
+    "vector_search": {
+      "calls": 3,
+      "successes": 3,
+      "failures": 0,
+      "success_rate": 100.0,
+      "avg_time": 0.3073078791300456,
+      "min_time": 0.16089844703674316,
+      "max_time": 0.4207422733306885,
+      "total_time": 0.9219236373901367,
+      "errors": []
+    },
+    "web_search": {
+      "calls": 3,
+      "successes": 3,
+      "failures": 0,
+      "success_rate": 100.0,
+      "avg_time": 1.8083068529764812,
+      "min_time": 1.7176783084869385,
+      "max_time": 1.981440782546997,
+      "total_time": 5.424920558929443,
+      "errors": []
+    },
+    "text_to_speech": {
+      "calls": 3,
+      "successes": 3,
+      "failures": 0,
+      "success_rate": 100.0,
+      "avg_time": 1.6880122820536296,
+      "min_time": 1.6494908332824707,
+      "max_time": 1.7128174304962158,
+      "total_time": 5.064036846160889,
+      "errors": []
+    },
+    "summarize": {
+      "calls": 3,
+      "successes": 3,
+      "failures": 0,
+      "success_rate": 100.0,
+      "avg_time": 3.1814754009246826,
+      "min_time": 3.0724592208862305,
+      "max_time": 3.2427289485931396,
+      "total_time": 9.544426202774048,
+      "errors": []
+    },
+    "visualization": {
+      "calls": 3,
+      "successes": 3,
+      "failures": 0,
+      "success_rate": 100.0,
+      "avg_time": 21.287769556045532,
+      "min_time": 18.035144567489624,
+      "max_time": 25.967007875442505,
+      "total_time": 63.8633086681366,
+      "errors": []
+    }
+  }
+}
