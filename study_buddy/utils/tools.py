@@ -28,7 +28,7 @@ from langchain_community.utilities.google_books import GoogleBooksAPIWrapper
 from langchain_community.tools.google_scholar import GoogleScholarQueryRun
 from langchain_community.utilities.google_scholar import GoogleScholarAPIWrapper
 from langchain_tavily import TavilySearch
-from langchain_community.tools.arxiv.tool import ArxivQueryRun
+# from langchain_community.tools.arxiv.tool import ArxivQueryRun
 from langchain.text_splitter import CharacterTextSplitter
 
 from e2b_code_interpreter import Sandbox
@@ -181,7 +181,6 @@ class AudioInput(BaseModel):
 # =============================================================================
 
 class VectorStoreRetriever(BaseWrapper):
-    """Enhanced vector store retrieval tool."""
     
     def validate_dependencies(self):
         """Validate vector store availability."""
@@ -510,7 +509,7 @@ class SpotifySearcher(BaseWrapper):
 
 
 class CodeInterpreter:
-    """Enhanced code interpreter with E2B sandbox management."""
+    """Code interpreter with E2B sandbox management."""
 
     def __init__(self):
         self._initialize_sandbox()
@@ -679,8 +678,8 @@ Code:"""
 # Custom API Wrappers with Error Handling
 # =============================================================================
 
-class RobustGoogleBooksWrapper(GoogleBooksAPIWrapper):
-    """Enhanced Google Books wrapper with better error handling."""
+class GoogleBooksWrapper(GoogleBooksAPIWrapper):
+    """Google Books wrapper with better error handling."""
     
     def _format(self, query: str, books: list) -> str:
         """Format search results with graceful handling of missing fields."""
@@ -702,11 +701,11 @@ class RobustGoogleBooksWrapper(GoogleBooksAPIWrapper):
         return "\n\n".join(results)
 
 
-class EnhancedGoogleScholarWrapper(GoogleScholarAPIWrapper):
-    """Enhanced Google Scholar wrapper with URL inclusion."""
+class GoogleScholarWrapper(GoogleScholarAPIWrapper):
+    """Google Scholar wrapper with URL inclusion."""
     
     def run(self, query: str) -> str:
-        """Run query with enhanced result formatting."""
+        """Run query with result formatting."""
         total_results = []
         page = 0
         
@@ -863,14 +862,14 @@ def create_basic_tools() -> List[Tool]:
     
     youtube_search = YouTubeSearchTool()
     wikipedia = WikipediaQueryRun(api_wrapper=WikipediaAPIWrapper())
-    arxiv = ArxivQueryRun()
+    # arxiv = ArxivQueryRun()
     
     google_books = None
     google_lens = None
     
     try:
         google_books = GoogleBooksQueryRun(
-            api_wrapper=RobustGoogleBooksWrapper(
+            api_wrapper=GoogleBooksWrapper(
                 google_books_api_key=Config.GOOGLE_API_KEY
             )
         )
@@ -882,13 +881,10 @@ def create_basic_tools() -> List[Tool]:
     except ValueError:
         print("Warning: Google Lens API key not found")
     
-    # Create enhanced wrappers
-    google_scholar = GoogleScholarQueryRun(api_wrapper=EnhancedGoogleScholarWrapper())
+    google_scholar = GoogleScholarQueryRun(api_wrapper=GoogleScholarWrapper())
     
-    # Vector store retriever
     retriever = VectorStoreRetriever()
     
-    # Wikidata searcher
     wikidata_searcher = WikidataSearcher()
     
     tools = [
@@ -912,11 +908,11 @@ def create_basic_tools() -> List[Tool]:
             description="Search Wikipedia for encyclopedic information",
             func=wikipedia.run
         ),
-        Tool(
-            name="arxiv_search",
-            description="Search academic papers on arXiv",
-            func=arxiv.run
-        ),
+        # Tool(
+        #     name="arxiv_search",
+        #     description="Search academic papers on arXiv",
+        #     func=arxiv.run
+        # ),
         Tool(
             name="google_scholar_search",
             description="Search academic literature on Google Scholar",
