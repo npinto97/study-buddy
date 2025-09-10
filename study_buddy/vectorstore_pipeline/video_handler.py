@@ -12,23 +12,23 @@ aai.settings.api_key = os.getenv("ASSEMBLYAI_API_KEY")
 
 def extract_audio_from_video(video_path: Path) -> Path:
     """
-    Estrae l'audio da un file video e lo salva come file temporaneo WAV.
+    Extracts audio from a video file and saves it as a temporary WAV file.
     """
     temp_audio_path = TEMP_DATA_DIR / f"{video_path.stem}.wav"
     temp_audio_path.parent.mkdir(parents=True, exist_ok=True)
 
     try:
         ffmpeg.input(str(video_path)).output(str(temp_audio_path), format="wav").run(overwrite_output=True)
-        logging.info(f"Audio estratto da {video_path} e salvato in {temp_audio_path}")
+        logging.info(f"Audio extracted from {video_path} and saved in {temp_audio_path}")
         return temp_audio_path
     except Exception as e:
-        logging.error(f"Errore durante l'estrazione audio: {e}")
+        logging.error(f"Error during audio extraction: {e}")
         raise
 
 
 def get_video_metadata(file_path: Path) -> Dict[str, Optional[str]]:
     """
-    Estrae i metadati di un file video.
+    Extracts metadata from a video file.
     """
     metadata = {"filename": file_path.name, "filepath": str(file_path), "type": "video"}
 
@@ -40,15 +40,15 @@ def get_video_metadata(file_path: Path) -> Dict[str, Optional[str]]:
             metadata["duration"] = round(float(video_streams[0]["duration"]), 2)
 
     except Exception as e:
-        logging.error(f"Errore nell'estrazione dei metadati: {e}")
+        logging.error(f"Error extracting metadata: {e}")
 
     return metadata
 
 
 def transcribe_video(file_path: Path) -> List[Document]:
     """
-    Estrae l'audio da un video, lo trascrive tramite AssemblyAI
-    e restituisce i metadati.
+    Extracts audio from a video, transcribes it using AssemblyAI
+    and returns the metadata.
     """
     try:
         temp_audio = extract_audio_from_video(file_path)
@@ -64,13 +64,13 @@ def transcribe_video(file_path: Path) -> List[Document]:
         transcript = transcriber.transcribe(str(temp_audio), config)
 
         if transcript.status == aai.TranscriptStatus.error:
-            logging.error(f"Trascrizione fallita per {file_path}: {transcript.error}")
+            logging.error(f"Transcription failed for {file_path}: {transcript.error}")
             return []
 
         transcription_text = transcript.text
 
         if not transcription_text.strip():
-            logging.warning(f"Trascrizione vuota per {file_path}")
+            logging.warning(f"Transcription empty for {file_path}")
             return []
 
         doc = Document(
@@ -78,11 +78,11 @@ def transcribe_video(file_path: Path) -> List[Document]:
             metadata=get_video_metadata(file_path)
         )
 
-        logging.info(f"Trascrizione completata per {file_path}")
+        logging.info(f"Transcription completed for {file_path}")
         return [doc]
 
     except Exception as e:
-        logging.error(f"Errore nella trascrizione di {file_path}: {e}")
+        logging.error(f"Error in transcription for {file_path}: {e}")
         return []
 
     finally:
