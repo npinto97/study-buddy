@@ -1,11 +1,48 @@
 # **Univox**
 
-**Univox** is an intelligent AI-powered study assistant developed as part of the **SIIA-RS** course project.
+**Univox** is an intelligent AI-powered study assistant.
 It leverages **advanced natural language processing**, **computer vision**, and **graph-based reasoning** to help students learn more effectively through **document analysis**, **content extraction**, and **personalized support**.
 
 The system is built on top of **LangGraph**, enabling a **modular, agent-driven architecture** where different AI components collaborate seamlessly.
 With Univox, students can interact naturally — through **text** or **voice** — and access a wide range of academic resources in an intuitive way.
 
+## Retrieval-Augmented Generation
+A core feature of Univox is its **RAG pipeline**, which enhances responses with relevant documents retrieved from the student’s course materials:
+- **Document retrieval**: Every query is matched against a FAISS-based vectorstore built from parsed syllabi, books, slides, notes, and multimedia.
+- **Context enrichment**: Retrieved documents are injected into the LLM prompt, ensuring answers are grounded in the actual study material.
+- **Downloadable resources**: In addition to enriched answers, students are given direct links to download useful files (e.g., lecture slides, exam papers, reference books).
+
+This means Univox is not just a conversational agent — it acts as a personal knowledge navigator, combining semantic search with LLM reasoning to maximize learning.
+
+## Project Structure
+```bash
+study-buddy/
+│
+├── data/                   # Raw (only locally), metadata, and processed datasets
+│   └── README.md
+│
+├── faiss_index/            # Vectorstore index
+│
+├── images/
+│
+├── study_buddy/            # Core source code
+│   └── README.md
+│
+├── tests/
+│   ├── performance/
+│   │    └── README.md
+│   └── tool_tests/         # Unit and load tests
+│
+├── streamlit_frontend.py   # Streamlit web app entrypoint
+├── config.yaml             # Configurable models, embeddings, vectorstore
+├── langgraph.json
+├── pyproject.toml          # Project metadata and dependencies
+├── requirements.txt
+├── setup.cfg
+├── .gitignore
+├── LICENSE
+└── README.md
+```
 
 ## **What You Can Do with Univox**
 
@@ -50,6 +87,7 @@ Stuck on a concept? Univox explains it clearly and links you back to the **exact
 For example:
 
 > “Explain mean reciprocal rank in simple terms”
+
 > “What’s the difference between item based and user based recommender systems?”
 
 ### **Advanced Research and Analysis**
@@ -155,8 +193,7 @@ git clone https://github.com/npinto97/univox.git
 cd univox
 
 python -m venv venv
-venv\Scripts\activate      # On Windows
-source venv/bin/activate   # On Linux/Mac
+venv\Scripts\activate
 
 pip install --upgrade pip
 pip install -r requirements.txt
@@ -233,7 +270,6 @@ By default, it launches at:
 
 ## **Future Enhancements**
 
-* Deeper integration with **LangGraph** for multi-agent workflows
 * More lightweight embedding models for CPU-only setups
 * Enhanced semantic search and document summarization
-* Richer multimedia learning experience
+* Richer multimodal learning experience

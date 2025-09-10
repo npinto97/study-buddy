@@ -1,4 +1,4 @@
-# Utilities
+# `utils/`
 
 This directory contains the core utility scripts that power the agent. These components provide essential services such as managing the LLM, handling embeddings, defining the agent's state, and integrating external tools.
 

@@ -1,4 +1,4 @@
-# Univox Performance Testing Suite
+# `performance/`
 
 The suite includes tools for both single-endpoint benchmarking and multi-user load testing, and it can generate visual reports to help you analyze the results.
 
