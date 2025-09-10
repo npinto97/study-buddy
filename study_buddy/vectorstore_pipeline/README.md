@@ -1,4 +1,4 @@
-# Vector Store Pipeline
+# `vectorstore_pipeline/`
 
 This directory contains the pipeline responsible for processing study materials and building or updating the **FAISS vector store**. This vector store is a core component of the RAG (Retrieval-Augmented Generation) system, enabling the AI to retrieve and synthesize information from the provided course content.
 

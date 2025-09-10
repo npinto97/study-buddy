@@ -1,4 +1,4 @@
-# Data Directory
+# `data/`
 
 This directory contains the educational content metadata and data files used by the Study Buddy system for semantic search and information retrieval.
 

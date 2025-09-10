@@ -1,0 +1,4 @@
+Method,Name,Error,Occurrences
+POST,/test/text-to-speech,HTTPError('500 Server Error: Internal Server Error for url: /test/text-to-speech'),12
+POST,/test/visualization,HTTPError('500 Server Error: Internal Server Error for url: /test/visualization'),1
+POST,/test/web-search,"ConnectionResetError(10054, 'An existing connection was forcibly closed by the remote host', None, 10054, None)",1

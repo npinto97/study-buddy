@@ -1,12 +1,14 @@
 from pathlib import Path
-from typing import Dict, Optional
+from typing import Dict, Optional, List, Union
 import logging
 from mutagen import File
-import whisper
-from typing import List
-
 from langchain.schema import Document
 from study_buddy.config import TEMP_DATA_DIR
+
+import assemblyai as aai
+import os
+
+aai.settings.api_key = os.getenv("ASSEMBLYAI_API_KEY")
 
 
 def get_audio_metadata(file_path: Path) -> Dict[str, Optional[str]]:
@@ -35,7 +37,7 @@ def get_audio_metadata(file_path: Path) -> Dict[str, Optional[str]]:
 
 def transcribe_audio(file_path: Path) -> List[Document]:
     """
-    Transcribes an audio file and returns a list of Documents for FAISS.
+    Transcribes an audio file using AssemblyAI and returns a list of Documents for FAISS.
 
     Args:
         file_path (Path): Path to the audio file to be transcribed.
@@ -47,14 +49,25 @@ def transcribe_audio(file_path: Path) -> List[Document]:
         temp_dir = Path(TEMP_DATA_DIR)
         temp_dir.mkdir(parents=True, exist_ok=True)
 
-        whisper_model = whisper.load_model("base")
-        result = whisper_model.transcribe(str(file_path), fp16=False)
+        transcriber = aai.Transcriber()
+        config = aai.TranscriptionConfig(
+            language_code="it",
+            punctuate=True,
+            format_text=True,
+            speech_model=aai.SpeechModel.best
+        )
 
-        transcription_text = result["text"]
+        transcript = transcriber.transcribe(str(file_path), config)
+
+        if transcript.status == aai.TranscriptStatus.error:
+            logging.error(f"Transcription failed for {file_path}: {transcript.error}")
+            return []
+
+        transcription_text = transcript.text
 
         if not transcription_text.strip():
             logging.warning(f"Transcription for {file_path} is empty.")
-            return []  # Evita di aggiungere documenti vuoti a FAISS
+            return []
 
         doc = Document(
             page_content=transcription_text,
@@ -62,7 +75,7 @@ def transcribe_audio(file_path: Path) -> List[Document]:
         )
 
         logging.info(f"Transcription processed for {file_path}")
-        return [doc]  # Restituisce una lista di documenti
+        return [doc]
 
     except Exception as e:
         logging.error(f"Error transcribing {file_path}: {e}")

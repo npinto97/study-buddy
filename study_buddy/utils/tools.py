@@ -7,7 +7,7 @@ from typing import Union, List, Optional, Dict, Any
 from abc import ABC, abstractmethod
 
 import pandas as pd
-import fitz  # PyMuPDF
+import fitz  # pip install PyMuPDF
 import pytesseract
 from pdf2image import convert_from_path
 from PIL import Image
@@ -28,7 +28,7 @@ from langchain_community.utilities.google_books import GoogleBooksAPIWrapper
 from langchain_community.tools.google_scholar import GoogleScholarQueryRun
 from langchain_community.utilities.google_scholar import GoogleScholarAPIWrapper
 from langchain_tavily import TavilySearch
-from langchain_community.tools.arxiv.tool import ArxivQueryRun
+# from langchain_community.tools.arxiv.tool import ArxivQueryRun
 from langchain.text_splitter import CharacterTextSplitter
 
 from e2b_code_interpreter import Sandbox
@@ -181,7 +181,6 @@ class AudioInput(BaseModel):
 # =============================================================================
 
 class VectorStoreRetriever(BaseWrapper):
-    """Enhanced vector store retrieval tool."""
     
     def validate_dependencies(self):
         """Validate vector store availability."""
@@ -509,173 +508,115 @@ class SpotifySearcher(BaseWrapper):
             return f"Error searching Spotify: {str(e)}"
 
 
-class CodeInterpreter(BaseWrapper):
-    """Enhanced code interpreter with sandbox management."""
-    
-    def validate_dependencies(self):
-        """Validate E2B API key."""
-        Config.validate_key("E2B_API_KEY")
-    
+class CodeInterpreter:
+    """Code interpreter with E2B sandbox management."""
+
     def __init__(self):
-        super().__init__()
-        self.sandbox = None
         self._initialize_sandbox()
-    
+
     def _initialize_sandbox(self):
         """Initialize E2B sandbox with error handling."""
         try:
-            if self.sandbox:
-                self.sandbox.kill()
-            self.sandbox = Sandbox()
-            self.sandbox.set_timeout(60)
+            self.sandbox = Sandbox.create()
         except Exception as e:
-            raise RuntimeError(f"Failed to initialize sandbox: {e}")
-    
+            raise RuntimeError(f"Failed to initialize E2B sandbox: {e}")
+
     def run_code(self, code: str) -> dict:
-        """Execute code with automatic retry on timeout."""
+        """Execute code in sandbox with basic error handling."""
         try:
             execution = self.sandbox.run_code(code)
             return {
-                "results": execution.results,
-                "stdout": execution.logs.stdout,
-                "stderr": execution.logs.stderr,
-                "error": execution.error,
+                "results": getattr(execution, "results", []),
+                "stdout": getattr(execution.logs, "stdout", "") if hasattr(execution, "logs") else "",
+                "stderr": getattr(execution.logs, "stderr", "") if hasattr(execution, "logs") else "",
+                "error": getattr(execution, "error", None),
             }
         except Exception as e:
-            error_msg = str(e).lower()
-            if "502" in error_msg or "timeout" in error_msg:
-                print("Sandbox timeout/error. Restarting...")
-                self._initialize_sandbox()
-                return self.run_code(code)  # Single retry
-            raise RuntimeError(f"Code execution error: {e}")
-    
+            raise RuntimeError(f"Code execution failed: {e}")
+
     def close(self):
         """Clean up sandbox resources."""
-        if self.sandbox:
+        try:
             self.sandbox.kill()
+        except:
+            pass
 
 
-class CSVAnalyzer(BaseWrapper):
-    """Hybrid CSV analysis combining statistical and semantic analysis."""
-    
-    def validate_dependencies(self):
-        """Validate CSV analysis dependencies."""
-        Config.validate_key("TOGETHER_API_KEY")
-    
+class CSVAnalyzer:
+    """Hybrid CSV analysis: statistical and semantic analysis."""
+
     def __init__(self, file_path: str):
-        super().__init__()
-        self.file_path = resolve_file_path(file_path)
-        self.df = self._load_dataframe()
+        self.file_path = os.path.abspath(file_path)
+        self.df = pd.read_csv(self.file_path)
         self.documents = self._load_documents()
-    
-    def _load_dataframe(self) -> pd.DataFrame:
-        """Load CSV as DataFrame."""
-        return pd.read_csv(self.file_path)
-    
-    def _load_documents(self) -> list:
-        """Load CSV as LangChain documents."""
+
+    def _load_documents(self) -> List:
         loader = CSVLoader(file_path=self.file_path)
         raw_docs = loader.load()
         splitter = CharacterTextSplitter(chunk_size=1000, chunk_overlap=50)
         return splitter.split_documents(raw_docs)
-    
+
     def get_statistical_analysis(self) -> str:
-        """Generate statistical description of dataset."""
-        info_parts = [
+        parts = [
             f"Columns: {list(self.df.columns)}",
             f"Rows: {len(self.df)}",
             f"Data types:\n{self.df.dtypes.to_string()}",
             f"\nFirst 3 rows:\n{self.df.head(3).to_string(index=False)}",
-            f"\nDescriptive statistics:\n{self.df.describe(include='all').fillna('').to_string()}"
+            f"\nDescriptive statistics:\n{self.df.describe(include='all').fillna('').to_string()}",
         ]
-        return "\n\n".join(info_parts)
-    
+        return "\n\n".join(parts)
+
     def get_semantic_analysis(self) -> str:
-        """Generate LLM-based semantic analysis."""
         try:
             llm = LLMFactory.create_together_llm()
-            
-            # Use first 10 document chunks
             content = "\n\n".join([doc.page_content for doc in self.documents[:10]])
-            
-            prompt = f"""Analyze this CSV dataset content and provide insights:
-
-{content}
-
-Identify patterns, interesting information, or anomalies. Be concise and focus on key insights."""
-            
+            prompt = f"Analyze this CSV dataset content and provide key insights:\n\n{content}"
             return llm.invoke(prompt)
-            
         except Exception as e:
             return f"Error in semantic analysis: {str(e)}"
-    
+
     def full_analysis(self) -> str:
-        """Combine statistical and semantic analysis."""
-        statistical = self.get_statistical_analysis()
-        semantic = self.get_semantic_analysis()
-        
-        return f"""[STATISTICAL ANALYSIS]
-{statistical}
-
-[SEMANTIC ANALYSIS]
-{semantic}"""
+        return f"[STATISTICAL ANALYSIS]\n{self.get_statistical_analysis()}\n\n[SEMANTIC ANALYSIS]\n{self.get_semantic_analysis()}"
 
 
-class DataVisualizer(BaseWrapper):
-    """Enhanced data visualization tool."""
-    
-    def validate_dependencies(self):
-        """Validate visualization dependencies."""
-        Config.validate_key("TOGETHER_API_KEY")
-        Config.validate_key("E2B_API_KEY")
-    
+class DataVisualizer:
+    """Data visualization tool using sandboxed Python execution."""
+
     def __init__(self, output_dir: str = "./visualizations"):
-        super().__init__()
-        self.output_dir = output_dir
+        self.output_dir = os.path.abspath(output_dir)
         os.makedirs(self.output_dir, exist_ok=True)
-        self.sandbox = Sandbox()
+        self.sandbox = Sandbox.create()
         self.llm = TogetherClient(api_key=Config.TOGETHER_API_KEY)
-    
+
     def create_visualization(self, csv_path: str, query: str) -> dict:
-        """Generate visualization from natural language query."""
+        """Generate visualizations from natural language query."""
         try:
-            resolved_path = resolve_file_path(csv_path)
-            
-            # Upload dataset to sandbox
+            resolved_path = os.path.abspath(csv_path)
             with open(resolved_path, "rb") as f:
                 sandbox_path = self.sandbox.files.write("dataset.csv", f).path
-            
-            # Generate analysis code
+
             code = self._generate_code(query, sandbox_path, resolved_path)
-            
-            # Execute code and save results
             image_paths = self._execute_and_save(code)
-            
             return {"image_paths": image_paths, "success": True}
-            
+
         except Exception as e:
             return {"error": str(e), "success": False}
-    
+
     def _generate_code(self, query: str, sandbox_path: str, local_path: str) -> str:
         """Generate Python code for visualization."""
-        # Get dataset info from local file
         df_sample = pd.read_csv(local_path, nrows=300)
         column_info = df_sample.dtypes.astype(str).to_dict()
-        
-        prompt = f"""Generate Python code for data visualization.
 
+        prompt = f"""Generate Python code for visualization.
 Dataset path in sandbox: {sandbox_path}
 Columns and types: {column_info}
-User question: "{query}"
-
+User query: "{query}"
 Requirements:
 - Load data: pd.read_csv("{sandbox_path}")
-- Use matplotlib/seaborn for visualizations
+- Use matplotlib/seaborn
 - Save plots: plt.savefig("chart-<name>.png")
-- Always call plt.close() after each plt.savefig()
-- For pie charts, ensure labels match the data index
-- Output ONLY Python code, no explanations
-
+- Call plt.close() after saving
+- Output ONLY Python code, without ``` and useless spaces
 Code:"""
 
         response = self.llm.chat.completions.create(
@@ -687,13 +628,12 @@ Code:"""
             max_tokens=1024,
             temperature=0.4
         )
-        
+
         code = response.choices[0].message.content.strip()
         return self._clean_code(code)
-    
+
     def _clean_code(self, code: str) -> str:
-        """Clean generated code by removing markdown formatting."""
-        code = code.strip()
+        """Remove markdown formatting from generated code."""
         if code.startswith("```"):
             lines = code.split("\n")
             if lines[0].startswith("```"):
@@ -702,38 +642,44 @@ Code:"""
                 lines = lines[:-1]
             code = "\n".join(lines)
         return code.strip()
-    
+
     def _execute_and_save(self, code: str) -> List[str]:
-        """Execute code and save generated images."""
-        print(f"Executing code:\n{code}\n{'-'*40}")
+        """Execute code in sandbox and save images."""
+        
         execution = self.sandbox.run_code(code)
+        print("Code generated by LLM:", code)
         
         if execution.error:
             raise RuntimeError(f"Code execution failed: {execution.error.value}")
-        
+
         saved_paths = []
-        for result in execution.results:
-            if result.png:
+        for result in getattr(execution, "results", []):
+            if getattr(result, "png", None):
                 filename = f"{uuid.uuid4().hex}.png"
                 file_path = os.path.join(self.output_dir, filename)
-                
                 with open(file_path, "wb") as f:
                     f.write(base64.b64decode(result.png))
-                
                 saved_paths.append(os.path.abspath(file_path))
-        
+
         if not saved_paths:
             raise RuntimeError("No visualizations were generated")
-        
+
         return saved_paths
+
+    def close(self):
+        """Clean up sandbox resources."""
+        try:
+            self.sandbox.kill()
+        except:
+            pass
 
 
 # =============================================================================
 # Custom API Wrappers with Error Handling
 # =============================================================================
 
-class RobustGoogleBooksWrapper(GoogleBooksAPIWrapper):
-    """Enhanced Google Books wrapper with better error handling."""
+class GoogleBooksWrapper(GoogleBooksAPIWrapper):
+    """Google Books wrapper with better error handling."""
     
     def _format(self, query: str, books: list) -> str:
         """Format search results with graceful handling of missing fields."""
@@ -755,11 +701,11 @@ class RobustGoogleBooksWrapper(GoogleBooksAPIWrapper):
         return "\n\n".join(results)
 
 
-class EnhancedGoogleScholarWrapper(GoogleScholarAPIWrapper):
-    """Enhanced Google Scholar wrapper with URL inclusion."""
+class GoogleScholarWrapper(GoogleScholarAPIWrapper):
+    """Google Scholar wrapper with URL inclusion."""
     
     def run(self, query: str) -> str:
-        """Run query with enhanced result formatting."""
+        """Run query with result formatting."""
         total_results = []
         page = 0
         
@@ -916,14 +862,14 @@ def create_basic_tools() -> List[Tool]:
     
     youtube_search = YouTubeSearchTool()
     wikipedia = WikipediaQueryRun(api_wrapper=WikipediaAPIWrapper())
-    arxiv = ArxivQueryRun()
+    # arxiv = ArxivQueryRun()
     
     google_books = None
     google_lens = None
     
     try:
         google_books = GoogleBooksQueryRun(
-            api_wrapper=RobustGoogleBooksWrapper(
+            api_wrapper=GoogleBooksWrapper(
                 google_books_api_key=Config.GOOGLE_API_KEY
             )
         )
@@ -935,13 +881,10 @@ def create_basic_tools() -> List[Tool]:
     except ValueError:
         print("Warning: Google Lens API key not found")
     
-    # Create enhanced wrappers
-    google_scholar = GoogleScholarQueryRun(api_wrapper=EnhancedGoogleScholarWrapper())
+    google_scholar = GoogleScholarQueryRun(api_wrapper=GoogleScholarWrapper())
     
-    # Vector store retriever
     retriever = VectorStoreRetriever()
     
-    # Wikidata searcher
     wikidata_searcher = WikidataSearcher()
     
     tools = [
@@ -965,11 +908,11 @@ def create_basic_tools() -> List[Tool]:
             description="Search Wikipedia for encyclopedic information",
             func=wikipedia.run
         ),
-        Tool(
-            name="arxiv_search",
-            description="Search academic papers on arXiv",
-            func=arxiv.run
-        ),
+        # Tool(
+        #     name="arxiv_search",
+        #     description="Search academic papers on arXiv",
+        #     func=arxiv.run
+        # ),
         Tool(
             name="google_scholar_search",
             description="Search academic literature on Google Scholar",
@@ -1064,52 +1007,128 @@ def create_multimedia_tools() -> List[Tool]:
     return tools
 
 
+
 def create_data_analysis_tools() -> List[Tool]:
     """Create data analysis and visualization tools."""
     tools = []
 
-    # Code interpreter
+    # Code interpreter 
     try:
-        interpreter = CodeInterpreter()
-        tools.append(Tool(
+        code_interpreter = CodeInterpreter()
+        
+        def execute_code(code: str) -> str:
+            """Safely execute code and return formatted results."""
+            try:
+                result = code_interpreter.run_code(code)
+                
+                # Format the execution results
+                output_parts = []
+                
+                if result.get("stdout"):
+                    output_parts.append(f"Output:\n{result['stdout']}")
+                
+                if result.get("stderr"):
+                    output_parts.append(f"Errors:\n{result['stderr']}")
+                
+                if result.get("error"):
+                    error_msg = result['error']
+                    if hasattr(error_msg, 'message'):
+                        error_text = error_msg.message
+                    elif hasattr(error_msg, 'value'):
+                        error_text = error_msg.value
+                    else:
+                        error_text = str(error_msg)
+                    output_parts.append(f"Execution Error:\n{error_text}")
+                
+                if result.get("results"):
+                    # Handle different types of results (charts, data, etc.)
+                    for i, res in enumerate(result["results"]):
+                        if hasattr(res, 'png') and res.png:
+                            output_parts.append(f"Generated visualization {i+1} (PNG image)")
+                        elif hasattr(res, 'text') and res.text:
+                            output_parts.append(f"Text output {i+1}:\n{res.text}")
+                        elif hasattr(res, 'json') and res.json:
+                            output_parts.append(f"JSON output {i+1}:\n{res.json}")
+                        else:
+                            output_parts.append(f"Result {i+1}: {str(res)}")
+                
+                return "\n\n".join(output_parts) if output_parts else "Code executed successfully with no output"
+                
+            except Exception as e:
+                return f"Error executing code: {str(e)}"
+        
+        tools.append(StructuredTool.from_function(
+            func=execute_code,
             name="execute_code",
-            description="Execute Python code in a secure sandbox environment",
-            func=interpreter.run_code
+            description="Execute Python code in a secure E2B sandbox environment. Supports data analysis, visualization, file operations, and more.",
+            args_schema=CodeInterpreterInput
         ))
+        
     except ValueError as e:
         print(f"Warning: Code interpreter not available - {e}")
+    except Exception as e:
+        print(f"Warning: Failed to initialize code interpreter - {e}")
 
-    # CSV analysis
-    tools.append(Tool(
+    # CSV analysis tool
+    def analyze_csv(file_path: str) -> str:
+        """Safely analyze CSV files."""
+        try:
+            resolved_path = resolve_file_path(file_path)
+            if not os.path.exists(resolved_path):
+                return f"Error: File not found at {resolved_path}"
+            
+            analyzer = CSVAnalyzer(resolved_path)
+            return analyzer.full_analysis()
+        except Exception as e:
+            return f"Error analyzing CSV: {str(e)}"
+
+    tools.append(StructuredTool.from_function(
+        func=analyze_csv,
         name="analyze_csv",
-        description="Perform statistical and semantic analysis on CSV files",
-        func=lambda file_path: CSVAnalyzer(file_path).full_analysis() if os.path.exists(file_path) else {"error": f"File not found: {file_path}", "success": False}
+        description="Perform statistical and semantic analysis on CSV files. Provides data overview, statistics, and AI-generated insights.",
+        args_schema=FilePathInput
     ))
 
-    # Data visualization
+    # Data visualization tool
     try:
         visualizer = DataVisualizer()
 
-        def safe_visualization(file_path, query=None):
-            """Wrapper to robustly handle file paths."""
-            print(f"--------------------------Creating visualization for file: {file_path} with query: {query}")
-            resolved_path = resolve_file_path(file_path)
-            print(f"----------------------------Resolved file path: {resolved_path}")
-            if not os.path.exists(resolved_path):
-                return {
-                    "error": f"The file '{resolved_path}' doesn't exist. Upload a valid CSV file.",
-                    "success": False
-                }
-            return visualizer.create_visualization(resolved_path, query)
+        def create_visualization(csv_path: str, query: str) -> str:
+            """Safely create data visualizations."""
+            try:
+                print(f"Creating visualization for file: {csv_path} with query: {query}")
+                resolved_path = resolve_file_path(csv_path)
+                print(f"Resolved file path: {resolved_path}")
+                
+                if not os.path.exists(resolved_path):
+                    return f"Error: The file '{resolved_path}' doesn't exist. Please upload a valid CSV file."
+                
+                result = visualizer.create_visualization(resolved_path, query)
+                
+                if result.get("success"):
+                    image_paths = result.get("image_paths", [])
+                    if image_paths:
+                        paths_str = "\n".join([f"- {path}" for path in image_paths])
+                        return f"Successfully created {len(image_paths)} visualization(s):\n{paths_str}"
+                    else:
+                        return "Visualization completed but no image files were generated."
+                else:
+                    return f"Visualization failed: {result.get('error', 'Unknown error')}"
+                    
+            except Exception as e:
+                return f"Error creating visualization: {str(e)}"
 
         tools.append(StructuredTool.from_function(
-            func=safe_visualization,
+            func=create_visualization,
             name="create_visualization",
-            description="Generate data visualizations from CSV files using natural language queries"
+            description="Generate data visualizations from CSV files using natural language queries. Creates charts, graphs, and plots based on your description.",
+            args_schema=DataVizInput
         ))
 
     except ValueError as e:
         print(f"Warning: Data visualizer not available - {e}")
+    except Exception as e:
+        print(f"Warning: Failed to initialize data visualizer - {e}")
 
     return tools
 

@@ -1,8 +1,8 @@
-from study_buddy.utils.tools import retrieve_tool
+from study_buddy.utils.tools import retrieve_knowledge
 
 def main():
     query = "Professore Semeraro giovanni"
-    result, docs = retrieve_tool(query)
+    result, docs = retrieve_knowledge(query)
 
     print("=== Documenti recuperati ===")
     for i, doc in enumerate(docs, start=1):

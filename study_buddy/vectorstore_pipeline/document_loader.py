@@ -50,7 +50,7 @@ def compute_file_hash(filepath: Path) -> str:
 
 
 def load_document(filepath: Path):
-    """Carica un documento usando il loader appropriato in base all'estensione."""
+    """Upload a document using the appropriate loader based on the extension."""
     file_extension = filepath.suffix.lower()
 
     if file_extension in SUPPORTED_EXTENSIONS:
@@ -74,7 +74,7 @@ def load_document(filepath: Path):
 
 
 def scan_directory_for_new_documents(processed_hashes: set, parsed_data_file: Path):
-    """Scansiona i file in `parsed_data_path`, aggiunge metadati e salva le trascrizioni."""
+    """Scans files in `parsed_data_path`, adds metadata, and saves transcripts."""
     new_docs = []
     new_hashes = set()
 
@@ -99,7 +99,7 @@ def scan_directory_for_new_documents(processed_hashes: set, parsed_data_file: Pa
             # Gestisce risorse esterne (YouTube, GitHub, siti web)
             url = entry.get("url")
             metadata["source_url"] = url  # Aggiunge l'URL ai metadati
-            logger.info(f"Estrazione da risorsa esterna: {url}")
+            logger.info(f"Extraction from external resource: {url}")
             content = None
 
             try:
@@ -117,30 +117,30 @@ def scan_directory_for_new_documents(processed_hashes: set, parsed_data_file: Pa
                         new_docs.append(Document(page_content=content, metadata=metadata))
                         new_hashes.add(doc_hash)
                         save_extracted_text(doc_hash, content)  # solo per debug
-                        logger.info(f"Documento esterno aggiunto: {url}")
+                        logger.info(f"External document added: {url}")
                     else:
-                        logger.info(f"Documento esterno già processato: {url}")
+                        logger.info(f"External document already processed: {url}")
                 else:
-                    logger.warning(f"Nessun contenuto estratto da: {url}")
+                    logger.warning(f"No content extracted from: {url}")
 
             except Exception as e:
-                logger.error(f"Errore nell'estrazione da {url}: {e}")
+                logger.error(f"Error in extraction from {url}: {e}")
 
         else:
             # Gestisce file locali
             filepath = Path(entry["path"])
 
             if not filepath.exists():
-                logger.warning(f"File non trovato: {filepath}")
+                logger.warning(f"File not found: {filepath}")
                 continue
 
             doc_hash = compute_file_hash(filepath)
 
             if doc_hash in processed_hashes:
-                logger.info(f"Documento già processato: {filepath}")
+                logger.info(f"Local document already processed: {filepath}")
                 continue
 
-            logger.info(f"Caricamento nuovo documento: {filepath}")
+            logger.info(f"Uploading new document: {filepath}")
 
             try:
                 documents = load_document(filepath)
@@ -154,8 +154,8 @@ def scan_directory_for_new_documents(processed_hashes: set, parsed_data_file: Pa
                     new_hashes.add(doc_hash)
 
             except Exception as e:
-                logger.error(f"Errore nell'elaborazione del file {filepath}: {e}")
+                logger.error(f"Error in processing file {filepath}: {e}")
 
-    logger.info(f"Nuovi documenti trovati: {len(new_docs)}")
+    logger.info(f"New docs found: {len(new_docs)}")
 
     return new_docs, new_hashes

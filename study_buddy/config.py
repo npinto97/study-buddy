@@ -22,7 +22,7 @@ from langchain_community.document_loaders import (TextLoader,
 
 
 def image_loader(filepath: str):
-    """ Estrae il testo da un'immagine usando OCR. """
+    """ Extracts text from an image using OCR."""
     image = Image.open(filepath)
     text = pytesseract.image_to_string(image)
     return [text]
