@@ -110,9 +110,12 @@ def format_tool_calls(message):
     return None
 
 def display_images_and_files(content, file_paths_list=None, message_index=0):
-    """Displays images inline and download buttons for any file."""
+    """Displays images inline and download buttons for any file - IMPROVED VERSION."""
     if not file_paths_list:
+        print("[DEBUG] No file paths provided to display_images_and_files")
         return
+    
+    print(f"[DEBUG] display_images_and_files called with {len(file_paths_list)} files")
     
     download_counter = 0
     processed_files = set()  # Per evitare duplicati
@@ -120,27 +123,42 @@ def display_images_and_files(content, file_paths_list=None, message_index=0):
     # Mostra i file passati esplicitamente dal tool
     for raw_path in file_paths_list:
         # Normalizza il path rimuovendo escape characters
-        norm_path = raw_path.replace("\\\\", "\\").replace("\\", os.sep)
+        norm_path = raw_path.replace("\\\\", "\\").replace("\\", os.sep).replace("/", os.sep)
         # Rimuovi anche eventuali apici singoli o doppi all'inizio e fine
         norm_path = norm_path.strip("'\"")
+        # Converti in percorso assoluto
+        abs_path = os.path.abspath(norm_path)
         
-        if norm_path in processed_files:
+        print(f"[DEBUG] Processing file for display: {raw_path} -> {abs_path}")
+        
+        if abs_path in processed_files:
+            print(f"[DEBUG] Skipping duplicate file: {abs_path}")
             continue
-        processed_files.add(norm_path)
+        processed_files.add(abs_path)
         
-        if os.path.exists(norm_path):
-            ext = norm_path.lower()
-            file_name = os.path.basename(norm_path)
+        if os.path.exists(abs_path):
+            ext = abs_path.lower()
+            file_name = os.path.basename(abs_path)
             
+            print(f"[DEBUG] File exists, displaying: {file_name}")
+            
+            # Display image inline if it's an image file
             if ext.endswith((".png", ".jpg", ".jpeg", ".gif", ".bmp", ".webp", ".svg")):
-                st.image(norm_path, caption=file_name, use_container_width=False)
+                try:
+                    st.image(abs_path, caption=file_name, width='content')
+                    print(f"[DEBUG] Successfully displayed image: {file_name}")
+                except Exception as e:
+                    st.error(f"Error displaying image {file_name}: {str(e)}")
+                    print(f"[DEBUG] Error displaying image: {e}")
             
-            mime_type = mimetypes.guess_type(norm_path)[0] or "application/octet-stream"
+            # Always provide download button
+            mime_type = mimetypes.guess_type(abs_path)[0] or "application/octet-stream"
             
             try:
-                with open(norm_path, "rb") as f:
+                with open(abs_path, "rb") as f:
                     file_bytes = f.read()
                 
+                # Choose appropriate icon
                 if ext.endswith((".png", ".jpg", ".jpeg", ".gif", ".bmp", ".webp", ".svg")):
                     icon = "🖼️"
                 elif ext.endswith((".pdf",)):
@@ -154,8 +172,8 @@ def display_images_and_files(content, file_paths_list=None, message_index=0):
                 else:
                     icon = "📥"
                 
-                # Key unica basata su hash del path per evitare conflitti
-                file_hash = hash(norm_path) % 10000  # Limita la lunghezza dell'hash
+                # Create unique key for download button
+                file_hash = hash(abs_path) % 10000
                 unique_key = f"download_{message_index}_{file_hash}_{download_counter}"
                 
                 st.download_button(
@@ -164,14 +182,17 @@ def display_images_and_files(content, file_paths_list=None, message_index=0):
                     file_name=file_name,
                     mime=mime_type,
                     key=unique_key,
-                    use_container_width=True
+                    width='content'
                 )
                 download_counter += 1
+                print(f"[DEBUG] Created download button for: {file_name}")
                 
             except Exception as e:
-                st.error(f"Error in reading the file {file_name}: {str(e)}")
+                st.error(f"Error reading file {file_name}: {str(e)}")
+                print(f"[DEBUG] Error reading file: {e}")
         else:
-            st.error(f"File not found: {norm_path}")
+            st.error(f"File not found: {abs_path}")
+            print(f"[DEBUG] File not found: {abs_path}")
 
 
 def display_chat_history(thread_id):
@@ -234,83 +255,124 @@ def display_chat_history(thread_id):
                         st.code(format_message_content(message), language="text")
 
 
+
 def process_tool_messages_for_images(tool_messages):
-    """Processes tool messages to extract valid image and file paths."""
+    """Processes tool messages to extract valid image and file paths - IMPROVED VERSION."""
     all_file_paths = []
     
     for tool_msg in tool_messages:
         try:
-            # Prova a parsare come JSON
+            # Get content from tool message
             if hasattr(tool_msg, 'content'):
                 content = tool_msg.content
             else:
                 content = str(tool_msg)
             
+            print(f"[DEBUG] Processing tool message content: {content[:200]}...")
+            
             try:
+                # Try to parse as JSON first
                 tool_output = json.loads(content)
+                print(f"[DEBUG] Parsed JSON tool output: {tool_output}")
             except json.JSONDecodeError:
-                # Se non è JSON, tratta come stringa e cerca pattern di path
-                path_patterns = re.findall(r'["\']([^"\']+\.[a-zA-Z0-9]+)["\']', content)
+                # If not JSON, search for file paths in the text
+                print(f"[DEBUG] Not JSON, searching for file paths in text")
+                
+                # Look for common path patterns (both Windows and Unix)
+                path_patterns = re.findall(r'([A-Za-z]:[\\\/][^"\'\s]+\.[a-zA-Z0-9]+|\/[^"\'\s]+\.[a-zA-Z0-9]+|[^"\'\s]*visualizations[\\\/][^"\'\s]+\.[a-zA-Z0-9]+)', content)
+                
                 for path in path_patterns:
-                    normalized_path = path.replace("\\\\", "\\").replace("\\", os.sep).strip("'\"")
-                    if os.path.exists(normalized_path):
-                        all_file_paths.append(normalized_path)
+                    normalized_path = path.replace("\\\\", "\\").replace("\\", os.sep).replace("/", os.sep).strip("'\"")
+                    abs_path = os.path.abspath(normalized_path)
+                    print(f"[DEBUG] Found path pattern: {path} -> normalized: {normalized_path} -> absolute: {abs_path}")
+                    
+                    if os.path.exists(abs_path):
+                        all_file_paths.append(abs_path)
+                        print(f"[DEBUG] Added existing file: {abs_path}")
+                    else:
+                        print(f"[DEBUG] File doesn't exist: {abs_path}")
+                
+                # Also look for quoted paths
+                quoted_patterns = re.findall(r'["\']([^"\']+\.[a-zA-Z0-9]+)["\']', content)
+                for path in quoted_patterns:
+                    normalized_path = path.replace("\\\\", "\\").replace("\\", os.sep).replace("/", os.sep)
+                    abs_path = os.path.abspath(normalized_path)
+                    
+                    if os.path.exists(abs_path) and abs_path not in all_file_paths:
+                        all_file_paths.append(abs_path)
+                        print(f"[DEBUG] Added quoted path: {abs_path}")
+                
                 continue
             
+            # Process JSON output
             file_paths = []
             
-            if "file_paths" in tool_output:
-                file_paths.extend(tool_output["file_paths"])
+            # Check various possible keys in the JSON response
+            for key in ["file_paths", "image_paths", "file_path", "image_path", "path", "saved_paths", "output_files"]:
+                if key in tool_output:
+                    value = tool_output[key]
+                    if isinstance(value, list):
+                        file_paths.extend(value)
+                    elif isinstance(value, str):
+                        file_paths.append(value)
             
-            if "image_paths" in tool_output:
-                file_paths.extend(tool_output["image_paths"])
-            
-            if "file_path" in tool_output:
-                file_paths.append(tool_output["file_path"])
-            elif "image_path" in tool_output:
-                file_paths.append(tool_output["image_path"])
-            elif "path" in tool_output:
-                file_paths.append(tool_output["path"])
-            
-            elif isinstance(tool_output, list):
+            # If tool_output is directly a list of paths
+            if isinstance(tool_output, list):
                 file_paths.extend(tool_output)
             
-            elif isinstance(tool_output, str) and "." in tool_output:
+            # If tool_output is directly a string path
+            elif isinstance(tool_output, str) and ("." in tool_output and ("/" in tool_output or "\\" in tool_output)):
                 file_paths.append(tool_output)
             
+            # Process all found file paths
             for file_path in file_paths:
                 if file_path:
-                    normalized_path = str(file_path).replace("\\\\", "\\").replace("\\", os.sep).strip("'\"")
-                    if os.path.exists(normalized_path):
-                        all_file_paths.append(normalized_path)
+                    # Clean and normalize the path
+                    normalized_path = str(file_path).replace("\\\\", "\\").replace("\\", os.sep).replace("/", os.sep).strip("'\"")
+                    abs_path = os.path.abspath(normalized_path)
+                    
+                    print(f"[DEBUG] Processing file path: {file_path} -> {abs_path}")
+                    
+                    if os.path.exists(abs_path):
+                        all_file_paths.append(abs_path)
+                        print(f"[DEBUG] Successfully added file: {abs_path}")
+                    else:
+                        print(f"[DEBUG] File not found: {abs_path}")
                         
         except Exception as e:
-            st.error(f"Error in parsing the tool's message: {e}")
+            print(f"[ERROR] Error processing tool message: {e}")
+            print(f"[ERROR] Tool message content: {content if 'content' in locals() else 'No content'}")
             continue
     
+    # Remove duplicates while preserving order
     seen = set()
     unique_paths = []
     for path in all_file_paths:
-        normalized = path.replace("\\\\", "\\").replace("\\", os.sep).strip("'\"")
+        normalized = os.path.abspath(path.replace("\\\\", "\\").replace("\\", os.sep).strip("'\""))
         if normalized not in seen:
             seen.add(normalized)
             unique_paths.append(normalized)
     
+    print(f"[DEBUG] Final unique paths: {unique_paths}")
     return unique_paths
 
 
 async def handle_streaming_events(events_generator):
-    """Handles real-time streaming of agent events with improved download support."""
+    """Handles real-time streaming of agent events with improved download support - IMPROVED VERSION."""
     full_response = ""
     tool_messages = []
     message_placeholder = st.empty()
     
     async for event in events_generator:
         for node_name, node_output in event.items():
+            print(f"[DEBUG] Processing event from node: {node_name}")
+            
             if node_name == "tools" and "messages" in node_output:
+                print(f"[DEBUG] Found {len(node_output['messages'])} tool messages")
                 for message in node_output["messages"]:
                     if hasattr(message, 'name'):
                         tool_messages.append(message)
+                        print(f"[DEBUG] Added tool message: {message.name}")
             
             elif node_name == "agent" and "messages" in node_output:
                 for message in node_output["messages"]:
@@ -323,28 +385,37 @@ async def handle_streaming_events(events_generator):
     if full_response:
         message_placeholder.markdown(full_response)
     
+    print(f"[DEBUG] Processing {len(tool_messages)} tool messages for file extraction")
     valid_file_paths = process_tool_messages_for_images(tool_messages)
     
     if valid_file_paths:
+        print(f"[DEBUG] Found {len(valid_file_paths)} valid file paths")
         st.markdown("---")
         st.markdown("📁 **File generati:**")
         display_images_and_files("", valid_file_paths, 999)
         
         return full_response, valid_file_paths
+    else:
+        print("[DEBUG] No valid file paths found")
     
     return full_response, None
 
+
 def handle_non_streaming_events(events):
-    """Handles agent events in non-streaming mode with improved download support."""
+    """Handles agent events in non-streaming mode with improved download support - IMPROVED VERSION."""
     full_response = ""
     tool_messages = []
     
     for event in events:
         for node_name, node_output in event.items():
+            print(f"[DEBUG] Processing event from node: {node_name}")
+            
             if node_name == "tools" and "messages" in node_output:
+                print(f"[DEBUG] Found {len(node_output['messages'])} tool messages")
                 for message in node_output["messages"]:
                     if hasattr(message, 'name'):
                         tool_messages.append(message)
+                        print(f"[DEBUG] Added tool message: {message.name}")
             
             elif node_name == "agent" and "messages" in node_output:
                 for message in node_output["messages"]:
@@ -354,14 +425,18 @@ def handle_non_streaming_events(events):
     if full_response:
         st.markdown(full_response)
     
+    print(f"[DEBUG] Processing {len(tool_messages)} tool messages for file extraction")
     valid_file_paths = process_tool_messages_for_images(tool_messages)
     
     if valid_file_paths:
+        print(f"[DEBUG] Found {len(valid_file_paths)} valid file paths")
         st.markdown("---")
         st.markdown("📁 **File generati:**")
         display_images_and_files("", valid_file_paths, 999)
         
         return full_response, valid_file_paths
+    else:
+        print("[DEBUG] No valid file paths found")
     
     return full_response, None
 
@@ -694,7 +769,7 @@ def voice_chat_input():
                 button_emoji,
                 key="voice_button_bottom",
                 help="Registra messaggio vocale" if not voice_active else "Modalità vocale attiva",
-                use_container_width=True
+                width='content'
             )
 
     return user_submission, voice_button

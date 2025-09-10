@@ -6,19 +6,19 @@ from study_buddy.config import logger
 
 
 def extract_text_from_url(url):
-    """Scarica e restituisce il testo da una pagina web."""
+    """Downloads and returns text from a web page."""
     try:
         response = requests.get(url, timeout=10)
         response.raise_for_status()
         soup = BeautifulSoup(response.text, "html.parser")
         return soup.get_text()
     except Exception as e:
-        logger.error(f"Errore nell'estrazione del testo da {url}: {e}")
+        logger.error(f"Error in text extraction from {url}: {e}")
         return None
 
 
 def extract_readme_from_repo(repo_url):
-    """Estrae il README.md da una repository GitHub."""
+    """Extract the README.md from a GitHub repository."""
     try:
         if repo_url.endswith(".git"):
             repo_url = repo_url[:-4]
@@ -27,30 +27,30 @@ def extract_readme_from_repo(repo_url):
         response.raise_for_status()
         return response.text
     except Exception as e:
-        logger.error(f"Errore nel recupero del README da {repo_url}: {e}")
+        logger.error(f"Error retrieving README from {repo_url}: {e}")
         return None
 
 
 def extract_transcript_from_youtube(youtube_url):
-    """Ottiene la trascrizione automatica di un video YouTube."""
+    """Get an automatic transcript of a YouTube video."""
     try:
         video_id = youtube_url.split("v=")[-1].split("&")[0]
         api = YouTubeTranscriptApi()
         transcript = api.fetch(video_id)
         return " ".join([entry['text'] for entry in transcript])
     except Exception as e:
-        logger.error(f"Errore nella trascrizione del video {youtube_url}: {e}")
+        logger.error(f"Error in video transcription {youtube_url}: {e}")
         return None
 
 
 def extract_external_resources(lesson_data):
-    """Estrae e restituisce documenti strutturati dalle risorse esterne di una lezione."""
+    """Extracts and returns structured documents from the external resources of a lesson."""
     resources = lesson_data.get("resources", [])
     extracted_docs = []
 
     for resource in resources:
         url = resource.get("url")
-        title = resource.get("title", "Risorsa Esterna")  # Nome predefinito se non specificato
+        title = resource.get("title", "External resource")  # Nome predefinito se non specificato
         content = None
 
         if "github.com" in url:
