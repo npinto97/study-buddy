@@ -110,7 +110,7 @@ def format_tool_calls(message):
     return None
 
 def display_images_and_files(content, file_paths_list=None, message_index=0):
-    """Displays images inline and download buttons for any file - IMPROVED VERSION."""
+    """Displays images inline and download buttons for any file."""
     if not file_paths_list:
         print("[DEBUG] No file paths provided to display_images_and_files")
         return
@@ -257,7 +257,7 @@ def display_chat_history(thread_id):
 
 
 def process_tool_messages_for_images(tool_messages):
-    """Processes tool messages to extract valid image and file paths - IMPROVED VERSION."""
+    """Processes tool messages to extract valid image and file paths."""
     all_file_paths = []
     
     for tool_msg in tool_messages:
@@ -358,7 +358,7 @@ def process_tool_messages_for_images(tool_messages):
 
 
 async def handle_streaming_events(events_generator):
-    """Handles real-time streaming of agent events with improved download support - IMPROVED VERSION."""
+    """Handles real-time streaming of agent events."""
     full_response = ""
     tool_messages = []
     message_placeholder = st.empty()
@@ -402,7 +402,7 @@ async def handle_streaming_events(events_generator):
 
 
 def handle_non_streaming_events(events):
-    """Handles agent events in non-streaming mode with improved download support - IMPROVED VERSION."""
+    """Handles agent events in non-streaming mode."""
     full_response = ""
     tool_messages = []
     
