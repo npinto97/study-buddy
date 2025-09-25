@@ -1,0 +1,55 @@
+{
+    "lesson_number": 9,
+    "title": "Content-based Recommender Systems",
+    "keywords": [
+      "Content-based Filtering",
+      "Keyword-based item representation",
+      "Content-based Recommender Systems",
+      "Word Sense Disambiguation"
+    ],
+    "slides": [
+      "slides/InformationFiltering_3_Content_based_Filtering.pdf.pdf"
+    ],
+    "notes": [],
+    "references": [
+      {
+        "title": "UNIBA: JIGSAW algorithm for Word Sense Disambiguation",
+         "filename": "references/uniba_jigsaw_algorithm_for_word_sense_disambiguation.pdf",
+        "description": "This paper describes JIGSAW, a knowledge-based WSD system that attemps to disambiguate all words in a text by exploiting WordNet senses"
+      },
+      {
+        "title": "A content-collaborative recommender that exploits WordNet-based user profiles for neighborhood formation",
+        "filename": "references/A_content_collaborative_recommender_that.pdf",
+        "description": "Based on the ratings of the most similar users, commonly referred to as neighbors, collaborative algorithms compute recommendations for the current user. The problem with this approach is that the similarity value is only computable if users have common rated items. The main contribution of this work is a possible solution to overcome this limitation."
+      },
+      {
+        "title": "Combining Learning and Word Sense Disambiguation for Intelligent User Profiling",
+        "filename": "references/combining_learning_and_word_sense_disambiguation_for_intelligent_user_profiling.pdf",
+        "description": "This work proposes the integration of linguistic knowledge in the process of learning semantic user profiles that capture concepts concerning user interests."
+      },
+      {
+        "title": "WordNet::Similarity - Measuring the Relatedness of Concepts",
+        "filename": "references/WordNetSimilarity_Measuring_the_Relatedness_of_Concepts.pdf",
+        "description": "WordNet::Similarity is a freely available software package that makes it possible to measure the semantic similarity or relatedness between a pair of concepts (or word senses). It provides six measures of similarity, and three measures of relatedness, all of which are based on the lexical database WordNet."
+      },
+      {
+        "title": "Learning and Revising User Profiles: The Identification of Interesting Web Sites",
+        "filename": "references/learning_and_revising_user_profiles_the_identification_of_interesting_web_sites.pdf",
+        "description": "We describe the use of a naive Bayesian classifier for this task, and demonstrate that it can incrementally learn profiles from user feedback on the interestingness of Web sites. Furthermore, the Bayesian classifier may easily be extended to revise user provided profiles."
+      }
+    ],
+    "supplementary_materials": [
+      {
+        "title": "Chapter VI: Information Extraction",
+        "filename": "supplementary_materials/Chapter_VI_Information_Extraction.pdf",
+        "description": ""
+      }
+    ],
+    "exercises": [],
+    "multimedia": {
+      "videos": [],
+      "images": [],
+      "audio": []
+    },
+    "external_resources": []
+  }

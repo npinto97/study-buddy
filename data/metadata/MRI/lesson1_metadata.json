@@ -1,0 +1,33 @@
+{
+    "lesson_number": 1,
+    "title": "Introduzione all'Information Retrieval",
+    "keywords": [
+      "text mining",
+      "Indexing",
+      "Ranking"
+    ],
+    "slides": [
+      "slides/InformationFiltering_1_Introduction.pdf"
+    ],
+    "notes": [],
+    "references": [
+      {
+        "title": "Knowledge Discovery in Textual Databases (KDT)",
+        "filename": "references/Knowledge_Discovery_in_Textual_Databases_(KDT).pdf",
+        "description": "A text categorization paradigm to annotate text articles with meaningful concepts that are organized in hierarchical structure."
+      },
+      {
+        "title": "Text Mining as Integration of Several Related Research Areas: Report on KDD'2000 Workshop on Text Mining",
+        "filename": "references/Text_mining_as_integration_of_several_re.pdf",
+        "description": "A report on the research issues covered in the papers presented at the KDD'2000 Workshop on Text Mining"
+      }
+    ],
+    "supplementary_materials": [],
+    "exercises": [],
+    "multimedia": {
+      "videos": [],
+      "images": [],
+      "audio": []
+    },
+    "external_resources": []
+  }

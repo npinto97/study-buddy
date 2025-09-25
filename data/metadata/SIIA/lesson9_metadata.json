@@ -1,0 +1,55 @@
+{
+    "lesson_number": 9,
+    "title": "Evaluation of Recommender Systems",
+    "keywords": [
+      "Relevance Metrics",
+      "Cranfield Paradigm",
+      "Metrics"
+    ],
+    "slides": [
+      "slides/Lesson_09_RecSys_Evaluation_part_1_Basics_Binary_relevance.pdf",
+      "slides/Lesson_09_RecSys_Evaluation_part_2_Graded-relevance.pdf"
+    ],
+    "notes": [],
+    "references": [
+      {
+        "title": "Novelty and Diversity in Top-N Recommendation - Analysisand Evaluation",
+        "filename": "references/novelty_and_diversity_in_top_n_recommendation_analysis_and_evaluation.pdf",
+        "description": "This article discusses the challenge of balancing diversity and relevance in recommender systems. It introduces a methodology for evaluating systems based on novel item retrieval and formulates the trade-off between diversity and matching quality as a binary optimization problem. By using an input control parameter, this balance can be tuned. The methods are tested on collaborative and case-based recommendation tasks, showing how adjusting this parameter can enhance system performance."
+      },
+      {
+        "title": "Rank and Relevance in Novelty and Diversity Metrics for Recommender Systems",
+        "filename": "references/rank_and_relevance_in_novelty_and_diversity_metrics_for_recommender_systems.pdf",
+        "description": "This paper presents a formal framework for novelty and diversity metrics in recommender systems, addressing the lack of a unified evaluation method. It identifies key concepts—choice, discovery, and relevance—as the foundation for these metrics. By incorporating item rank and relevance through a probabilistic recommendation browsing model, the framework generalizes existing metrics. The study's experimental results validate and highlight the properties of these metrics, emphasizing the importance of considering ranking and relevance in novelty and diversity evaluations."
+      },
+      {
+        "title": "Stability of Recommendation Algorithms",
+        "filename": "references/stability_of_recommendation_algorithms.pdf",
+        "description": "The article introduces \"stability\" as a performance measure for recommender systems, focusing on how consistent predictions remain even when new predictions are added to the training data. Stability is seen as a valuable practical property for enhancing user trust in recommendation systems. The study finds that model-based algorithms exhibit higher stability than neighborhood-based collaborative filtering methods, with stability being influenced by factors like data sparsity and normalization. It provides extensive empirical analysis across several algorithms and datasets."
+      },
+      {
+        "title": "Temporal Diversity in Recommender Systems",
+        "filename": "references/temporal_diversity_in_recommender_systems.pdf",
+        "description": "This study highlights the importance of temporal diversity in Collaborative Filtering (CF) algorithms for recommender systems, which is often overlooked. It emphasizes how the same items are recommended repeatedly and examines how user behavior, such as profile size and rating intervals, influences recommendation diversity. The research proposes methods to maximize temporal diversity in recommendations without significantly compromising accuracy, providing a more varied set of suggestions for users over time."
+      },
+      {
+        "title": "The Unfairness of Popularity Bias in Recommendation",
+        "filename": "references/the_unfairness_of_popularity_bias_in_recommendation.pdf",
+        "description": "This paper addresses the popularity bias problem in recommender systems, which tends to overexpose popular items while underrepresenting niche ones. It explores the impact of this bias on different user groups, such as those who prefer niche, diverse, or blockbuster content. The study finds that even users interested in long-tail or non-popular items often receive recommendations dominated by popular items, highlighting the disparity caused by popularity bias. The experimental results on a movie dataset reveal this significant bias."
+      }
+    ],
+    "supplementary_materials": [
+      {
+        "title": "Training and Testing of Recommender Systems on Data Missing Not at Random",
+        "filename": "supplementary_materials/training_and_testing_of_recommender_systems_on_data_missing_not_at_random.pdf",
+        "description": "The real-world problem in recommendation systems is to generate personalized recommendations that are relevant to each user from a vast array of items. The challenge is heightened by the phenomenon of missing not at random (MNAR) ratings, which can skew the recommendation process. The aim is to select a few items for each user from the store that they would find relevant, despite the limitations of incomplete or biased data."
+      }
+    ],
+    "exercises": [],
+    "multimedia": {
+      "videos": [],
+      "images": [],
+      "audio": []
+    },
+    "external_resources": []
+  }

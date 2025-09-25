@@ -1,0 +1,182 @@
+{
+    "lesson_number": 8,
+    "title": "Large Language Models in Recommender Systems",
+    "keywords": [
+      "Recommender Systems",
+      "Large Language Models (LLMs)",
+      "Prompting"
+    ],
+    "slides": [
+      "slides/Lesson_08_Large_Language_Models_in_Recommender_Systems.pdf"
+    ],
+    "notes": [],
+    "references": [
+      {
+        "title": "A Large Language Model Enhanced Conversational Recommender System",
+        "filename": "references/a_large_language_model_enhanced_conversational_recommender_system.pdf",
+        "description": "Conversational recommender systems (CRSs) aim to suggest items through a dialogue interface, involving tasks like preference elicitation and explanation. A new system, LLMCRS, leverages large language models (LLMs) to manage sub-tasks, collaborate with expert models, and generate user interactions. The approach divides the workflow into four stages: sub-task detection, model matching, sub-task execution, and response generation. By fine-tuning with reinforcement learning from CRS feedback, LLMCRS outperforms existing methods on benchmark datasets."
+      },
+      {
+        "title": "A spreading activation theory of memory",
+        "filename": "references/a_spreading_activation_theory_of_memory.pdf",
+        "description": "The ACT theory of factual memory suggests that information is encoded as cognitive units, which strengthen with practice and weaken over time. Memory retrieval operates through spreading activation across an interconnected network of units, with the level of activation determining recall probability. The theory explains various memory phenomena, including interference, associative relatedness, the effects of practice, and differences between recognition and recall, as well as reconstructive recall."
+      },
+      {
+        "title": "A survey on large language models for recommendation",
+        "filename": "references/a_survey_on_large_language_models_for_recommendation.pdf",
+        "description": "Large Language Models (LLMs) have become key tools in enhancing Recommendation Systems (RS). This survey categorizes LLM-based approaches into two main paradigms: Discriminative LLM for Recommendation (DLLM4Rec) and Generative LLM for Recommendation (GLLM4Rec), the latter of which is reviewed for the first time. The paper discusses various methodologies, challenges, and performance insights related to these models, aiming to inspire future research and applications. A GitHub repository with relevant resources is also provided. For more details, visit: [GitHub Repository](https://github.com/WLiK/LLM4Rec-Awesome-Papers)."
+      },
+      {
+        "title": "Attention Is All You Need",
+        "filename": "references/attention_is_all_you_need.pdf",
+        "description": "The Transformer model, based entirely on attention mechanisms, removes the need for recurrence and convolutions in sequence transduction tasks. It achieves superior performance on machine translation tasks, surpassing previous models in quality while being more parallelizable and requiring less training time. On the WMT 2014 English-to-German task, it achieved 28.4 BLEU, and 41.8 BLEU on the English-to-French task. The Transformer also generalizes well to other tasks, including constituency parsing, with fewer training costs."
+      },
+      {
+        "title": "BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding",
+        "filename": "references/bert_pre_training_of_deep_bidirectional_transformers_for_language_understanding.pdf",
+        "description": "BERT (Bidirectional Encoder Representations from Transformers) is a language representation model that pre-trains deep bidirectional representations by conditioning on both left and right context in all layers. It achieves state-of-the-art performance across various tasks, including question answering and language inference, with minimal task-specific modifications. BERT outperforms previous models in several benchmarks, such as GLUE, MultiNLI, and SQuAD, significantly improving task accuracies."
+      },
+      {
+        "title": "BERT4Rec: Sequential Recommendation with Bidirectional Encoder Representations from Transformer",
+        "filename": "references/bert4rec_sequential_recommendation_with_bidirectional_encoder_representations_from_transformer.pdf",
+        "description": "BERT (Bidirectional Encoder Representations from Transformers) is a language representation model that pre-trains deep bidirectional representations by conditioning on both left and right context in all layers. It achieves state-of-the-art performance across various tasks, including question answering and language inference, with minimal task-specific modifications. BERT outperforms previous models in several benchmarks, such as GLUE, MultiNLI, and SQuAD, significantly improving task accuracies."
+      },
+      {
+        "title": "Chain-of-Thought Prompting Elicits Reasoning in Large Language Models",
+        "filename": "references/chain_of_thought_prompting_elicits_reasoning_in_large_language_models.pdf",
+        "description": "Chain-of-thought prompting significantly improves the reasoning abilities of large language models by providing intermediate reasoning steps within the input prompt. This method, demonstrated on models like PaLM 540B, boosts performance across arithmetic, commonsense, and symbolic reasoning tasks. For example, using just eight chain-of-thought examples, PaLM 540B achieved state-of-the-art results on the GSM8K benchmark, surpassing even fine-tuned GPT-3 with a verifier. This approach enhances model accuracy by guiding reasoning through structured steps."
+      },
+      {
+        "title": "ClayRS: An end-to-end framework for reproducible knowledge-aware recommender systems",
+        "filename": "references/clayrs_an_end_to_end_framework_for_reproducible_knowledge_aware_recommender_systems.pdf",
+        "description": "ClayRS is an end-to-end framework designed to facilitate replicable knowledge-aware recommender systems. It provides state-of-the-art methodologies for building content representations and incorporates these into content-based recommendation algorithms. By offering a structured approach, it supports the development of accountable and research-driven recommender systems. The framework aims to simplify the implementation of advanced content representation and experimental protocols, addressing gaps in the scattered literature on knowledge-aware recommender systems."
+      },
+      {
+        "title": "Combining Graph Neural Networks and Sentence Encoders for Knowledge-aware Recommendations",
+        "filename": "references/Combining_Graph_Neural_Networks_and_Sentence_ecnoders_for_knowledge_aware_recommendations.pdf",
+        "description": "This paper presents a knowledge-aware recommendation strategy combining graph neural networks and sentence encoders. The approach utilizes graph neural networks for encoding collaborative features and item properties, alongside transformer-based sentence encoders to learn representations from textual descriptions. A deep neural network with attention mechanisms refines these representations to predict user interest and generate recommendations. Experimental results demonstrate that the proposed method outperforms competitive baselines on two datasets."
+      },
+      {
+        "title": "How to Index Item IDs for Recommendation Foundation Models",
+        "filename": "references/how_to_index_item_ids_for_recommendation_foundation_models.pdf",
+        "description": "This study focuses on utilizing large language models (LLMs) for recommendation tasks by converting them into natural language tasks, enabling generative recommendations. A key challenge is item ID creation to avoid excessive text and hallucinations. The research proposes four indexing methods: sequential, collaborative, semantic, and hybrid indexing. The study highlights how proper item indexing significantly impacts the performance of LLM-based recommendations, with real-world datasets demonstrating the effectiveness of the proposed methods. For more information, visit [GitHub: LLM-RecSys-ID](https://github.com/Wenyueh/LLM-RecSys-ID)."
+      },
+      {
+        "title": "Large Language Models are Competitive Near Cold-start Recommenders for Language- and Item-based Preferences",
+        "filename": "references/large_language_models_are_competitive_near_cold_start_recommenders_for_language_and_item_based_preferences.pdf",
+        "description": "This study explores using large language models (LLMs) for recommendations based on both item-based and language-based user preferences. It compares LLMs with traditional item-based collaborative filtering (CF) methods. The findings suggest that LLMs provide competitive recommendation performance for pure language-based preferences, especially in near cold-start scenarios, without requiring extensive supervised training. This is promising, as language-based preferences offer more explainability than traditional methods. The study highlights LLMs' potential for recommendation tasks even with minimal training data."
+      },
+      {
+        "title": "LLM Based Generation of Item-Description for Recommendation System",
+        "filename": "references/llm_based_generation_of_item_description_for_recommendation_system.pdf",
+        "description": "This paper investigates using Large Language Models (LLMs), like Alpaca, to generate detailed item descriptions for recommendation systems. Using datasets from MovieLens (movies) and Goodreads (books), the study compares LLM-generated descriptions with web-scraped descriptions. Results show that LLM-generated descriptions perform comparably to those obtained through manual scraping, evaluated by metrics like Top Hits, MRR, and NDCG. This suggests that LLMs can effectively generate high-quality item descriptions, reducing the need for manual scraping."
+      },
+      {
+        "title": "LLM-generated Explanations for Recommender Systems",
+        "filename": "references/llm_generated_explanations_for_recommender_systems.pdf",
+        "description": "This paper explores how Large Language Models (LLMs) can generate high-quality explanations for recommendations, improving transparency in systems like feature-based, collaborative filtering, and knowledge-based approaches. It discusses the positive reception of LLM-generated explanations by users, noting their usefulness in evaluating recommended items. The study emphasizes the importance of personalization in explanations and highlights user preferences regarding the characteristics of LLM-based explanations, offering insights for future research in this area."
+      },
+      {
+        "title": "LLM-Rec: Personalized Recommendation via Prompting Large Language Models",
+        "filename": "references/llm_rec_personalized_recommendation_via_prompting_large_language_models.pdf",
+        "description": "This study presents LLM-REC, a novel approach to enhance personalized text-based recommendations using four prompting strategies for text enrichment. The experiments demonstrate that augmenting text with LLM-generated content significantly improves recommendation quality. Even basic models like MLP outperform complex content-based methods. The success of LLM-REC lies in its effective use of the language model's ability to understand both general and specific item characteristics, highlighting the importance of diverse prompts and input augmentation techniques for better recommendations."
+      },
+      {
+        "title": "LoRA: Low-Rank Adaptation of Large Language Models",
+        "filename": "references/lora_low_rank_adaptation_of_large_language_models.pdf",
+        "description": "LoRA (Low-Rank Adaptation) is a technique that reduces the number of trainable parameters in large language models like GPT-3 by injecting low-rank decomposition matrices into each Transformer layer. This approach significantly reduces memory requirements and computational cost while maintaining model performance. It achieves comparable or better results than full fine-tuning, with a 10,000x reduction in trainable parameters and no added inference latency. LoRA is compatible with models like RoBERTa, DeBERTa, and GPT-2."
+      },
+      {
+        "title": "A Neural Probabilistic Language Model",
+        "filename": "references/NIPS-2000-a-neural-probabilistic-language-model-Paper.pdf",
+        "description": "This approach to statistical language modeling simultaneously learns distributed word representations and the probability function for word sequences. The key idea is that unseen sequences are given high probability if composed of words similar to those in already observed sequences. Neural networks are used to model the probability function, significantly improving upon traditional trigram models, as demonstrated in experiments with two text corpora. This method provides better generalization by leveraging word similarity."
+      },
+      {
+        "title": "ONCE: Boosting Content-based Recommendation with Both Open- and Closed-source Large Language Models",
+        "filename": "references/once_boosting_content_based_recommendation_with_both_open_and_closed_source_large_language_models.pdf",
+        "description": "This study explores the use of both open- and closed-source large language models (LLMs) to enhance content-based recommender systems. By utilizing LLMs as content encoders or applying prompting techniques, the research demonstrates a significant improvement in recommendation performance, with up to a 19.32% relative improvement compared to current models. The findings emphasize the potential of LLMs in improving recommendation systems. The authors also plan to release their code and LLM-generated data for others to replicate their results."
+      },
+      {
+        "title": "OpenP5: Benchmarking Foundation Models for Recommendation",
+        "filename": "references/openp5_benchmarking_foundation_models_for_recommendation.pdf",
+        "description": "The paper introduces OpenP5, an open-source library for benchmarking foundation models for recommendation systems under the Pre-train, Personalized Prompt, and Predict Paradigm (P5). It covers implementations for sequential and straightforward recommendation tasks, supports ten datasets, and offers three item indexing methods. The library allows for benchmarking on various domains and item indexing methods, promoting reproducibility in future research. The code and pre-trained checkpoints are available at [OpenP5 GitHub](https://github.com/agiresearch/OpenP5)."
+      },
+      {
+        "title": "Pre-train, Prompt, and Predict: A Systematic Survey of Prompting Methods in Natural Language Processing",
+        "filename": "references/pre_train_prompt_and_predict_a_systematic_survey_of_prompting_methods_in_natural_language_processing.pdf",
+        "description": "This article surveys prompt-based learning in NLP, where language models generate predictions by filling in gaps within a textual prompt. Unlike traditional supervised learning, prompt-based learning allows models to adapt to new tasks with little or no labeled data. The paper discusses key components like pre-trained models, prompts, and tuning strategies. It aims to provide an accessible overview, categorizing existing research and offering resources like NLPedia-Pretrain for further exploration."
+      },
+      {
+        "title": "Prompt Learning for News Recommendation",
+        "filename": "references/prompt_learning_for_news_recommendation.pdf",
+        "description": "This paper introduces the Prompt4NR framework for news recommendation, which applies the pre-train, prompt, and predict paradigm to enhance news click prediction. The framework transforms recommendation tasks into cloze-style mask-prediction tasks using various prompt templates, including discrete, continuous, and hybrid templates. The approach is evaluated using prompt ensembling for improved performance. Extensive experiments on the MIND dataset demonstrate the effectiveness of Prompt4NR, setting new benchmark results for news recommendation tasks."
+      },
+      {
+        "title": "Questioning the Survey Responses of Large Language Models",
+        "filename": "references/questioning_the_survey_responses_of_large_language_models.pdf",
+        "description": "This study critically examines the use of surveys to assess the demographics and values of large language models. The research finds that model responses are influenced by biases in ordering and labeling, and adjusting for these biases results in models giving uniformly random answers, regardless of model size or pre-training data. The study concludes that survey-derived alignment measures often reflect statistical proximity to uniform distributions, rather than genuinely capturing model alignment with specific subgroups."
+      },
+      {
+        "title": "Recommendation as Instruction Following: A Large Language Model Empowered Recommendation Approach",
+        "filename": "references/recommendation_as_instruction_following_a_large_language_model_empowered_recommendation_approach.pdf",
+        "description": "This study introduces a novel approach to recommender systems by treating them as instruction-following tasks for large language models (LLMs). By tuning Flan-T5-XL to interpret natural language instructions representing user preferences, the model can generate more personalized recommendations. The authors manually design 39 instruction templates, creating extensive personalized datasets. Experimental results show that this method outperforms several competitive models, including GPT-3.5, highlighting the potential of using natural language instructions for user-friendly recommendation systems."
+      },
+      {
+        "title": "Recommendation as Language Processing (RLP): A Unified Pretrain, Personalized Prompt & Predict Paradigm (P5)",
+        "filename": "references/recommendation_as_language_processing_rlp_a_unified_pretrain_personalized_prompt_predict_paradigm_p5.pdf",
+        "description": "The paper introduces the \"Pretrain, Personalized Prompt, and Predict Paradigm\" (P5) for unifying recommendation tasks. By transforming user-item interactions, reviews, and metadata into natural language, P5 offers a flexible, unified framework that captures deeper semantics for personalized recommendations. It reduces fine-tuning needs, supports zero-shot or few-shot predictions, and improves generalization across tasks. The model advances recommender systems into a universal recommendation engine. Experiments on various benchmarks demonstrate P5's effectiveness."
+      },
+      {
+        "title": "Recommender Systems in the Era of Large Language Models (LLMs)",
+        "filename": "references/recommender_systems_in_the_era_of_large_language_models.pdf",
+        "description": "This survey reviews the application of Large Language Models (LLMs) in recommender systems, focusing on pre-training, fine-tuning, and prompting techniques. It covers methods for using LLMs as feature encoders to represent users and items and highlights advancements in leveraging LLMs to enhance recommendation tasks. The survey also discusses future directions in this rapidly evolving field to offer a comprehensive understanding for researchers and practitioners interested in integrating LLMs into recommendation systems."
+      },
+      {
+        "title": "TALLRec: An Effective and Efficient Tuning Framework to Align Large Language Model with Recommendation",
+        "filename": "references/tallrec_an_effective_and_efficient_tuning_framework_to_align_large_language_model_with_recommendation.pdf",
+        "description": "The paper introduces TALLRec, a framework designed to align Large Language Models (LLMs) with recommendation tasks. TALLRec enhances the performance of LLMs in recommendation systems, such as movie and book recommendations, by fine-tuning with limited recommendation data. This approach bridges the gap between LLMs' general pre-training tasks and the specific needs of recommendation systems. Results show that TALLRec improves recommendation accuracy even with fewer than 100 samples and demonstrates strong cross-domain generalization. The framework is efficient and can run on a single RTX 3090 with LLaMA-7B. For more details, check out the [TALLRec repository](https://github.com/SAI990323/TALLRec)."
+      },
+      {
+        "title": "Together is Better: Hybrid Recommendations Combining Graph Embeddings and Contextualized Word Representations",
+        "filename": "references/together_is_better_hybrid_recommendations_combining_graphs_embeddings_and_contestualized_word_representations.pdf",
+        "description": "This paper proposes a hybrid recommendation framework that combines graph embeddings and contextual word representations. The process involves generating both types of embeddings separately, then using them to train a deep architecture that creates a hybrid representation. This combined embedding is used for generating recommendations. Experiments on two datasets show that this approach improves predictive accuracy and outperforms competitive baselines, validating its effectiveness in recommendation tasks."
+      },
+      {
+        "title": "U-BERT: Pre-training User Representations for Improved Recommendation",
+        "filename": "references/u_bert_pre_training_user_representations_for_improved_recommendation.pdf",
+        "description": "The paper introduces U-BERT, a pretraining and fine-tuning based approach for learning user representations in recommendation systems. It utilizes content-rich domains for pretraining and models user behaviors with user, review, and item encoders. A review co-matching layer captures semantic interactions between user reviews and items. U-BERT outperforms existing models in recommendation tasks, demonstrating state-of-the-art performance across six benchmark datasets. This approach addresses issues related to insufficient user behavior data, especially in less popular domains."
+      },
+      {
+        "title": "Uncovering ChatGPT's Capabilities in Recommender Systems",
+        "filename": "references/uncovering_chatgpts_capabilities_in_recommender_systems.pdf",
+        "description": "This study investigates aligning ChatGPT with traditional information retrieval ranking methods for recommendations, such as point-wise, pair-wise, and list-wise ranking. Experiments across four datasets show that list-wise ranking offers the best balance between cost and performance for ChatGPT. The research highlights a promising direction for enhancing ChatGPT's recommendation capabilities. The full code and results are available at [GitHub link](https://github.com/rainym00d/LLM4RS)."
+      }
+    ],
+    "supplementary_materials": [],
+    "exercises": [],
+    "multimedia": {
+      "videos": [],
+      "images": [],
+      "audio": []
+    },
+    "external_resources": [
+      {
+        "type": "repository",
+        "title": "Transformers4Rec by NVIDIA-Merlin",
+        "url": "https://github.com/NVIDIA-Merlin/Transformers4Rec",
+        "description": "TTransformers4Rec is a flexible and efficient library for sequential and session-based recommendation and can work with PyTorch."
+      },
+      {
+        "type": "article",
+        "title": "Supervised Fine-Tuning: Customizing LLMs",
+        "url": "https://medium.com/mantisnlp/supervised-fine-tuning-customizing-llms-a2c1edbf22c3",
+        "description": "An article on how to customize large language models (LLMs) using supervised fine-tuning techniques."
+      },
+      {
+        "type": "article",
+        "title": "Sam Altman Says Human-Tier AI Is Coming Soon",
+        "url": "https://futurism.com/the-byte/sam-altman-human-tier-ai-coming-soon",
+        "description": "Sam Altman discusses the future of AI and its evolution towards human-level capabilities."
+      }
+    ]
+  }

@@ -1,0 +1,53 @@
+{
+    "lesson_number": 7,
+    "title": "Information Filtering e Recommender Systems",
+    "keywords": [
+      "Rating matrix",
+      "Collaborative filtering",
+      "Content_Based RS"
+    ],
+    "slides": [
+      "slides/InformationFiltering_1_Introduction.pdf"
+    ],
+    "notes": [],
+    "references": [
+        {
+            "title": "Hybrid Recommender Systems Survey and Experiments",
+            "filename": "references/Hybrid_Recommender_Systems_Survey_and_Experiments.pdf",
+            "description": "his paper surveys the landscape of actual and possible hybrid recommenders, and introduces a novel hybrid, EntreeC, a system that combines knowledge-based recommendation and collaborative ¢ltering to recommend restaurants"
+        },
+        {
+            "title": "Collaborative Filtering and Recommendation Systems",
+            "filename": "references/Collaborative_Filtering_and_Recommendation_Systems.pdf",
+            "description": "This paper presents an item-based collaborative filtering algorithm for recommendation systems, which computes item-item similarities and uses them to generate recommendations."
+        },
+        {
+            "title": "Amazon.com Recommendations",
+            "filename": "references/Amazon-Recommendations.pdf",
+            "description": "Our algorithm produces recommendations in realtime, scales to massive data sets, and generates highquality recommendations."
+        },
+        {
+            "title": "Content-based Recommender Systems: State of the Art and Trends",
+            "filename": "references/Content-based_Recommender_Systems:_State_of_the_Art_and_Trends.pdf",
+            "description": "This chapter provides an overview of content-based recommender systems, with the aim of imposing a degree of order on the diversity of the different aspects involved in their design and implementation."
+        },
+        {
+            "title": "A content-collaborative recommender that exploits WordNet-based user profiles for neighborhood formation",
+            "filename": "references/On_the_tip_of_my_thought_playing_the_Gui.pdf",
+            "description": "This paper proposes a new content-collaborative hybrid recommender which computes similarities between users relying on their content-based profiles, in which user preferences are stored, instead of comparing their rating styles."
+        },
+        {
+            "title": "On the Tip of My Thought: Playing the Guillotine Game",
+            "filename": "references/Matrix_Factorization_Techniques_for_Recommender_Systems.pdf",
+            "description": "In this paper we propose a system to solve a language game, called Guillotine, which requires a player with a strong cultural and linguistic background knowledge."
+        }
+    ],
+    "supplementary_materials": [],
+    "exercises": [],
+    "multimedia": {
+      "videos": [],
+      "images": [],
+      "audio": []
+    },
+    "external_resources": []
+  }

@@ -1,0 +1,34 @@
+{
+    "lesson_number": 4,
+    "title": "System-oriented evaluation (batch-mode evaluation)",
+    "keywords": [
+      "System Evaluation",
+      "Cranfield Paradigm",
+      "Precision ",
+      "Recall"
+    ],
+    "slides": [
+      "slides/InformationRetrieval_4_Valutation.pdf"
+    ],
+    "notes": [],
+    "references": [
+      {
+        "title": "IR evaluation methods for retrieving highly relevant documents",
+         "filename": "references/IR_evaluation_methods_for_retrieving_highly_relevant_documents.pdf",
+        "description": "This paper proposes evaluation methods based on the use of non-dichotomous relevance judgements in IR experiments."
+      },
+      {
+        "title": "Cumulated Gain-Based Evaluation of IR Techniques",
+        "filename": "references/Cumulated_Gain-Based_Evaluation_Of_IR_Techniques.pdf",
+        "description": "This article proposes several novel measures that compute the cumulative gain the user obtains by examining the retrieval result up to a given ranked position."
+      }
+    ],
+    "supplementary_materials": [],
+    "exercises": [],
+    "multimedia": {
+      "videos": [],
+      "images": [],
+      "audio": []
+    },
+    "external_resources": []
+  }

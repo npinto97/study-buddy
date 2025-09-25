@@ -1,0 +1,39 @@
+{
+    "lesson_number": 12,
+    "title": "Large Multimodal Models (LMM): Training and Evaluation",
+    "keywords": [
+      "Log-Likelihood",
+      "Generation",
+      "Images description"
+    ],
+    "slides": [
+      "slides/Lesson_12_Large_Multomodal_Models_Traning_and_Evaluation.pdf"
+    ],
+    "notes": [],
+    "references": [
+      {
+        "title": "Look at the Text: Instruction-Tuned Language Models are More Robust Multiple Choice Selectors than You Think",
+        "filename": "references/look_at_the_text_instruction_tuned_language_models_are_more_robust_multiple_choice_selectors_than_you_think.pdf",
+        "description": "This paper compares two methods for evaluating LLM responses to multiple-choice questions (MCQs): ranking candidate answers using first token probabilities and evaluating full text answers. Findings suggest that text-based answers are more robust to question phrasing and option order changes than first token probabilities, especially when there is a high mismatch rate between first token and text-based evaluations. This supports the preference for using text answers in assessing LLM performance over debiased first token probability methods like PriDe."
+      },
+      {
+        "title": "MLLM-as-a-Judge: Assessing Multimodal LLM-as-a-Judge with Vision-Language Benchmark",
+        "filename": "references/mllm_as_a_judge_assessing_multimodal_llm_as_a_judge_with_vision_language_benchmark.pdf",
+        "description": "This paper introduces the benchmark **MLLM-as-a-Judge**, designed to evaluate the judgment capabilities of multimodal large language models (MLLMs) across tasks like scoring, pair comparison, and ranking. Findings reveal that MLLMs excel in pair comparisons but exhibit significant discrepancies with human preferences in scoring and ranking tasks. Challenges include biases, hallucinations, and inconsistencies, even in advanced models like GPT-4V. These insights highlight the need for further refinement before MLLMs can reliably act as evaluators. The project resources are accessible at [MLLM-Judge](https://mllm-judge.github.io/)."
+      }
+    ],
+    "supplementary_materials": [],
+    "exercises": [
+        {
+          "title": "LMM_Ex",
+          "filename": "exercises/notebooks/LMM_Ex.ipynb",
+          "description": "LLaVa extends LLaMa by integrating visual inputs using image features from CLIP's vision encoder. A projection module, such as a linear layer or a two-layer MLP (used in LLaVa 1.5), aligns image and text feature dimensions. The model is trained to predict the next text token conditioned on both image features and text tokens, enabling multimodal capabilities."
+        }
+      ],
+    "multimedia": {
+      "videos": [],
+      "images": [],
+      "audio": []
+    },
+    "external_resources": []
+  }

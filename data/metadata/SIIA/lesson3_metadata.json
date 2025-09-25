@@ -1,0 +1,40 @@
+{
+    "lesson_number": 3,
+    "title": "Installation for Surprise, CaseRecommender, LightFM, SasRec",
+    "keywords": [
+      "Surprise",
+      "CaseRecommender",
+      "SasRec"
+    ],
+    "slides": [
+      "slides/Lesson_03_RecSys_in_Python_SIIA_24.pdf"
+    ],
+    "notes": [],
+    "references": [
+      {
+        "title": "BPR: Bayesian Personalized Ranking from Implicit Feedback",
+        "filename": "references/Lesson_03_BPR_Bayesian_Personalized_Ranking_from_Implicit_Feedback_UAI2009.pdf",
+        "description": "Item recommendation predicts a personalized ranking of items based on implicit feedback (e.g., clicks, purchases). While methods like matrix factorization (MF) and k-nearest-neighbor (kNN) are commonly used, they are not directly optimized for ranking tasks. This paper introduces a new optimization criterion, BPR-Opt, based on Bayesian analysis, and presents a learning algorithm for personalized ranking tasks. The experiments show that optimizing for the right criterion outperforms standard learning methods for MF and kNN."
+      },
+      {
+        "title": "WSABIE: Scaling Up To Large Vocabulary Image Annotation",
+        "filename": "references/Lesson_03_WARP_WSABIE_Scaling_Up_To_Large_Vocabulary_Image_Annotation_IJCAI2011.pdf",
+        "description": "The WSABIE method optimizes precision in image annotation by learning a low-dimensional joint embedding space for both images and annotations. It outperforms baseline methods in terms of both speed and memory consumption, making it scalable to large datasets. WSABIE excels in ranking annotations, offering an efficient solution for handling tens of millions of images and annotations."
+      }
+    ],
+    "supplementary_materials": [],
+    "exercises": [],
+    "multimedia": {
+      "videos": [],
+      "images": [],
+      "audio": []
+    },
+    "external_resources": [
+      {
+        "type": "dataset",
+        "title": "MovieLens Dataset",
+        "url": "https://grouplens.org/datasets/movielens/",
+        "description": "The MovieLens dataset offers a collection of movie ratings and metadata for research in recommendation systems."
+      }
+    ]
+  }

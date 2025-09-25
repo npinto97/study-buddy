@@ -22,7 +22,7 @@ from langchain_community.document_loaders import (TextLoader,
 
 
 def image_loader(filepath: str):
-    """ Estrae il testo da un'immagine usando OCR. """
+    """ Extracts text from an image using OCR."""
     image = Image.open(filepath)
     text = pytesseract.image_to_string(image)
     return [text]
@@ -48,6 +48,7 @@ SUPPORTED_EXTENSIONS = set(FILE_LOADERS.keys()).union(AUDIO_EXTENSIONS, VIDEO_EX
 # Load environment variables from .env
 load_dotenv()
 
+logger.remove()
 logger.add(sys.stderr, level="INFO", format="{time} {level} {message}")
 logger.add("logs/study_buddy.log", level="DEBUG", rotation="10 MB", compression="zip")
 
@@ -58,25 +59,20 @@ PROJ_ROOT = Path(__file__).resolve().parents[1]
 logger.info(f"Project root path resolved to: {PROJ_ROOT}")
 
 DATA_DIR = PROJ_ROOT / "data"
-# RAW_DATA_DIR = DATA_DIR / "raw"
-RAW_DATA_DIR = PROJ_ROOT / "notebooks" / "demo_material"
+RAW_DATA_DIR = DATA_DIR / "raw"
+# RAW_DATA_DIR = PROJ_ROOT / "notebooks" / "demo_material"
 PROCESSED_DATA_DIR = DATA_DIR / "processed"
 EXTERNAL_DATA_DIR = DATA_DIR / "external"
-# METADATA_DIR = DATA_DIR / "metadata"
-METADATA_DIR = PROJ_ROOT / "notebooks" / "demo_material" / "metadata"
+METADATA_DIR = DATA_DIR / "metadata"
+# METADATA_DIR = PROJ_ROOT / "notebooks" / "demo_material" / "metadata"
 TEMP_DATA_DIR = DATA_DIR / "temp"
-
-FAISS_INDEX_DIR = DATA_DIR / "faiss_index"
-
-PROCESSED_DOCS_FILE = PROCESSED_DATA_DIR / "processed_docs.json"
-# PROCESSED_STATUS_FILE = PROCESSED_DATA_DIR / "processed_status.json"
-# logger.info(f"Processed documents file set to: {PROCESSED_DOCS_FILE}")
-
-# directory that contains data files for evaluation
-EVAL_DATA_DIR = DATA_DIR / "evaluation"
-
-
+EXTRACTED_TEXT_DIR = PROCESSED_DATA_DIR / "extracted_text"
+FAISS_INDEX_DIR = PROJ_ROOT / "faiss_index"
 IMAGES_DIR = PROJ_ROOT / "images"
+
+PARSED_COURSES_DATA_FILE = PROCESSED_DATA_DIR / "parsed_course_data.json"
+PROCESSED_DOCS_FILE = PROCESSED_DATA_DIR / "processed_docs.json"
+TEMP_DOCS_FILE = TEMP_DATA_DIR / "temp_extracted_documents.json"
 
 
 # Definition of configuration models
@@ -118,9 +114,9 @@ if not os.environ.get("OPENAI_API_KEY"):
 try:
     from tqdm import tqdm
 
-    logger.remove(0)
+    logger.remove()
     logger.add(
-        lambda msg: tqdm.write(msg, end="") if tqdm else logger.error(f"Failed to write log message: {msg}"),
+        lambda msg: tqdm.write(msg, end=""),
         colorize=True
     )
 except ModuleNotFoundError as e:

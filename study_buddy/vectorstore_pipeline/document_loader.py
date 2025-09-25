@@ -6,7 +6,10 @@ from pathlib import Path
 import json
 from langchain.schema import Document
 
-from study_buddy.config import logger, SUPPORTED_EXTENSIONS, FILE_LOADERS, AUDIO_EXTENSIONS, VIDEO_EXTENSIONS, RAW_DATA_DIR, METADATA_DIR
+from study_buddy.config import (
+    logger, SUPPORTED_EXTENSIONS, FILE_LOADERS, AUDIO_EXTENSIONS, VIDEO_EXTENSIONS,
+    EXTRACTED_TEXT_DIR
+)
 from study_buddy.vectorstore_pipeline.audio_handler import transcribe_audio
 from study_buddy.vectorstore_pipeline.video_handler import transcribe_video
 from study_buddy.vectorstore_pipeline.external_resources_handler import (
@@ -16,16 +19,25 @@ from study_buddy.vectorstore_pipeline.external_resources_handler import (
 )
 
 
-def compute_document_hash(filepath: Path) -> str:
+def save_extracted_text(doc_hash: str, content: str):
     """
-    Generate a SHA-256 hash for the content of a document.
-
-    Args:
-        filepath (Path): Path to the file.
-
-    Returns:
-        str: SHA-256 hash of the file content.
+    Save extracted text to a file inside the `extracted_texts` folder.
     """
+    EXTRACTED_TEXT_DIR.mkdir(parents=True, exist_ok=True)
+    file_path = EXTRACTED_TEXT_DIR / f"{doc_hash}.txt"
+    with open(file_path, "w", encoding="utf-8") as f:
+        f.write(content)
+
+    logger.info(f"Extracted text saved: {file_path}")
+
+
+def compute_document_hash(content: str) -> str:
+    """Genera un hash SHA-256 per una stringa di contenuto."""
+    return hashlib.sha256(content.encode()).hexdigest()
+
+
+def compute_file_hash(filepath: Path) -> str:
+    """Genera un hash SHA-256 per un file."""
     hasher = hashlib.sha256()
     try:
         with open(filepath, "rb") as f:
@@ -38,15 +50,7 @@ def compute_document_hash(filepath: Path) -> str:
 
 
 def load_document(filepath: Path):
-    """
-    Load a document using the appropriate loader based on its extension.
-
-    Args:
-        filepath (Path): Path to the file.
-
-    Returns:
-        list: List of documents loaded.
-    """
+    """Upload a document using the appropriate loader based on the extension."""
     file_extension = filepath.suffix.lower()
 
     if file_extension in SUPPORTED_EXTENSIONS:
@@ -59,8 +63,7 @@ def load_document(filepath: Path):
 
             loader_class = FILE_LOADERS[file_extension]
             loader = loader_class(str(filepath))
-            documents = loader.load()
-            return documents
+            return loader.load()
 
         except Exception as e:
             logger.error(f"Error loading document {filepath}: {e}")
@@ -70,89 +73,89 @@ def load_document(filepath: Path):
         raise ValueError(f"Unsupported file format: {file_extension}")
 
 
-def scan_directory_for_new_documents(processed_hashes: set):
-    """
-    Scans a directory for unprocessed documents/external resources and loads them.
-
-    Args:
-        raw_data_dir (Path): Directory containing the raw documents.
-        lesson_json_dir (Path): Directory contenente i file JSON delle lezioni.
-        processed_hashes (set): Set of hashes for already processed documents.
-
-    Returns:
-        tuple: A list of new documents and a set of their hashes.
-    """
+def scan_directory_for_new_documents(processed_hashes: set, parsed_data_file: Path):
+    """Scans files in `parsed_data_path`, adds metadata, and saves transcripts."""
     new_docs = []
     new_hashes = set()
 
-    # Scansiona i file locali
-    try:
-        for filepath in RAW_DATA_DIR.rglob("*"):
-            if filepath.is_file() and filepath.suffix.lower() in SUPPORTED_EXTENSIONS:
-                doc_hash = compute_document_hash(filepath)
+    if not parsed_data_file.exists():
+        logger.error(f"File {parsed_data_file} non trovato!")
+        return new_docs, new_hashes
 
-                if doc_hash not in processed_hashes:
-                    logger.info(f"Found new document: {filepath}")
-                    try:
-                        documents = load_document(filepath)
-                        new_docs.extend(documents)
-                        new_hashes.add(doc_hash)
-                    except Exception as e:
-                        logger.error(f"Error processing document {filepath}: {e}")
+    # Carica il JSON dei file elaborati
+    with open(parsed_data_file, "r", encoding="utf-8") as f:
+        parsed_data = json.load(f)
 
-    except Exception as e:
-        logger.error(f"Errore nella scansione delle risorse locali: {e}")
-        raise
+    for entry in parsed_data:
+        metadata = {
+            "course_name": entry.get("course_name", "Unknown Course"),
+            "course_description": entry.get("course_description", "No description available"),
+            "lesson_number": entry.get("lesson_number"),
+            "lesson_title": entry.get("lesson_title"),
+            "type": entry.get("type")
+        }
 
-    # Scansione di tutti i file JSON nella cartella delle lezioni
-    try:
-        for json_file in METADATA_DIR.rglob("*.json"):
-            logger.info(f"Lettura file JSON: {json_file}")
+        if entry["type"] == "external_resource":
+            # Gestisce risorse esterne (YouTube, GitHub, siti web)
+            url = entry.get("url")
+            metadata["source_url"] = url  # Aggiunge l'URL ai metadati
+            logger.info(f"Extraction from external resource: {url}")
+            content = None
 
             try:
-                with open(json_file, "r", encoding="utf-8") as f:
-                    lesson_data = json.load(f)
-            except json.JSONDecodeError as e:
-                logger.error(f"Errore nel parsing di {json_file}: {e}")
+                if "github.com" in url:
+                    content = extract_readme_from_repo(url)
+                elif "youtube.com" in url or "youtu.be" in url:
+                    content = extract_transcript_from_youtube(url)
+                else:
+                    content = extract_text_from_url(url)
+
+                if content:
+                    doc_hash = compute_document_hash(content)
+
+                    if doc_hash not in processed_hashes:
+                        new_docs.append(Document(page_content=content, metadata=metadata))
+                        new_hashes.add(doc_hash)
+                        save_extracted_text(doc_hash, content)  # solo per debug
+                        logger.info(f"External document added: {url}")
+                    else:
+                        logger.info(f"External document already processed: {url}")
+                else:
+                    logger.warning(f"No content extracted from: {url}")
+
+            except Exception as e:
+                logger.error(f"Error in extraction from {url}: {e}")
+
+        else:
+            # Gestisce file locali
+            filepath = Path(entry["path"])
+
+            if not filepath.exists():
+                logger.warning(f"File not found: {filepath}")
                 continue
 
-            resources = lesson_data.get("external_resources", [])
-            if not resources:
-                logger.warning(f"Nessuna risorsa trovata in {json_file}")
+            doc_hash = compute_file_hash(filepath)
 
-            for resource in resources:
-                url = resource.get("url")
-                logger.info(f"Estrazione da: {url}")
-                content = None
+            if doc_hash in processed_hashes:
+                logger.info(f"Local document already processed: {filepath}")
+                continue
 
-                try:
-                    if "github.com" in url:
-                        logger.info(f"[GitHub] Estrazione README da: {url}")
-                        content = extract_readme_from_repo(url)
-                    elif "youtube.com" in url or "youtu.be" in url:
-                        logger.info(f"[YouTube] Estrazione trascrizione da: {url}")
-                        content = extract_transcript_from_youtube(url)
-                    else:
-                        logger.info(f"[Web] Estrazione testo da: {url}")
-                        content = extract_text_from_url(url)
+            logger.info(f"Uploading new document: {filepath}")
 
-                    if content:
-                        doc_hash = hashlib.sha256(content.encode()).hexdigest()
-                        if doc_hash not in processed_hashes:
-                            metadata = {key: value for key, value in resource.items()}
-                            new_docs.append(Document(page_content=content, metadata=metadata))
-                            new_hashes.add(doc_hash)
-                            logger.info(f"Documento aggiunto: {url}")
-                        else:
-                            logger.info(f"Documento già processato: {url}")
-                    else:
-                        logger.warning(f"Nessun contenuto estratto da: {url}")
-                except Exception as e:
-                    logger.error(f"Errore nell'estrazione da {url}: {e}")
+            try:
+                documents = load_document(filepath)
+                for doc in documents:
+                    # Aggiunge i metadati al documento
+                    metadata["file_path"] = str(filepath)
+                    
+                    new_doc = Document(page_content=doc.page_content, metadata=metadata)
+                    save_extracted_text(doc_hash, doc.page_content)
+                    new_docs.append(new_doc)
+                    new_hashes.add(doc_hash)
 
-    except Exception as e:
-        logger.error(f"Errore nella scansione della cartella metadata: {e}")
+            except Exception as e:
+                logger.error(f"Error in processing file {filepath}: {e}")
 
-    logger.info(f"Nuovi documenti trovati: {len(new_docs)}")
+    logger.info(f"New docs found: {len(new_docs)}")
 
     return new_docs, new_hashes

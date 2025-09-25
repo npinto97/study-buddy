@@ -1,0 +1,39 @@
+{
+    "lesson_number": 5,
+    "title": "Text Categorization",
+    "keywords": [
+      "Indexing",
+      "Classifier",
+      "Supervised learning ",
+      "Unsupervised learning"
+    ],
+    "slides": [
+      "slides/InformationRetrieval_5_Text_Categorization.pdf"
+    ],
+    "notes": [],
+    "references": [
+      {
+        "title": "The InfoFinder Agent: Learning User Interests through Heuristic Phrase Extraction",
+         "filename": "references/The_InfoFinder_Agent_Learning_User_Inter.pdf",
+        "description": "This article presents the approach taken by the InfoFinder project. InfoFinder learnsprofiles of user interests from sample documents that users submit while browsing, without surveying them as to their interest in a set of sample documents."
+      },
+      {
+        "title": "Remembrance Agent: A continuously running automated information retrieval system",
+        "filename": "references/Remembrance_Agent_A_continuously_running_automated_information_retrieval_system.pdf",
+        "description": "The Remembrance Agent (RA) is a program which augments humanmemoryby displaying a list of documents which might be relevant to the user’s current context."
+      },
+        {
+            "title": "Machine Learning in Automated Text Categorization",
+            "filename": "references/Machine_Learning_in_Automated_Text_Categorization.pdf",
+            "description": "This survey discusses the main approaches to text categorization that fall within the machine learning paradigm."
+        }
+    ],
+    "supplementary_materials": [],
+    "exercises": [],
+    "multimedia": {
+      "videos": [],
+      "images": [],
+      "audio": []
+    },
+    "external_resources": []
+  }
