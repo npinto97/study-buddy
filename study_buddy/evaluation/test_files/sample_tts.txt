@@ -1,0 +1,3 @@
+Ciao! Questa è una prova della sintesi vocale.
+Sto leggendo un breve testo in italiano per verificare che il suono sia naturale e chiaro.
+Se riesci a sentire bene la mia voce, allora il sistema funziona correttamente.

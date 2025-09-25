@@ -1,0 +1,6 @@
+
+--- Running Classic Retrieval Evaluation ---
+Mean Precision@4: 0.0250
+Mean Reciprocal Rank (MRR): 0.0833
+
+--- Running RAGAS Semantic Evaluation ---
