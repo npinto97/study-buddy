@@ -177,14 +177,26 @@ cython_debug/
 Thumbs.db
 
 # Exclude local databases and protected material
-data/
+data/processed/
+data/raw/
+data/temp/
+
+history/
 
 notebooks/
-
-images/
 
 .vscode/
 
 .langgraph_api/
 
 siia-450317-4cc1f1da5b72.json
+
+streamlit_outputs/
+
+uploaded_files/
+
+visualizations/
+
+conversations/
+
+tests/performance/logs/

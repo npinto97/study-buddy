@@ -1,0 +1,77 @@
+{
+    "lesson_number": 1,
+    "title": "Introduction to Semantic Search",
+    "keywords": [
+      "knowledge",
+      "long tail",
+      "Wisdom"
+    ],
+    "slides": [
+      "slides/Lesson_01_Presentation_Semantics_in_IIA.pdf"
+    ],
+    "notes": [],
+    "references": [
+      {
+        "title": "Experimental evidence of massive-scale emotional contagion through social networks",
+        "filename": "references/experimental_evidence_of_massive_scale_emotional_contagion_through_social_networks.pdf",
+        "description": "An experimental study on emotional contagion through social networks at large scale."
+      },
+      {
+        "title": "GroupLens: An Open Architecture for Collaborative Filtering of Netnews",
+        "filename": "references/grouplens_an_open_architecture_for_collaborative_filtering_of_netnews.pdf",
+        "description": "GroupLens is a collaborative filtering system that helps users find interesting netnews articles by predicting scores based on others' opinions. It supports anonymous ratings and features an open architecture for integrating alternative software solutions."
+      },
+      {
+        "title": "Editorial Expression of Concern and Correction",
+        "filename": "references/editorial_expression_of_concern_and_correction.pdf",
+        "description": "This study examines emotional contagion on Facebook, showing that emotions expressed by others on social media can influence users' own emotions, even without in-person interaction. Reducing emotional content in the News Feed led to fewer positive posts and more negative ones, suggesting that social networks facilitate large-scale emotional transmission."
+      }
+    ],
+    "supplementary_materials": [
+      {
+        "title": "The ancient book of wisdom at the heart of every computer",
+        "filename": "supplementary_materials/Lesson_01_The_ancient_book_of_wisdom_at_the_heart_of_every_computer.pdf",
+        "description": "The article explores the connection between the ancient Chinese text, the I Ching, and the development of modern computing, highlighting how the book's binary structure influenced the creation of binary code used in computers. It reflects on how this ancient wisdom has unknowingly shaped technology, linking a philosophical text with the logic that powers modern digital systems."
+      },
+      {
+        "title": "The Long Tail",
+        "filename": "supplementary_materials/Lesson_01_The_Long_Tail.pdf",
+        "description": "The Long Tail concept highlights how digital distribution platforms like Amazon, Netflix, and iTunes enable the discovery of niche content, making it economically viable to cater to smaller audiences. This shift from a hit-driven market to one where even less popular items can find their audience suggests a future where abundance, rather than scarcity, drives entertainment industries."
+      },
+      {
+        "title": "The Unreasonable Effectiveness of Data",
+        "filename": "supplementary_materials/Lesson_01_The_Unreasonable_Effectiveness_of_Data.pdf",
+        "description": "Eugene Wigner's article discusses how mathematics effectively explains physical phenomena through simple equations like f = ma and e = mc². However, human-centered sciences struggle with similar mathematical elegance. The explosion of data, such as Google's trillion-word corpus, can provide insights into human behavior, even if it doesn't offer tidy mathematical models. Instead of focusing on elegant theories, we may need to embrace complexity and utilize vast amounts of data for modeling tasks like natural language processing."
+      },
+      {
+        "title": "The Web is Still a DARPA Weapon",
+        "filename": "supplementary_materials/Lesson_01_The_Web_is_still_a_DARPA_weapon.pdf",
+        "description": "The Internet was originally developed as a U.S. military project for command and control, especially in the context of nuclear threats during the Cold War. It became a platform for cultural collaboration, countering Communist ideologies. Over time, the Internet's foundational protocols (like TCP/IP) enabled the creation of applications such as DNS, FTP, and SMTP."
+      },
+      {
+        "title": "What is Informatics?",
+        "filename": "supplementary_materials/Lesson_01_What_is_Informatics.pdf",
+        "description": "Informatics is often misunderstood as an advanced technological field, but it's more about understanding and processing information across various disciplines. While computer science focuses on programming and technology, informatics combines computing with other fields to solve problems. Unlike civil engineering, which deals with predictable systems like bridges, programming is inherently less predictable due to the complexity and constant change in technology. Programmers can't always achieve the same level of precision because the systems they create often evolve, leading to uncertainty and constant learning."
+      }
+    ],
+    "exercises": [],
+    "multimedia": {
+      "videos": [],
+      "images": [],
+      "audio": []
+    },
+    "external_resources": [
+      {
+        "type": "video",
+        "title": "The Zipf Mystery",
+        "url": "https://www.youtube.com/watch?v=fCn8zs912OE&ab_channel=Vsauce",
+        "description": "Power law and Pareto Principle. Zipf's law is an empirical law stating that when a list of measured values is sorted in decreasing order, the value of the n-th entry is often approximately inversely proportional to n"
+      },
+      {
+        "type": "articles",
+        "title": "How the CIA made Google",
+        "url": "https://medium.com/insurge-intelligence/how-the-cia-made-google-e836451a959e",
+        "description": "INSURGE INTELLIGENCE reveals a story claiming the U.S. intelligence community funded Google, along with other startups, to dominate global information. This initiative allegedly stems from a secret Pentagon group that has connected U.S. government interests with influential sectors, leading to consequences such as mass surveillance, global warfare, and advancements toward a military AI system similar to Skynet."
+      }
+    ]
+  }
