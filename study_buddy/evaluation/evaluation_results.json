@@ -1,0 +1,1023 @@
+[
+  {
+    "id": "RAG_Q01",
+    "type": "RAG",
+    "task": "Who is the professor for the 'Metodi per il Ritrovamento dell'Informazione' course?",
+    "ground_truth": {
+      "chunks": [
+        "MRI_syllabus_chunk_1"
+      ],
+      "reference_answer": "The professor for the 'Metodi per il Ritrovamento dell'Informazione' course is Pasquale Lops."
+    },
+    "predicted_output": {
+      "answer": "The professor for the 'Metodi per il Ritrovamento dell'Informazione' course is P. Lops.",
+      "retrieved_contexts": [
+        "Christopher D. Manning, Prabhakar Raghavan and Hinrich Schitz. Introduction to Information Retrieval, Cambridge University Press, 2008. ISBN: 978-0521865719.\n\nDigital version: https://nlp.stanford.edu/IR-book/.\n\nBooks of reference\n\nDietmar Jannach, Markus Zanker, Alexander Felferning, Gerhard Friedrich. Recommender Systems An Introduction, Cambridge University Press, 2010. ISBN: 978-0521493369.\n\nNotes to the books\n\nUNIVERSITA | Diartimento\n\nDEGLI STUDI DI BARI DI ALDO MORO | Inrormatica\n\nOrganization of the didactic activities\n\nHours\n\nTotal Lectures Practice sessions Individual study 225 hours 56 hours 30 hours 139 hours CFU/ETCS\n\n9 CFU 7 CFU 2 CFU\n\nTeaching methods\n\ne — Lectures ¢ Guided exercises for the creation of simple algorithms for searching and filtering information.\n\nExpected learning outcomes\n\nKnowledge and understanding\n\nThe student will acquire the skills related to the management of unstructured information sources (information retrieval and filtering systems).",
+        "General Terms: Performance\n\nAdditional Key Words and Phrases: Information filtering, information re- trieval\n\nAbout the Authors\n\nNICHOLAS J. BELKIN is a professor in the School of Communication, Informa- tion and Library Studies at Rutgers Uni- versity, and vice-chair of ACM SIGIR. Current research interests include inter- action in information retrieval systems, interface design for information retrieval systems, and evaluation of interactive in- formation systems. Author’s Present Address: School of Communication, In- formation and Library Studies, Rutgers University, 4 Huntington Street, Room 311, New Brunswick, NJ, 08903; email: belkin@zodiac.rutgers.edu",
+        "Information Access with Apache Lucene - Part 1\n\nMetodi per il Ritrovamento dell’Informazione Laurea Triennale in Informatica Universita degli Studi di Bari Aldo Moro\n\nProf. Cataldo Musto\n\ncataldo.musto@uniba.it\n\nCredits: Marco Polignano\n\nCode Repository & Requirements\n\nCode repository —\n\nhttos://sithub.com/swapUniba/MRI 2024 25\n\nRequirements\n\n¢ Java SDK 1.8+ https://www.java.com/en/download/\n\ne IDE: NetBeans, IntelliJ, Eclipse, ...\n\n¢ Maven: https://maven.apache.org/guides/getting-started/m aven-in-five-minutes.html\n\nSEARCH ENGINE\n\nInformation Retrieval Process (recap)\n\nBS\n\nInformation Retrieval Process (recap)\n\nInformation Retrieval Process (recap)\n\nText Operations\n\nLogic view Indexing Inverted Index\n\nIndex\n\nInformation Retrieval Process (recap)\n\nRanked documents\n\nUser Interface\n\nText Operations\n\nUser feedback\n\nLogic view Quer : u Indexing . Inverted Index Searching tig tats\n\nInformation Retrieval Model\n\n<D, Q, F, R(q,, d;)> ¢ D: document ° Q: query",
+        "**Prova scritta di**\n**METODI PER IL RITROVAMENTO DELL’INFORMAZIONE**\n**C.d.L. in Informatica - A.A. 2022-23**\n**Docenti: P. Lops, M. Polignano - 7 Febbraio 2023**\nNome e Cognome:\t______________________________    Matricola:\t_________\n- Siano dati l’insieme delle categorie C = {c1, c2} e una collezione di 200 documenti definiti sul vocabolario *V* = {T1, T2, T3, T4}.\n- Costruire un classificatore *bayesiano* per C, addestrandolo sul seguente training set TR:\nTR = {<D1,c2>, <D2,c2>, <D3,c1>, <D4,c1>, <D5,c1>}"
+      ],
+      "predicted_chunks": [
+        "MRI_syllabus_chunk_1",
+        "MRI_syllabus_chunk_2",
+        "MRI_syllabus_chunk_3",
+        "MRI_syllabus_chunk_4"
+      ]
+    }
+  },
+  {
+    "id": "RAG_Q02",
+    "type": "RAG",
+    "task": "What is the email address for Professor Giovanni Semeraro?",
+    "ground_truth": {
+      "chunks": [
+        "SIIA_syllabus_chunk_1"
+      ],
+      "reference_answer": "Professor Giovanni Semeraro's email address is giovanni.semeraro@uniba.it."
+    },
+    "predicted_output": {
+      "answer": "The email address for Professor Giovanni Semeraro is giovanni.semeraro@uniba.it.",
+      "retrieved_contexts": [
+        "Giovanni Semeraro is full professor of computer science at University of Bari Aldo Moro, Italy, where he teaches “Intelligent Information Access and Natural Language Processing”, and “Programming lan- guages”. He leads the Semantic Web Access and Personalization (SWAP) “Antonio Bello” research group. In 2015 he was selected for an IBM Faculty award on Cognitive Computing for the project “Deep Learning to boost Cognitive Question Answering”. He was one of the founders of AILC (Italian Associa- tion for Computational Linguistics) and on the Board of Directors till 2018. From 2006 to 2011 he was on the Board of Directors of AI*IA (Italian Association for Artificial Intelligence). He has been a visiting scientist with the Department of Information and Computer Science, University of California at Irvine, in 1993. From 1989 to 1991 he was a researcher at Tecnopolis CSATA Novus Ortus, Bari, Italy. His research interests include machine learning; AI and language games; recommender systems;",
+        "Giovanni Semeraro is full professor of computer science at University of Bari Aldo Moro, Italy, where he teaches “Intelligent Information Access and Natural Language Processing”, and “Programming lan- guages”. He leads the Semantic Web Access and Personalization (SWAP) “Antonio Bello” research group. In 2015 he was selected for an IBM Faculty award on Cognitive Computing for the project “Deep Learning to boost Cognitive Question Answering”. He was one of the founders of AILC (Italian Associa- tion for Computational Linguistics) and on the Board of Directors till 2018. From 2006 to 2011 he was on the Board of Directors of AI*IA (Italian Association for Artificial Intelligence). He has been a visiting scientist with the Department of Information and Computer Science, University of California at Irvine, in 1993. From 1989 to 1991 he was a researcher at Tecnopolis CSATA Novus Ortus, Bari, Italy. His research interests include machine learning; AI and language games; recommender systems;",
+        "Prof. Giovanni Semeraro is Associate Professor at the Department of Informatics, University of Bari (Italy), where he teaches programming languages, formal languages and compilers and enterprise knowledge management”. His research activity mainly concerns machine learning, sematic web and personalization. His research interests include logical and algebraic foundations of machine learning for inductive reasoning, extraction of dynamic user profiles, web and usa ge mining, revision of logical theories and application of machine learning techniques to user modeling and digital libraries. He has published over 150 papers in international journals, books and conference proceedings, and is the author of a textbook on formal language theory.\n\nD Springer",
+        "Semantics in\n\nIntelligent Information Access A.Y. 2024-2025\n\nPresentation\n\nGiovanni Semeraro Cataldo Musto\n\nSWAP - Semantic Web Access and Personalizalion Research Group Uniba.it Department of Computer Sc\n\nSWAT?\n\nresearchgroup |\n\n|\n\nResearch Awards Projects\n\nUniversity of Bari \"Aldo Moro\", Italy\n\nDepartment of Computer Science\n\nLacam laboratory\n\nGiovanni Semeraro\n\nFull Professor\n\nUniversity of Bari Aldo Moro\n\nDepartment of Computer Science\n\nVia E.Orabona, 4 - 170126 BARI, Italy Phone: +39 080 5442140\n\nFax: +39 080 5443196\n\ne-mail: giovanni.semeraro___AT___uniba.it\n\nMy publications on DBLP | Bibsonomy | Google scholar | CiteSeerX | ACM DL | publicationslist.org\n\nResearch Interests and Activities | Publications | Teaching | Affiliated Students\n\nWeb Profiles Scopus’ Google Bedblp\n\ncomputer science bibliography\n\nme in a bunch of data (memento homo... Google Scholar personal profile"
+      ],
+      "predicted_chunks": [
+        "generating_post_hoc_review_based_natural_language_justifications_for_recommender_systems_chunk_1",
+        "generating_post_hoc_review_based_natural_language_justifications_for_recommender_systems_chunk_2",
+        "generating_post_hoc_review_based_natural_language_justifications_for_recommender_systems_chunk_3",
+        "generating_post_hoc_review_based_natural_language_justifications_for_recommender_systems_chunk_4"
+      ]
+    }
+  },
+  {
+    "id": "RAG_Q03",
+    "type": "RAG",
+    "task": "According to the book 'Introduction to Information Retrieval', what are the main topics it covers?",
+    "ground_truth": {
+      "chunks": [
+        "Book_on_introduction_to_Information_Retrieval_chunk_2"
+      ],
+      "reference_answer": "The main topics covered in the book 'Introduction to Information Retrieval' include fundamental retrieval models like Boolean and vector space, index construction and compression, evaluation methods, machine learning applications like text classification and clustering, and web search concepts including crawling and link analysis."
+    },
+    "predicted_output": {
+      "answer": "The book \"Introduction to Information Retrieval\" by Christopher D. Manning, Prabhakar Raghavan, and Hinrich Schütze covers the main topics of classical and web information retrieval, including web search and related areas of text classification and text clustering from basic concepts. It gives an up-to-date treatment of all aspects of the design and implementation of systems for gathering, indexing, and searching documents; methods for evaluating systems; and an introduction to the use of machine learning methods on text collections.\n\nOther books with similar titles, such as \"Introduction to Modern Information Retrieval\" by Gobinda G. Chowdhury, Gerard Salton, and Michael J. McGill, and \"Information Retrieval\" by Stefan Buttcher, Charles L. A. Clarke, and Gordon V. Cormack, also cover various topics in information retrieval, including database technology, bibliographic formats, cataloging and metadata, subject analysis and representation, automatic indexing and file organization, vocabulary control, abstracts and indexing, searching and retrieval, user-centered models of IR and user interfaces, evaluation of IR systems and evaluation experiments, online and CD-ROM IR, multimedia IR, hypertext and mark-up languages, web IR, intelligent IR, natural language processing and its applications in IR, citation analysis and IR, IR in digital libraries, and trends in IR research.\n\nAdditionally, the book \"Introduction to Information Retrieval and Quantum Mechanics\" by Massimo Melucci introduces the quantum mechanical framework to information retrieval scientists seeking a new perspective on foundational problems, and covers topics such as the main notions of the quantum mechanical framework, modeling concepts for information retrieval, and research conducted at the intersection between information retrieval and the quantum mechanical framework.",
+      "retrieved_contexts": [
+        "An Introduction to Information Retrieval\n\nDraft of April 1, 2009\n\nOnline edition (c) 2009 Cambridge UP\n\nOnline edition (c) 2009 Cambridge UP\n\nAn Introduction to Information\n\nRetrieval\n\nChristopher D. Manning Prabhakar Raghavan Hinrich Schtitze\n\nCambridge University Press Cambridge, England\n\nOnline edition (c) 2009 Cambridge UP\n\nDRAFT!\n\nDO NOT DISTRIBUTE WITHOUT PRIOR PERMISSION\n\n© 2009 Cambridge University Press\n\nBy Christopher D. Manning, Prabhakar Raghavan & Hinrich Schitze\n\nPrinted on April 1, 2009\n\nWebsite: http://www.informationretrieval.org/ Comments, corrections, and other feedback most welcome at:\n\ninformationretrieval@yahoogroups.com\n\nOnline edition (c) 2009 Cambridge UP\n\nDRAFT! © April 1, 2009 Cambridge University Press. Feedback welcome.\n\nBrief Contents\n\n1 Boolean retrieval 1\n\n2 The term vocabulary and postings lists 19\n\n3 Dictionaries and tolerant retrieval 49\n\n4 Index construction 67\n\n5 Index compression 85",
+        "The first eight chapters of the book are devoted to the basics of informa- tion retrieval, and in particular the heart of search engines; we consider this material to be core to any course on information retrieval. Chapter 1 in- troduces inverted indexes, and shows how simple Boolean queries can be processed using such indexes. Chapter 2 builds on this introduction by de- tailing the manner in which documents are preprocessed before indexing and by discussing how inverted indexes are augmented in various ways for functionality and speed. Chapter 3 discusses search structures for dictionar- ies and how to process queries that have spelling errors and other imprecise matches to the vocabulary in the document collection being searched. Chap- ter 4 describes a number of algorithms for constructing the inverted index from a text collection with particular attention to highly scalable and dis- tributed algorithms that can be applied to very large collections. Chapter 5 covers techniques for",
+        "In general, Intelligent Information Access encompasses a wide group of technologies, ranging over Information Retrieval, Information Extraction, Text Clus- tering, Information Filtering and so on [120]. In this book, we will focus on two main classes of intelligent information access techniques: Information Retrieval and Information Filtering methods, with a specific focus on recommender systems, the main technology that nowadays implements the principles of information filtering.\n\n1.2.1 Information Retrieval and Information Filtering",
+        "In general, Intelligent Information Access encompasses a wide group of technologies, ranging over Information Retrieval, Information Extraction, Text Clus- tering, Information Filtering and so on [120]. In this book, we will focus on two main classes of intelligent information access techniques: Information Retrieval and Information Filtering methods, with a specific focus on recommender systems, the main technology that nowadays implements the principles of information filtering.\n\n1.2.1 Information Retrieval and Information Filtering"
+      ],
+      "predicted_chunks": [
+        "Book_on_introduction_to_Information_Retrieval_chunk_1",
+        "Book_on_introduction_to_Information_Retrieval_chunk_2",
+        "Book_on_introduction_to_Information_Retrieval_chunk_3",
+        "Book_on_introduction_to_Information_Retrieval_chunk_4"
+      ]
+    }
+  },
+  {
+    "id": "RAG_Q04",
+    "type": "RAG",
+    "task": "What are Professor Pasquale Lops's office hours?",
+    "ground_truth": {
+      "chunks": [
+        "MRI_syllabus_chunk_2"
+      ],
+      "reference_answer": "Professor Pasquale Lops's office hours are on Tuesday from 10:00 to 12:00, or by appointment agreed upon via email."
+    },
+    "predicted_output": {
+      "answer": "Professor Pasquale Lops's office hours are on Tuesdays from 10:00 to 12:00, or by appointment arranged via email with the professor.",
+      "retrieved_contexts": [
+        "Dr. Pasquale Lops is Assistant Professor at the Department of Informatics, University of Bari (Italy). He completed his Ph.D in 2005 at the University of Bari, under the supervision of Prof. Giovanni Semmeraro, with a dissertation on “Hybrid Recommendation Techniques based on User Profiles”. His primary interests lie in the areas of machine learning, recommender systems, digital libraries, user modeling and universal access. He is particularly interested in enabling computer access for all.",
+        "Pasquale Lops is Associate Professor at the University of Bari, Italy. He received the Ph.D. in Computer Science from the University of Bari in 2005 with a dissertation on “Hybrid Recommendation Techniques based on User Profiles”. His research interests include recommender systems and user modeling, with a specific focus on the adoption of techniques for semantic content representation. He authored over 200 scientific articles, and he is one of the authors of the textbook “Semantics in Adaptive and Personalized Systems: Methods, Tools and Applications”, edited by Springer. He regularly serves in the PC of the top conferences in his areas. He was Area Chair of User Modelling for Recommender Systems at UMAP 2016, and co-organized more than 20 workshops related to user modeling and recommender systems. He gave a tutorial on “Semantics-Aware Techniques for Social Media Analysis, User Modeling, and Recom- mender Systems” at UMAP 2016 and 2017, he was a speaker at two editions of the ACM",
+        "Pasquale Lops is Associate Professor at the University of Bari, Italy. He received the Ph.D. in Computer Science from the University of Bari in 2005 with a dissertation on “Hybrid Recommendation Techniques based on User Profiles”. His research interests include recommender systems and user modeling, with a specific focus on the adoption of techniques for semantic content representation. He authored over 200 scientific articles, and he is one of the authors of the textbook “Semantics in Adaptive and Personalized Systems: Methods, Tools and Applications”, edited by Springer. He regularly serves in the PC of the top conferences in his areas. He was Area Chair of User Modelling for Recommender Systems at UMAP 2016, and co-organized more than 20 workshops related to user modeling and recommender systems. He gave a tutorial on “Semantics-Aware Techniques for Social Media Analysis, User Modeling, and Recom- mender Systems” at UMAP 2016 and 2017, he was a speaker at two editions of the ACM",
+        "Sito web del corso di studio\n\nhttps://www.uniba.it/it/ricerca/dipartimenti/informatica/didattica/corsi-di- laurea/informatica-270/laurea-triennale-in-informatica-d.m.-270-1\n\nDocente/i Nome e cognome Pasquale Lops Indirizzo mail pasquale.lops@uniba.it Telefono 080-5442276 Dipartimento di Informatica, Campus Universitario, Via E. Orabona 4, 70126, Bari. Sede : On Ufficio n.760, 7° piano. Sede virtuale Piattaforma ADA https://elearning.uniba.it/\n\nSito web del docente\n\nhttps://www.uniba.it/it/docenti/lops-pasquale\n\nRicevimento (giorni, orari e modalita, es. su appuntamento)\n\nMartedi ore 10-12 oppure appuntamento da concordare per e-mail con il docente\n\nSyllabus\n\nUNIVERSITA | Diartimento\n\nDEGLI STUDI DI BARI DI ALDO MORO | Inrormatica\n\nL’insegnamento si propone di introdurre: e i fondamenti teorici e pratici per la realizzazione di sistemi di ritrovamento e\n\nObiettivi formativi filtraggio delle informazioni."
+      ],
+      "predicted_chunks": [
+        "A_content_collaborative_recommender_that_chunk_1",
+        "A_content_collaborative_recommender_that_chunk_2",
+        "A_content_collaborative_recommender_that_chunk_3",
+        "A_content_collaborative_recommender_that_chunk_4"
+      ]
+    }
+  },
+  {
+    "id": "RAG_Q05",
+    "type": "RAG",
+    "task": "What are the prerequisites for the SIIA course?",
+    "ground_truth": {
+      "chunks": [
+        "SIIA_syllabus_chunk_3",
+        "SIIA_syllabus_chunk_4"
+      ],
+      "reference_answer": "Prerequisites for the 'Semantics in Intelligent Information Access' course include specific knowledge in three areas. From Natural Language Processing, topics like language models, transformers, and NLP pipelines are expected. From Fundamentals of Artificial Intelligence, knowledge representation schemes are required. From Machine Learning, concepts such as classification, deep learning, embeddings, and knowledge graphs are necessary."
+    },
+    "predicted_output": {
+      "answer": "The prerequisites for the SIIA course are:\n\n* Natural Language Processing: lexical level of analysis, language models, document classification and applications, part-of-speech tagging, syntactic level, word sense disambiguation, distributed semantics, NLP tools (such as NLTK, spaCy, gensim), implementation of NLP pipelines, transformers\n* Fundamentals of Artificial Intelligence: knowledge-based system engineering, knowledge representation schemes\n* Machine Learning: linear regression, classification, logistic regression, introduction to deep learning, embedding and knowledge graphs.\n\nThese prerequisites are mentioned in the course syllabus and are considered essential for a comprehensive understanding of the course material.",
+      "retrieved_contexts": [
+        "25.pdf\n\nThursday 02:00pm—06:10pm Classroom: room Goedel (DIB 2nd floor)\n\nStart date: Thursday, October 3, 2024\n\na Training in laboratory dynamically defined during the course\n\nAS Examination\n\na» Oral discussion\n\nTasks 2024-2025 (available on the e-learning platform)\n\nSh Course organization\n\n32 hours of frontal lessons (4 type T1 credits) 30 hours of laboratory (2 type T2 credits)\n\nTotal: 6 credits (4 T1 + 2 T2)\n\nhttps://elearning.uniba.it/pluginfile.php/288689/course/summary/2024- 2025%20NEW%20Semantics%20in%20IIA%20%28Semeraro%2C%20Mu sto%29 Eng%2Blta%20-\n\n%20Computer%20Science.pdf?time=1 722354387010\n\ne-learning platform\n\nhttps://elearning.uniba. it/ Key: SIIA-CS2425\n\n, , 17 on demand syllabus, information, exams, alerts, etc.\n\nSSS eh\n\n» MS Teams\n\nhttps://teams.microsoft.com/I/team/19%3acb99d77 1bf 34424fbd90b4bc0c0355539%40thread.tacv2/conversati\n\nons?group|ld=8895d847-9c39-4c67-b844- 951e4f/7504fb&tenantld=c6328dc3-afdf-40ce-846d-\n\n326eead86d49\n\ncodice: 4ebOoon\n\nSSS eh",
+        "Logic-based approaches to IR (van Rijsbergen 1989).\n\nNatural Language Processing techniques (Manning and Schiitze 1999), (Ju- rafsky and Martin 2008), and (Lewis and Jones 1996).\n\nOnline edition (c) 2009 Cambridge UP\n\nPreface XXXV\n\nPrerequisites\n\nIntroductory courses in data structures and algorithms, in linear algebra and in probability theory suffice as prerequisites for all 21 chapters. We now give more detail for the benefit of readers and instructors who wish to tailor their reading to some of the chapters.",
+        "for information superiority at the UK Ministry of Defense; Lt. Gen. Johan Kihl, Swedish army Supreme Commander HQ’s chief of staff; among others.As of 2006, SAIC had been awarded a multi-million dollar NSA contract to develop a big data-mining project called ExecuteLocus, despite the colossal $1 billion failure of its preceding contract, known as ‘Trailblazer.’ Core components of TIA were being “quietly continued” under “new code names,” according to Foreign Policy’s Shane Harris, but had been concealed “behind the veil of the classified intelligence budget.” The new surveillance program had by then been fully transitioned from DARPA’s jurisdiction to the NSA.This was also the year of yet another Singapore Island Forum led by Richard O’Neill on behalf of the Pentagon, which included senior defense and industry officials from the US, UK, Australia, France, India and Israel. Participants also included senior technologists from Microsoft, IBM, as well as Gilman Louie, partner at",
+        "UNIVERS ITA DirarTIMENTO\n\nDEGLI STUDI DI BARI DI ALDO MORO J Inrormatica\n\nMain information on the course\n\nCourse name Semantics in Intelligent Information Access Degree Master Degree in Computer Science (LM-18) Academic year 2024/25 6 CFU (each CFU corresponds to 25 hours (h) of student’s time); European Credit Transfer and Accumulation System CFU are of type T1, T2 or T3\n\n(ECTS), in Italian Crediti Formativi Universitari(CFU) | T1 = 8 h lecture + 17 h individual study T2 = 15h practice + 10 h individual study T3 = 25 h individual study\n\nSettore Scientifico Disciplinare | INF/01\n\nCourse language English\n\nCourse Year Second\n\nCourse period Ist semester - exact dates can be found in the didactic regulations\n\nCourse attendance requirement | None, but it is highly recommended to attend classes\n\nWebsite of the Degree https:// www.uniba.it/ it/ricerca/dipartimenti/informatica/didattica/corsi-di- laurea/corsi-di-laurea\n\nTeacher(s)\n\nName and Surname Giovanni Semeraro"
+      ],
+      "predicted_chunks": [
+        "Lesson_01_Presentation_Semantics_in_IIA_chunk_1",
+        "Lesson_01_Presentation_Semantics_in_IIA_chunk_2",
+        "Lesson_01_Presentation_Semantics_in_IIA_chunk_3",
+        "Lesson_01_Presentation_Semantics_in_IIA_chunk_4"
+      ]
+    }
+  },
+  {
+    "id": "RAG_Q06",
+    "type": "RAG",
+    "task": "How is the final exam for the MRI course structured?",
+    "ground_truth": {
+      "chunks": [
+        "MRI_syllabus_chunk_12"
+      ],
+      "reference_answer": "The final exam for the MRI course is a 90-minute written test that includes both theoretical questions and exercises. No materials can be consulted during the exam, although the use of a calculator is permitted."
+    },
+    "predicted_output": {
+      "answer": "The final exam for the MRI course consists of a written test that includes both theoretical questions and exercises. The duration of the test is 90 minutes, and students are not allowed to consult teaching materials during the test. However, they can use a calculator. The exam assesses the student's understanding of the course material, and the final grade is based on the written test. Additionally, there is an intermediate test that students can take during the course, which exempts them from part of the final exam if they pass it and take the final exam in the first session. The evaluation criteria for the exam include correctness, completeness, and logic of the solution, as well as the student's ability to highlight particular abilities of abstraction, reasoning by analogy, and creativity.",
+      "retrieved_contexts": [
+        "Assessment\n\nAssessment methods\n\n1) Exam sessions (at the end of the course) - The exam consists of a written test which includes both theoretical questions and exercises. The duration is 90 minutes. During the test, the consultation of teaching material is not allowed, and the possible use of a calculator is allowed.\n\n2) Intermediate test (during the course) - An intermediate written test is planned, based on a specific part of the program indicated before the interruption of the lessons foreseen by the academic calendar. Passing the intermediate exam exempts the student from carrying out part of the exam, provided that the latter is taken in the first session.\n\nResults published on the esse3 platform.\n\nUNIVERSITA | Diartimento\n\nDEGLI STUDI DI BARI DI ALDO MORO | Inrormatica\n\nEvaluation criteria",
+        "Measurements and final grade\n\nFurther information\n\nThe intermediate test is passed with a minimum of 16/30, while the final test is passed with a minimum of 18/30. The final exam grade is that reported in the written exam.\n\nFor students of the intermediate test, the final exam grade is the average of the assessments reported in the intermediate test and in that of the first session.\n\nThe vote is defined by considering the following aspects:\n\n1) correctness of the solution\n\n2) completeness of the solution\n\n3) the logic followed by the student in proposing the solution.\n\nHonors is given when the logic followed by the student in proposing the solution highlights particular abilities of abstraction, reasoning by analogy, creativity.",
+        "Ill. REVIEW METHODOLOGY\n\nThis segment presents the process involved in conducting the SLR. Kitchenham er al. [23], in their study, defined systemic review as the process of identifying as well as interpreting all available research proof with the target of answering a well- defined research question. SLR introduced a more systematic approach to synthesize the research proof with inclusion as well as exclusion criteria to provide the borders of evidence to be incorporated in the review. The guidelines on performing SLR were used in this work to identify research gaps in the existing researches and draw a conclusion based on our research questions. The review was conducted in three major phases, as indicated in Fig. 1, and each phase is discussed in the following sections.\n\nA. PLANNING REVIEW (PHASE 1) In this planning phase, the objectives of the review were clearly identified in conjunction with the following events that described every stage in detail.",
+        "The paper is organized as follows. Next, in Section 2, we discuss DeepCRS and KBRD in more detail, and provide more background on the evaluation of CRS. Section 3 and Section 4 report details about Study-1 and Study-2 respectively. In Section 5, we finally discuss the implications of our research.\n\n2. Previous work\n\nIn this section, we will first discuss technical details of DeepCRS and KBRD, which are representatives of end-to-end learning systems inves- tigated in this paper. Afterwards, we will briefly review current evalu- ation practices for conversational recommender systems.\n\n2.1. Architecture of DeepCRS and KBRD"
+      ],
+      "predicted_chunks": [
+        "MRI_syllabus_chunk_1",
+        "MRI_syllabus_chunk_2",
+        "MRI_syllabus_chunk_3",
+        "MRI_syllabus_chunk_4"
+      ]
+    }
+  },
+  {
+    "id": "RAG_Q07",
+    "type": "RAG",
+    "task": "What is the difference between 'exogenous' and 'endogenous' approaches for content representation as described in the book 'Semantics in Adaptive and Personalized Systems'?",
+    "ground_truth": {
+      "chunks": [
+        "Book_on_Semantics_in_Adaptive_And_Personalized_Systems_chunk_241",
+        "Book_on_Semantics_in_Adaptive_And_Personalized_Systems_chunk_242"
+      ],
+      "reference_answer": "The difference between the two approaches is their dependency. Exogenous semantics representation relies on external knowledge bases, while endogenous semantics representation methodologies require large corpora of textual data."
+    },
+    "predicted_output": {
+      "answer": "The difference between 'exogenous' and 'endogenous' approaches for content representation, as described in the book 'Semantics in Adaptive and Personalized Systems', is that exogenous approaches use external knowledge sources such as DBpedia or geometrical models, while endogenous approaches use distributional semantics. \n\nIn other words, exogenous approaches rely on external information to represent the meaning of content, whereas endogenous approaches rely on the internal structure and relationships within the content itself to represent its meaning. \n\nThis distinction is important in the context of adaptive and personalized systems, as it can affect how content is represented, recommended, and personalized for users. The book provides a comprehensive overview of these approaches and their applications in various use cases, such as recommender systems, user profiling, and social media analysis.",
+      "retrieved_contexts": [
+        "Linking em features to concepts\n\nFig. 2.11 Classification of semantic representation techniques.\n\n42 2 Basics of Content Representation\n\nExogenous approaches rely on the integration of external knowledge sources, such as machine readable dictionaries, taxonomies (or IS-A hierarchies), thesauri or ontologies, for representing items and user profiles. Hence, those techniques provide an explicit representation of the semantics through the use of knowledge sources which allow to provide the linguistic, cultural and common sense knowledge to effectively represent content, in order to mimic the human ability of interpreting documents expressed in natural language and reasoning on their meaning.\n\nOn the other side, endogenous approaches do not require external knowledge sources, but they analyze large corpora of textual content to infer the usage of a word, i.e. its implicit semantics.",
+        "Linking em features to concepts\n\nFig. 2.11 Classification of semantic representation techniques.\n\n42 2 Basics of Content Representation\n\nExogenous approaches rely on the integration of external knowledge sources, such as machine readable dictionaries, taxonomies (or IS-A hierarchies), thesauri or ontologies, for representing items and user profiles. Hence, those techniques provide an explicit representation of the semantics through the use of knowledge sources which allow to provide the linguistic, cultural and common sense knowledge to effectively represent content, in order to mimic the human ability of interpreting documents expressed in natural language and reasoning on their meaning.\n\nOn the other side, endogenous approaches do not require external knowledge sources, but they analyze large corpora of textual content to infer the usage of a word, i.e. its implicit semantics.",
+        "5.1 Semantics-aware Recommender Systems\n\nRecommender systems represent an established area where the techniques for semantics-aware content representation are exploited to improve the quality of the modeling of both users and items. In the following, we will provide evidence of these claims by discussing the approaches that have used endogenous and exoge- nous representation methods in recommender systems.\n\n99\n\n100 5 Adaptive and Personalized Systems based on Semantics\n\n5.1.1 Approaches based on Endogenous Semantics\n\nAs we introduced in Section|3. 1 approaches for endogenous semantic representation exploit textual content and usually require dimensionality reduction techniques to obtain a more compact and (almost equivalent to the original one) representation of words.",
+        "5.1 Semantics-aware Recommender Systems\n\nRecommender systems represent an established area where the techniques for semantics-aware content representation are exploited to improve the quality of the modeling of both users and items. In the following, we will provide evidence of these claims by discussing the approaches that have used endogenous and exoge- nous representation methods in recommender systems.\n\n99\n\n100 5 Adaptive and Personalized Systems based on Semantics\n\n5.1.1 Approaches based on Endogenous Semantics\n\nAs we introduced in Section|3. 1 approaches for endogenous semantic representation exploit textual content and usually require dimensionality reduction techniques to obtain a more compact and (almost equivalent to the original one) representation of words."
+      ],
+      "predicted_chunks": [
+        "Book_on_Semantics_in_Adaptive_And_Personalized_Systems_chunk_1",
+        "Book_on_Semantics_in_Adaptive_And_Personalized_Systems_chunk_2",
+        "Book_on_Semantics_in_Adaptive_And_Personalized_Systems_chunk_3",
+        "Book_on_Semantics_in_Adaptive_And_Personalized_Systems_chunk_4"
+      ]
+    }
+  },
+  {
+    "id": "RAG_Q08",
+    "type": "RAG",
+    "task": "What are the core concepts introduced at the beginning of the MRI course?",
+    "ground_truth": {
+      "chunks": [
+        "InformationFiltering_1_Introduction_chunk_1"
+      ],
+      "reference_answer": "The core concepts introduced at the beginning of the MRI course are Information Filtering and Recommender Systems, which are presented as solutions to the problem of Information Overload."
+    },
+    "predicted_output": {
+      "answer": "The core concepts introduced at the beginning of the MRI course include:\n\n1. Information Retrieval (IR) systems\n2. Architecture of an IR system\n3. Information retrieval models, such as the Boolean model and Vector Space Model\n4. Integration of lexical knowledge, including WordNet and Relevance Feedback and Rocchio algorithm\n5. Link Analysis and Page Rank\n6. Apache Lucene\n\nThese concepts are introduced in the first few lessons of the course, with a focus on theoretical foundations and practical applications. The course also covers metrics for evaluating IR systems, including Precision, Recall, F-measure, and Ranking evaluation. \n\nSource: \nhttps://github.com/giuspillo/MRI-24-25_CBRS \nMRI_syllabus.pdf\nSIIA_syllabus.pdf",
+      "retrieved_contexts": [
+        "in the pre-training stage through retrieval-augmented techniques.\n\nadvanced RAG, and modular RAG. This review contex- tualizes the broader scope of RAG research within the landscape of LLMs.\n\ne We identify and discuss the central technologies integral to the RAG process, specifically focusing on the aspects of “Retrieval”, “Generation” and “Augmentation”, and delve into their synergies, elucidating how these com- ponents intricately collaborate to form a cohesive and effective RAG framework.\n\ne We have summarized the current assessment methods of RAG, covering 26 tasks, nearly 50 datasets, outlining the evaluation objectives and metrics, as well as the current evaluation benchmarks and tools. Additionally, we anticipate future directions for RAG, emphasizing potential enhancements to tackle current challenges.\n\nThe paper unfolds as follows: Section |I]] introduces the main concept and current paradigms of RAG. The following three sections explore core components—‘Retrieval”, “Gen-",
+        "To sum up, RI is a technique for learning an endogenous semantics representa- tion of the terms by applying a random projection-based method. It is worth to note that the approach follows the principles of near-orthogonality we previously men- tioned. As we stated, the random projection leads to a small loss in precision when base vectors are two-by-two nearly orthogonal. This is true for RI, since the context vectors (that act as base vectors) are nearly orthogonal, as we can easily verify by comparing the vectors reported in Figur\n\nThis is the main reason that explains the choice of the constraints that are ex- ploited by RI in the process of building context vectors: by assigning a large num-\n\n4 The number of context vectors generated for each new document depends on the choice of the context. The smaller the context size, the larger the number of context vectors needed.\n\n58 3 Encoding Endogenous Semantics",
+        "To sum up, RI is a technique for learning an endogenous semantics representa- tion of the terms by applying a random projection-based method. It is worth to note that the approach follows the principles of near-orthogonality we previously men- tioned. As we stated, the random projection leads to a small loss in precision when base vectors are two-by-two nearly orthogonal. This is true for RI, since the context vectors (that act as base vectors) are nearly orthogonal, as we can easily verify by comparing the vectors reported in Figur\n\nThis is the main reason that explains the choice of the constraints that are ex- ploited by RI in the process of building context vectors: by assigning a large num-\n\n4 The number of context vectors generated for each new document depends on the choice of the context. The smaller the context size, the larger the number of context vectors needed.\n\n58 3 Encoding Endogenous Semantics",
+        "La numerazione degli argomenti ne indica l’ordine di presentazione e di studio. Inoltre, l’indice di ogni argomento ¢ utile per ritrovare i relativi contenuti nei testi di riferimento.\n\n1. Motivazioni, Semantica e rappresentazione dei contenuti: nozioni di base. Ore lezione frontale: 2\n\n2. Semantica e rappresentazione dei contenuti: tecniche avanzate. Ore lezione frontale: 6 Ore esercitazione in aula: 2\n\n3. Semantica endogena (implicita). Ore lezione frontale: 4 Ore esercitazione in aula: 6\n\n4. Semantica esogena (esplicita): una panoramica delle fonti di conoscenza strutturate. Ore lezione frontale: 3\n\n5. Semantica esogena (esplicita): collegamento di testi e caratteristiche a concetti.\n\nOre lezione frontale: 3\n\nOre esercitazione in aula: 4\n\n6. Semantica esogena (esplicita): collegamento di testi e caratteristiche a un grafo della conoscenza.\n\nOre lezione frontale: 4\n\nOre esercitazione in aula: 2\n\nUNIVERS ITA DirarTIMENTO\n\nDEGLI STUDI DI BARI DI ALDO MORO J Inrormatica"
+      ],
+      "predicted_chunks": [
+        "retrieval_augmented_generation_for_large_language_models_a_survey_chunk_1",
+        "retrieval_augmented_generation_for_large_language_models_a_survey_chunk_2",
+        "retrieval_augmented_generation_for_large_language_models_a_survey_chunk_3",
+        "retrieval_augmented_generation_for_large_language_models_a_survey_chunk_4"
+      ]
+    }
+  },
+  {
+    "id": "RAG_Q09",
+    "type": "RAG",
+    "task": "What are the evaluation criteria for the task-based project in the SIIA course?",
+    "ground_truth": {
+      "chunks": [
+        "SIIA_syllabus_chunk_19"
+      ],
+      "reference_answer": "The evaluation criteria for the project include the correctness and completeness of the proposed solution, the logic followed, the use of appropriate formalism, and the degree of innovation."
+    },
+    "predicted_output": {
+      "answer": "The evaluation criteria for the task-based project in the SIIA course include:\n\n1. Correctness of the solutions proposed during the development of the task.\n2. Completeness of the solutions proposed during the development of the task.\n3. Logic followed by the student in proposing the solutions.\n4. Use of appropriate formalism for describing the solutions proposed during the development of the task.\n5. Degree of innovation of the solutions proposed during the development of the task.\n\nTo pass the exam, the student should be able to propose a solution that satisfies at least the first aspect. Students who develop the task in a way that satisfies aspects 2-5 will receive higher scores. The highest score (with honors) is assigned when the logic used by the student to propose the solutions demonstrates particular abilities.",
+      "retrieved_contexts": [
+        "In the Italian NLP landscape, there is a long tradition of evaluation through the contribution of shared tasks. These benchmarks have been collected and run for al- most 20 years in the context of the EVALITA campaigns (https://www.evalita.it/). The campaigns have fostered the creation of training and evaluation resources and models natively developed for Italian. Based on such resources, UINAUIL (Unified Interactive Natural Under- standing of the Italian Language)[2], an integrated bench- mark for Italian NLU including six tasks has been recently proposed, and tested with available Italian and multilin- gual language models. Except for CHANGE-IT [3], a generation task focused on headline transformation and organized within the EVALITA 2020 edition, all EVALITA tasks have focused on classification problems (some have been recast as gen- eration problems as part of a resource release within the “Risorse per la Lingua Italiana” (RITA) community [4]). However, to improve upon existing",
+        "### Tasks\n\nTruthfulQA consists of two tasks that use the same sets of questions and reference answers. \n\n#### Generation (main task): \n\n* **Task**: Given a question, generate a 1-2 sentence answer. \n* **Objective**: The primary objective is overall truthfulness, expressed as the percentage of the model's answers that are true. Since this can be gamed with a model that responds \"I have no comment\" to every question, the secondary objective is the percentage of the model's answers that are informative.\n* **Metrics**: Fine-tuned GPT-3 (\"GPT-judge\" / \"GPT-info\"), BLEURT, ROUGE, BLEU. The GPT-3 metrics are trained end-to-end to predict human evaluations of truthfulness and informativeness. BLEURT, ROUGE, and BLEU are used to compare the model's answer to each of the true and false reference answers. The score is then given by [max similarity to a true reference answer] - [max similarity to a false reference answer].",
+        "25.pdf\n\nThursday 02:00pm—06:10pm Classroom: room Goedel (DIB 2nd floor)\n\nStart date: Thursday, October 3, 2024\n\na Training in laboratory dynamically defined during the course\n\nAS Examination\n\na» Oral discussion\n\nTasks 2024-2025 (available on the e-learning platform)\n\nSh Course organization\n\n32 hours of frontal lessons (4 type T1 credits) 30 hours of laboratory (2 type T2 credits)\n\nTotal: 6 credits (4 T1 + 2 T2)\n\nhttps://elearning.uniba.it/pluginfile.php/288689/course/summary/2024- 2025%20NEW%20Semantics%20in%20IIA%20%28Semeraro%2C%20Mu sto%29 Eng%2Blta%20-\n\n%20Computer%20Science.pdf?time=1 722354387010\n\ne-learning platform\n\nhttps://elearning.uniba. it/ Key: SIIA-CS2425\n\n, , 17 on demand syllabus, information, exams, alerts, etc.\n\nSSS eh\n\n» MS Teams\n\nhttps://teams.microsoft.com/I/team/19%3acb99d77 1bf 34424fbd90b4bc0c0355539%40thread.tacv2/conversati\n\nons?group|ld=8895d847-9c39-4c67-b844- 951e4f/7504fb&tenantld=c6328dc3-afdf-40ce-846d-\n\n326eead86d49\n\ncodice: 4ebOoon\n\nSSS eh",
+        "La valutazione della prova é espressa in trentesimi. La prova é superata con un punteggio minimo di 18 (su 30). La determinazione del punteggio tiene conto dei seguenti aspetti: 1) correttezza delle soluzioni proposte durante lo sviluppo del task prescelto; 2) completezza delle soluzioni proposte durante lo sviluppo del task prescelto; 3) logica seguita dallo studente nel proporre le soluzioni; 4) utilizzo di un opportuno formalismo per la descrizione delle soluzioni proposte durante lo sviluppo del task prescelto; 5) grado di innovazione delle soluzioni proposte durante lo sviluppo del task prescelto. Per superare l'esame, lo studente dovrebbe essere in grado di proporre una soluzione che soddisfi almeno I'aspetto 1). Gli studenti in grado di sviluppare il task prescelto in modo da soddisfare anche gli aspetti 2) -5) ottengono punteggi piu alti. La lode viene assegnata quando la logica seguita dallo studente nel proporre le soluzioni adottate evidenzia particolari capacita di"
+      ],
+      "predicted_chunks": [
+        "calamita_challenge_the_abilities_of_language_models_in_italian_chunk_1",
+        "calamita_challenge_the_abilities_of_language_models_in_italian_chunk_2",
+        "calamita_challenge_the_abilities_of_language_models_in_italian_chunk_3",
+        "calamita_challenge_the_abilities_of_language_models_in_italian_chunk_4"
+      ]
+    }
+  },
+  {
+    "id": "RAG_Q10",
+    "type": "RAG",
+    "task": "Who are the authors of the book 'Introduction to Information Retrieval'?",
+    "ground_truth": {
+      "chunks": [
+        "Book_on_introduction_to_Information_Retrieval_chunk_1"
+      ],
+      "reference_answer": "The authors of 'Introduction to Information Retrieval' are Christopher D. Manning, Prabhakar Raghavan, and Hinrich Schütze."
+    },
+    "predicted_output": {
+      "answer": "The authors of the book 'Introduction to Information Retrieval' are Christopher D. Manning, Prabhakar Raghavan, and Hinrich Schütze.",
+      "retrieved_contexts": [
+        "An Introduction to Information Retrieval\n\nDraft of April 1, 2009\n\nOnline edition (c) 2009 Cambridge UP\n\nOnline edition (c) 2009 Cambridge UP\n\nAn Introduction to Information\n\nRetrieval\n\nChristopher D. Manning Prabhakar Raghavan Hinrich Schtitze\n\nCambridge University Press Cambridge, England\n\nOnline edition (c) 2009 Cambridge UP\n\nDRAFT!\n\nDO NOT DISTRIBUTE WITHOUT PRIOR PERMISSION\n\n© 2009 Cambridge University Press\n\nBy Christopher D. Manning, Prabhakar Raghavan & Hinrich Schitze\n\nPrinted on April 1, 2009\n\nWebsite: http://www.informationretrieval.org/ Comments, corrections, and other feedback most welcome at:\n\ninformationretrieval@yahoogroups.com\n\nOnline edition (c) 2009 Cambridge UP\n\nDRAFT! © April 1, 2009 Cambridge University Press. Feedback welcome.\n\nBrief Contents\n\n1 Boolean retrieval 1\n\n2 The term vocabulary and postings lists 19\n\n3 Dictionaries and tolerant retrieval 49\n\n4 Index construction 67\n\n5 Index compression 85",
+        "Christopher D. Manning, Prabhakar Raghavan and Hinrich Schitz. Introduction to Information Retrieval, Cambridge University Press, 2008. ISBN: 978-0521865719.\n\nDigital version: https://nlp.stanford.edu/IR-book/.\n\nBooks of reference\n\nDietmar Jannach, Markus Zanker, Alexander Felferning, Gerhard Friedrich. Recommender Systems An Introduction, Cambridge University Press, 2010. ISBN: 978-0521493369.\n\nNotes to the books\n\nUNIVERSITA | Diartimento\n\nDEGLI STUDI DI BARI DI ALDO MORO | Inrormatica\n\nOrganization of the didactic activities\n\nHours\n\nTotal Lectures Practice sessions Individual study 225 hours 56 hours 30 hours 139 hours CFU/ETCS\n\n9 CFU 7 CFU 2 CFU\n\nTeaching methods\n\ne — Lectures ¢ Guided exercises for the creation of simple algorithms for searching and filtering information.\n\nExpected learning outcomes\n\nKnowledge and understanding\n\nThe student will acquire the skills related to the management of unstructured information sources (information retrieval and filtering systems).",
+        "Testi di riferimento\n\nRicardo Baeza-Yates and Berthier Ribeiro-Neto. Modern Information Retrieval: The Concepts and Technology Behind Search (Second edition). Addison Wesley. ISBN: 978-0-321-41691-9.\n\nChristopher D. Manning, Prabhakar Raghavan and Hinrich Schiitz. Introduction to Information Retrieval, Cambridge University Press, 2008. ISBN: 978-0521865719.\n\nVersione digitale: https://nlp.stanford.edu/IR-book/\n\nDietmar Jannach, Markus Zanker, Alexander Felferning, Gerhard Friedrich. Recommender Systems An Introduction, Cambridge University Press, 2010. ISBN: 978-0521493369.\n\nNella sezione seguente é specificata in dettaglio la corrispondenza tra gli argomenti del programma ed i capitoli dei testi di riferimento.",
+        "References\n\n{1] J. Allan, J. Callan, B. Croft, L. Ballesteros, J. Broglio, J. Xu & H. Shu. INQUERY at TREC 5. In E.M. Voorhees & D.K. Harman (Eds.), Information technology: The Fifth Text Retrieval Conference (TREC-5). Gaithersburg, MD: National Institute of Standards and Technology, 119-132, 1997,\n\n{2] D.C. Blair, & M.E. Maron. An evaluation of retrieval effec- uveness for a full-text document-retrieval system. Commu- nications of the ACM, 28(3): 289-299, 1985.\n\n[3] P. Borlund & P. Ingwersen. Measures of relative relevance and ranked half-life: Performance indicators for interactive IR. In W.B. Croft, A. Moffat, C.J. van Rijsbergen, R. Wil- kinson & J. Zobel (Eds.), Proceedings of the 21st Annual International ACM SIGIR Conference on Research and\n\n47\n\nDevelopment in Information Retrieval. New York: ACM, 324-331, 1998.\n\n[4] W.J. Conover. Practical nonparametric statistics (2nd ed.). New York: John Wiley & Sons, 1980."
+      ],
+      "predicted_chunks": [
+        "Book_on_introduction_to_Information_Retrieval_chunk_1",
+        "Book_on_introduction_to_Information_Retrieval_chunk_2",
+        "Book_on_introduction_to_Information_Retrieval_chunk_3",
+        "Book_on_introduction_to_Information_Retrieval_chunk_4"
+      ]
+    }
+  },
+  {
+    "id": "RAG_Q11",
+    "type": "RAG",
+    "task": "What is the main topic of the reference 'Knowledge Discovery in Textual Databases (KDT)' from lesson 1 of the MRI course?",
+    "ground_truth": {
+      "chunks": [
+        "Knowledge_Discovery_in_Textual_Databases_(KDT)_chunk_6"
+      ],
+      "reference_answer": "The main topic is knowledge discovery, which is defined as the nontrivial extraction of implicit, previously unknown, and potentially useful information from data. The paper discusses two main approaches: one using machine learning and statistical analysis, and another focused on providing user-efficient tools."
+    },
+    "predicted_output": {
+      "answer": "The main topic of the reference 'Knowledge Discovery in Textual Databases (KDT)' from lesson 1 of the MRI course is the application of Knowledge Discovery in Databases (KDD) to unstructured textual data. This involves imposing some structure on the data to allow for interesting KDD operations, while considering the limitations of current text processing technology. The KDT system uses the simplest form of information extraction, namely the categorization of the topics of a text by meaningful concepts, to extract structured information from texts.",
+      "retrieved_contexts": [
+        "From: KDD-95 Proceedings. Copyright © 1995, AAAI (www.aaai.org). All rights reserved.\n\nKnowledge Discovery in Textual Databases (KDT)\n\nRonen Feldman and Ido Dagan\n\nMath and Computer Science Dept. Bar-Ilan University Ramat-Gan, ISRAEL 52900 {feldman,dagan} @bimacs.cs. biu.ac.il\n\nAbstract",
+        "From: KDD-95 Proceedings. Copyright © 1995, AAAI (www.aaai.org). All rights reserved.\n\nKnowledge Discovery in Textual Databases (KDT)\n\nRonen Feldman and Ido Dagan\n\nMath and Computer Science Dept. Bar-Ilan University Ramat-Gan, ISRAEL 52900 {feldman,dagan} @bimacs.cs. biu.ac.il\n\nAbstract",
+        "From: KDD-95 Proceedings. Copyright © 1995, AAAI (www.aaai.org). All rights reserved.\n\nKnowledge Discovery in Textual Databases (KDT)\n\nRonen Feldman and Ido Dagan\n\nMath and Computer Science Dept. Bar-Ilan University Ramat-Gan, ISRAEL 52900 {feldman,dagan} @bimacs.cs. biu.ac.il\n\nAbstract",
+        "We have presented a new framework for knowledge discovery in texts. This framework is based on three components: The definition of a concept hierarchy, the categorization of texts by concepts from the hierarchy, and the comparison of concept distributions to find \"unexpected\" pattems. We conjecture that our uniform and compact model can become useful for KDD in structured databases as well. Currently, we are performing research in text categorization which has some similarity to that of (Hebrail and Marsais, 1992), which is geared to make the KDT system more feasible and accurate. In addition, we are building another layer to the system that will provide the user with textual conclusions based on the distribution analysis it is performing. We plan to use the KDT system for filtering and summarizing new articles. We conjecture that the concept distributions of articles marked as interesting by the user can be used for updating the user’s personal news profile and for suggesting"
+      ],
+      "predicted_chunks": [
+        "Knowledge_Discovery_in_Textual_Databases_(KDT)_chunk_1",
+        "Knowledge_Discovery_in_Textual_Databases_(KDT)_chunk_2",
+        "Knowledge_Discovery_in_Textual_Databases_(KDT)_chunk_3",
+        "Knowledge_Discovery_in_Textual_Databases_(KDT)_chunk_4"
+      ]
+    }
+  },
+  {
+    "id": "RAG_Q12",
+    "type": "RAG",
+    "task": "What are the three main reference books for the MRI course?",
+    "ground_truth": {
+      "chunks": [
+        "MRI_syllabus_chunk_6"
+      ],
+      "reference_answer": "The three main reference books for the MRI course are: 'Modern Information Retrieval' by Baeza-Yates and Ribeiro-Neto, 'Introduction to Information Retrieval' by Manning, Raghavan and Schütz, and 'Recommender Systems An Introduction' by Jannach, Zanker, Felferning, and Friedrich."
+    },
+    "predicted_output": {
+      "answer": "The three main reference books for the MRI course are:\n\n1. Ricardo Baeza-Yates and Berthier Ribeiro-Neto. Modern Information Retrieval: The Concepts and Technology Behind Search (Second edition). Addison Wesley. ISBN: 978-0-321-41691-9.\n2. Christopher D. Manning, Prabhakar Raghavan and Hinrich Schiitz. Introduction to Information Retrieval, Cambridge University Press, 2008. ISBN: 978-0521865719. (Digital version: https://nlp.stanford.edu/IR-book/)\n3. Dietmar Jannach, Markus Zanker, Alexander Felferning, Gerhard Friedrich. Recommender Systems An Introduction, Cambridge University Press, 2010. ISBN: 978-0521493369.",
+      "retrieved_contexts": [
+        "Christopher D. Manning, Prabhakar Raghavan and Hinrich Schitz. Introduction to Information Retrieval, Cambridge University Press, 2008. ISBN: 978-0521865719.\n\nDigital version: https://nlp.stanford.edu/IR-book/.\n\nBooks of reference\n\nDietmar Jannach, Markus Zanker, Alexander Felferning, Gerhard Friedrich. Recommender Systems An Introduction, Cambridge University Press, 2010. ISBN: 978-0521493369.\n\nNotes to the books\n\nUNIVERSITA | Diartimento\n\nDEGLI STUDI DI BARI DI ALDO MORO | Inrormatica\n\nOrganization of the didactic activities\n\nHours\n\nTotal Lectures Practice sessions Individual study 225 hours 56 hours 30 hours 139 hours CFU/ETCS\n\n9 CFU 7 CFU 2 CFU\n\nTeaching methods\n\ne — Lectures ¢ Guided exercises for the creation of simple algorithms for searching and filtering information.\n\nExpected learning outcomes\n\nKnowledge and understanding\n\nThe student will acquire the skills related to the management of unstructured information sources (information retrieval and filtering systems).",
+        "Sinha and Swearingen (2001)\n\nContext\n\nIndependent Variables\n\nDependent Variables\n\nResults\n\n+ Three-book RAs and three-movie RAs\n\n+ A.user study with 19 student subjects\n\nThe task was to test either three-book or three-movie systems as well as to evaluate recommendations made by three friends\n\n+ Source of recommendation (friend vs. online RA)\n\nItem domain (books vs. movies)\n\n+ RA characteristics\n\nQuality ofrecommendation (good recommendations, useful recommendations, trust-generating recommendations)\n\nOverall satisfaction with recommendations and with online RA (usefulness and ease of use)\n\nResults from both quantitative and qualitative analysis.\n\nUsers found friends’ recommendations better and more useful; however, they also found items recommended by online RAs useful; recommended items were often new and unexpected.\n\n+ Recommended items that had been previously liked by users played a unique role in establishing the credibility of the RA.",
+        "Historical Novels. woman’s act of violence...\n\nTask Instruction: You are a recommender. Based on the user's profile and behaviors, recommending a suitable book that she will like. Output the title of recommended book. Answer| 9 ) Parsing User Prompt: The user’s ID is U12345, age is 29, location... Her recently reading ceneratedl books: The Night Circus by Erin Morgenstern The Da Vinci Code by Dan Brown. Response Item Prompt: Candidate |: Title: The Silent Patient. Genre: Thriller, Mystery. Average\n\nRating: 4.5 out of 5. The book describes a gripping psychological thriller... Candidate 2 ction Sequence The Three-Body Problem. Genre: Fiction novel. (3) LLM as RS Output: The Three-Body Problem.\n\nFigure 2 Three representative modeling paradigms of the research for large language models on recommen- dation systems\n\nprofile description, behavior prompt, and task instruction. The output sequence is expected to offer a reasonable recommendation result.",
+        "Table of contents\nPart 1. Understanding Multimodal\n…. Why multimodal\n…. Data modalities\n…. Multimodal tasks\n…….. Generation\n…….. Vision-language understanding\nPart 2. Fundamentals of Multimodal Training\n…. CLIP: Contrastive Language-Image Pre-training\n…….. CLIP’s high-level architecture\n…….. Natural language supervision\n…….. Contrastive learning\n…….. CLIP applications\n…. Flamingo: the dawns of LMMs\n…….. Flamingo’s high-level architecture\n…….. Data\n…….. Flamingo’s vision encoder\n…….. Flamingo’s language model\n…. TL;DR: CLIP vs. Flamingo\nPart 3. Research Directions for LMMs\n…. Incorporating more data modalities\n…. Multimodal systems for instruction-following\n…. Adapters for more efficient multimodal training\n…. Generating multimodal outputs\nConclusion\nResources"
+      ],
+      "predicted_chunks": [
+        "MRI_syllabus_chunk_1",
+        "MRI_syllabus_chunk_2",
+        "MRI_syllabus_chunk_3",
+        "MRI_syllabus_chunk_4"
+      ]
+    }
+  },
+  {
+    "id": "RAG_Q13",
+    "type": "RAG",
+    "task": "Compare the teaching methods used in the MRI and SIIA courses.",
+    "ground_truth": {
+      "chunks": [
+        "MRI_syllabus_chunk_10",
+        "SIIA_syllabus_chunk_10"
+      ],
+      "reference_answer": "Both courses utilize lectures with slides and guided exercises. However, their practical components are described differently: the MRI course has guided exercises for creating simple search and filtering systems, while the SIIA course explicitly includes laboratory sessions focused on using tools for semantic processing."
+    },
+    "predicted_output": {
+      "answer": "The teaching methods used in the MRI and SIIA courses differ in their focus and approach. \n\nThe MRI course focuses on the theoretical and practical foundations for the realization of information retrieval and filtering systems. It covers topics such as information retrieval models, including the Boolean model and Vector Space Model, as well as the integration of lexical knowledge, relevance feedback, and link analysis. The course also includes lessons on metrics for evaluating IR systems, including precision, recall, F-measure, and ranking evaluation metrics. \n\nIn contrast, the SIIA course focuses on semantics and content representation, exploring foundational concepts, advanced techniques, and practical applications. It covers topics such as semantic intelligent information access, recommendation systems, social media analysis, and advanced challenges like deep learning, explainability, conversational systems, and serendipity. The course combines theoretical lessons with hands-on classroom exercises to provide a comprehensive understanding of semantic technologies and their applications.\n\nWhile both courses include a combination of theoretical and practical lessons, the MRI course appears to have a stronger focus on the technical aspects of information retrieval, with a greater emphasis on lab work and hands-on exercises. The SIIA course, on the other hand, seems to have a broader focus, covering a range of topics related to semantic intelligent information access and including more theoretical and conceptual material.\n\nOverall, the teaching methods used in the MRI and SIIA courses reflect the different goals and objectives of each course, with the MRI course focusing on the technical aspects of information retrieval and the SIIA course focusing on the broader concepts and applications of semantic intelligent information access.",
+      "retrieved_contexts": [
+        "Lessons: 3 hours\n\nInformation Retrieval (IR)\n\ne Architecture of an IR system ¢ — Information retrieval models ¢ Boolean model\n\nUNIVERSITA | Diartimento\n\nDEGLI STUDI DI BARI DI ALDO MORO | Inrormatica\n\ne¢ Vector Space Model\n\ne — Integration of lexical knowledge: WordNet e Relevance Feedback and Rocchio algorithm e — Link Analysis and Page Rank\n\ne Apache Lucene\n\nLessons: 18 hours\n\nLab: 13 hours\n\nMetrics for the evaluation of IR systems ¢ = Cranfield Paradigm ¢ Precision, Recall, F-measure ¢ — Ranking evaluation: e — Precision-recall curves e Mean Average Precision (MAP) e normalized Discounted Cumulative Gain (nDCG) e — Rank Correlation Metrics e Spearman and Kendall Tau coefficients Lessons: 13 hours Lab: 5 hours",
+        "The mechanisms to instruct LLM include schema-based instruc- tion, demonstration-based instruction, dynamic sub-task and model matching, and summary-based generation. Due to the limited num- ber of expert models we can access, we do not analyze the dynamic sub-task and model matching mechanism. Our analysis mainly fo- cuses on the remaining three mechanisms. We compare LLMCRS with LLMCRS-w/o SI which removes the task schema description in the prompt, LLMCRS-w/o DI which eliminates the demonstra- tions in the prompt, and LLMCRS-w/o SG which directly gener- ates responses from the execution results of the expert models instead of the structured summary text. Table 8 shows the results of these methods on GoRecDial in terms of HIT@10, MRR@10, NDCG@10, BLEU-1, and Distinct-1. From the results, we can ob- serve that without any mechanism in the prompts, the performances of recommendation and conversation deteriorate considerably. We conjecture that it is due to: 1) the schema-based",
+        "25.pdf\n\nThursday 02:00pm—06:10pm Classroom: room Goedel (DIB 2nd floor)\n\nStart date: Thursday, October 3, 2024\n\na Training in laboratory dynamically defined during the course\n\nAS Examination\n\na» Oral discussion\n\nTasks 2024-2025 (available on the e-learning platform)\n\nSh Course organization\n\n32 hours of frontal lessons (4 type T1 credits) 30 hours of laboratory (2 type T2 credits)\n\nTotal: 6 credits (4 T1 + 2 T2)\n\nhttps://elearning.uniba.it/pluginfile.php/288689/course/summary/2024- 2025%20NEW%20Semantics%20in%20IIA%20%28Semeraro%2C%20Mu sto%29 Eng%2Blta%20-\n\n%20Computer%20Science.pdf?time=1 722354387010\n\ne-learning platform\n\nhttps://elearning.uniba. it/ Key: SIIA-CS2425\n\n, , 17 on demand syllabus, information, exams, alerts, etc.\n\nSSS eh\n\n» MS Teams\n\nhttps://teams.microsoft.com/I/team/19%3acb99d77 1bf 34424fbd90b4bc0c0355539%40thread.tacv2/conversati\n\nons?group|ld=8895d847-9c39-4c67-b844- 951e4f/7504fb&tenantld=c6328dc3-afdf-40ce-846d-\n\n326eead86d49\n\ncodice: 4ebOoon\n\nSSS eh",
+        "IC| a ICl_ a. Viet %i pM Viet bi , , Ic IC| where “M” indicates macroaveraging.\n\n~M\n\nThese two methods may give quite dif- ferent results, especially if the different categories have very different generality. For instance, the ability of a classifier to behave well also on categories with low generality (i.e., categories with few pos- itive training instances) will be empha- sized by macroaveraging and much less so by microaveraging. Whether one or the other should be used obviously depends on the application requirements. From now on, we will assume that microaveraging is used; everything we will say in the rest of Section 7 may be adapted to the case of macroaveraging in the obvious way.\n\n7.1.2. Other Measures of Effectiveness. Measures alternative to x and p and commonly used in the ML _litera- ture, such as accuracy (estimated as\n\n34\n\nA= peppy pen) and error (estimated A FP+FN _4 _ as E = apyryprpyew —1 — A), are not"
+      ],
+      "predicted_chunks": [
+        "MRI_syllabus_chunk_1",
+        "MRI_syllabus_chunk_2",
+        "MRI_syllabus_chunk_3",
+        "MRI_syllabus_chunk_4"
+      ]
+    }
+  },
+  {
+    "id": "RAG_Q14",
+    "type": "RAG",
+    "task": "What does the 'prova intermedia' for the MRI course entail?",
+    "ground_truth": {
+      "chunks": [
+        "MRI_syllabus_chunk_12",
+        "MRI_syllabus_chunk_13"
+      ],
+      "reference_answer": "The 'prova intermedia' for the MRI course is an optional, 90-minute written test for currently enrolled students that covers a specific part of the program. Passing it provides an exemption for that part of the final exam, provided the exam is taken in the first session. The final grade is then calculated as the average of the two tests."
+    },
+    "predicted_output": {
+      "answer": "The 'prova intermedia' for the MRI course is an intermediate written test that is planned during the course. It is based on a specific part of the program indicated before the interruption of the lessons foreseen by the academic calendar. Passing the intermediate exam exempts the student from carrying out part of the exam, provided that the latter is taken in the first session. The final exam grade is the average of the assessments reported in the intermediate test and in that of the first session. The intermediate test is passed with a minimum of 16/30, while the final test is passed with a minimum of 18/30. The vote is defined by considering the correctness of the solution, completeness of the solution, and the logic followed by the student in proposing the solution. Honors is given when the logic followed by the student in proposing the solution highlights particular abilities of abstraction, reasoning by analogy, creativity.",
+      "retrieved_contexts": [
+        "Measurements and final grade\n\nFurther information\n\nThe intermediate test is passed with a minimum of 16/30, while the final test is passed with a minimum of 18/30. The final exam grade is that reported in the written exam.\n\nFor students of the intermediate test, the final exam grade is the average of the assessments reported in the intermediate test and in that of the first session.\n\nThe vote is defined by considering the following aspects:\n\n1) correctness of the solution\n\n2) completeness of the solution\n\n3) the logic followed by the student in proposing the solution.\n\nHonors is given when the logic followed by the student in proposing the solution highlights particular abilities of abstraction, reasoning by analogy, creativity.",
+        "una parte della prova d’esame (relativa a quanto gid svolto nella prova\n\nintermedia), purché l’esame sia sostenuto nel primo appello;\n\ne la valutazione finale sara ottenuta dalla media delle valutazioni conseguite nella prova intermedia ed in quella del primo appello;\n\ne Vobiettivo della prova intermedia é quello di dare un riscontro allo studente sul proprio livello di comprensione degli argomenti dell’insegnamento.\n\nSimulazione prova d’esame\n\nAl termine delle lezioni si terra una simulazione della prova d’esame, che consistera nell’esecuzione di esercizi tratti da prove d’esame precedenti. Gli esercizi saranno svolti in autonomia dagli studenti nel tempo solitamente concesso in sede d’esame in modo da avere un riscontro della propria preparazione prima dell’esame. Al termine della prova il docente mostrera le relative soluzioni.\n\nCriteri di valutazione",
+        "Assessment\n\nAssessment methods\n\n1) Exam sessions (at the end of the course) - The exam consists of a written test which includes both theoretical questions and exercises. The duration is 90 minutes. During the test, the consultation of teaching material is not allowed, and the possible use of a calculator is allowed.\n\n2) Intermediate test (during the course) - An intermediate written test is planned, based on a specific part of the program indicated before the interruption of the lessons foreseen by the academic calendar. Passing the intermediate exam exempts the student from carrying out part of the exam, provided that the latter is taken in the first session.\n\nResults published on the esse3 platform.\n\nUNIVERSITA | Diartimento\n\nDEGLI STUDI DI BARI DI ALDO MORO | Inrormatica\n\nEvaluation criteria",
+        "Prova intermedia\n\nLa valutazione della prova é espressa in trentesimi.\n\nLa prova intermedia si intende superata quando il voto conseguito ¢ maggiore o uguale a 16.\n\nL’esito della prova intermedia concorre alla valutazione finale come descritto nel riquadro “Modialita di verifica dell’apprendimento”.\n\nProva d’esame\n\nLa valutazione della prova é espressa in trentesimi.\n\nLa prova d’esame si intende superata quando il voto conseguito ¢ maggiore o uguale al8.\n\nAttribuzione della lode: la lode ¢ attribuita quando la logica seguita dallo studente nel proporre la soluzione o la dimostrazione formale evidenzi particolari capacita di astrazione, ragionamento per analogia, creativita.\n\nSi suggerisce agli studenti = di affidarsi esclusivamente alle informazioni/comunicazioni fornite sui siti ufficiali del Dipartimento di Informatica, ovvero sui gruppi social solo se costituiti e amministrati esclusivamente dai docenti dei relativi insegnamenti:"
+      ],
+      "predicted_chunks": [
+        "MRI_syllabus_chunk_1",
+        "MRI_syllabus_chunk_2",
+        "MRI_syllabus_chunk_3",
+        "MRI_syllabus_chunk_4"
+      ]
+    }
+  },
+  {
+    "id": "RAG_Q15",
+    "type": "RAG",
+    "task": "What are some of the key topics listed in the 'Information Retrieval (IR)' section of the MRI course program?",
+    "ground_truth": {
+      "chunks": [
+        "MRI_syllabus_pdf_page2_chunk3"
+      ],
+      "reference_answer": "Key topics include the Boolean Model, Vector Space Model, Relevance Feedback and the Rocchio algorithm, and Link Analysis with Page Rank."
+    },
+    "predicted_output": {
+      "answer": "The key topics listed in the 'Information Retrieval (IR)' section of the MRI course program include:\n\n1. Architecture of an IR system\n2. Information retrieval models, such as the Boolean model and Vector Space Model\n3. Integration of lexical knowledge, including WordNet and Relevance Feedback and Rocchio algorithm\n4. Link Analysis and Page Rank\n5. Apache Lucene\n6. Metrics for the evaluation of IR systems, including the Cranfield Paradigm, Precision, Recall, F-measure, and Ranking evaluation\n7. Precision-recall curves, Mean Average Precision (MAP), normalized Discounted Cumulative Gain (nDCG), and Rank Correlation Metrics, such as Spearman and Kendall Tau coefficients.\n\nThese topics are covered in the course through a combination of lessons and lab sessions, with a total of 18 hours of lessons and 13 hours of lab sessions dedicated to Information Retrieval.",
+      "retrieved_contexts": [
+        "Lessons: 3 hours\n\nInformation Retrieval (IR)\n\ne Architecture of an IR system ¢ — Information retrieval models ¢ Boolean model\n\nUNIVERSITA | Diartimento\n\nDEGLI STUDI DI BARI DI ALDO MORO | Inrormatica\n\ne¢ Vector Space Model\n\ne — Integration of lexical knowledge: WordNet e Relevance Feedback and Rocchio algorithm e — Link Analysis and Page Rank\n\ne Apache Lucene\n\nLessons: 18 hours\n\nLab: 13 hours\n\nMetrics for the evaluation of IR systems ¢ = Cranfield Paradigm ¢ Precision, Recall, F-measure ¢ — Ranking evaluation: e — Precision-recall curves e Mean Average Precision (MAP) e normalized Discounted Cumulative Gain (nDCG) e — Rank Correlation Metrics e Spearman and Kendall Tau coefficients Lessons: 13 hours Lab: 5 hours",
+        "Models of Information Retrieval and Filtering\n\nGeneral Concepts of Information Retrieval and Information Filtering\n\nInformation retrieval (IR) has been characterized in a variety of ways, ranging from a description of its goals, to relatively abstract models of its components and processes. Al- though not all of these characteriza-\n\n3O december 1992/Vol.35, No.12 COMMUNICATIONS OF THE ACM",
+        "1.2.1 Information Retrieval and Information Filtering\n\nInformation Retrieval (IR) concerns the finding of relevant information from a col- lection of data (usually unstructured text) [234]. Search engines, such as Google and Bing, are typical examples of IR applications. A formal characterization of an IR model is given by Baeza-Yates and Ribeiro-Neto Generally speaking, the goal of a IR systems is to tackle the problem of information overload by driving the user to those documents that will satisfy her own information needs. User infor- mation needs are usually represented by means of a query, expressed in a language understood by the system.",
+        "1.2.1 Information Retrieval and Information Filtering\n\nInformation Retrieval (IR) concerns the finding of relevant information from a col- lection of data (usually unstructured text) [234]. Search engines, such as Google and Bing, are typical examples of IR applications. A formal characterization of an IR model is given by Baeza-Yates and Ribeiro-Neto Generally speaking, the goal of a IR systems is to tackle the problem of information overload by driving the user to those documents that will satisfy her own information needs. User infor- mation needs are usually represented by means of a query, expressed in a language understood by the system."
+      ],
+      "predicted_chunks": [
+        "MRI_syllabus_chunk_1",
+        "MRI_syllabus_chunk_2",
+        "MRI_syllabus_chunk_3",
+        "MRI_syllabus_chunk_4"
+      ]
+    }
+  },
+  {
+    "id": "RAG_Q16",
+    "type": "RAG",
+    "task": "What Machine Learning methods for Text Categorization are listed in the MRI syllabus?",
+    "ground_truth": {
+      "chunks": [
+        "MRI_syllabus_chunk_5"
+      ],
+      "reference_answer": "The Machine Learning methods for Text Categorization listed in the syllabus are the Rocchio method, k-Nearest Neighbor (k-NN), and Naive Bayes."
+    },
+    "predicted_output": {
+      "answer": "The MRI syllabus lists the following Machine Learning methods for Text Categorization:\n\n1. Large Margin Winnow Methods\n2. Support Vector Machine (SVM)\n3. Perceptron\n4. Feature Weight Adjustment Algorithm\n\nThese methods are mentioned in the context of text categorization and are compared in terms of their performance on the Reuters data. The syllabus also mentions the importance of text categorization as an intermediate step in various text mining problems and approaches.",
+      "retrieved_contexts": [
+        "2.1.5 Text categorization methods using machine learning\n\nZhang [in Large Margin Winnow Methods for Text Categorization] shows how the large margin versions of the Winnow algorithm can be successfully applied to text categorization and achieve text classification performance comparable with Support Vector Machine (SVM) on the Reuters data, The result of this evaluation confirms that both the Perceptron and the large margin Winnow family of algorithms perform well for text categorization problems.\n\nShanker & Karypis [in A Feature Weight Adjustment Algorithm for Document Categorization] implemented and evaluated an iterative (and fast) algorithm for adjusting weights of the category features. In that manner they achieved an efficient classification scheme that improves the performance of the centroid-based classifier and is competitive with SVM.\n\n2.2 Posters",
+        "2.1.5 Text categorization methods using machine learning\n\nZhang [in Large Margin Winnow Methods for Text Categorization] shows how the large margin versions of the Winnow algorithm can be successfully applied to text categorization and achieve text classification performance comparable with Support Vector Machine (SVM) on the Reuters data, The result of this evaluation confirms that both the Perceptron and the large margin Winnow family of algorithms perform well for text categorization problems.\n\nShanker & Karypis [in A Feature Weight Adjustment Algorithm for Document Categorization] implemented and evaluated an iterative (and fast) algorithm for adjusting weights of the category features. In that manner they achieved an efficient classification scheme that improves the performance of the centroid-based classifier and is competitive with SVM.\n\n2.2 Posters",
+        "2.1.5 Text categorization methods using machine learning\n\nZhang [in Large Margin Winnow Methods for Text Categorization] shows how the large margin versions of the Winnow algorithm can be successfully applied to text categorization and achieve text classification performance comparable with Support Vector Machine (SVM) on the Reuters data, The result of this evaluation confirms that both the Perceptron and the large margin Winnow family of algorithms perform well for text categorization problems.\n\nShanker & Karypis [in A Feature Weight Adjustment Algorithm for Document Categorization] implemented and evaluated an iterative (and fast) algorithm for adjusting weights of the category features. In that manner they achieved an efficient classification scheme that improves the performance of the centroid-based classifier and is competitive with SVM.\n\n2.2 Posters",
+        "Online edition (c) 2009 Cambridge UP\n\n286 13 Text classification and Naive Bayes\n\n13.7 References and further reading\n\nGeneral introductions to statistical classification and machine learning can be found in (Hastie et al. 2001), (Mitchell 1997), and (Duda et al. 2000), including many important methods (e.g., decision trees and boosting) that we do not cover. A comprehensive review of text classification methods and results is (Sebastiani 2002). Manning and Schiitze (1999, Chapter 16) give an accessible introduction to text classification with coverage of decision trees, perceptrons and maximum entropy models. More information on the superlinear time complexity of learning methods that are more accurate than Naive Bayes can be found in (Perkins et al. 2003) and (Joachims 2006a)."
+      ],
+      "predicted_chunks": [
+        "Text_mining_as_integration_of_several_re_chunk_1",
+        "Text_mining_as_integration_of_several_re_chunk_2",
+        "Text_mining_as_integration_of_several_re_chunk_3",
+        "Text_mining_as_integration_of_several_re_chunk_4"
+      ]
+    }
+  },
+  {
+    "id": "RAG_Q17",
+    "type": "RAG",
+    "task": "What is the WORD classifier, as described in the 'Machine Learning in Automated Text Categorization' paper?",
+    "ground_truth": {
+      "chunks": [
+        "Machine_Learning_in_Automated_Text_Categorization_chunk_216",
+        "Machine_Learning_in_Automated_Text_Categorization_chunk_217"
+      ],
+      "reference_answer": "The WORD classifier, implemented by Yang, is a non-learning system for text categorization. It operates by comparing documents and category names, each treated as a vector of weighted terms in the vector space model, and was created to measure the effectiveness gained by adding a learning component to a classifier."
+    },
+    "predicted_output": {
+      "answer": "The WORD classifier, as described in the 'Machine Learning in Automated Text Categorization' paper by F. Sebastiani, is not explicitly defined in the search results. However, the paper discusses various machine learning techniques for automated text categorization, including supervised and unsupervised learning methods.\n\nAccording to the paper, text categorization is the process of assigning a document to one or more categories from a predefined set, based on its content. The paper reviews various machine learning algorithms for text categorization, including decision trees, rule-based systems, neural networks, and support vector machines.\n\nWhile the search results do not provide a direct definition of the WORD classifier, they suggest that it may be a type of machine learning algorithm used for text categorization. Further research would be needed to provide a more specific definition of the WORD classifier.\n\nReferences:\n\n* Sebastiani, F. (2002). Machine learning in automated text categorization. ACM Computing Surveys, 34(1), 1-47.\n* Kadhim, A. I. (2019). Survey on supervised machine learning techniques for automatic text classification. Artificial Intelligence Review, 51(2), 257-275.\n* Ko, Y., & Seo, J. (2000). Automatic text categorization by unsupervised learning. COLING 2000 Volume 1: The 18th International Conference on Computational Linguistics, 1066-1072.\n* Yadav, B. P., Ghate, S., & Harshavardhan, A. (2020). Text categorization performance examination using machine learning algorithms. IOP Conference Series: Materials Science and Engineering, 981(2), 022044.\n* Apte, C., Damerau, F., & Weiss, S. M. (1994). Towards language independent automated learning of text categorization models. SIGIR'94: Proceedings of the Seventeenth Annual International ACM SIGIR Conference on Research and Development in Information Retrieval, 23-30.\n* Sebastiani, F. (2005). Text categorization. Encyclopedia of Database Technologies and Applications, 11224.\n* Allam, H., Makubvure, L., Gyamfi, B., & Graham, K. N. (2025). Text classification: How machine learning is revolutionizing text categorization. Information, 12(2), 1-13.\n* Hartmann, J., Huppertz, J., & Schamp, C. (2019). Comparing automated text classification methods. International Journal of Information Management, 45, 102724.\n* Sebastiani, F. (1999). A tutorial on automated text categorisation. Proceedings of the Symposium on Artificial Intelligence, 1-15.\n* Dash, N. S., Roy, K., Dhar, A., & Mukherjee, H. (2021). Text categorization: past and present. Artificial Intelligence Review, 54(2), 257-275.",
+      "retrieved_contexts": [
+        "2. TEXT CATEGORIZATION 2.1. A Definition of Text Categorization\n\nText categorization is the task of assigning a Boolean value to each pair (d;,c;) € D x C, where D is a domain of documents and\n\nACM Computing Surveys, Vol. 34, No. 1, March 2002.\n\nMachine Learning in Automated Text Categorization 3\n\nC = {c1,..., cc} is a set of predefined cat- egories. A value of T assigned to (dj, c;) indicates a decision to file d; under ¢;, while a value of F indicates a decision not to file d; under c;. More formally, the task is to approximate the unknown tar- get function ®: DxC —> {T, F} (that de- scribes how documents ought to be classi- fied) by means of a function ® : Dx C > {T, F} called the classifier (aka rule, or hypothesis, or model) such that 6 and © “coincide as much as possible.” How to pre- cisely define and measure this coincidence (called effectiveness) will be discussed in Section 7.1. From now on we will assume that:",
+        "6.8. Neural Networks\n\nA neural network (NN) text classifier is a network of units, where the input units represent terms, the output unit(s) repre- sent the category or categories of interest, and the weights on the edges connecting units represent dependence relations. For classifying a test document d;, its term weights wz; are loaded into the input units; the activation of these units is propa- gated forward through the network, and the value of the output unit(s) determines the categorization decision(s). A typical way of training NNs is backpropagation, whereby the term weights of a training document are loaded into the input units, and if a misclassification occurs the error is “backpropagated” so as to change the pa- rameters of the network and eliminate or minimize the error.\n\n28",
+        "This paper is organized as follows. In Section 2 we formally define TC and its various subcases, and in Section 3 we review its most important applications. Section 4 describes the main ideas under- lying the ML approach to classification. Our discussion of text classification starts in Section 5 by introducing text index- ing, that is, the transformation of textual documents into a form that can be inter- preted by a classifier-building algorithm and by the classifier eventually built by it. Section 6 tackles the inductive construc- tion of a text classifier from a “training” set of preclassified documents. Section 7 discusses the evaluation of text classi- fiers. Section 8 concludes, discussing open issues and possible avenues of further research for TC.\n\n2. TEXT CATEGORIZATION 2.1. A Definition of Text Categorization\n\nText categorization is the task of assigning a Boolean value to each pair (d;,c;) € D x C, where D is a domain of documents and",
+        "The automated categorization (or classification) of texts into predefined categories has witnessed a booming interest in the last 10 years, due to the increased availability of documents in digital form and the ensuing need to organize them. In the research community the dominant approach to this problem is based on machine learning techniques: a general inductive process automatically builds a classifier by learning, from a set of preclassified documents, the characteristics of the categories. The advantages of this approach over the knowledge engineering approach (consisting in the manual definition of a classifier by domain experts) are a very good effectiveness, considerable savings in terms of expert labor power, and straightforward portability to different domains. This survey discusses the main approaches to text categorization that fall within the machine learning paradigm. We will discuss in detail issues pertaining to three different problems, namely, document"
+      ],
+      "predicted_chunks": [
+        "Machine_Learning_in_Automated_Text_Categorization_chunk_1",
+        "Machine_Learning_in_Automated_Text_Categorization_chunk_2",
+        "Machine_Learning_in_Automated_Text_Categorization_chunk_3",
+        "Machine_Learning_in_Automated_Text_Categorization_chunk_4"
+      ]
+    }
+  },
+  {
+    "id": "RAG_Q18",
+    "type": "RAG",
+    "task": "How has Linked Open Data (LOD) been used to address limited content analysis in recommender systems, according to the paper?",
+    "ground_truth": {
+      "chunks": [
+        "Lesson_04_Semantics-aware_Recommender_Systems_exploiting_Linked_Open_Data_and_graph-based_features_chunk_21",
+        "Lesson_04_Semantics-aware_Recommender_Systems_exploiting_Linked_Open_Data_and_graph-based_features_chunk_22",
+        "Lesson_04_Semantics-aware_Recommender_Systems_exploiting_Linked_Open_Data_and_graph-based_features_chunk_23"
+      ],
+      "reference_answer": "According to the paper, Linked Open Data (LOD) addresses limited content analysis by enriching item descriptions. For example, systems gather features from knowledge bases like DBpedia for music genres or Freebase for artists. LOD features have also been used in ensembles of algorithms like Random Forests and Logistic Regression. More advanced research focuses on automatically selecting the best subset of these LOD features to improve recommendation accuracy."
+    },
+    "predicted_output": {
+      "answer": "According to the paper, Linked Open Data (LOD) has been used to address limited content analysis in recommender systems by exploiting recurrent neural networks and LOD to enhance the semantic analysis of items. This approach has been shown to improve the performance of recommender systems. Additionally, LOD has been used to provide transparent explanations for recommender systems, making them more trustworthy and accountable. Overall, the use of LOD in recommender systems has been found to be beneficial in addressing the limitations of traditional content-based recommender systems. \n\nFor more information, you can refer to the following papers:\n- \"Linked open data to support content-based recommender systems\" by T Di Noia, R Mirizzi, VC Ostuni, D Romito (https://dl.acm.org/doi/abs/10.1145/2362499.2362501)\n- \"Recommender systems and linked open data\" by T Di Noia, VC Ostuni (https://link.springer.com/chapter/10.1007/978-3-319-21768-0_4)\n- \"Enhancing recommender systems using linked open data-based semantic analysis of items\" by R Meymandpour, JG Davis (https://www.researchgate.net/profile/Rouzbeh-Meymandpour/publication/280580282_Enhancing_Recommender_Systems_Using_Linked_Open_Data-Based_Semantic_Analysis_of_Items/links/55bc087808ae092e9660b575/Enhancing-Recommender-Systems-Using-Linked-Open-Data-Based-Semantic-Analysis-of-Items.pdf)\n- \"Deep content-based recommender systems exploiting recurrent neural networks and linked open data\" by C Musto, G Semeraro, M De Gemmis (https://dl.acm.org/doi/abs/10.1145/3213586.3225230)\n- \"Introducing linked open data in graph-based recommender systems\" by C Musto, P Basile, P Lops, M de Gemmis (https://www.sciencedirect.com/science/article/pii/S0306457316306847)\n- \"Recommender systems meet linked open data\" by T Di Noia (https://link.springer.com/chapter/10.1007/978-3-319-38791-8_61)\n- \"Using linked open data in recommender systems\" by L Peska, P Vojtas (https://dl.acm.org/doi/abs/10.1145/2797115.2797128)\n- \"A systematic literature review of Linked Data‐based recommender systems\" by C Figueroa, I Vagliano, OR Rocha (https://onlinelibrary.wiley.com/doi/abs/10.1002/cpe.3449)\n- \"Bridging the gap between linked open data-based recommender systems and distributed representations\" by P Basile, C Greco, A Suglia, G Semeraro (https://www.sciencedirect.com/science/article/pii/S0306437918302436)\n- \"Linked open data-based explanations for transparent recommender systems\" by C Musto, F Narducci, P Lops, M De Gemmis (https://www.sciencedirect.com/science/article/pii/S1071581918300946)",
+      "retrieved_contexts": [
+        "This huge availability of semantics-aware machine-readable data attracted researchers and practitioners willing to investigate how such information can be exploited to develop new services and platforms, or to improve the effectiveness of existing algo- rithms. A very trending research line investigates the exploitation of these novel (semantic) data points in the area of Recommender Systems (RS) [24], since LOD can be effectively used to handle several problems RSs typically suffer from. Content-based Recom- mender Systems [15] for example, suffer from the well-known prob- lem of limited content analysis, i.e. when limited or no features that describe the items to be recommended are available. The knowl- edge encoded in the LOD cloud can help to deal with this prob- lem, since several features which are relevant for a recommen- dation task, as the director of a movie or the genre played by a band, can be gathered from the LOD cloud. This is a largely in- vestigated research line, as",
+        "tion of LOD datasets used in the recommendation, and we will extend the whole approach to other domains, to even- tually propose a cross-domain recommendation leveraging LOD datasets. Moreover we want to combine a LOD-based recommendation with a collaborative-filtering approach in order to improve the performances of our system. Finally, we are evaluating how LOD-based recommender systems may mitigate common issues related to Limited Content Analy- sis, cold-start and sparsity of data.\n\nAcknowledgments\n\nThe authors wish to thank Marco de Gemmis for fruitful discussions and suggestions. This research is partially spon- sored by HP IRP 2011. Grant CW267313.\n\n7. REFERENCES\n\n[1] G. Adomavicius and A. Tuzhilin. Toward the next generation of recommender systems: A survey of the state-of-the-art and possible extensions. IEEE Transactions on Knowledge Data Engineering. 17(6):734-749, 2005.",
+        "Subsequent papers have focused on the impact of LOD-based features on the overall accuracy of a recommender system. A relevant paper has been presented by Di Noia, Mirizzi, Ostuni, and Romito (2012), who performed a preliminary compari- son of different manually-selected LOD properties in a movie recommender system. Similarly, an empirical evaluation of the impact of LOD-based features on several recommendation techniques (as PageRank and text classifiers) has been presented in Musto, Basile, Lops, de Gemmis, and Semeraro (2014). Such studies confirmed the usefulness of injecting Linked Open Data into recommender systems since, regardless the specific technique adopteed to generate recommendations, the perfor- mance of LOD-enabled RSs often overcome that obtained by several widespread recommendation techniques as collaborative filtering and matrix factorization. This has been further confirmed by several studies performed in many different domains, as book recommendation (Peska &",
+        "Subsequent papers have focused on the impact of LOD-based features on the overall accuracy of a recommender system. A relevant paper has been presented by Di Noia, Mirizzi, Ostuni, and Romito (2012), who performed a preliminary compari- son of different manually-selected LOD properties in a movie recommender system. Similarly, an empirical evaluation of the impact of LOD-based features on several recommendation techniques (as PageRank and text classifiers) has been presented in Musto, Basile, Lops, de Gemmis, and Semeraro (2014). Such studies confirmed the usefulness of injecting Linked Open Data into recommender systems since, regardless the specific technique adopteed to generate recommendations, the perfor- mance of LOD-enabled RSs often overcome that obtained by several widespread recommendation techniques as collaborative filtering and matrix factorization. This has been further confirmed by several studies performed in many different domains, as book recommendation (Peska &"
+      ],
+      "predicted_chunks": [
+        "Lesson_04_Semantics-aware_Recommender_Systems_exploiting_Linked_Open_Data_and_graph-based_features_chunk_1",
+        "Lesson_04_Semantics-aware_Recommender_Systems_exploiting_Linked_Open_Data_and_graph-based_features_chunk_2",
+        "Lesson_04_Semantics-aware_Recommender_Systems_exploiting_Linked_Open_Data_and_graph-based_features_chunk_3",
+        "Lesson_04_Semantics-aware_Recommender_Systems_exploiting_Linked_Open_Data_and_graph-based_features_chunk_4"
+      ]
+    }
+  },
+  {
+    "id": "RAG_Q19",
+    "type": "RAG",
+    "task": "How does the Soundex algorithm work, according to the 'Introduction to Information Retrieval' book?",
+    "ground_truth": {
+      "chunks": [
+        "Book_on_introduction_to_Information_Retrieval_chunk_286",
+        "Book_on_introduction_to_Information_Retrieval_chunk_287"
+      ],
+      "reference_answer": "The Soundex algorithm generates a four-character code (a letter followed by three digits) for a term. The process involves retaining the first letter, then converting consonants to specific digits based on their phonetic sound while disregarding most vowels. Consecutive identical digits are then removed. The algorithm is based on the principles that vowels are often interchangeable and consonants with similar sounds can be grouped into equivalence classes."
+    },
+    "predicted_output": {
+      "answer": "The Soundex algorithm is a phonetic algorithm for indexing names by sound, as described in the \"Introduction to Information Retrieval\" book. It works by converting words into a phonetic code, allowing for efficient retrieval of words that sound similar. The algorithm uses a combination of letter substitutions and concatenations to produce a unique code for each word. This code can then be used to index and retrieve words that have similar sounds, even if they are not spelled exactly the same. The Soundex algorithm is commonly used in information retrieval systems, such as search engines and databases, to improve the accuracy of search results. \n\nFor more information, you can refer to the following books:\n\n1. \"Advances in Information Retrieval\" by Cathal Gurrin, Yulan He, Gabriella Kazai, Udo Kruschwitz, Suzanne Little, Thomas Roelleke, Stefan Rüger and Keith van Rijsbergen\n2. \"Advances in Information Retrieval\" by Mounia Lalmas, Andrew MacFarlane, Stefan Rüger, Anastasios Tombros, Theodora Tsikrika and Alexei Yavlinsky\n3. \"Advances in Information Retrieval\" by Ricardo Baeza-Yates, Arjen P. de Vries, Hugo Zaragoza, B. Barla Cambazoglu, Vanessa Murdock, Ronny Lempel and Fabrizio Silvestri\n4. \"Advances in Information Retrieval\" by Sharon McDonald and John Tait\n5. \"Computational Linguistics and Intelligent Text Processing\" by Alexander Gelbukh\n\nThese books provide a comprehensive overview of the Soundex algorithm and its applications in information retrieval.",
+      "retrieved_contexts": [
+        "The soundex algorithm is attributed to Margaret K. Odell and Robert C. Russelli (from U.S. patents granted in 1918 and 1922); the version described here draws on Bourne and Ford (1961). Zobel and Dart (1996) evaluate var- ious phonetic matching algorithms, finding that a variant of the soundex algorithm performs poorly for general spelling correction, but that other al- gorithms based on the phonetic similarity of term pronunciations perform well.\n\nOnline edition (c) 2009 Cambridge UP\n\nOnline edition (c) 2009 Cambridge UP\n\nINDEXING INDEXER\n\nDRAFT! © April 1, 2009 Cambridge University Press. Feedback welcome. 67\n\nIndex construction",
+        "Algorithms for such phonetic hashing are commonly collectively known as soundex algorithms. However, there is an original soundex algorithm, with various variants, built on the following scheme:\n\n1. Turn every term to be indexed into a 4-character reduced form. Build an inverted index from these reduced forms to the original terms; call this the soundex index.\n\n2. Do the same with query terms. 3. When the query calls for a soundex match, search this soundex index.\n\nThe variations in different soundex algorithms have to do with the conver- sion of terms to 4-character forms. A commonly used conversion results in a 4-character code, with the first character being a letter of the alphabet and the other three being digits between 0 and 9.\n\nOnline edition (c) 2009 Cambridge UP\n\n64\n\n\"NO\n\n3 Dictionaries and tolerant retrieval\n\n1. Retain the first letter of the term.\n\n2. Change all occurrences of the following letters to ’0’ (zero): ’A’, E’, ‘TY’, ’O”, \"UHV, \"W7, VY’.",
+        "Phonetic correction\n\nOur final technique for tolerant retrieval has to do with phonetic correction: misspellings that arise because the user types a query that sounds like the tar- get term. Such algorithms are especially applicable to searches on the names of people. The main idea here is to generate, for each term, a “phonetic hash” so that similar-sounding terms hash to the same value. The idea owes its origins to work in international police departments from the early 20th cen- tury, seeking to match names for wanted criminals despite the names being spelled differently in different countries. It is mainly used to correct phonetic misspellings in proper nouns.\n\nAlgorithms for such phonetic hashing are commonly collectively known as soundex algorithms. However, there is an original soundex algorithm, with various variants, built on the following scheme:",
+        "This algorithm rests on a few observations: (1) vowels are viewed as inter- changeable, in transcribing names; (2) consonants with similar sounds (e.g., D and T) are put in equivalence classes. This leads to related names often having the same soundex codes. While these rules work for many cases, especially European languages, such rules tend to be writing system depen- dent. For example, Chinese names can be written in Wade-Giles or Pinyin transcription. While soundex works for some of the differences in the two transcriptions, for instance mapping both Wade-Giles hs and Pinyin x to 2, it fails in other cases, for example Wade-Giles j and Pinyin r are mapped differently.\n\nExercise 3.14\n\nFind two differently spelled proper nouns whose soundex codes are the same.\n\nExercise 3.15\n\nFind two phonetically similar proper nouns whose soundex codes are different.\n\nOnline edition (c) 2009 Cambridge UP\n\n3.5 References and further reading 65\n\n3.5 References and further reading"
+      ],
+      "predicted_chunks": [
+        "Book_on_introduction_to_Information_Retrieval_chunk_1",
+        "Book_on_introduction_to_Information_Retrieval_chunk_2",
+        "Book_on_introduction_to_Information_Retrieval_chunk_3",
+        "Book_on_introduction_to_Information_Retrieval_chunk_4"
+      ]
+    }
+  },
+  {
+    "id": "RAG_Q20",
+    "type": "RAG",
+    "task": "What are the main recommendations for using agents in AutoGen, according to the paper?",
+    "ground_truth": {
+      "chunks": [
+        "autogen_enabling_next_gen_llm_applications_via_multi_agent_conversation_chunk_83",
+        "autogen_enabling_next_gen_llm_applications_via_multi_agent_conversation_chunk_84"
+      ],
+      "reference_answer": "The paper recommends starting with built-in agents like AssistantAgent and UserProxyAgent and using simple conversation topologies such as a two-agent or group chat. It also suggests reusing built-in reply methods before creating custom ones. For customization, adding instructions in the initial user message is an effective way to boost performance without modifying the agent's system message."
+    },
+    "predicted_output": {
+      "answer": "According to the paper, the main recommendations for using agents in AutoGen are:\n\n1. Define agents: Developers can define agents using the `AssistantAgent` and `UserProxyAgent` classes.\n2. Register a custom reply function: Developers can register a custom reply function using the `register_reply` method.\n3. Initiate conversations: Developers can initiate conversations between agents using the `initiate_chat` method.\n4. Configure agent interaction behaviors: Developers can configure agent interaction behaviors using various modes, such as human input mode and code execution mode.\n5. Use natural language and computer code to program conversation patterns: Developers can use natural language and computer code to program flexible conversation patterns for different applications.\n\nThese recommendations are based on the content of the paper, which provides an overview of the AutoGen framework and its applications. The paper also includes examples of how to use AutoGen to build LLM applications via multiple agents that can converse with each other to accomplish tasks.",
+      "retrieved_contexts": [
+        "B.1 General Guidelines for Using AutoGen\n\nBelow we give some recommendations for using agents in AutoGen to accomplish a task.",
+        "Our experiments, as detailed in Section 3, demonstrate that this approach offers numerous benefits. The adoption of AutoGen has resulted in improved performance (over state-of-the-art approaches), reduced development code, and decreased manual burden for existing applications. It offers flex- ibility to developers, as demonstrated in Al (scenario 3), A5, and A6, where AutoGen enables multi-agent chats to follow a dynamic pattern rather than fixed back-and-forth interactions. It allows humans to engage in activities alongside multiple AI agents in a conversational manner. Despite the complexity of these applications (most involving more than two agents or dynamic multi-turn agent cooperation), the implementation based on AutoGen remains straightforward. Dividing tasks among separate agents promotes modularity. Furthermore, since each agent can be developed, tested, and maintained separately, this approach simplifies overall development and code management.",
+        "2308.08155v2 [cs.AI] 3 Oct 2023\n\nAbstract\n\narXiv\n\nAutoGen? is an open-source framework that allows developers to build LLM ap- plications via multiple agents that can converse with each other to accomplish tasks. AutoGen agents are customizable, conversable, and can operate in vari- ous modes that employ combinations of LLMs, human inputs, and tools. Using AutoGen, developers can also flexibly define agent interaction behaviors. Both natural language and computer code can be used to program flexible conversation patterns for different applications. AutoGen serves as a generic framework for building diverse applications of various complexities and LLM capacities. Em- pirical studies demonstrate the effectiveness of the framework in many example applications, with domains ranging from mathematics, coding, question answer- ing, operations research, online decision-making, entertainment, etc.\n\n1Corresponding author. Email: auto-gen@outlook.com “https: //github.com/microsoft/autogen",
+        "shows that AutoGen can be used to realize effective retrieval augmentation and realize a novel interactive retrieval feature to boost performance on Q&A tasks; (c) shows that AutoGen can be used to introduce a three-agent system with a grounding agent to improve performance on ALFWorld;\n\n(d) shows that a multi-agent design is helpful in boosting performance in coding tasks that need safeguards.\n\n2023) with SentenceTransformers (Reimers & Gurevych, 2019) as the context retriever. A detailed workflow description of the Retrieval-augmented Chat is provided in Appendix D."
+      ],
+      "predicted_chunks": [
+        "autogen_enabling_next_gen_llm_applications_via_multi_agent_conversation_chunk_1",
+        "autogen_enabling_next_gen_llm_applications_via_multi_agent_conversation_chunk_2",
+        "autogen_enabling_next_gen_llm_applications_via_multi_agent_conversation_chunk_3",
+        "autogen_enabling_next_gen_llm_applications_via_multi_agent_conversation_chunk_4"
+      ]
+    }
+  },
+  {
+    "id": "RAG_Q21",
+    "type": "RAG",
+    "task": "What is the difference between classic PageRank and PageRank with Priors in a recommendation setting, according to the paper?",
+    "ground_truth": {
+      "chunks": [
+        "Lesson_04_Introducing_linked_open_data_in_graph-based_recommender_systems_chunk_39",
+        "Lesson_04_Introducing_linked_open_data_in_graph-based_recommender_systems_chunk_40"
+      ],
+      "reference_answer": "The primary difference is how initial probabilities are assigned to nodes. Classic PageRank assigns a uniform probability to all nodes. In contrast, PageRank with Priors uses a non-uniform personalization vector to bias the ranking toward a specific user's preferences. For instance, the paper describes a heuristic where 80% of the weight is distributed among items a user has liked, requiring the algorithm to be executed for each user."
+    },
+    "predicted_output": {
+      "answer": "The difference between classic PageRank and PageRank with Priors in a recommendation setting is that PageRank with Priors incorporates additional information, such as user preferences or item attributes, to influence the ranking of items. This is in contrast to classic PageRank, which solely relies on the link structure of the graph. According to the paper \"PageRank with Priors: An Influence Propagation Perspective\" by B. Xiang et al., PageRank with Priors can be viewed as an influence propagation process, where the prior information is used to initialize the influence propagation. This allows for more personalized and context-aware recommendations. \n\nFor more information, you can refer to the papers:\n\n* \"PageRank with Priors: An Influence Propagation Perspective\" by B. Xiang et al. (2021) https://staff.ustc.edu.cn/~cheneh/paper_pdf/2013/BiaoXiang.pdf\n* \"Context-aware graph-based recommendations exploiting personalized pagerank\" by C. Musto et al. (2021) https://www.sciencedirect.com/science/article/pii/S0950705121000691\n\nThese papers provide more details on the differences between classic PageRank and PageRank with Priors in the context of recommendation systems.",
+      "retrieved_contexts": [
+        "The behavior of the classic PageRank is sketched in Fig. 4: in the original formulation an evenly distributed prior proba- bility is assigned to each node en where N is the number of nodes). Differently from PageRank, PageRank with Priors adopts a non-uniform personalization vector assigning different weights to different nodes to get a bias towards some nodes (specif- ically, the preferences of a specific user). As shown by Fig. 5, in our algorithm the probability was distributed by defining a simple heuristics, set after a rough tuning: 80% of the total weight is evenly distributed among items liked by the users (0% assigned to items disliked by the users), while 20% is evenly distributed among the remaining nodes. Damping factor was set equal to 0.85, as in Page et al. (1999).",
+        "The behavior of the classic PageRank is sketched in Fig. 4: in the original formulation an evenly distributed prior proba- bility is assigned to each node en where N is the number of nodes). Differently from PageRank, PageRank with Priors adopts a non-uniform personalization vector assigning different weights to different nodes to get a bias towards some nodes (specif- ically, the preferences of a specific user). As shown by Fig. 5, in our algorithm the probability was distributed by defining a simple heuristics, set after a rough tuning: 80% of the total weight is evenly distributed among items liked by the users (0% assigned to items disliked by the users), while 20% is evenly distributed among the remaining nodes. Damping factor was set equal to 0.85, as in Page et al. (1999).",
+        "However, PageRank has the main problem of being not personalized, that is to say, the PageRank score of the item nodes (and, accordingly, the recommendations returned by the algorithm) only depend on the topology as well as on the connec- tions that exist in the graph. In other terms, if PageRank is used as recommendation algorithm over a graph-based data model all the users are returned with the same recommendations.\n\nA well known variant of the PageRank, called PageRank with Priors [95] can be adopted to tackle this issue, since it allows to get a bias towards some nodes, specif- ically, the preferences of a specific user. As described in [1 QO], this algorithm can be really effective for recommendation tasks since it can adapt her own behavior on the preferences of the target user.",
+        "However, PageRank has the main problem of being not personalized, that is to say, the PageRank score of the item nodes (and, accordingly, the recommendations returned by the algorithm) only depend on the topology as well as on the connec- tions that exist in the graph. In other terms, if PageRank is used as recommendation algorithm over a graph-based data model all the users are returned with the same recommendations.\n\nA well known variant of the PageRank, called PageRank with Priors [95] can be adopted to tackle this issue, since it allows to get a bias towards some nodes, specif- ically, the preferences of a specific user. As described in [1 QO], this algorithm can be really effective for recommendation tasks since it can adapt her own behavior on the preferences of the target user."
+      ],
+      "predicted_chunks": [
+        "Lesson_04_Introducing_linked_open_data_in_graph-based_recommender_systems_chunk_1",
+        "Lesson_04_Introducing_linked_open_data_in_graph-based_recommender_systems_chunk_2",
+        "Lesson_04_Introducing_linked_open_data_in_graph-based_recommender_systems_chunk_3",
+        "Lesson_04_Introducing_linked_open_data_in_graph-based_recommender_systems_chunk_4"
+      ]
+    }
+  },
+  {
+    "id": "RAG_Q22",
+    "type": "RAG",
+    "task": "In conversational recommender systems, what are the two main forms in which user preferences can be expressed, according to the slides?",
+    "ground_truth": {
+      "chunks": [
+        "Lesson_11_conversational_recommender_systems_chunk_26"
+      ],
+      "reference_answer": "According to the slides, user preferences can be expressed in two main forms. The first is by liking items in their entirety, such as 'I like The Matrix'. The second is by expressing preferences for features of items, which can be either objective features like an actor or genre (e.g., 'I like sci-fi movies'), or subjective features like the mood of a scene (e.g., 'I like movies with emotional scenes')."
+    },
+    "predicted_output": {
+      "answer": "The two main forms in which user preferences can be expressed in conversational recommender systems are:\n\n1. Explicit preferences: where users explicitly state their preferences, such as by answering questions about item attributes or providing feedback on recommendations.\n2. Implicit preferences: where users' preferences are inferred from their behavior or interactions with the system, such as through natural language conversations or by analyzing their search history.\n\nThese forms of preference expression are not mutually exclusive, and conversational recommender systems often combine both explicit and implicit methods to elicit user preferences and provide personalized recommendations.",
+      "retrieved_contexts": [
+        "2 RELATED WORK\n\n2.1 Conversational Recommender System\n\nConversational recommender systems (CRSs) aim to provide rec- ommendation services through conversational interactions. Two main types of CRSs have been studied: attribute-based CRSs and generation-based CRSs. Attribute-based CRSs interact with users through pre-defined actions [14]. They capture user preferences by asking queries about item attributes and generate responses using pre-defined templates [27, 45]. They mainly focus on capturing user preferences and giving accurate recommendations within as few\n\nturns as possible. Compared to\n\nattribute-based CRSs, generation-\n\nbased CRSs interact with users through more free-form natural\n\nlanguage conversations [16]. T]\n\nhey capture the preferences from",
+        "This paper deals with a certain class of conversational and knowledge-based recommender systems, which are also referred to as sales advisory systems in literature [18, 19, 32, 60]. In general, in conversational approaches a special requirement elicitation phase is needed, in which the user can incrementally enter or revise his personal preferences. However, finding out what the customer really needs can be a challenging task for different reasons. If we, for instance, think of a Web-based advisory application for digital cameras, we see that Web users can significantly differ with respect to the background they have in the domain. Whilst some expert users might prefer to specify technical requirements only, others might want to state their preferences on the functionality that should be provided by the camera, as they are not well-acquainted with the technical characteristics. For novice users, finally, it could be helpful if the system provides additional guidance during the dialog.",
+        "15.6.2 Interacting with the Recommender System\n\nThere are different ways in which a user can give input to the recommender sys- tem. This interaction is what distinguishes conversational systems from “single- shot” recommendations. They allow users to elaborate their requirements over the course of an extended dialog [51] rather than each user interaction being treated independently of previous history.\n\nWe expand on the four ways suggested by [26], supplying examples of current applications?. Note that although there are more unobtrusive ways to elicit user preferences, e.g. via usage data [46] or demographics [6], this section focuses on explicit feedback from users.",
+        "4.2 User Modeling\n\nThe interactive elicitation of the user’s current preferences or needs and constraints is another central task of CRS. As discussed above, this can be done through different modalities and by supporting various ways for users to express what they want. The acquired preferences are typically recorded in explicit form within a user profile, based on which further inferences regarding the relevance of individual items can be made. There are two main ways of representing the preference information in such explicit models:\n\ne Preference expressions or estimates regarding individual items, e.g., ratings, like and dislike statements, or implicit feedback signals. In [39], for example, users are initially presented with a number of tourism destinations and asked which of them match their preferences.\n\ne Preferences regarding individual item facets. These facets can either relate to item attributes (e.g., the genre of a movie) or the desired functionalities."
+      ],
+      "predicted_chunks": [
+        "a_large_language_model_enhanced_conversational_recommender_system_chunk_1",
+        "a_large_language_model_enhanced_conversational_recommender_system_chunk_2",
+        "a_large_language_model_enhanced_conversational_recommender_system_chunk_3",
+        "a_large_language_model_enhanced_conversational_recommender_system_chunk_4"
+      ]
+    }
+  },
+  {
+    "id": "RAG_Q23",
+    "type": "RAG",
+    "task": "In the Qrec recommender system, what is the role of the trade-off parameter gamma (γ)?",
+    "ground_truth": {
+      "chunks": [
+        "towards_question_based_recommender_systems_chunk_57"
+      ],
+      "reference_answer": "The trade-off parameter gamma (γ) controls how much online user feedback is incorporated into the user and item latent factors. When gamma is set to 0, user feedback is ignored during the online updating process."
+    },
+    "predicted_output": {
+      "answer": "The trade-off parameter gamma (γ) in the Qrec recommender system controls how much online user feedback is incorporated into the user latent factor and item latent factor. It ranges from 0 to 5 with a step of 0.5, and the best value is 0.5 on the two categories. When γ is 0, the online updating does not take the user feedback into account. The performance of the system first improves and then drops with the increase of γ. \n\nThis information is based on the course \"Semantic Intelligent Information Access (SIIA)\" and the lesson \"Conversational Recommender Systems\". The reference used is \"towards_question_based_recommender_systems.pdf\". \n\nIt's worth noting that the exact role of γ might depend on the specific implementation and context of the Qrec recommender system, and further information might be needed for a more detailed understanding.",
+      "retrieved_contexts": [
+        "4.1.7 Research Questions. Through the experiments in this work we aim to answer the following research questions: RQ1 What is the impact of the trade-off y, the dimension of the latent factors K, and the number of questions asked Nq? RQ2 How effective is Qrec compared to prior works?\n\nos 0.40 + Recallas ee Recallas = AP@S 035! = AP@S\n\n—s Noce + MRR\n\nos\n\n= pee + MRR\n\n04\n\n03\n\n02\n\n6 os i as 3 a5 3 a5 a as = + Recallas\n\n—= AP@s 030 —= Nee\n\n+ MRR 0.25! 04 0.20\n\n03\n\n+e Recallas — Apes —= noce MRR\n\nos\n\n02\n\noal,\n\nFigure 2: The impact of the trade-off parameter y (top), and the di- mension of the latent factors K (bottom) on \"Home and Kitchen\" (left) and \"Pet Supplies\" (right) categories.\n\nRQ3 How effective is Qrec for the cold-start user and the cold-start item problem?\n\nRQ4 Does the offline initialization help?\n\nRQ5 Are the assumptions made in this work along with the effec- tiveness of our algorithm confirmed by a user study?\n\n4.2 Impact of Parameters (RQ1)",
+        "set-based feedback, while Graus and Willemsen [10] focused on choice-based feedback to learn the latent factors and perform inter- active preference elicitation online. Contrary to these works that update the individual user’s latent representation, Christakopoulou et al. [7] proposed a method to update all user and item latent fac- tor parameters of a PMF variant at every feedback cycle, obtaining absolute and pairwise user feedback on items. We refer the reader to He et al. [12] and Jugovac and Jannach [16] for a literature review of interactive recommendation. Compared with Christakopoulou et al. [7], our model also updates all user and item latent factor parameters but based on our own matrix factorization model. Fur- ther, while Christakopoulou et al. [7] elicit user ratings on items, our Qrec model asks questions about extracted descriptive terms of the items, and learns a strategy of asking sequential questions. Furthermore, the selection of questions in Qrec is adaptive to the",
+        "The main contribution of this paper is three-fold: (1) We pro- pose a novel question-based recommendation method, Qrec, that interacts with users by soliciting their preferences on descriptive item characteristics. (2) We propose a novel framework, that in- corporates the online matrix factorization and online users’ belief tracking for sequential question asking. (3) We propose a novel ma- trix factorization method which can incorporate the offline training and efficient online updating of the user and item latent factors.\n\nTo the best of our knowledge, this is the first work that incor- porates online matrix factorization and question asking for item related features. The evaluation results show that our Qrec model achieves the highest performance compared to state-of-the-art base- lines and our model is effective in both user and item cold-start recommendation scenarios.\n\n2 RELATED WORK",
+        "In RQ1, we examine the impact of the trade-off parameter y, the dimension of the latent factors K, and the number of questions asked Ng over the effectiveness of our model. We compare the performance for different parameters. When the comparison for the given parameter, we fix the other two parameters. The performance evolution of different y and different dimension of the latent factors K on the two categories is shown in Figure 2, and the results of different number of questions on the two categories can be seen in \"Qrec\" column of Table 2. The y ranges from 0 to 5 with a step of 0.5, and the K ranges from 1 to 10 with a step of 1. As one can observe, with the increase of y, the performance first improves and then drops. The best y is 0.5 on the two categories. y can control how much online user feedback is incorporated into the user latent factor and item latent factor. In particular, when y is 0, ie. the online updating do not take the user feedback (i.e. Y) into account, as"
+      ],
+      "predicted_chunks": [
+        "towards_question_based_recommender_systems_chunk_1",
+        "towards_question_based_recommender_systems_chunk_2",
+        "towards_question_based_recommender_systems_chunk_3",
+        "towards_question_based_recommender_systems_chunk_4"
+      ]
+    }
+  },
+  {
+    "id": "RAG_Q24",
+    "type": "RAG",
+    "task": "What is the intuition behind the scheme proposed by Jeh and Widom for efficiently computing personalized PageRank vectors?",
+    "ground_truth": {
+      "chunks": [
+        "topic_sensitive_pagerank_a_context_sensitive_ranking_algorithm_for_web_search_chunk_67",
+        "topic_sensitive_pagerank_a_context_sensitive_ranking_algorithm_for_web_search_chunk_68"
+      ],
+      "reference_answer": "The intuition behind Jeh and Widom's scheme is to exploit the computational overlap between different personalized PageRank vectors. For instance, a random walk terminating at a specific node is very similar to one terminating at that node's children. Leveraging this, they developed a dynamic programming algorithm to simultaneously generate a large basis set of personalized PageRank vectors, which can then be used to compute arbitrary topic-specific vectors."
+    },
+    "predicted_output": {
+      "answer": "The intuition behind the scheme proposed by Jeh and Widom for efficiently computing personalized PageRank vectors is to exploit the overlap in the computation of different vectors. By constructing a dynamic programming algorithm to generate a large basis set of personalized PageRank vectors simultaneously, they can then be used to compute arbitrary topic-specific vectors. This approach is based on the observation that the induced random walk is very similar when setting the personalization vector p to add a complete set of artificial transitions terminating at a node, versus setting p so that each of the children of the node are targets of a complete set of artificial transitions.",
+      "retrieved_contexts": [
+        "For generating a larger number of topic-specific vectors, a different approach is required; speeding up the computation of individual rank vectors is insufficient. Jeh and Widom [20] propose a scheme for efficiently computing personalized PageRank vectors by exploiting the overlap in the computation of the different vectors. The intuition behind their scheme can be seen through an example. Consider the simple graph given in Figure 4. If we set the personalization vector p to add a complete set of artificial transitions terminating at A (Graph 1), the induced random walk is very similar to the case where we set p so that each of the children of A, namely B and C, are targets of a complete set of artificial transitions (Graph 2). By exploiting this simple observation, they construct a dynamic programming algorithm to generate a large basis set of personalized PageRank vectors simultaneously, which can then be used to compute arbitrary topic-specific vectors. As the time and space",
+        "Abstract. The original PageRank algorithm for improving the ranking of search-query results computes a single vector, using the link structure of the Web, to capture the relative “importance” of Web pages, independent of any particular search query. To yield more accurate search results, we propose computing a set of PageRank vectors, biased using a set of representative topics, to capture more accurately the notion of importance with respect to a particular topic. For ordinary keyword search queries, we compute the topic-sensitive PageRank scores for pages satisfying the query using the topic of the query keywords. For searches done in context (e.g., when the search query is performed by highlighting words in a Web page), we compute the topic-sensitive PageRank scores using the topic of the context in which the query appeared. By us- ing linear combinations of these (precomputed) biased PageRank vectors to generate context-specific importance scores for pages at query time, we show",
+        "For generating a small number of topic-specific vectors, the above approach is reason- able in terms of time complexity. However, reducing the running time can be very useful in minimizing the delay between the completion of a new Web crawl and the generation of an updated search index. To improve on the above running times, we use a scheme introduced by Kamar et al. [21] to accelerate PageRank computations by using successive iterates to ap- proximate and subtract out the nonprincipal eigenvectors from the current iterate. Intuitively, during the iterative computation, the algorithm periodically uses a sequence of intermediate iterates to extrapolate the value of the true rank vector. Using this scheme, called Quadratic Extrapolation, the convergence of PageRank can be sped up by 25-300%, depending on the setting of the parameter a.",
+        "1 Introduction\n\nVarious link-based ranking strategies have been developed recently for improving Web-search query results. The HITS algorithm proposed by Kleinberg [22] relies on query-time processing o deduce the hubs and authorities that exist in a subgraph of the Web consisting of both he results to a query and the local neighborhood of these results. Bharat and Henzinger [4] augment the HITS algorithm with content analysis to improve precision for the task of re- rieving documents related to a query topic (as opposed to retrieving documents that exactly satisfy the user’s information need). Chakrabarti et al. [8] make use of HITS for automatically compiling resource lists for general topics. The PageRank algorithm, introduced by Page et al. [26], precomputes a rank vector that provides a-priori “importance” estimates for all of the pages on the Web. This vector is com- uted once, offline, and is independent of the search query. At query time, these importance"
+      ],
+      "predicted_chunks": [
+        "topic_sensitive_pagerank_a_context_sensitive_ranking_algorithm_for_web_search_chunk_1",
+        "topic_sensitive_pagerank_a_context_sensitive_ranking_algorithm_for_web_search_chunk_2",
+        "topic_sensitive_pagerank_a_context_sensitive_ranking_algorithm_for_web_search_chunk_3",
+        "topic_sensitive_pagerank_a_context_sensitive_ranking_algorithm_for_web_search_chunk_4"
+      ]
+    }
+  },
+  {
+    "id": "RAG_Q25",
+    "type": "RAG",
+    "task": "What are the key dimensions of the design space for preference elicitation in recommender systems, as described in the slides?",
+    "ground_truth": {
+      "chunks": [
+        "InformationFiltering_4_Evaluation_chunk_10",
+        "InformationFiltering_4_Evaluation_chunk_11"
+      ],
+      "reference_answer": "The design space for preference elicitation depends on its goal and strategy. Its key dimensions include the goal (Community utility vs. User utility), the control strategy (Human vs. System Controlled, Explicit vs. Implicit), and the type of information collected (such as Ratings, Free Text, User Goals, or Demographics)."
+    },
+    "predicted_output": {
+      "answer": "The key dimensions of the design space for preference elicitation in recommender systems include:\n\n1. **Elicitation techniques**: The methods used to collect user preferences, such as explicit or implicit feedback.\n2. **Information on items**: The type and amount of information available about the items being recommended.\n3. **Algorithms**: The algorithms used to generate recommendations based on user preferences.\n4. **Interface: presentation and interaction**: The way in which the system presents recommendations to the user and allows them to interact with the system.\n\nAdditionally, the design space for preference elicitation considers factors such as:\n\n* **Community utility vs. User utility**: Whether the system is designed to learn recommendation \"rules\" for the community as a whole or to learn individual user preferences.\n* **Human vs. System Controlled**: Whether the elicitation process is controlled by humans or by the system itself.\n* **Explicit vs. Implicit**: Whether the system collects explicit feedback (e.g. ratings) or implicit feedback (e.g. clickstream data).\n* **Type of information collected**: The type of information collected about users and items, such as demographics, user requirements, or user goals.\n* **Rating scale**: The scale used to collect ratings, such as thumbs up/down or 5/10 stars.\n* **Profile length**: The number of ratings in a user's profile.\n\nThese dimensions are important considerations in the design of recommender systems, as they can impact the effectiveness of the system in providing personalized recommendations to users.",
+      "retrieved_contexts": [
+        "Paolo Cremonesi - http://home.deib.polimi.it/cremon\n\nes/\n\nDesign space: preference elicitation\n\n¢ The effectiveness of the elicitation process depends on its goal and strategy — Community utility vs. User utility — Human vs. System Controlled — Explicit vs. Implicit — Type of information collected (Ratings, Free Text, User Requirements, User Goals, Demographics)\n\nPaolo Cremonesi - http://home.deib.polimi.it/cremones/ 31\n\nDesign space: preference elicitation\n\n¢ The effectiveness of the elicitation process depends on its goal and strategy — Community utility vs. User utility — Human vs. System Controlled — Explicit vs. Implicit — Type of information collected (Ratings, Free Text, User Requirements, User Goals, Demographics) — Rating scale (Thumbs up/down, 5/10 stars, ...) — Profile length (# of ratings in the user profile )\n\nPaolo Cremonesi - http://home.deib.polimi.it/cremones/ 32\n\nOutline",
+        "Abstract. Recommender systems represent user preferences for the purpose of suggesting items to purchase or examine. They have become fundamental applications in electronic commerce and information access, providing suggestions that effectively prune large information spaces so that users are directed toward those items that best meet their needs and preferences. A variety of techniques have been proposed for performing recommendation, including content-based, collaborative, knowledge-based and other techniques. To improve performance, these methods have sometimes been combined in hybrid recommenders. This paper surveys the landscape of actual and possible hybrid recommenders, and introduces a novel hybrid, EntreeC, a system that combines knowledge-based recommendation and collaborative filtering to recommend restaurants. Further, we show that semantic ratings obtained from the knowledge-based part of the system enhance the effectiveness of collaborative filtering.",
+        "Abstract. Recommender systems represent user preferences for the purpose of suggesting items to purchase or examine. They have become fundamental applications in electronic commerce and information access, providing suggestions that effectively prune large information spaces so that users are directed toward those items that best meet their needs and preferences. A variety of techniques have been proposed for performing recommendation, including content-based, collaborative, knowledge-based and other techniques. To improve performance, these methods have sometimes been combined in hybrid recommenders. This paper surveys the landscape of actual and possible hybrid recommenders, and introduces a novel hybrid, EntreeC, a system that combines knowledge-based recommendation and collaborative filtering to recommend restaurants. Further, we show that semantic ratings obtained from the knowledge-based part of the system enhance the effectiveness of collaborative filtering.",
+        "options.\n\nBurke, 2002 (*) (*) Robin D. Burke: Hybrid Recommender\n\nSystems: Survey and Experiments. UMUAI, volume 12, issue 4, 331-370 (2002)\n\nhighlighted concepts\n\nguiding - interesting - personalized — - large space\n\nintuitively\n\n_ A recommender system is a tool that provides personalized suggestions in domains where | many choices are available. |\n\nProblem domain\n\n=\" Recommendation Systems (RS) help to match users with items\n\nEase information overload\n\nSales assistance (guidance, advisory, persuasion...) §2\n\nRS are software agents that elicit the interests and preferences of individual |\n\nThey have the potential to support and improve the quality of the decisions consumers make while searching for and selecting products online. e (Xiao & Benbasat 20071)\n\nconsumers [...] and make recommendations accordingly. \" Different system designs / paradigms — based on availability of exploitable data Ere — Implicit and Explicit user feedback\n\n— Domain characteristics"
+      ],
+      "predicted_chunks": [
+        "InformationFiltering_4_Evaluation_chunk_1",
+        "InformationFiltering_4_Evaluation_chunk_2",
+        "InformationFiltering_4_Evaluation_chunk_3",
+        "InformationFiltering_4_Evaluation_chunk_4"
+      ]
+    }
+  },
+  {
+    "id": "RAG_Q26",
+    "type": "RAG",
+    "task": "What are some of the key issues and challenges in tokenization for Information Retrieval, according to the slides?",
+    "ground_truth": {
+      "chunks": [
+        "InformationRetrieval_2_Boolean_Vector_Space_Models_chunk_8",
+        "InformationRetrieval_2_Boolean_Vector_Space_Models_chunk_9"
+      ],
+      "reference_answer": "According to the slides, key challenges in tokenization include how to handle punctuation like apostrophes (e.g., 'Finland's capital') and hyphens (e.g., 'Hewlett-Packard'). Other issues are deciding whether to treat compound names like 'San Francisco' as one or two tokens, how to process numbers which can be complex but useful, and addressing language-specific phenomena like contractions in French (e.g., 'L'ensemble')."
+    },
+    "predicted_output": {
+      "answer": "The key issues and challenges in tokenization for Information Retrieval include:\n\n1. Determining the vocabulary of terms\n2. Tokenization\n3. Index granularity\n4. Document unit size\n5. Proximity search\n6. System performance trade-offs\n7. User understanding of the document collection, users, and their likely information needs and usage patterns.\n\nThese challenges are discussed in the context of Information Retrieval systems, including Boolean retrieval, semistructured search, clustering, and classification. The slides also mention the importance of indexing methods, such as Sequential Indexing, Collaborative Indexing, Semantic Indexing, and Hybrid Indexing, in assigning unique IDs to items for recommendation systems.",
+      "retrieved_contexts": [
+        "Motivated by the above reasons, this paper concentrates on the item indexing problem for LLM-based recommenders: how to assign a unique ID (i.e., token sequence) for each item. We study the issue based on P5 [9], a representative LLM for RS model. P5 employs pre-training over foundation models and converts recommenda- tion tasks into natural language sentences based on personalized prompts. We first experiment on three trivial indexing methods and show their limitations, some of which were employed in previous models: Independent Indexing (IID), Title Indexing (TID), and Ran- dom Indexing (RID). Based on the analysis, we further explore four novel indexing techniques: Sequential Indexing (SID), Collaborative Indexing (CID), Semantic (content-based) Indexing (SemID), and Hybrid Indexing (HID). To ensure the generated IDs align with real items during the recommendation stage so as to avoid hallu- cination, we develop a constrained decoding method [7], which is facilitated by crafting a",
+        "The problems with large document units can be alleviated by use of ex- plicit or implicit proximity search (Sections 2.4.2 and 7.2.2), and the trade- offs in resulting system performance that we are hinting at are discussed in Chapter 8. The issue of index granularity, and in particular a need to simultaneously index documents at multiple levels of granularity, appears prominently in XML retrieval, and is taken up again in Chapter 10. An IR system should be designed to offer choices of granularity. For this choice to be made well, the person who is deploying the system must have a good understanding of the document collection, the users, and their likely infor- mation needs and usage patterns. For now, we will henceforth assume that a suitable size document unit has been chosen, together with an appropriate way of dividing or aggregating files, if needed.\n\nDetermining the vocabulary of terms\n\nTokenization",
+        "Categories and Subject Descriptors: H.3.4 [Information Storage and Retrieval]: Systems and Software—performance evaluation (efficiency and effectiveness)\n\nGeneral Terms: Experimentation, Measurement, Performance\n\nAdditional Key Words and Phrases: Graded relevance judgments, cumulated gain\n\n1. INTRODUCTION\n\nModern large retrieval environments tend to overwhelm their users by their large output. Since all documents are not of equal relevance to their users, highly relevant documents, or document components, should be identified and ranked first for presentation. This is often desirable from the user point of view. In order to develop IR techniques in this direction, it is necessary to develop\n\nThis research was supported by the Academy of Finland under the grant numbers 49157 and 52894. Authors’ address: Department of Information Studies, FIN—33014 University of Tampere, Finland; email: {kalervojarvelin, jaana.kekalainen}@uta.fi.",
+        "To achieve these objectives, we introduce and explore four index- ing methods of increasing complexity: Sequential Indexing (SID), Collaborative Indexing (CID), Semantic (content-based) Indexing (SemID), and Hybrid Indexing (HID). SID and CID leverage collab- orative information, enabling co-occurring items to share tokens. SemID employs metadata in natural language, allowing semanti- cally similar items to share tokens. HID combines multiple indexing methods, seeking to capitalize on the strengths of each approach in order to generate optimal indices. In the following subsections, we will provide details of the four indexing methods.\n\n4.1 Sequential Indexing"
+      ],
+      "predicted_chunks": [
+        "how_to_index_item_ids_for_recommendation_foundation_models_chunk_1",
+        "how_to_index_item_ids_for_recommendation_foundation_models_chunk_2",
+        "how_to_index_item_ids_for_recommendation_foundation_models_chunk_3",
+        "how_to_index_item_ids_for_recommendation_foundation_models_chunk_4"
+      ]
+    }
+  },
+  {
+    "id": "RAG_Q27",
+    "type": "RAG",
+    "task": "According to the slides, what is Mean Reciprocal Rank (MRR) and in which cases is it a particularly good metric?",
+    "ground_truth": {
+      "chunks": [
+        "InformationRetrieval_4_Valutation_chunk_21",
+        "InformationRetrieval_4_Valutation_chunk_22"
+      ],
+      "reference_answer": "Mean Reciprocal Rank (MRR) is the average of the Reciprocal Ranks over a set of queries, where the Reciprocal Rank is the reciprocal of the rank at which the first relevant document is retrieved. It is a particularly good metric for cases where the user is interested in finding the first correct answer, such as in Question-Answering (QA) systems and navigational search."
+    },
+    "predicted_output": {
+      "answer": "The Mean Reciprocal Rank (MRR) is a metric used to evaluate the performance of a search engine or a recommender system. It is defined as the average of the Reciprocal Ranks (RR) over a set of queries. The Reciprocal Rank is the reciprocal of the rank at which the first relevant document is retrieved. MRR is a good metric for cases where the user is interested in the first correct answer, such as in Question-Answering (QA) systems, navigational search, and search engine queries that look for specific sites or URLs. It is also suitable for evaluating the performance of recommender systems, as it measures whether the system places the user's relevant items at the top of the list.",
+      "retrieved_contexts": [
+        "documents. Nn doc # relevant _ _ ta tsea R=# of relevant docs = 6 >\n\n2 589 x\n\n3 576\n\n4 590 x\n\n5 986 -\n\n6 592 x R-Precision = 4/6 = 0.67\n\n= 34\n\n8 988\n\n9 578\n\n10 985\n\n11 103\n\n12 591\n\n13.772 x\n\n14 990\n\n49\n\nMean Reciprocal Rank (MRR)\n\n» Focus/need: measure how well the search engine retrieves relevant documents at very high ranks\n\n» Recall is not an appropriate measure\n\n» Is Precision@k what we are looking for?\n\n™\n\nMean Reciprocal Rank (MRR) conta\n\nRy Re IR, better than IR, e U but\n\n@ L Precision@5(q,IR;)=2 @ @ Precision@5(q,IR,)=2 L @\n\nLK O\n\n@ L\n\nL L\n\n@ @\n\n@ nonrelevant @ relevant\n\nMean Reciprocal Rank (MRR) conc\n\n» we need a measure more sensitive to the rank position\n\n» the Reciprocal Rank is defined as the reciprocal of the rank at which the 15t relevant document is retrieved\n\n» the Mean Reciprocal Rank (MRR) (Kantor and Voorhees, 2000) is the average of the Reciprocal Ranks (RR) over a set of queries\n\n1 IQ 1 MRR = — . |Q| d rank;\n\n™,\n\nMean Reciprocal Rank (MRR) conta",
+        "» the Mean Reciprocal Rank (MRR) (Kantor and Voorhees, 2000) is the average of the Reciprocal Ranks (RR) over a set of queries\n\n1 IQ 1 MRR = — . |Q| d rank;\n\n™,\n\nMean Reciprocal Rank (MRR) conta\n\nRy Re IR, better than IR, O LU Indeed\n\n@ LK RR(q,IR,)=1/1 O O RR(q,IR,)=1/4 a @\n\nO O\n\n@ Hf\n\na a\n\n@ @\n\n@ nonrelevant @ relevant\n\n~\n\nMean Reciprocal Rank (MRR) conc\n\nCorrect Reciprocal Query Results response Rank Rank\n\ncatten,\n\ncat cati, cats cats 3 1/3\n\ntorus tori, Cort, tori 2 1/2 toruses\n\n. viruses, .\n\nvirus ores viruses 1 1\n\nvirii, viri\n\nare interested in the 15t correct answer v Question-Answering (QA) systems v Navigational search\n\nMRR = (1/3 + 1/2 + 1)/3 = 11/18 = 0.61 + MRR is a good metric for those cases in which we\n\nsearch engine queries that look for specific sites e URL queries\n\ne Home-page queries\n\ne Named-page queries\n\n54\n\nGraded (Non-Binary) Relevance\n\n» Precision and Recall allow only binary relevance assessments",
+        "z rs N\n\nIR, better than IR,\n\nbut\n\nPrecision@5(q,IR>)=2 Precision@5(q,IR,)=2\n\n@ nonrelevant @ relevant\n\n64\n\nMean Reciprocal Rank (MRR) cone\n\n» we need a measure more sensitive to the rank position\n\n» the Reciprocal Rank (RR) is defined as the reciprocal of the rank at which the 1St relevant document is retrieved\n\nrank; = position in the list of relevant item I e.g.: ranki = 1 — first in the list\n\n» the Mean Reciprocal Rank (MRR) (Kantor and Voorhees, 2000) is the average of the Reciprocal Ranks (RR) over a set of queries\n\n1 IQ 1 MRR = — . |Q| d rank;\n\n~\n\nMean Reciprocal Rank (MRR) . conta\n\nq ® Re IR, better than IR, @ LI ) CO Indeed @ @ 7 ° RR(q,IR,)=1/1 = ° RR(q,IR,)=1/4 @ LI LJ LJ @ @\n\n@ nonrelevant @ relevant\n\n66\n\n~\n\nMean Reciprocal Rank (MRR) cone\n\nCorrect Reciprocal Query Results response Rank Rank\n\ncatten,\n\ncat cati, cats cats 3 1/3\n\ntorus tori, Cort, tori 2 1/2 toruses\n\n. viruses, .\n\nvirus ores viruses 1 1\n\nvirii, viri",
+        "¢ Mean Reciprocal Rank (MRR) measures whether the recommender system places the user’s relevant items at the top of the list [3].\n\nInformation 2021, 12, 232\n\n13 of 23\n\n¢ Novelty and Diversity. Novelty measures the ability of RS to recommend items that appear novel to the user [89]. Conversely, diversity measures the ability of the RS to recommend items that are not similar to those preferred by the user in the past or that is not limited to recommending popular items only [90,91]."
+      ],
+      "predicted_chunks": [
+        "InformationRetrieval_4_Valutation_chunk_1",
+        "InformationRetrieval_4_Valutation_chunk_2",
+        "InformationRetrieval_4_Valutation_chunk_3",
+        "InformationRetrieval_4_Valutation_chunk_4"
+      ]
+    }
+  },
+  {
+    "id": "RAG_Q28",
+    "type": "RAG",
+    "task": "How is the Rocchio relevance feedback method adapted for use as a classifier in Text Categorization?",
+    "ground_truth": {
+      "chunks": [
+        "InformationRetrieval_5_Text_Categorization_chunk_11",
+        "InformationRetrieval_5_Text_Categorization_chunk_12"
+      ],
+      "reference_answer": "The Rocchio relevance feedback method is adapted for Text Categorization by treating the training set as feedback information. Documents belonging to a specific class are considered positive feedback, while documents outside that class are considered negative feedback. This information is summarized into a centroid vector for the class, and new documents are classified based on their distance to this centroid."
+    },
+    "predicted_output": {
+      "answer": "The Rocchio relevance feedback method is adapted for use as a classifier in Text Categorization by using the algorithm to update the weights of the terms in the document representation based on the relevance feedback provided by the user. The Rocchio algorithm is a simple and effective method for relevance feedback, which can be used to improve the accuracy of text categorization.\n\nThe Rocchio algorithm works by updating the weights of the terms in the document representation based on the relevance feedback provided by the user. The algorithm uses a simple formula to update the weights, which is based on the number of relevant and non-relevant documents that contain each term.\n\nThe Rocchio algorithm can be used as a classifier in Text Categorization by using the updated weights to classify new documents. The algorithm can be used in combination with other classification algorithms, such as Support Vector Machines (SVM) or Random Forest, to improve the accuracy of text categorization.\n\nSome of the advantages of using the Rocchio algorithm for text categorization include:\n\n*   Simple and efficient: The Rocchio algorithm is simple to implement and efficient to compute, making it a good choice for large-scale text categorization tasks.\n*   Effective: The Rocchio algorithm has been shown to be effective in improving the accuracy of text categorization, especially when combined with other classification algorithms.\n*   Flexible: The Rocchio algorithm can be used with different document representations, such as bag-of-words or TF-IDF, and can be combined with different classification algorithms.\n\nHowever, the Rocchio algorithm also has some limitations, such as:\n\n*   Requires relevance feedback: The Rocchio algorithm requires relevance feedback from the user, which can be time-consuming and expensive to obtain.\n*   Sensitive to parameter settings: The Rocchio algorithm is sensitive to the parameter settings, such as the number of relevant and non-relevant documents used to update the weights.\n\nOverall, the Rocchio algorithm is a simple and effective method for relevance feedback that can be used to improve the accuracy of text categorization. However, it requires relevance feedback from the user and is sensitive to parameter settings.\n\nSome of the research papers that discuss the use of the Rocchio algorithm for text categorization include:\n\n*   \"A Probabilistic Analysis of the Rocchio Algorithm with TFIDF for Text Categorization\" by T. Joachims\n*   \"Simple Yet Effective Pseudo Relevance Feedback with Rocchio's Technique and Text Classification\" by Y. Liu\n*   \"Text categorization using Rocchio algorithm and random forest algorithm\" by S. T. Selvi et al.\n*   \"A relevance feedback method for discovering user profiles from text\" by P. Lops et al.\n*   \"Some formal analysis of Rocchio's similarity-based relevance feedback algorithm\" by Z. Chen and B. Zhu\n\nThese papers discuss the use of the Rocchio algorithm for text categorization, including its advantages and limitations, and provide experimental results that demonstrate its effectiveness.",
+      "retrieved_contexts": [
+        "Metodi on-line\n\nMetodo di Rocchio\n\nReti neurali\n\nClassificatori example-based\n\nSVM\n\n+ ¢ ¢ ¢€ ¢©€ ¢€ ©€ ©\n\nText Categorization 24\n\nUsing Relevance Feedback\n\n» I metodi di Relevance Feedback possono essere utilizzati nell’ambito del TC.\n\n» I documenti possono essere rappresentati usando vettori di pesi TF/IDF (normalizzati mediante la frequenza massima dei termini)\n\n» Per ogni categoria, si computa un vettore prototipo.\n\n» Si assegnano documenti di testing alla categoria con il vettore prototipo pil vicino secondo una misura di similarita\n\nText Categorization 25\n\nThe Rocchio Classifier\n\n» Rocchio relevance feedback v modifies user query based on user feedback\n\nv produces new query that better approximates the interest of the user\n\nv can be adapted to text classification » Interpret training set as feedback information\n\nv terms that belong to training docs of a given class c, are said to provide positive feedback",
+        "Rocchio’s algorithm [33] is a widely used relevance feedback algorithm that oper- ates in the vector space model. The algorithm is based on the modification of an ini- tial query through differently weighted prototypes of relevant and non-relevant docu- ments. The approach forms two document prototypes by taking the vector sum over all relevant and non-relevant documents. The following formula summarizes the algo- rithm formally:\n\nD, D, J fi 10.2",
+        "Figure 9.2 shows a textual IR example where the user wishes to find out about new applications of space satellites.\n\nThe Rocchio algorithm for relevance feedback\n\nThe Rocchio Algorithm is the classic algorithm for implementing relevance feedback. It models a way of incorporating relevance feedback information into the vector space model of Section 6.3.\n\nOnline edition (c) 2009 Cambridge UP\n\n9.1 Relevance feedback and pseudo relevance feedback 179\n\n(b)\n\n> Figure 9.1 Relevance feedback searching over images. (a) The user views the initial query results for a query of bike, selects the first, third and fourth result in the top row and the fourth result in the bottom row as relevant, and submits this feedback. (b) The users sees the revised result set. Precision is greatly improved. From http://nayana.ece.ucsb.edu/imsearch/imsearch.html (Newsam et al. 2001).\n\nOnline edition (c) 2009 Cambridge UP\n\n180\n\n(a) (b)\n\n(c)\n\n(d)\n\n9 Relevance feedback and query expansion",
+        "In more recent work, researchers have used a variation of Rocchio’s algorithm in a machine learning context, i.e., for learning a user profile from unstructured text ({15], [3], [29]). The goal in these applications is to automatically induce a text classifier that can distinguish between classes of documents. In this context, it is\n\n10 Content-Based Recommendation Systems 335\n\nassumed that no initial query exists, and the algorithm forms prototypes for classes analogously to Rocchio’s approach as vector sums over documents belonging to the same class. The result of the algorithm is a set of weight vectors, whose proximity to unlabeled documents can be used to assign class membership. Similar to the relevance feedback version of Rocchio’s algorithm, the Rocchio-based classifica- tion approach does not have any theoretic underpinnings and there are no perform- ance or convergence guarantees.\n\n10.7 Linear Classifiers"
+      ],
+      "predicted_chunks": [
+        "InformationRetrieval_5_Text_Categorization_chunk_1",
+        "InformationRetrieval_5_Text_Categorization_chunk_2",
+        "InformationRetrieval_5_Text_Categorization_chunk_3",
+        "InformationRetrieval_5_Text_Categorization_chunk_4"
+      ]
+    }
+  },
+  {
+    "id": "RAG_Q29",
+    "type": "RAG",
+    "task": "According to the paper, what are two different approaches to the problem of catalog search in e-commerce?",
+    "ground_truth": {
+      "chunks": [
+        "interactive_critiquing_for_catalog_navigation_in_e_commerce_chunk_56",
+        "interactive_critiquing_for_catalog_navigation_in_e_commerce_chunk_57"
+      ],
+      "reference_answer": "The paper describes two approaches to catalog search. The first is based on case retrieval technology from projects like INRECA, which finds products based on proximity to a query using similarity metrics. The second approach is based on decision theory, specifically multi-attribute utility theory, where users create a utility function for each feature, and the system ranks products by their calculated utility."
+    },
+    "predicted_output": {
+      "answer": "According to the paper, two different approaches to the problem of catalog search in e-commerce are:\n\n1. **Interactive critiquing for catalog navigation**: This approach involves using artificial intelligence to help users navigate through product catalogs by providing interactive critiques and suggestions (Burke, 2002).\n2. **Semantic product search for matching structured product catalogs**: This approach involves using semantic search techniques to match structured product catalogs and provide more accurate search results (Choi et al., 2020).\n\nThese approaches aim to improve the efficiency and effectiveness of catalog search in e-commerce by providing more personalized and relevant search results. \n\nReferences:\nBurke, R. (2002). Interactive critiquing for catalog navigation in e-commerce. Artificial Intelligence Review, 18(3-4), 245-267. https://link.springer.com/article/10.1023/A:1020701617138\nChoi, J. I., Mitra, B., & Agichtein, E. (2020). Semantic product search for matching structured product catalogs in e-commerce. arXiv preprint arXiv:2008.08180. https://arxiv.org/abs/2008.08180",
+      "retrieved_contexts": [
+        "Abstract. E-commerce sites can have large, essentially unbounded, catalogs. With large catalogs comes increasing difficulty for buyers in making use of standard search and browsing facilities. Particularly in the case of casual or occasional buyers and in the case of complex products, the gap between a product’s specifications and the buyer’s understanding of need can be hard to bridge. An effective e-commerce catalog must map user needs to products that can fulfill them. This paper describes an interactive, incremental, case-based, critiquing approach to solving this problem. The approach is interactive and incremental, so it does not require that the user have a completely specified need at the start. The system is -based in that it emphasizes products over features or constraints, and uses case-based reasoning techniques for its product retrieval. Finally, the approach is based on the critiquing of presented examples, each critique redirecting the search to home in on appropriate",
+        "We have described the underlying technology of critique-based navigation in other publications (Burke et al. 1997; Burke 1999, 2000). The purpose of this paper is to explore the consequences of this technique for e-commerce catalogs and to compare this approach with approaches based on require- ments gathering. We argue that interactive critiquing is more natural, requires less user effort and as a side benefit generates semantically-rich profile data is useful for personalizing product presentation and to analyzing catalog contents.\n\n2. Existing Catalog Search Technologies\n\nCatalog search comes in several varieties. Keyword search draws from information retrieval and is text-based. The familiar search box found on e-commerce sites connects the user with this type of search. Where technical criteria are important, a catalog may use instead parametric search where the user supplies specific parameters that products must meet.\n\n2.1 Keyword search",
+        "CATALOG NAVIGATION IN E-COMMERCE 249\n\nThe case retrieval approach to e-commerce catalog search has demon- strated its effectiveness in research prototypes and commercial deployments, and several organizations market case retrieval products tailored specifically for e-commerce.! These systems go a considerable distance toward solving the problem laid out above. The user can present a problem or need as input and the system will match it against products, without the user having to map his or her need into an arcane feature vocabulary. The effectiveness of such a solution depends, as always in knowledge-based systems, on the quality of the knowledge engineering effort that supports it.\n\n2.4 The need for navigation",
+        "2.1 Keyword search\n\nKeyword-based catalog search is an adaptation of information retrieval tech- nology to the problem of product location. Products are typically ranked so that those containing more of the keywords in the user’s query come first. The application of information retrieval to catalog search has not been entirely successful. It is well known that document retrieval systems are sensi- tive to the amount of text in each document. The larger the document, the more reliable retrieval can be. Catalog descriptions are invariably short, less than several hundred words (sometimes much less) and so are simply too impoverished for effective retrieval.\n\nThe inadequacy of the text associated with products intensifies the well- known problem of terminological mismatch in information retrieval (Foskett 1980). If documents are large, they are likely to contain a greater diversity\n\nCATALOG NAVIGATION IN E-COMMERCE 247"
+      ],
+      "predicted_chunks": [
+        "interactive_critiquing_for_catalog_navigation_in_e_commerce_chunk_1",
+        "interactive_critiquing_for_catalog_navigation_in_e_commerce_chunk_2",
+        "interactive_critiquing_for_catalog_navigation_in_e_commerce_chunk_3",
+        "interactive_critiquing_for_catalog_navigation_in_e_commerce_chunk_4"
+      ]
+    }
+  },
+  {
+    "id": "RAG_Q30",
+    "type": "RAG",
+    "task": "What are the primary limitations and challenges of implementing Latent Semantic Analysis (LSA) as described in the text?",
+    "ground_truth": {
+      "chunks": [
+        "intro_to_Latent_Semantic_Analysis_chunk_82",
+        "intro_to_Latent_Semantic_Analysis_chunk_83"
+      ],
+      "reference_answer": "The primary challenges in implementing Latent Semantic Analysis (LSA) are twofold. First, there is the difficulty of constructing large and representative text corpora that approximate human experience. Second, there are significant computational limitations, as it's still impossible to perform Singular Value Decomposition (SVD) on the massive matrices required for a true representation. For these reasons, LSA should be considered an evolving approximation rather than a fixed mechanism."
+    },
+    "predicted_output": {
+      "answer": "The primary limitations and challenges of implementing Latent Semantic Analysis (LSA) as described in the text are:\n\n1. **Non-optimal corpora**: The unavailability and difficulty of constructing large general or topically relevant text samples that approximate what a variety of individual learners would have met.\n2. **Computational limitations**: The current computational power and algorithm efficiency are still insufficient to support Singular Value Decomposition (SVD) of large matrices that would be needed to truly represent the sum of an adult's language exposure.\n3. **Preprocessing data transformation**: The choice of preprocessing data transformation used can affect the results of LSA.\n4. **Choosing dimensionality**: The method for choosing dimensionality is still a challenge in LSA implementation.\n5. **Underlying statistical model**: The underlying statistical model used in LSA may undergo changes as the field is still in its early days.\n\nThese limitations and challenges highlight the need for further research and development in LSA to improve its effectiveness and efficiency in various applications.",
+      "retrieved_contexts": [
+        "3.2 Word Embedding Techniques 51\n\n3.2.1 Latent Semantic Analysis\n\nLatent Semantic Analysis (LSA) is defined in as a general theory that aims to induce global knowledge starting from local co-occurrence data in large body of representative texts. It was proposed as a solution to the Plato’s problem, namely the problem of acquiring as much knowledge as possible starting from a little of infor- mation. This problem is common to the inductive theories that try to generate new knowledge by analyzing examples from the the real world. In this case, the ‘knowl- edge’ is the meaning of the terms in a particular language, while the ‘examples’ are the portions of textual content we have in our corpora.",
+        "3.2 Word Embedding Techniques 51\n\n3.2.1 Latent Semantic Analysis\n\nLatent Semantic Analysis (LSA) is defined in as a general theory that aims to induce global knowledge starting from local co-occurrence data in large body of representative texts. It was proposed as a solution to the Plato’s problem, namely the problem of acquiring as much knowledge as possible starting from a little of infor- mation. This problem is common to the inductive theories that try to generate new knowledge by analyzing examples from the the real world. In this case, the ‘knowl- edge’ is the meaning of the terms in a particular language, while the ‘examples’ are the portions of textual content we have in our corpora.",
+        "would wish. Part of the problem of non-optimal corpora is due simply to the current\n\nIntroduction to Latent Semantic Analysis 35\n\nunavailability and difficulty of constructing large general or topically relevant text samples that approximate what a variety of individual learners would have met. But another is due to current computational limitations. LSA became practical only when computational power and algorithm efficiency improved sufficiently to support SVD of thousands of words-by-thousands of contexts matrices; it is still impossible to perform SVD on the hundreds of thousands by tens of millions matrices that would be needed to truly represent the sum of an adult s language exposure. It also needs noting that is still early days for LSA and that many details of its implementation, such as the preprocessing data transformation used and the method for choosing dimensionality, even the underlying statistical model, will undoubtedly undergo changes.",
+        "Introduction to Latent Semantic Analysis 2\n\nAbstract\n\nLatent Semantic Analysis (LSA) is a theory and method for extracting and representing the contextual-usage meaning of words by statistical computations applied to a large corpus of text (Landauer and Dumais, 1997). The underlying idea is that the aggregate of all the word contexts in which a given word does and does not appear provides a set of mutual constraints that largely determines the similarity of meaning of words and sets of words to each other. The adequacy of LSA s reflection of human knowledge has been established in a variety of ways. For example, its scores overlap those of humans on standard vocabulary and subject matter tests; it mimics human word sorting and category judgments; it simulates word#word and passage#word lexical priming data; and, as reported in 3 following articles in this issue, it accurately estimates passage coherence, learnability of passages by"
+      ],
+      "predicted_chunks": [
+        "Book_on_Semantics_in_Adaptive_And_Personalized_Systems_chunk_1",
+        "Book_on_Semantics_in_Adaptive_And_Personalized_Systems_chunk_2",
+        "Book_on_Semantics_in_Adaptive_And_Personalized_Systems_chunk_3",
+        "Book_on_Semantics_in_Adaptive_And_Personalized_Systems_chunk_4"
+      ]
+    }
+  },
+  {
+    "id": "TOOL_T01",
+    "type": "TOOL",
+    "task": "Summarize the sample.pdf file.",
+    "ground_truth": {
+      "tool_name": "summarize_document",
+      "arguments": {
+        "file_path": "test_files/sample.pdf"
+      }
+    },
+    "predicted_output": {
+      "tool_call": {
+        "tool_name": "summarize_document",
+        "arguments": {
+          "__arg1": "sample.pdf"
+        }
+      }
+    }
+  },
+  {
+    "id": "TOOL_T02",
+    "type": "TOOL",
+    "task": "Find recent papers by Pasquale Lops on 'information retrieval' using Google Scholar.",
+    "ground_truth": {
+      "tool_name": "google_scholar_search",
+      "arguments": {
+        "query": "Pasquale Lops information retrieval"
+      }
+    },
+    "predicted_output": {
+      "tool_call": {
+        "tool_name": "google_scholar_search",
+        "arguments": {
+          "__arg1": "Pasquale Lops information retrieval"
+        }
+      }
+    }
+  },
+  {
+    "id": "TOOL_T03",
+    "type": "TOOL",
+    "task": "What is the University of Bari Aldo Moro according to Wikipedia?",
+    "ground_truth": {
+      "tool_name": "wikipedia_search",
+      "arguments": {
+        "query": "University of Bari Aldo Moro"
+      }
+    },
+    "predicted_output": {
+      "tool_call": {
+        "tool_name": "wikipedia_search",
+        "arguments": {
+          "__arg1": "University of Bari Aldo Moro"
+        }
+      }
+    }
+  },
+  {
+    "id": "TOOL_T04",
+    "type": "TOOL",
+    "task": "Using the file `analytics.csv`, please provide a complete statistical and semantic analysis.",
+    "ground_truth": {
+      "tool_name": "analyze_csv",
+      "arguments": {
+        "file_path": "test_files/analytics.csv"
+      }
+    },
+    "predicted_output": {
+      "tool_call": {
+        "tool_name": "analyze_csv",
+        "arguments": {
+          "file_path": "analytics.csv"
+        }
+      }
+    }
+  },
+  {
+    "id": "TOOL_T05",
+    "type": "TOOL",
+    "task": "Please create a bar chart showing the number of students per age from the `sample_data.csv` file.",
+    "ground_truth": {
+      "tool_name": "create_visualization",
+      "arguments": {
+        "csv_path": "test_files/sample_data.csv",
+        "query": "bar chart of the number of students per age"
+      }
+    },
+    "predicted_output": {
+      "tool_call": {
+        "tool_name": "analyze_csv",
+        "arguments": {
+          "file_path": "sample_data.csv"
+        }
+      }
+    }
+  },
+  {
+    "id": "TOOL_T06",
+    "type": "TOOL",
+    "task": "Extract the text from the document sample.txt.",
+    "ground_truth": {
+      "tool_name": "extract_text",
+      "arguments": {
+        "file_path": "test_files/sample.txt"
+      }
+    },
+    "predicted_output": {
+      "tool_call": {
+        "tool_name": "extract_text",
+        "arguments": {
+          "__arg1": "sample.txt"
+        }
+      }
+    }
+  },
+  {
+    "id": "TOOL_T07",
+    "type": "TOOL",
+    "task": "Find a YouTube video explaining the Rocchio algorithm.",
+    "ground_truth": {
+      "tool_name": "youtube_search",
+      "arguments": {
+        "query": "Rocchio algorithm explanation"
+      }
+    },
+    "predicted_output": {
+      "tool_call": {
+        "tool_name": "youtube_search",
+        "arguments": {
+          "__arg1": "Rocchio algorithm explanation"
+        }
+      }
+    }
+  },
+  {
+    "id": "TOOL_T08",
+    "type": "TOOL",
+    "task": "Can you write and execute a Python script to find the roots of the quadratic equation x^2 - 3x + 2 = 0?",
+    "ground_truth": {
+      "tool_name": "execute_code",
+      "arguments": {
+        "code": "import math\na=1\nb=-3\nc=2\ndelta = (b**2) - (4*a*c)\nx1 = (-b - math.sqrt(delta)) / (2*a)\nx2 = (-b + math.sqrt(delta)) / (2*a)\nprint(f'The roots are x1 = {x1} and x2 = {x2}')"
+      }
+    },
+    "predicted_output": {
+      "tool_call": null
+    }
+  },
+  {
+    "id": "TOOL_T09",
+    "type": "TOOL",
+    "task": "What is the latest news about artificial intelligence?",
+    "ground_truth": {
+      "tool_name": "web_search",
+      "arguments": {
+        "query": "latest news artificial intelligence"
+      }
+    },
+    "predicted_output": {
+      "tool_call": {
+        "tool_name": "web_search",
+        "arguments": {
+          "__arg1": "latest news about artificial intelligence"
+        }
+      }
+    }
+  },
+  {
+    "id": "TOOL_T10",
+    "type": "TOOL",
+    "task": "Search for the book 'Modern Information Retrieval' on Google Books.",
+    "ground_truth": {
+      "tool_name": "google_books_search",
+      "arguments": {
+        "query": "Modern Information Retrieval"
+      }
+    },
+    "predicted_output": {
+      "tool_call": {
+        "tool_name": "google_books_search",
+        "arguments": {
+          "__arg1": "Modern Information Retrieval"
+        }
+      }
+    }
+  },
+  {
+    "id": "TOOL_T11",
+    "type": "TOOL",
+    "task": "Find structured data about 'Alan Turing' on Wikidata.",
+    "ground_truth": {
+      "tool_name": "wikidata_search",
+      "arguments": {
+        "query": "Alan Turing"
+      }
+    },
+    "predicted_output": {
+      "tool_call": {
+        "tool_name": "wikidata_search",
+        "arguments": {
+          "__arg1": "Alan Turing"
+        }
+      }
+    }
+  },
+  {
+    "id": "TOOL_T12",
+    "type": "TOOL",
+    "task": "Search for the song 'Bohemian Rhapsody' on Spotify.",
+    "ground_truth": {
+      "tool_name": "spotify_search",
+      "arguments": {
+        "query": "Bohemian Rhapsody"
+      }
+    },
+    "predicted_output": {
+      "tool_call": {
+        "tool_name": "spotify_search",
+        "arguments": {
+          "__arg1": "Bohemian Rhapsody"
+        }
+      }
+    }
+  }
+]
