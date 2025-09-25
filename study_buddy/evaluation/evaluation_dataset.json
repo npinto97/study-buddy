@@ -1,0 +1,382 @@
+[
+  {
+    "id": "RAG_Q01",
+    "type": "RAG",
+    "task": "Who is the professor for the 'Metodi per il Ritrovamento dell'Informazione' course?",
+    "ground_truth": {
+      "chunks": ["MRI_syllabus_chunk_1"],
+      "reference_answer": "The professor for the 'Metodi per il Ritrovamento dell'Informazione' course is Pasquale Lops."
+    }
+  },
+  {
+    "id": "RAG_Q02",
+    "type": "RAG",
+    "task": "What is the email address for Professor Giovanni Semeraro?",
+    "ground_truth": {
+      "chunks": ["SIIA_syllabus_chunk_1"],
+      "reference_answer": "Professor Giovanni Semeraro's email address is giovanni.semeraro@uniba.it."
+    }
+  },
+  {
+    "id": "RAG_Q03",
+    "type": "RAG",
+    "task": "According to the book 'Introduction to Information Retrieval', what are the main topics it covers?",
+    "ground_truth": {
+      "chunks": ["Book_on_introduction_to_Information_Retrieval_chunk_2"],
+      "reference_answer": "The main topics covered in the book 'Introduction to Information Retrieval' include fundamental retrieval models like Boolean and vector space, index construction and compression, evaluation methods, machine learning applications like text classification and clustering, and web search concepts including crawling and link analysis."
+    }
+  },
+  {
+    "id": "RAG_Q04",
+    "type": "RAG",
+    "task": "What are Professor Pasquale Lops's office hours?",
+    "ground_truth": {
+      "chunks": ["MRI_syllabus_chunk_2"],
+      "reference_answer": "Professor Pasquale Lops's office hours are on Tuesday from 10:00 to 12:00, or by appointment agreed upon via email."
+    }
+  },
+  {
+    "id": "RAG_Q05",
+    "type": "RAG",
+    "task": "What are the prerequisites for the SIIA course?",
+    "ground_truth": {
+      "chunks": ["SIIA_syllabus_chunk_3", "SIIA_syllabus_chunk_4"],
+      "reference_answer": "Prerequisites for the 'Semantics in Intelligent Information Access' course include specific knowledge in three areas. From Natural Language Processing, topics like language models, transformers, and NLP pipelines are expected. From Fundamentals of Artificial Intelligence, knowledge representation schemes are required. From Machine Learning, concepts such as classification, deep learning, embeddings, and knowledge graphs are necessary."
+    }
+  },
+  {
+    "id": "RAG_Q06",
+    "type": "RAG",
+    "task": "How is the final exam for the MRI course structured?",
+    "ground_truth": {
+      "chunks": ["MRI_syllabus_chunk_12"],
+      "reference_answer": "The final exam for the MRI course is a 90-minute written test that includes both theoretical questions and exercises. No materials can be consulted during the exam, although the use of a calculator is permitted."
+    }
+  },
+  {
+    "id": "RAG_Q07",
+    "type": "RAG",
+    "task": "What is the difference between 'exogenous' and 'endogenous' approaches for content representation as described in the book 'Semantics in Adaptive and Personalized Systems'?",
+    "ground_truth": {
+      "chunks": ["Book_on_Semantics_in_Adaptive_And_Personalized_Systems_chunk_241", "Book_on_Semantics_in_Adaptive_And_Personalized_Systems_chunk_242"],
+      "reference_answer": "The difference between the two approaches is their dependency. Exogenous semantics representation relies on external knowledge bases, while endogenous semantics representation methodologies require large corpora of textual data."
+    }
+  },
+  {
+    "id": "RAG_Q08",
+    "type": "RAG",
+    "task": "What are the core concepts introduced at the beginning of the MRI course?",
+    "ground_truth": {
+      "chunks": ["InformationFiltering_1_Introduction_chunk_1"],
+      "reference_answer": "The core concepts introduced at the beginning of the MRI course are Information Filtering and Recommender Systems, which are presented as solutions to the problem of Information Overload."
+    }
+  },
+    {
+    "id": "RAG_Q09",
+    "type": "RAG",
+    "task": "What are the evaluation criteria for the task-based project in the SIIA course?",
+    "ground_truth": {
+      "chunks": ["SIIA_syllabus_chunk_19"],
+      "reference_answer": "The evaluation criteria for the project include the correctness and completeness of the proposed solution, the logic followed, the use of appropriate formalism, and the degree of innovation."
+    }
+  },
+  {
+    "id": "RAG_Q10",
+    "type": "RAG",
+    "task": "Who are the authors of the book 'Introduction to Information Retrieval'?",
+    "ground_truth": {
+      "chunks": ["Book_on_introduction_to_Information_Retrieval_chunk_1"],
+      "reference_answer": "The authors of 'Introduction to Information Retrieval' are Christopher D. Manning, Prabhakar Raghavan, and Hinrich Schütze."
+    }
+  },
+  {
+    "id": "RAG_Q11",
+    "type": "RAG",
+    "task": "What is the main topic of the reference 'Knowledge Discovery in Textual Databases (KDT)' from lesson 1 of the MRI course?",
+    "ground_truth": {
+        "chunks": ["Knowledge_Discovery_in_Textual_Databases_(KDT)_chunk_6"],
+        "reference_answer": "The main topic is knowledge discovery, which is defined as the nontrivial extraction of implicit, previously unknown, and potentially useful information from data. The paper discusses two main approaches: one using machine learning and statistical analysis, and another focused on providing user-efficient tools."
+    }
+  },
+  {
+    "id": "RAG_Q12",
+    "type": "RAG",
+    "task": "What are the three main reference books for the MRI course?",
+    "ground_truth": {
+        "chunks": ["MRI_syllabus_chunk_6"],
+        "reference_answer": "The three main reference books for the MRI course are: 'Modern Information Retrieval' by Baeza-Yates and Ribeiro-Neto, 'Introduction to Information Retrieval' by Manning, Raghavan and Schütz, and 'Recommender Systems An Introduction' by Jannach, Zanker, Felferning, and Friedrich."
+    }
+  },
+  {
+    "id": "RAG_Q13",
+    "type": "RAG",
+    "task": "Compare the teaching methods used in the MRI and SIIA courses.",
+    "ground_truth": {
+      "chunks": ["MRI_syllabus_chunk_10", "SIIA_syllabus_chunk_10"],
+      "reference_answer": "Both courses utilize lectures with slides and guided exercises. However, their practical components are described differently: the MRI course has guided exercises for creating simple search and filtering systems, while the SIIA course explicitly includes laboratory sessions focused on using tools for semantic processing."
+    }
+  },
+  {
+    "id": "RAG_Q14",
+    "type": "RAG",
+    "task": "What does the 'prova intermedia' for the MRI course entail?",
+    "ground_truth": {
+      "chunks": ["MRI_syllabus_chunk_12", "MRI_syllabus_chunk_13"],
+      "reference_answer": "The 'prova intermedia' for the MRI course is an optional, 90-minute written test for currently enrolled students that covers a specific part of the program. Passing it provides an exemption for that part of the final exam, provided the exam is taken in the first session. The final grade is then calculated as the average of the two tests."
+    }
+  },
+  {
+    "id": "RAG_Q15",
+    "type": "RAG",
+    "task": "What are some of the key topics listed in the 'Information Retrieval (IR)' section of the MRI course program?",
+    "ground_truth": {
+        "chunks": ["MRI_syllabus_pdf_page2_chunk3"],
+        "reference_answer": "Key topics include the Boolean Model, Vector Space Model, Relevance Feedback and the Rocchio algorithm, and Link Analysis with Page Rank."
+    }
+  },
+  {
+    "id": "RAG_Q16",
+    "type": "RAG",
+    "task": "What Machine Learning methods for Text Categorization are listed in the MRI syllabus?",
+    "ground_truth": {
+      "chunks": ["MRI_syllabus_chunk_5"],
+      "reference_answer": "The Machine Learning methods for Text Categorization listed in the syllabus are the Rocchio method, k-Nearest Neighbor (k-NN), and Naive Bayes."
+    }
+  },
+  {
+    "id": "RAG_Q17",
+    "type": "RAG",
+    "task": "What is the WORD classifier, as described in the 'Machine Learning in Automated Text Categorization' paper?",
+    "ground_truth": {
+      "chunks": ["Machine_Learning_in_Automated_Text_Categorization_chunk_216", "Machine_Learning_in_Automated_Text_Categorization_chunk_217"],
+      "reference_answer": "The WORD classifier, implemented by Yang, is a non-learning system for text categorization. It operates by comparing documents and category names, each treated as a vector of weighted terms in the vector space model, and was created to measure the effectiveness gained by adding a learning component to a classifier."
+    }
+  },
+  {
+    "id": "RAG_Q18",
+    "type": "RAG",
+    "task": "How has Linked Open Data (LOD) been used to address limited content analysis in recommender systems, according to the paper?",
+    "ground_truth": {
+      "chunks": ["Lesson_04_Semantics-aware_Recommender_Systems_exploiting_Linked_Open_Data_and_graph-based_features_chunk_21", "Lesson_04_Semantics-aware_Recommender_Systems_exploiting_Linked_Open_Data_and_graph-based_features_chunk_22", "Lesson_04_Semantics-aware_Recommender_Systems_exploiting_Linked_Open_Data_and_graph-based_features_chunk_23"],
+      "reference_answer": "According to the paper, Linked Open Data (LOD) addresses limited content analysis by enriching item descriptions. For example, systems gather features from knowledge bases like DBpedia for music genres or Freebase for artists. LOD features have also been used in ensembles of algorithms like Random Forests and Logistic Regression. More advanced research focuses on automatically selecting the best subset of these LOD features to improve recommendation accuracy."
+    }
+  },
+  {
+    "id": "RAG_Q19",
+    "type": "RAG",
+    "task": "How does the Soundex algorithm work, according to the 'Introduction to Information Retrieval' book?",
+    "ground_truth": {
+      "chunks": ["Book_on_introduction_to_Information_Retrieval_chunk_286", "Book_on_introduction_to_Information_Retrieval_chunk_287"],
+      "reference_answer": "The Soundex algorithm generates a four-character code (a letter followed by three digits) for a term. The process involves retaining the first letter, then converting consonants to specific digits based on their phonetic sound while disregarding most vowels. Consecutive identical digits are then removed. The algorithm is based on the principles that vowels are often interchangeable and consonants with similar sounds can be grouped into equivalence classes."
+    }
+  },
+  {
+    "id": "RAG_Q20",
+    "type": "RAG",
+    "task": "What are the main recommendations for using agents in AutoGen, according to the paper?",
+    "ground_truth": {
+      "chunks": ["autogen_enabling_next_gen_llm_applications_via_multi_agent_conversation_chunk_83", "autogen_enabling_next_gen_llm_applications_via_multi_agent_conversation_chunk_84"],
+      "reference_answer": "The paper recommends starting with built-in agents like AssistantAgent and UserProxyAgent and using simple conversation topologies such as a two-agent or group chat. It also suggests reusing built-in reply methods before creating custom ones. For customization, adding instructions in the initial user message is an effective way to boost performance without modifying the agent's system message."
+    }
+  },
+  {
+    "id": "RAG_Q21",
+    "type": "RAG",
+    "task": "What is the difference between classic PageRank and PageRank with Priors in a recommendation setting, according to the paper?",
+    "ground_truth": {
+      "chunks": ["Lesson_04_Introducing_linked_open_data_in_graph-based_recommender_systems_chunk_39", "Lesson_04_Introducing_linked_open_data_in_graph-based_recommender_systems_chunk_40"],
+      "reference_answer": "The primary difference is how initial probabilities are assigned to nodes. Classic PageRank assigns a uniform probability to all nodes. In contrast, PageRank with Priors uses a non-uniform personalization vector to bias the ranking toward a specific user's preferences. For instance, the paper describes a heuristic where 80% of the weight is distributed among items a user has liked, requiring the algorithm to be executed for each user."
+    }
+  },
+  {
+    "id": "RAG_Q22",
+    "type": "RAG",
+    "task": "In conversational recommender systems, what are the two main forms in which user preferences can be expressed, according to the slides?",
+    "ground_truth": {
+      "chunks": ["Lesson_11_conversational_recommender_systems_chunk_26"],
+      "reference_answer": "According to the slides, user preferences can be expressed in two main forms. The first is by liking items in their entirety, such as 'I like The Matrix'. The second is by expressing preferences for features of items, which can be either objective features like an actor or genre (e.g., 'I like sci-fi movies'), or subjective features like the mood of a scene (e.g., 'I like movies with emotional scenes')."
+    }
+  },
+  {
+    "id": "RAG_Q23",
+    "type": "RAG",
+    "task": "In the Qrec recommender system, what is the role of the trade-off parameter gamma (γ)?",
+    "ground_truth": {
+      "chunks": ["towards_question_based_recommender_systems_chunk_57"],
+      "reference_answer": "The trade-off parameter gamma (γ) controls how much online user feedback is incorporated into the user and item latent factors. When gamma is set to 0, user feedback is ignored during the online updating process."
+    }
+  },
+  {
+    "id": "RAG_Q24",
+    "type": "RAG",
+    "task": "What is the intuition behind the scheme proposed by Jeh and Widom for efficiently computing personalized PageRank vectors?",
+    "ground_truth": {
+      "chunks": ["topic_sensitive_pagerank_a_context_sensitive_ranking_algorithm_for_web_search_chunk_67", "topic_sensitive_pagerank_a_context_sensitive_ranking_algorithm_for_web_search_chunk_68"],
+      "reference_answer": "The intuition behind Jeh and Widom's scheme is to exploit the computational overlap between different personalized PageRank vectors. For instance, a random walk terminating at a specific node is very similar to one terminating at that node's children. Leveraging this, they developed a dynamic programming algorithm to simultaneously generate a large basis set of personalized PageRank vectors, which can then be used to compute arbitrary topic-specific vectors."
+    }
+  },
+  {
+    "id": "RAG_Q25",
+    "type": "RAG",
+    "task": "What are the key dimensions of the design space for preference elicitation in recommender systems, as described in the slides?",
+    "ground_truth": {
+      "chunks": ["InformationFiltering_4_Evaluation_chunk_10", "InformationFiltering_4_Evaluation_chunk_11"],
+      "reference_answer": "The design space for preference elicitation depends on its goal and strategy. Its key dimensions include the goal (Community utility vs. User utility), the control strategy (Human vs. System Controlled, Explicit vs. Implicit), and the type of information collected (such as Ratings, Free Text, User Goals, or Demographics)."
+    }
+  },
+  {
+    "id": "RAG_Q26",
+    "type": "RAG",
+    "task": "What are some of the key issues and challenges in tokenization for Information Retrieval, according to the slides?",
+    "ground_truth": {
+      "chunks": ["InformationRetrieval_2_Boolean_Vector_Space_Models_chunk_8", "InformationRetrieval_2_Boolean_Vector_Space_Models_chunk_9"],
+      "reference_answer": "According to the slides, key challenges in tokenization include how to handle punctuation like apostrophes (e.g., 'Finland's capital') and hyphens (e.g., 'Hewlett-Packard'). Other issues are deciding whether to treat compound names like 'San Francisco' as one or two tokens, how to process numbers which can be complex but useful, and addressing language-specific phenomena like contractions in French (e.g., 'L'ensemble')."
+    }
+  },
+  {
+    "id": "RAG_Q27",
+    "type": "RAG",
+    "task": "According to the slides, what is Mean Reciprocal Rank (MRR) and in which cases is it a particularly good metric?",
+    "ground_truth": {
+      "chunks": ["InformationRetrieval_4_Valutation_chunk_21", "InformationRetrieval_4_Valutation_chunk_22"],
+      "reference_answer": "Mean Reciprocal Rank (MRR) is the average of the Reciprocal Ranks over a set of queries, where the Reciprocal Rank is the reciprocal of the rank at which the first relevant document is retrieved. It is a particularly good metric for cases where the user is interested in finding the first correct answer, such as in Question-Answering (QA) systems and navigational search."
+    }
+  },
+  {
+    "id": "RAG_Q28",
+    "type": "RAG",
+    "task": "How is the Rocchio relevance feedback method adapted for use as a classifier in Text Categorization?",
+    "ground_truth": {
+      "chunks": ["InformationRetrieval_5_Text_Categorization_chunk_11", "InformationRetrieval_5_Text_Categorization_chunk_12"],
+      "reference_answer": "The Rocchio relevance feedback method is adapted for Text Categorization by treating the training set as feedback information. Documents belonging to a specific class are considered positive feedback, while documents outside that class are considered negative feedback. This information is summarized into a centroid vector for the class, and new documents are classified based on their distance to this centroid."
+    }
+  },
+  {
+    "id": "RAG_Q29",
+    "type": "RAG",
+    "task": "According to the paper, what are two different approaches to the problem of catalog search in e-commerce?",
+    "ground_truth": {
+      "chunks": ["interactive_critiquing_for_catalog_navigation_in_e_commerce_chunk_56", "interactive_critiquing_for_catalog_navigation_in_e_commerce_chunk_57"],
+      "reference_answer": "The paper describes two approaches to catalog search. The first is based on case retrieval technology from projects like INRECA, which finds products based on proximity to a query using similarity metrics. The second approach is based on decision theory, specifically multi-attribute utility theory, where users create a utility function for each feature, and the system ranks products by their calculated utility."
+    }
+  },
+  {
+    "id": "RAG_Q30",
+    "type": "RAG",
+    "task": "What are the primary limitations and challenges of implementing Latent Semantic Analysis (LSA) as described in the text?",
+    "ground_truth": {
+      "chunks": ["intro_to_Latent_Semantic_Analysis_chunk_82", "intro_to_Latent_Semantic_Analysis_chunk_83"],
+      "reference_answer": "The primary challenges in implementing Latent Semantic Analysis (LSA) are twofold. First, there is the difficulty of constructing large and representative text corpora that approximate human experience. Second, there are significant computational limitations, as it's still impossible to perform Singular Value Decomposition (SVD) on the massive matrices required for a true representation. For these reasons, LSA should be considered an evolving approximation rather than a fixed mechanism."
+    }
+  },
+  {
+    "id": "TOOL_T01",
+    "type": "TOOL",
+    "task": "Summarize the sample.pdf file.",
+    "ground_truth": {
+      "tool_name": "summarize_document",
+      "arguments": {"file_path": "test_files/sample.pdf"}
+    }
+  },
+  {
+    "id": "TOOL_T02",
+    "type": "TOOL",
+    "task": "Find recent papers by Pasquale Lops on 'information retrieval' using Google Scholar.",
+    "ground_truth": {
+      "tool_name": "google_scholar_search",
+      "arguments": {"query": "Pasquale Lops information retrieval"}
+    }
+  },
+  {
+    "id": "TOOL_T03",
+    "type": "TOOL",
+    "task": "What is the University of Bari Aldo Moro according to Wikipedia?",
+    "ground_truth": {
+      "tool_name": "wikipedia_search",
+      "arguments": {"query": "University of Bari Aldo Moro"}
+    }
+  },
+  {
+    "id": "TOOL_T04",
+    "type": "TOOL",
+    "task": "Using the file `analytics.csv`, please provide a complete statistical and semantic analysis.",
+    "ground_truth": {
+      "tool_name": "analyze_csv",
+      "arguments": {"file_path": "test_files/analytics.csv"}
+    }
+  },
+  {
+    "id": "TOOL_T05",
+    "type": "TOOL",
+    "task": "Please create a bar chart showing the number of students per age from the `sample_data.csv` file.",
+    "ground_truth": {
+      "tool_name": "create_visualization",
+      "arguments": {"csv_path": "test_files/sample_data.csv", "query": "bar chart of the number of students per age"}
+    }
+  },
+  {
+    "id": "TOOL_T06",
+    "type": "TOOL",
+    "task": "Extract the text from the document sample.txt.",
+    "ground_truth": {
+        "tool_name": "extract_text",
+        "arguments": {"file_path": "test_files/sample.txt"}
+    }
+  },
+  {
+    "id": "TOOL_T07",
+    "type": "TOOL",
+    "task": "Find a YouTube video explaining the Rocchio algorithm.",
+    "ground_truth": {
+        "tool_name": "youtube_search",
+        "arguments": {"query": "Rocchio algorithm explanation"}
+    }
+  },
+  {
+    "id": "TOOL_T08",
+    "type": "TOOL",
+    "task": "Can you write and execute a Python script to find the roots of the quadratic equation x^2 - 3x + 2 = 0?",
+    "ground_truth": {
+      "tool_name": "execute_code",
+      "arguments": {
+        "code": "import math\na=1\nb=-3\nc=2\ndelta = (b**2) - (4*a*c)\nx1 = (-b - math.sqrt(delta)) / (2*a)\nx2 = (-b + math.sqrt(delta)) / (2*a)\nprint(f'The roots are x1 = {x1} and x2 = {x2}')"
+      }
+    }
+  },
+  {
+    "id": "TOOL_T09",
+    "type": "TOOL",
+    "task": "What is the latest news about artificial intelligence?",
+    "ground_truth": {
+        "tool_name": "web_search",
+        "arguments": {"query": "latest news artificial intelligence"}
+    }
+  },
+  {
+    "id": "TOOL_T10",
+    "type": "TOOL",
+    "task": "Search for the book 'Modern Information Retrieval' on Google Books.",
+    "ground_truth": {
+        "tool_name": "google_books_search",
+        "arguments": {"query": "Modern Information Retrieval"}
+    }
+  },
+  {
+    "id": "TOOL_T11",
+    "type": "TOOL",
+    "task": "Find structured data about 'Alan Turing' on Wikidata.",
+    "ground_truth": {
+        "tool_name": "wikidata_search",
+        "arguments": {"query": "Alan Turing"}
+    }
+  },
+  {
+    "id": "TOOL_T12",
+    "type": "TOOL",
+    "task": "Search for the song 'Bohemian Rhapsody' on Spotify.",
+    "ground_truth": {
+        "tool_name": "spotify_search",
+        "arguments": {"query": "Bohemian Rhapsody"}
+    }
+  }
+]
