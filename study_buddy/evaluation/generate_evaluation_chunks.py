@@ -7,8 +7,8 @@ from study_buddy.vectorstore_pipeline.document_loader import scan_directory_for_
 from study_buddy.config import logger, PARSED_COURSES_DATA_FILE
 
 # Ensure these values are IDENTICAL to those used in 'study_buddy\vectorstore_pipeline\vector_store_builder.py'
-CHUNK_SIZE = 1000
-CHUNK_OVERLAP = 200
+CHUNK_SIZE = 500
+CHUNK_OVERLAP = 150
 
 OUTPUT_DIR = Path("study_buddy/evaluation/chunked_documents")
 
