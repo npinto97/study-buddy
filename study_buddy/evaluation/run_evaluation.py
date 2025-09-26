@@ -6,6 +6,7 @@ from tqdm import tqdm
 from study_buddy.agent import compiled_graph
 from study_buddy.vectorstore_pipeline.vector_store_builder import get_vector_store
 from study_buddy.config import FAISS_INDEX_DIR
+from study_buddy.utils.tools import close_sandboxes
 
 EVALUATION_DATASET_PATH = Path("evaluation_dataset.json")
 EVALUATION_RESULTS_PATH = Path("evaluation_results.json")
@@ -26,7 +27,7 @@ async def run_agent(task_input, config):
     
     return final_answer, tool_calls
 
-def get_retrieved_chunks(query: str, k: int = 4):
+def get_retrieved_chunks(query: str, k: int = 3):
     
     vector_store = get_vector_store(FAISS_INDEX_DIR)
     retrieved_docs = vector_store.similarity_search(query, k=k)
@@ -38,66 +39,74 @@ def get_retrieved_chunks(query: str, k: int = 4):
         # Troviamo il numero del chunk dal contenuto, se il nostro script lo ha salvato
         # In alternativa, usiamo una logica per derivarlo se necessario
         # Per ora, usiamo il nome del file come proxy
-        retrieved_ids.append(source_file) # Semplificazione, da affinare se serve più precisione
+        retrieved_ids.append(source_file)
         
     return retrieved_docs
 
 async def main():
+    try:
+        with open(EVALUATION_DATASET_PATH, "r", encoding="utf-8") as f:
+            evaluation_dataset = json.load(f)
 
-    with open(EVALUATION_DATASET_PATH, "r", encoding="utf-8") as f:
-        evaluation_dataset = json.load(f)
+        evaluation_results = []
 
-    evaluation_results = []
-
-    for task_item in tqdm(evaluation_dataset, desc="Running Evaluation"):
-        task_id = task_item["id"]
-        task_type = task_item["type"]
-        task_prompt = task_item["task"]
-        
-        config = {"configurable": {"thread_id": task_id}}
-
-        final_answer, tool_calls = await run_agent(task_prompt, config)
-
-        result_entry = {
-            "id": task_id,
-            "type": task_type,
-            "task": task_prompt,
-            "ground_truth": task_item["ground_truth"],
-            "predicted_output": {}
-        }
-
-        if task_type == "RAG":
-            retrieved_docs = get_retrieved_chunks(task_prompt)
-            retrieved_contexts = [doc.page_content for doc in retrieved_docs]
+        for task_item in tqdm(evaluation_dataset, desc="Running Evaluation"):
+            # ... (il tuo loop di valutazione rimane identico) ...
+            task_id = task_item["id"]
+            task_type = task_item["type"]
+            task_prompt = task_item["task"]
             
-            # Per il confronto, usiamo i nomi dei file sorgente come ID
-            base_filename = Path(retrieved_docs[0].metadata.get("file_path")).stem if retrieved_docs else ""
-            predicted_chunks_ids = [f"{base_filename}_chunk_{i+1}" for i in range(len(retrieved_docs))]
+            config = {"configurable": {"thread_id": task_id}}
 
+            final_answer, tool_calls = await run_agent(task_prompt, config)
 
-            result_entry["predicted_output"] = {
-                "answer": final_answer,
-                "retrieved_contexts": retrieved_contexts,
-                "predicted_chunks": predicted_chunks_ids
+            result_entry = {
+                "id": task_id,
+                "type": task_type,
+                "task": task_prompt,
+                "ground_truth": task_item["ground_truth"],
+                "predicted_output": {}
             }
-        
-        elif task_type == "TOOL":
-            if tool_calls:
-                # Salviamo solo la prima chiamata al tool per semplicità
-                predicted_tool_call = {
-                    "tool_name": tool_calls[0].get("name"),
-                    "arguments": tool_calls[0].get("args")
+
+            if task_type == "RAG":
+                retrieved_docs = get_retrieved_chunks(task_prompt)
+                retrieved_contexts = [doc.page_content for doc in retrieved_docs]
+                
+                predicted_chunks_ids = []
+                if retrieved_docs:
+                    for i, doc in enumerate(retrieved_docs):
+                        source_identifier = doc.metadata.get("file_path") or doc.metadata.get("source_url")
+                        if source_identifier:
+                            base_filename = Path(source_identifier).stem
+                            predicted_chunks_ids.append(f"{base_filename}_chunk_{i+1}")
+                        else:
+                            predicted_chunks_ids.append(f"unknown_source_chunk_{i+1}")
+
+                result_entry["predicted_output"] = {
+                    "answer": final_answer,
+                    "retrieved_contexts": retrieved_contexts,
+                    "predicted_chunks": predicted_chunks_ids
                 }
-                result_entry["predicted_output"] = {"tool_call": predicted_tool_call}
-            else:
-                result_entry["predicted_output"] = {"tool_call": None}
+            
+            elif task_type == "TOOL":
+                if tool_calls:
+                    predicted_tool_call = {
+                        "tool_name": tool_calls[0].get("name"),
+                        "arguments": tool_calls[0].get("args")
+                    }
+                    result_entry["predicted_output"] = {"tool_call": predicted_tool_call}
+                else:
+                    result_entry["predicted_output"] = {"tool_call": None}
 
-        evaluation_results.append(result_entry)
+            evaluation_results.append(result_entry)
 
-    with open(EVALUATION_RESULTS_PATH, "w", encoding="utf-8") as f:
-        json.dump(evaluation_results, f, indent=2, ensure_ascii=False)
+        with open(EVALUATION_RESULTS_PATH, "w", encoding="utf-8") as f:
+            json.dump(evaluation_results, f, indent=2, ensure_ascii=False)
 
-    print(f"\nEvaluation run complete. Results saved to {EVALUATION_RESULTS_PATH}")
+        print(f"\nEvaluation run complete. Results saved to {EVALUATION_RESULTS_PATH}")
+
+    finally:
+        close_sandboxes()
 
 if __name__ == "__main__":
     asyncio.run(main())
