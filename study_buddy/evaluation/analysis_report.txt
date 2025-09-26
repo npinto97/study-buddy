@@ -1,6 +1,49 @@
 
 --- Running Classic Retrieval Evaluation ---
-Mean Precision@4: 0.0250
-Mean Reciprocal Rank (MRR): 0.0833
+Mean Precision@3: 0.7667
+Mean Reciprocal Rank (MRR): 0.7667
 
 --- Running RAGAS Semantic Evaluation ---
+
+--- RAGAS Semantic Evaluation Results ---
+                                                                                                                                         user_input  faithfulness  answer_relevancy  context_precision  context_recall
+0                            According to the MRI_syllabus.pdf, who is the professor for the 'Metodi per il Ritrovamento dell'Informazione' course?      0.000000          0.000000           0.000000        0.000000
+1                                                                  Find the email address for Professor Giovanni Semeraro in the SIIA_syllabus.pdf.      0.166667          0.000000           1.000000        1.000000
+2                               From the provided document 'Book_on_introduction_to_Information_Retrieval.pdf', what are the main topics it covers?      0.000000          0.000000           0.333333        0.000000
+3                                                              What are the office hours for Professor Pasquale Lops as listed in the MRI syllabus?      1.000000          0.955620           0.583333        1.000000
+4                                  Under the 'Prerequisites/requirements' section of the SIIA_syllabus.pdf, what are the main subject areas listed?      0.333333          0.000000           0.000000        0.000000
+5                                                                           Describe the exam regulations for the MRI course based on the syllabus.      0.000000          0.000000           1.000000        0.500000
+6             In the book 'Semantics in Adaptive and Personalized Systems', what is the key difference between exogenous and endogenous approaches?      0.333333          0.985429           0.333333        1.000000
+7                      According to the introductory slides of the MRI course, what problem do Information Filtering and Recommender Systems solve?      0.400000          0.948674           1.000000        1.000000
+8                                                           What are the five criteria for the final grade attribution in the SIIA course syllabus?      0.400000          0.000000           0.000000        0.000000
+9                                                                       List the three authors of the book 'Introduction to Information Retrieval'.      0.000000          0.964304           0.583333        1.000000
+10                        What is the main topic of the reference 'Knowledge Discovery in Textual Databases (KDT)' from lesson 1 of the MRI course?      0.400000          1.000000           0.000000        0.500000
+11                                                                                      What are the three main reference books for the MRI course?      0.250000          1.000000           0.000000        0.000000
+12                                                                                   Compare the teaching methods used in the MRI and SIIA courses.      0.352941          0.959519           0.333333        0.000000
+13                                                                                      What does the 'prova intermedia' for the MRI course entail?      0.611111          0.965775           1.000000        0.333333
+14                                    What are some of the key topics listed in the 'Information Retrieval (IR)' section of the MRI course program?      0.857143          0.992117           1.000000        1.000000
+15                                                            What Machine Learning methods for Text Categorization are listed in the MRI syllabus?      0.142857          0.991547           0.000000        0.000000
+16        According to the text, what is the trade-off between precision and recall, and how can a classifier be tuned to favor one over the other?      0.705882          0.947932           1.000000        1.000000
+17         What was a key limitation of early approaches using LOD-based features in recommender systems, and how was this problem later addressed?      0.000000          0.924332           1.000000        0.000000
+18                         What were the limitations of the Co-occurrence technique for implicit aspect identification in the study by Feng et al.?      0.000000          0.000000           0.000000        0.000000
+19                                            What is the two-step strategy described in the paper for adapting a language model to a new language?      0.181818          0.000000           0.000000        0.000000
+20                            What is the general effect of iterative correction, and how many rounds are typically needed to see the most benefit?      0.705882          0.000000           1.000000        0.500000
+21                                          What are the key limitations of the Normalized Recall (NR) measure in Information Retrieval evaluation?      0.000000          1.000000           0.000000        0.000000
+22                                   According to the paper, how can an explanation interface give a user feedback on the quality of their profile?      0.000000          0.977263           0.000000        0.000000
+23                              According to the paper, how have food recommender systems evolved from their early examples to modern applications?      0.000000          0.952386           0.000000        0.000000
+24                                             What are the main advantages of the AMIE 3 rule mining system compared to systems like OP and RuDiK?      0.138889          0.000000           0.000000        0.000000
+25            According to the text, what is the main limitation of using word embedding methods to analyze gender bias across different languages?      0.333333          0.980806           0.000000        0.000000
+26                                      What were the performance results of the RID, TID, and IID indexing methods when compared to the baselines?      0.666667          0.000000           1.000000        0.000000
+27                                                          What is the Text REtrieval Conference (TREC), and what evaluation paradigm does it use?      0.833333          0.973065           1.000000        1.000000
+28  What are the two main benefits of breaking down the reasoning process into a chain of rounds for question answering, as described in the paper?      0.500000          0.967486           0.000000        0.000000
+29                                         What is the false dichotomy in Natural Language Processing that arose from the success of n-gram models?      0.833333          0.975753           1.000000        1.000000
+
+--- Average RAGAS Scores ---
+faithfulness         0.338217
+answer_relevancy     0.615400
+context_precision    0.438889
+context_recall       0.361111
+dtype: float64
+
+--- Running Tool Use Evaluation ---
+Tool Use Accuracy: 100.00% (12/12 correct calls)
