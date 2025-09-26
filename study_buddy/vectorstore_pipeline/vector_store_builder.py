@@ -15,8 +15,8 @@ from study_buddy.utils.embeddings import embeddings
 from study_buddy.vectorstore_pipeline.document_loader import scan_directory_for_new_documents
 from study_buddy.config import logger, PROCESSED_DOCS_FILE, FAISS_INDEX_DIR, PARSED_COURSES_DATA_FILE, TEMP_DOCS_FILE
 
-CHUNK_SIZE = 1000
-CHUNK_OVERLAP = 200
+CHUNK_SIZE = 500
+CHUNK_OVERLAP = 150
 BATCH_SIZE = 64
 EMBEDDING_BATCH_SIZE = 32
 RATE_LIMIT_DELAY = 60
