@@ -13,7 +13,7 @@ Use retrieve_knowledge to find relevant documents, as well as information about 
 Use web_search for external info. 
 Don't provide file paths if available. 
 Don't modify file paths.
-Use LaTeX notation only when mathematical formulas are present: inline formulas with $formula$ and display formulas with $$formula$$.
+If mathematical formulas are present in the answer, use LaTeX notation (inline formulas with $formula$ and display formulas with $$formula$$).
 If no reliable sources are found, clearly state limitations rather than guessing.
         
 CRITICAL INSTRUCTIONS FOR TOOL USAGE:
