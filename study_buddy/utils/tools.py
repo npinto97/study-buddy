@@ -463,16 +463,16 @@ class AudioProcessor(BaseWrapper):
 
 class SpotifySearcher(BaseWrapper):
     """Spotify music search functionality."""
-    
+
     def validate_dependencies(self):
         """Validate Spotify API credentials."""
         Config.validate_key("SPOTIFY_CLIENT_ID")
         Config.validate_key("SPOTIFY_CLIENT_SECRET")
-    
+
     def __init__(self):
         super().__init__()
         self.access_token = self._get_access_token()
-    
+
     def _get_access_token(self) -> str:
         """Get Spotify access token."""
         auth_url = "https://accounts.spotify.com/api/token"
@@ -483,29 +483,29 @@ class SpotifySearcher(BaseWrapper):
         )
         response.raise_for_status()
         return response.json()["access_token"]
-    
+
     def search(self, query: str, search_type: str = "track", limit: int = 5) -> str:
         """Search for music on Spotify."""
         try:
-            url = f"https://api.spotify.com/v1/search"
+            url = "https://api.spotify.com/v1/search"
             params = {"q": query, "type": search_type, "limit": limit}
-            headers = {"Authorization": f"Bearer self.access_token"}
-            
+            headers = {"Authorization": f"Bearer {self.access_token}"}
+
             response = requests.get(url, params=params, headers=headers)
             response.raise_for_status()
-            
+
             data = response.json()
             items = data.get(f"{search_type}s", {}).get("items", [])
-            
+
             results = []
             for item in items:
                 name = item.get("name", "Unknown")
                 artist = item.get("artists", [{}])[0].get("name", "Unknown Artist")
                 link = item.get("external_urls", {}).get("spotify", "")
                 results.append(f"{name} by {artist} → [Listen]({link})")
-            
+
             return "\n".join(results) if results else "No results found"
-            
+
         except Exception as e:
             return f"Error searching Spotify: {str(e)}"
 
