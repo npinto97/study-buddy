@@ -4,7 +4,7 @@
 import hashlib
 from pathlib import Path
 import json
-from langchain.schema import Document
+from langchain_core.documents import Document
 
 from study_buddy.config import (
     logger, SUPPORTED_EXTENSIONS, FILE_LOADERS, AUDIO_EXTENSIONS, VIDEO_EXTENSIONS,
@@ -85,7 +85,14 @@ def scan_directory_for_new_documents(processed_hashes: set, parsed_data_file: Pa
     # Carica il JSON dei file elaborati
     with open(parsed_data_file, "r", encoding="utf-8") as f:
         parsed_data = json.load(f)
-
+    
+    print(f"\n🔍 DEBUG: Total entries in parsed_course_data.json: {len(parsed_data)}")
+    
+    external_count = sum(1 for e in parsed_data if e.get("type") == "external_resource")
+    local_count = sum(1 for e in parsed_data if e.get("type") != "external_resource")
+    print(f"   - External resources: {external_count}")
+    print(f"   - Local files: {local_count}")
+    
     for entry in parsed_data:
         metadata = {
             "course_name": entry.get("course_name", "Unknown Course"),

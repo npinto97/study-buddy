@@ -5,7 +5,7 @@ from time import sleep
 from typing import Optional, Set
 import torch
 
-from langchain.schema import Document
+from langchain_core.documents import Document
 from langchain_community.vectorstores import FAISS
 from faiss import IndexFlatL2
 from langchain_community.docstore.in_memory import InMemoryDocstore

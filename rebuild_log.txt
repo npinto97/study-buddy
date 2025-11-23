@@ -1,0 +1,136 @@
+2025-11-11 22:32:44 | INFO     | study_buddy.config:<module>:74 | Project root path resolved to: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\univox
+[32m2025-11-11 22:32:44.510[0m | [1mINFO    [0m | [36mstudy_buddy.config[0m:[36m<module>[0m:[36m144[0m - [1mLangSmith Tracing: False[0m
+[32m2025-11-11 22:32:44.510[0m | [1mINFO    [0m | [36mstudy_buddy.config[0m:[36m<module>[0m:[36m145[0m - [1mLangSmith Endpoint: None[0m
+[32m2025-11-11 22:32:44.511[0m | [1mINFO    [0m | [36mstudy_buddy.utils.embeddings[0m:[36minitialize_gpu_embeddings[0m:[36m8[0m - [1mInitializing Embeddings with model: BAAI/bge-m3[0m
+[32m2025-11-11 22:32:44.524[0m | [1mINFO    [0m | [36mstudy_buddy.utils.embeddings[0m:[36minitialize_gpu_embeddings[0m:[36m14[0m - [1mGPU detected: NVIDIA GeForce RTX 3060 (12.9 GB)[0m
+[32m2025-11-11 22:32:44.524[0m | [1mINFO    [0m | [36mstudy_buddy.utils.embeddings[0m:[36minitialize_gpu_embeddings[0m:[36m15[0m - [1mUsing GPU for embeddings...[0m
+[32m2025-11-11 22:32:54.518[0m | [1mINFO    [0m | [36mstudy_buddy.utils.embeddings[0m:[36minitialize_gpu_embeddings[0m:[36m38[0m - [1mEmbeddings with model BAAI/bge-m3 successfully initialized on CUDA.[0m
+[32m2025-11-11 22:32:54.866[0m | [1mINFO    [0m | [36m__main__[0m:[36mmain[0m:[36m8[0m - [1mParsing the courses metadata...[0m
+[32m2025-11-11 22:32:54.866[0m | [1mINFO    [0m | [36mstudy_buddy.vectorstore_pipeline.parse_course_metadata[0m:[36mparse_all_courses_metadata[0m:[36m202[0m - [1mParsing metadata for course: MRI[0m
+[32m2025-11-11 22:32:54.869[0m | [1mINFO    [0m | [36mstudy_buddy.vectorstore_pipeline.parse_course_metadata[0m:[36mparse_all_courses_metadata[0m:[36m202[0m - [1mParsing metadata for course: SIIA[0m
+[32m2025-11-11 22:32:54.882[0m | [1mINFO    [0m | [36mstudy_buddy.vectorstore_pipeline.parse_course_metadata[0m:[36mparse_all_courses_metadata[0m:[36m212[0m - [1mParsing completed! Data saved in 'C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\univox\data\processed\parsed_course_data.json'.[0m
+[32m2025-11-11 22:32:54.882[0m | [1mINFO    [0m | [36mstudy_buddy.vectorstore_pipeline.parse_course_metadata[0m:[36mparse_all_courses_metadata[0m:[36m213[0m - [1mTotal items processed: 347[0m
+[32m2025-11-11 22:32:54.882[0m | [1mINFO    [0m | [36m__main__[0m:[36mmain[0m:[36m12[0m - [1mStarting the FAISS index update process...[0m
+[32m2025-11-11 22:32:54.882[0m | [1mINFO    [0m | [36mstudy_buddy.vectorstore_pipeline.vector_store_builder[0m:[36moptimize_gpu_memory[0m:[36m35[0m - [1mGPU Memory optimized:[0m
+[32m2025-11-11 22:32:54.883[0m | [1mINFO    [0m | [36mstudy_buddy.vectorstore_pipeline.vector_store_builder[0m:[36moptimize_gpu_memory[0m:[36m36[0m - [1m   - Memory limit: 11.0GB / 12.9GB[0m
+[32m2025-11-11 22:32:54.883[0m | [1mINFO    [0m | [36mstudy_buddy.vectorstore_pipeline.vector_store_builder[0m:[36moptimize_gpu_memory[0m:[36m37[0m - [1m   - Batch size embeddings: 32[0m
+[32m2025-11-11 22:32:54.883[0m | [1mINFO    [0m | [36mstudy_buddy.vectorstore_pipeline.vector_store_builder[0m:[36minitialize_faiss_store[0m:[36m141[0m - [1mCreating new FAISS store at C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\univox\faiss_index[0m
+[32m2025-11-11 22:32:54.896[0m | [1mINFO    [0m | [36mstudy_buddy.vectorstore_pipeline.vector_store_builder[0m:[36mload_temp_docs[0m:[36m70[0m - [1mTemporary documents and hashes loaded successfully.[0m
+[32m2025-11-11 22:32:54.899[0m | [1mINFO    [0m | [36mstudy_buddy.vectorstore_pipeline.vector_store_builder[0m:[36msave_temp_docs[0m:[36m56[0m - [1mTemporary documents and hashes saved successfully.[0m
+[32m2025-11-11 22:32:54.899[0m | [1mINFO    [0m | [36mstudy_buddy.vectorstore_pipeline.vector_store_builder[0m:[36mget_embedding_dimensions[0m:[36m83[0m - [1mDetecting embedding dimensions...[0m
+
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00,  4.88it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00,  4.88it/s]
+[32m2025-11-11 22:32:55.109[0m | [1mINFO    [0m | [36mstudy_buddy.vectorstore_pipeline.vector_store_builder[0m:[36mget_embedding_dimensions[0m:[36m86[0m - [1mEmbedding dimensions: 1024[0m
+[32m2025-11-11 22:32:55.109[0m | [1mINFO    [0m | [36mstudy_buddy.vectorstore_pipeline.vector_store_builder[0m:[36mindex_documents[0m:[36m256[0m - [1mStarting GPU-accelerated document indexing...[0m
+[32m2025-11-11 22:32:55.109[0m | [1mINFO    [0m | [36mstudy_buddy.vectorstore_pipeline.vector_store_builder[0m:[36mindex_documents[0m:[36m257[0m - [1m   - Total documents: 32[0m
+[32m2025-11-11 22:32:55.109[0m | [1mINFO    [0m | [36mstudy_buddy.vectorstore_pipeline.vector_store_builder[0m:[36mindex_documents[0m:[36m258[0m - [1m   - Chunk size: 1000[0m
+[32m2025-11-11 22:32:55.109[0m | [1mINFO    [0m | [36mstudy_buddy.vectorstore_pipeline.vector_store_builder[0m:[36mindex_documents[0m:[36m259[0m - [1m   - Batch size: 64[0m
+[32m2025-11-11 22:32:55.109[0m | [1mINFO    [0m | [36mstudy_buddy.vectorstore_pipeline.vector_store_builder[0m:[36mindex_documents[0m:[36m260[0m - [1m   - GPU batch size: 32[0m
+[32m2025-11-11 22:32:55.110[0m | [1mINFO    [0m | [36mstudy_buddy.vectorstore_pipeline.vector_store_builder[0m:[36mbatch_process_documents[0m:[36m244[0m - [1mProcessing 32 documents in 1 batches (size: 64)[0m
+[32m2025-11-11 22:32:55.110[0m | [1mINFO    [0m | [36mstudy_buddy.vectorstore_pipeline.vector_store_builder[0m:[36mbatch_process_documents[0m:[36m249[0m - [1mBatch 1/1: 32 documents[0m
+[32m2025-11-11 22:32:55.152[0m | [1mINFO    [0m | [36mstudy_buddy.vectorstore_pipeline.vector_store_builder[0m:[36mindex_documents[0m:[36m275[0m - [1mBatch 1: 598 chunks to index...[0m
+[32m2025-11-11 22:32:55.153[0m | [1mINFO    [0m | [36mstudy_buddy.vectorstore_pipeline.vector_store_builder[0m:[36madd_documents_to_store[0m:[36m205[0m - [1mProcessing 598 documents on RTX 5080...[0m
+[32m2025-11-11 22:32:55.153[0m | [1mINFO    [0m | [36mstudy_buddy.vectorstore_pipeline.vector_store_builder[0m:[36madd_documents_to_store[0m:[36m214[0m - [1mProcessing batch 1/19 (32 docs)[0m
+
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00,  1.11it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00,  1.11it/s]
+[32m2025-11-11 22:32:56.066[0m | [1mINFO    [0m | [36mstudy_buddy.vectorstore_pipeline.vector_store_builder[0m:[36madd_documents_to_store[0m:[36m214[0m - [1mProcessing batch 2/19 (32 docs)[0m
+
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00,  1.09it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00,  1.09it/s]
+[32m2025-11-11 22:32:56.994[0m | [1mINFO    [0m | [36mstudy_buddy.vectorstore_pipeline.vector_store_builder[0m:[36madd_documents_to_store[0m:[36m214[0m - [1mProcessing batch 3/19 (32 docs)[0m
+
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00,  1.18it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00,  1.18it/s]
+[32m2025-11-11 22:32:57.849[0m | [1mINFO    [0m | [36mstudy_buddy.vectorstore_pipeline.vector_store_builder[0m:[36madd_documents_to_store[0m:[36m214[0m - [1mProcessing batch 4/19 (32 docs)[0m
+
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00,  1.03it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00,  1.03it/s]
+[32m2025-11-11 22:32:58.827[0m | [1mINFO    [0m | [36mstudy_buddy.vectorstore_pipeline.vector_store_builder[0m:[36madd_documents_to_store[0m:[36m214[0m - [1mProcessing batch 5/19 (32 docs)[0m
+
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00,  1.11it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00,  1.11it/s]
+[32m2025-11-11 22:32:59.743[0m | [1mINFO    [0m | [36mstudy_buddy.vectorstore_pipeline.vector_store_builder[0m:[36madd_documents_to_store[0m:[36m214[0m - [1mProcessing batch 6/19 (32 docs)[0m
+
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]
+Batches: 100%|██████████| 1/1 [00:01<00:00,  1.21s/it]
+Batches: 100%|██████████| 1/1 [00:01<00:00,  1.21s/it]
+[32m2025-11-11 22:33:00.965[0m | [1mINFO    [0m | [36mstudy_buddy.vectorstore_pipeline.vector_store_builder[0m:[36madd_documents_to_store[0m:[36m214[0m - [1mProcessing batch 7/19 (32 docs)[0m
+
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]
+Batches: 100%|██████████| 1/1 [00:01<00:00,  1.00s/it]
+Batches: 100%|██████████| 1/1 [00:01<00:00,  1.00s/it]
+[32m2025-11-11 22:33:01.974[0m | [1mINFO    [0m | [36mstudy_buddy.vectorstore_pipeline.vector_store_builder[0m:[36madd_documents_to_store[0m:[36m214[0m - [1mProcessing batch 8/19 (32 docs)[0m
+
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]
+Batches: 100%|██████████| 1/1 [00:01<00:00,  1.43s/it]
+Batches: 100%|██████████| 1/1 [00:01<00:00,  1.43s/it]
+[32m2025-11-11 22:33:03.405[0m | [1mINFO    [0m | [36mstudy_buddy.vectorstore_pipeline.vector_store_builder[0m:[36madd_documents_to_store[0m:[36m214[0m - [1mProcessing batch 9/19 (32 docs)[0m
+
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]
+Batches: 100%|██████████| 1/1 [00:01<00:00,  1.26s/it]
+Batches: 100%|██████████| 1/1 [00:01<00:00,  1.26s/it]
+[32m2025-11-11 22:33:04.685[0m | [1mINFO    [0m | [36mstudy_buddy.vectorstore_pipeline.vector_store_builder[0m:[36madd_documents_to_store[0m:[36m214[0m - [1mProcessing batch 10/19 (32 docs)[0m
+
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]
+Batches: 100%|██████████| 1/1 [00:01<00:00,  1.01s/it]
+Batches: 100%|██████████| 1/1 [00:01<00:00,  1.01s/it]
+[32m2025-11-11 22:33:05.704[0m | [1mINFO    [0m | [36mstudy_buddy.vectorstore_pipeline.vector_store_builder[0m:[36madd_documents_to_store[0m:[36m214[0m - [1mProcessing batch 11/19 (32 docs)[0m
+
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]
+Batches: 100%|██████████| 1/1 [00:01<00:00,  1.17s/it]
+Batches: 100%|██████████| 1/1 [00:01<00:00,  1.17s/it]
+[32m2025-11-11 22:33:06.877[0m | [1mINFO    [0m | [36mstudy_buddy.vectorstore_pipeline.vector_store_builder[0m:[36madd_documents_to_store[0m:[36m214[0m - [1mProcessing batch 12/19 (32 docs)[0m
+
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]
+Batches: 100%|██████████| 1/1 [00:01<00:00,  1.27s/it]
+Batches: 100%|██████████| 1/1 [00:01<00:00,  1.27s/it]
+[32m2025-11-11 22:33:08.155[0m | [1mINFO    [0m | [36mstudy_buddy.vectorstore_pipeline.vector_store_builder[0m:[36madd_documents_to_store[0m:[36m214[0m - [1mProcessing batch 13/19 (32 docs)[0m
+
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]
+Batches: 100%|██████████| 1/1 [00:01<00:00,  1.09s/it]
+Batches: 100%|██████████| 1/1 [00:01<00:00,  1.09s/it]
+[32m2025-11-11 22:33:09.262[0m | [1mINFO    [0m | [36mstudy_buddy.vectorstore_pipeline.vector_store_builder[0m:[36madd_documents_to_store[0m:[36m214[0m - [1mProcessing batch 14/19 (32 docs)[0m
+
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]
+Batches: 100%|██████████| 1/1 [00:01<00:00,  1.30s/it]
+Batches: 100%|██████████| 1/1 [00:01<00:00,  1.30s/it]
+[32m2025-11-11 22:33:10.569[0m | [1mINFO    [0m | [36mstudy_buddy.vectorstore_pipeline.vector_store_builder[0m:[36madd_documents_to_store[0m:[36m214[0m - [1mProcessing batch 15/19 (32 docs)[0m
+
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]
+Batches: 100%|██████████| 1/1 [00:01<00:00,  1.22s/it]
+Batches: 100%|██████████| 1/1 [00:01<00:00,  1.22s/it]
+[32m2025-11-11 22:33:11.795[0m | [1mINFO    [0m | [36mstudy_buddy.vectorstore_pipeline.vector_store_builder[0m:[36madd_documents_to_store[0m:[36m214[0m - [1mProcessing batch 16/19 (32 docs)[0m
+
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]
+Batches: 100%|██████████| 1/1 [00:01<00:00,  1.15s/it]
+Batches: 100%|██████████| 1/1 [00:01<00:00,  1.15s/it]
+[32m2025-11-11 22:33:12.956[0m | [1mINFO    [0m | [36mstudy_buddy.vectorstore_pipeline.vector_store_builder[0m:[36madd_documents_to_store[0m:[36m214[0m - [1mProcessing batch 17/19 (32 docs)[0m
+
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00,  1.10it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00,  1.10it/s]
+[32m2025-11-11 22:33:13.874[0m | [1mINFO    [0m | [36mstudy_buddy.vectorstore_pipeline.vector_store_builder[0m:[36madd_documents_to_store[0m:[36m214[0m - [1mProcessing batch 18/19 (32 docs)[0m
+
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00,  1.32it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00,  1.32it/s]
+[32m2025-11-11 22:33:14.637[0m | [1mINFO    [0m | [36mstudy_buddy.vectorstore_pipeline.vector_store_builder[0m:[36madd_documents_to_store[0m:[36m214[0m - [1mProcessing batch 19/19 (22 docs)[0m
+
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00,  1.87it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00,  1.87it/s]
+[32m2025-11-11 22:33:15.180[0m | [1mINFO    [0m | [36mstudy_buddy.vectorstore_pipeline.vector_store_builder[0m:[36madd_documents_to_store[0m:[36m221[0m - [1mAll 598 documents successfully indexed on GPU[0m
+[32m2025-11-11 22:33:15.185[0m | [1mINFO    [0m | [36mstudy_buddy.vectorstore_pipeline.vector_store_builder[0m:[36m_save_faiss_store[0m:[36m237[0m - [1mFAISS vector store saved to C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\univox\faiss_index[0m
+[32m2025-11-11 22:33:15.185[0m | [1mINFO    [0m | [36mstudy_buddy.vectorstore_pipeline.vector_store_builder[0m:[36mindex_documents[0m:[36m280[0m - [1mBatch 1 completed. Total chunks: 598[0m
+[32m2025-11-11 22:33:15.187[0m | [1mINFO    [0m | [36mstudy_buddy.vectorstore_pipeline.vector_store_builder[0m:[36msave_processed_hashes[0m:[36m192[0m - [1mProcessed hashes saved successfully.[0m
+[32m2025-11-11 22:33:15.187[0m | [1mINFO    [0m | [36mstudy_buddy.vectorstore_pipeline.vector_store_builder[0m:[36mindex_documents[0m:[36m298[0m - [1mIndexing completed. 598 total chunks processed.[0m
+[32m2025-11-11 22:33:15.187[0m | [1mINFO    [0m | [36mstudy_buddy.vectorstore_pipeline.vector_store_builder[0m:[36minitialize_faiss_store[0m:[36m170[0m - [1mFAISS vector store created and populated successfully[0m
+[32m2025-11-11 22:33:15.187[0m | [1mINFO    [0m | [36m__main__[0m:[36mmain[0m:[36m17[0m - [1mThe FAISS index has been successfully updated.[0m

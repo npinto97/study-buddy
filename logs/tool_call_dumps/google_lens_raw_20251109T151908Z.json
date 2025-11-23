@@ -1,0 +1,20 @@
+{
+  "search_metadata": {
+    "id": "6910b0d3d6eb72c9f4946c5d",
+    "status": "Success",
+    "json_endpoint": "https://serpapi.com/searches/0cec4ae02f6fe924/6910b0d3d6eb72c9f4946c5d.json",
+    "created_at": "2025-11-09 15:18:43 UTC",
+    "processed_at": "2025-11-09 15:18:43 UTC",
+    "google_lens_url": "https://lens.google.com/uploadbyurl?url=file%3A%2F%2F%2FC%3A%5CUsers%5CUtente%5COneDrive+-+Universit%C3%A0+degli+Studi+di+Bari%5CUniversita%5CMagistrale%5CII+Anno%5CI+Semestre%5CSemantics%5CProject%5Cunivox%5Cuploaded_files%5C84.jpg",
+    "raw_html_file": "https://serpapi.com/searches/0cec4ae02f6fe924/6910b0d3d6eb72c9f4946c5d.html",
+    "total_time_taken": 3.84
+  },
+  "search_parameters": {
+    "engine": "google_lens",
+    "url": "file:///C:\\Users\\Utente\\OneDrive - Università degli Studi di Bari\\Universita\\Magistrale\\II Anno\\I Semestre\\Semantics\\Project\\univox\\uploaded_files\\84.jpg"
+  },
+  "search_information": {
+    "images_results_state": "Fully empty"
+  },
+  "error": "Google Lens hasn't returned any results for this query."
+}

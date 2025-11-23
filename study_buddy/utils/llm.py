@@ -1,12 +1,36 @@
 from langchain_together import ChatTogether
+from langchain_google_genai import ChatGoogleGenerativeAI
 from study_buddy.config import CONFIG, logger
+import os
 
-logger.info(f"Initializing LLM with model: {CONFIG.llm.model}")
+provider = CONFIG.llm.provider.lower()
 
-llm = ChatTogether(
-    model=CONFIG.llm.model,
-    temperature=0.3,
-    streaming= True
-)
+if provider == "together":
+    model_name = CONFIG.llm.together.model
+    logger.info(f"Initializing Together AI LLM with model: {model_name}")
+    llm = ChatTogether(
+        model=model_name,
+        temperature=0.3,
+        streaming=True
+    )
+    logger.info(f"Together AI LLM with model {model_name} successfully initialized.")
 
-logger.info(f"LLM with model {CONFIG.llm.model} successfully initialized.")
+elif provider == "gemini":
+    model_name = CONFIG.llm.gemini.model
+    logger.info(f"Initializing Google Gemini LLM with model: {model_name}")
+    
+    # Check for Google API key
+    if not os.environ.get("GOOGLE_API_KEY"):
+        logger.warning("GOOGLE_API_KEY not found in environment variables")
+    
+    llm = ChatGoogleGenerativeAI(
+        model=model_name,
+        temperature=0.3,
+        streaming=True,
+        convert_system_message_to_human=True
+    )
+    logger.info(f"Google Gemini LLM with model {model_name} successfully initialized.")
+
+else:
+    logger.error(f"Unknown LLM provider: {provider}. Supported providers: 'together', 'gemini'")
+    raise ValueError(f"Unknown LLM provider: {provider}")

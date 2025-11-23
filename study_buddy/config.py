@@ -10,7 +10,6 @@ import pytesseract
 from PIL import Image
 
 
-from langchain_docling import DoclingLoader
 from langchain_community.document_loaders import (TextLoader,
                                                   UnstructuredMarkdownLoader,
                                                   UnstructuredPDFLoader,
@@ -18,7 +17,8 @@ from langchain_community.document_loaders import (TextLoader,
                                                   UnstructuredExcelLoader,
                                                   UnstructuredPowerPointLoader,
                                                   UnstructuredHTMLLoader,
-                                                  UnstructuredEPubLoader)
+                                                  UnstructuredEPubLoader,
+                                                  UnstructuredWordDocumentLoader)
 
 
 def image_loader(filepath: str):
@@ -33,7 +33,7 @@ FILE_LOADERS = {
     ".pdf": UnstructuredPDFLoader,
     ".txt": TextLoader,
     ".md": UnstructuredMarkdownLoader,
-    ".docx": DoclingLoader,
+    ".docx": UnstructuredWordDocumentLoader,
     ".csv": UnstructuredCSVLoader,
     ".xlsx": UnstructuredExcelLoader,
     ".pptx": UnstructuredPowerPointLoader,
@@ -49,8 +49,23 @@ SUPPORTED_EXTENSIONS = set(FILE_LOADERS.keys()).union(AUDIO_EXTENSIONS, VIDEO_EX
 load_dotenv()
 
 logger.remove()
-logger.add(sys.stderr, level="INFO", format="{time} {level} {message}")
-logger.add("logs/study_buddy.log", level="DEBUG", rotation="10 MB", compression="zip")
+# Add colorful console output with detailed formatting
+logger.add(
+    sys.stderr,
+    level="INFO",
+    format="<green>{time:YYYY-MM-DD HH:mm:ss}</green> | <level>{level: <8}</level> | <cyan>{name}</cyan>:<cyan>{function}</cyan>:<cyan>{line}</cyan> | <level>{message}</level>"
+)
+
+# Add detailed logging to file with process ID
+logger.add(
+    "logs/study_buddy_{time:YYYY-MM-DD}.log",
+    level="DEBUG",
+    format="{time:YYYY-MM-DD HH:mm:ss.SSS} | {level: <8} | {process} | {thread} | {name}:{function}:{line} | {message}",
+    rotation="00:00",  # Create new file at midnight
+    retention="30 days",  # Keep logs for 30 days
+    compression="zip",
+    enqueue=True  # Thread-safe logging
+)
 
 # logger.info("Logging initialized.")
 
@@ -76,8 +91,16 @@ TEMP_DOCS_FILE = TEMP_DATA_DIR / "temp_extracted_documents.json"
 
 
 # Definition of configuration models
-class LLMConfig(BaseModel):
+class TogetherConfig(BaseModel):
     model: str
+
+class GeminiConfig(BaseModel):
+    model: str
+
+class LLMConfig(BaseModel):
+    provider: str
+    together: TogetherConfig
+    gemini: GeminiConfig
 
 
 class EmbeddingsConfig(BaseModel):

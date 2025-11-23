@@ -3,8 +3,13 @@ import os
 import base64
 import uuid
 import requests
+import time
 from typing import Union, List, Optional, Dict, Any
 from abc import ABC, abstractmethod
+
+from study_buddy.utils.logging_config import get_logger, LogContext, metrics
+
+logger = get_logger("tools")
 
 import pandas as pd
 import fitz  # pip install PyMuPDF
@@ -12,11 +17,11 @@ import pytesseract
 from pdf2image import convert_from_path
 from PIL import Image
 from textblob import TextBlob
+from docx import Document  # pip install python-docx
 
 from pydantic import BaseModel, Field
 from langchain_core.tools import Tool
 from langchain.tools import StructuredTool
-from langchain.chains.summarize import load_summarize_chain
 from langchain_community.document_loaders import PyPDFLoader, TextLoader, CSVLoader
 from langchain_community.llms import Together
 from langchain_community.tools.google_lens import GoogleLensQueryRun
@@ -54,6 +59,10 @@ class Config:
     SPOTIFY_CLIENT_ID = os.getenv("SPOTIFY_CLIENT_ID")
     SPOTIFY_CLIENT_SECRET = os.getenv("SPOTIFY_CLIENT_SECRET")
     E2B_API_KEY = os.getenv("E2B_API_KEY")
+    SERP_API_KEY = os.getenv("SERP_API_KEY")
+    TAVILY_API_KEY = os.getenv("TAVILY_API_KEY")
+    GOOGLE_LENS_API_KEY = os.getenv("GOOGLE_LENS_API_KEY")
+    IMGBB_API_KEY = os.getenv("IMGBB_API_KEY")  # For temporary image hosting
     
     # Default models and settings
     DEFAULT_LLM_MODEL = "mistralai/Mistral-7B-Instruct-v0.2"
@@ -109,6 +118,59 @@ class FileProcessor:
             for chunk in response.iter_content(chunk_size=8192):
                 f.write(chunk)
         return temp_path
+    
+    @staticmethod
+    def upload_image_to_imgbb(image_path: str, api_key: Optional[str] = None) -> Optional[str]:
+        """
+        Upload a local image to imgbb.com and return the public URL.
+        
+        Args:
+            image_path: Path to the local image file
+            api_key: imgbb API key (optional, will use Config.IMGBB_API_KEY if not provided)
+            
+        Returns:
+            Public URL of the uploaded image, or None if upload fails
+        """
+        if api_key is None:
+            api_key = Config.IMGBB_API_KEY
+        
+        if not api_key:
+            logger.warning("IMGBB_API_KEY not set, cannot upload image")
+            return None
+        
+        if not os.path.exists(image_path):
+            logger.error(f"Image file not found: {image_path}")
+            return None
+        
+        try:
+            # Read and encode image to base64
+            with open(image_path, "rb") as image_file:
+                image_data = base64.b64encode(image_file.read()).decode("utf-8")
+            
+            # Upload to imgbb
+            url = "https://api.imgbb.com/1/upload"
+            payload = {
+                "key": api_key,
+                "image": image_data,
+                "expiration": 600  # 10 minutes expiration
+            }
+            
+            logger.info(f"Uploading image to imgbb: {os.path.basename(image_path)}")
+            response = requests.post(url, data=payload, timeout=30)
+            response.raise_for_status()
+            
+            result = response.json()
+            if result.get("success"):
+                public_url = result["data"]["url"]
+                logger.info(f"Image uploaded successfully: {public_url}")
+                return public_url
+            else:
+                logger.error(f"imgbb upload failed: {result}")
+                return None
+                
+        except Exception as e:
+            logger.error(f"Failed to upload image to imgbb: {e}", exc_info=True)
+            return None
 
 
 class LLMFactory:
@@ -131,20 +193,37 @@ class LLMFactory:
 
 def resolve_file_path(file_path: str) -> str:
     """
-    Risolve automaticamente il percorso del file.
-    Se riceve solo il nome del file, lo cerca nella cartella uploaded_files.
+    Risolve e sanitizza un percorso di file, gestendo percorsi assoluti,
+    relativi e stringhe potenzialmente malformate.
     """
-    if os.path.isabs(file_path) and os.path.exists(file_path):
-        return file_path
-    
-    if not os.path.isabs(file_path):
-        upload_dir = os.path.join(os.getcwd(), "uploaded_files")
-        potential_path = os.path.join(upload_dir, file_path)
-        if os.path.exists(potential_path):
-            return potential_path
-    
-    return file_path
+    if not isinstance(file_path, str):
+        logger.error(f"Invalid file path type: {type(file_path)}. Must be a string.")
+        return ""
 
+    # 1. Rimuovi eventuali apici o virgolette che l'LLM potrebbe aver aggiunto
+    clean_path = file_path.strip().strip("'\"")
+
+    # 2. Normalizza i separatori di percorso per il sistema operativo corrente
+    if os.name == 'nt':  # Windows
+        clean_path = clean_path.replace('/', '\\')
+    else:  # Unix-like
+        clean_path = clean_path.replace('\\', '/')
+        
+    # 3. Se il percorso è assoluto ed esiste, usalo
+    if os.path.isabs(clean_path) and os.path.exists(clean_path):
+        return os.path.normpath(clean_path)
+
+    # 4. Altrimenti, cercalo nella cartella di upload predefinita
+    upload_dir = os.path.join(os.getcwd(), "uploaded_files")
+    # Usa os.path.basename per gestire in sicurezza sia percorsi relativi che nomi di file semplici
+    potential_path = os.path.join(upload_dir, os.path.basename(clean_path))
+
+    if os.path.exists(potential_path):
+        return os.path.normpath(potential_path)
+
+    # 5. Come ultima risorsa, restituisci il percorso pulito ma non verificato
+    logger.warning(f"Could not find file in known paths: '{file_path}'. Returning normalized path.")
+    return os.path.normpath(clean_path)
 
 # =============================================================================
 # Pydantic Models for Input Validation
@@ -176,6 +255,11 @@ class AudioInput(BaseModel):
     audio_input: Union[str, bytes] = Field(description="Audio file path, URL, or raw bytes")
 
 
+class GoogleLensInput(BaseModel):
+    """Input schema for Google Lens analysis."""
+    query: str = Field(description="Path to an image file or a public image URL to analyze with Google Lens")
+
+
 # =============================================================================
 # Core Tool Implementations
 # =============================================================================
@@ -187,38 +271,174 @@ class VectorStoreRetriever(BaseWrapper):
         if not os.path.exists(FAISS_INDEX_DIR):
             raise ValueError(f"FAISS index directory not found: {FAISS_INDEX_DIR}")
     
-    def retrieve(self, query: str, k: int = 4) -> tuple[str, list, list]:
-        """Retrieve information with validation and error handling."""
-        try:
-            vector_store = get_vector_store(FAISS_INDEX_DIR)
+    def retrieve(self, query: str, k: int = 4, min_score: float = 0.3) -> tuple[str, list, list]:
+        """
+        Retrieve information with validation, enhanced logging, and quality filtering.
+        
+        Args:
+            query: Search query text
+            k: Number of results to retrieve (default: 4)
+            min_score: Minimum similarity score threshold (default: 0.3)
             
-            # Validate embedding dimensions
-            embedding_dim = vector_store.index.d
-            test_embedding = vector_store.embeddings.embed_query("test")
-            if len(test_embedding) != embedding_dim:
-                raise ValueError(
-                    f"Embedding dimension mismatch: {len(test_embedding)} vs {embedding_dim}"
-                )
+        Returns:
+            tuple of (formatted_results, doc_objects, file_paths)
+        """
+        with LogContext("rag_retrieval", logger) as log_ctx:
+            logger.info(f"""
+🔍 RAG Retrieval Process:
+   Query: {query}
+   Requested Results: {k}
+   Min Score Threshold: {min_score}
+""")
             
-            retrieved_docs = vector_store.similarity_search(query, k=k)
-            
-            file_paths = []
-            serialized_parts = []
-            
-            for doc in retrieved_docs:
-                path = doc.metadata.get("file_path")
-                if path:
-                    normalized_path = os.path.normpath(path)
-                    file_paths.append(normalized_path)
+            try:
+                # Initialize vector store with metrics
+                init_start = time.time()
+                vector_store = get_vector_store(FAISS_INDEX_DIR)
+                init_time = time.time() - init_start
                 
-                serialized_parts.append(
-                    f"Source: {doc.metadata}\nContent: {doc.page_content}"
+                logger.debug(f"""
+📚 Vector Store Details:
+   Location: {FAISS_INDEX_DIR}
+   Type: {type(vector_store).__name__}
+   Initialization Time: {init_time:.3f}s
+""")
+                
+                # Validate embedding model
+                embed_start = time.time()
+                embedding_dim = vector_store.index.d
+                test_embedding = vector_store.embeddings.embed_query("test")
+                embed_time = time.time() - embed_start
+                
+                if len(test_embedding) != embedding_dim:
+                    raise ValueError(f"Embedding dimension mismatch: {len(test_embedding)} vs {embedding_dim}")
+                
+                logger.debug(f"""
+🧬 Embedding Validation:
+   Dimension: {embedding_dim}
+   Test Time: {embed_time:.3f}s
+   Model: {type(vector_store.embeddings).__name__}
+""")
+                
+                # Perform enhanced similarity search
+                search_start = time.time()
+                # Fetch more candidates for better filtering
+                retrieved_docs = vector_store.similarity_search_with_score(
+                    query, 
+                    k=min(k * 2, 20)  # Fetch extra for quality filtering
                 )
-            
-            return "\n\n".join(serialized_parts), retrieved_docs, file_paths
-            
-        except Exception as e:
-            return f"Error during retrieval: {str(e)}", [], []
+                search_time = time.time() - search_start
+                
+                # Quality-based filtering
+                filtered_docs = []
+                for doc, score in retrieved_docs:
+                    if score >= min_score:
+                        filtered_docs.append((doc, score))
+                    else:
+                        logger.debug(f"Filtered out document with low score: {score:.4f}")
+                
+                # Sort by score and take top k
+                filtered_docs.sort(key=lambda x: x[1], reverse=True)
+                final_docs = filtered_docs[:k]
+                
+                logger.info(f"""
+🎯 Search Performance:
+   Time: {search_time:.3f}s
+   Raw Results: {len(retrieved_docs)}
+   Filtered Results: {len(filtered_docs)}
+   Final Results: {len(final_docs)}
+   Avg Score: {sum(score for _, score in final_docs) / len(final_docs):.4f}
+""")
+                
+                # Process results with detailed metadata
+                file_paths = []
+                serialized_parts = []
+                metrics = {"scores": [], "content_lengths": []}
+                
+                for i, (doc, score) in enumerate(final_docs, 1):
+                    # Enhanced metadata processing
+                    metadata = doc.metadata
+                    path = metadata.get("file_path", "Unknown")
+                    page = metadata.get("page", "N/A")
+                    doc_type = metadata.get("type", "Unknown")
+                    
+                    # Use only filename instead of full absolute path for portability
+                    if path and path != "Unknown":
+                        filename = os.path.basename(path)  # Extract just the filename
+                        normalized_path = os.path.normpath(path)
+                        file_paths.append(normalized_path)
+                    else:
+                        filename = "Unknown"
+                    
+                    # Track metrics
+                    metrics["scores"].append(score)
+                    metrics["content_lengths"].append(len(doc.page_content))
+                    
+                    # Format detailed document info - using filename only
+                    doc_info = f"""
+Document {i}:
+• Score: {score:.4f}
+• Source: {filename}
+• Page/Section: {page}
+• Type: {doc_type}
+• Length: {len(doc.page_content)} chars
+• Content Preview:
+{'-' * 40}
+{doc.page_content[:200]}...
+{'-' * 40}
+"""
+                    logger.info(doc_info)
+                    
+                    # Format for return - using filename only for portability
+                    serialized_parts.append(
+                        f"[Source {i}] {filename} (Page {page})\n"
+                        f"Relevance: {score:.4f}\n"
+                        f"{doc.page_content}\n"
+                        f"{'-' * 80}"
+                    )
+                
+                # Log final metrics
+                logger.success(f"""
+📊 Retrieval Metrics:
+   Documents Retrieved: {len(final_docs)}
+   Average Score: {sum(metrics['scores']) / len(metrics['scores']):.4f}
+   Score Range: {min(metrics['scores']):.4f} - {max(metrics['scores']):.4f}
+   Avg Content Length: {sum(metrics['content_lengths']) / len(metrics['content_lengths']):.0f}
+   Total Process Time: {search_time + init_time + embed_time:.3f}s
+""")
+                
+                combined_results = "\n\n".join(serialized_parts)
+                return combined_results, [doc for doc, _ in final_docs], file_paths
+                
+            except Exception as e:
+                logger.error(f"""
+❌ Retrieval Failed:
+   Error Type: {type(e).__name__}
+   Error Message: {str(e)}
+""", exc_info=True)
+                
+                return (
+                    f"Error during retrieval: {type(e).__name__} - {str(e)}\n"
+                    "Please try reformulating your query or contact support.",
+                    [], []
+                )
+    def print_faithfulness_percent(query, k=4, min_score=0.3):
+        """
+        Esegue una query con VectorStoreRetriever e stampa la percentuale di faithfulness per ogni documento e la media.
+        """
+        retriever = VectorStoreRetriever()
+        results, docs, paths = retriever.retrieve(query, k=k, min_score=min_score)
+        print(f"Risultati faithfulness per la query: {query}\n")
+        # Estrai gli score dal testo dei risultati (che contiene 'Relevance: <score>')
+        import re
+        pattern = r"Relevance: ([0-9.]+)"
+        scores = [float(m) for m in re.findall(pattern, results)]
+        if not scores:
+            print("Nessun risultato trovato o impossibile estrarre gli score.")
+            return
+        for i, score in enumerate(scores, 1):
+            print(f"Documento {i}: Faithfulness = {score*100:.2f}%")
+        print(f"\nFaithfulness media: {sum(scores)/len(scores)*100:.2f}%\n")
 
 
 class DocumentProcessor(BaseWrapper):
@@ -227,22 +447,87 @@ class DocumentProcessor(BaseWrapper):
     def validate_dependencies(self):
         """Validate document processing dependencies."""
         pass
-    
+
     def extract_text(self, file_path: str) -> str:
-        """Extract text from various document types."""
+        """
+        Estrae il testo da vari tipi di documenti, delegando la risoluzione
+        e la pulizia del percorso alla funzione `resolve_file_path`.
+        Per documenti lunghi (>2000 caratteri), restituisce un preview strutturato
+        invece del contenuto completo per evitare overflow di contesto.
+        """
+        logger.info(f"📄 extract_text called with raw input: {repr(file_path)}")
         
         resolved_path = resolve_file_path(file_path)
+        logger.info(f"📄 Path resolved to: {repr(resolved_path)}")
         
-        ext = FileProcessor.get_file_extension(resolved_path)
+        if not os.path.exists(resolved_path):
+            error_message = f"Error: no such file found at the resolved path: '{resolved_path}'"
+            logger.error(error_message)
+            return error_message
+
+        logger.info("✅ Path exists: True. Proceeding with text extraction.")
         
-        if ext == ".pdf":
-            return self._extract_from_pdf(resolved_path)
-        elif ext in [".png", ".jpg", ".jpeg", ".tiff", ".bmp"]:
-            return self._extract_from_image(resolved_path)
-        elif ext == ".txt":
-            return self._extract_from_text(resolved_path)
-        else:
-            raise ValueError(f"Unsupported file format: {ext}")
+        try:
+            ext = FileProcessor.get_file_extension(resolved_path)
+            
+            # Extract raw text based on file type
+            if ext == ".pdf":
+                raw_text = self._extract_from_pdf(resolved_path)
+            elif ext in [".png", ".jpg", ".jpeg", ".tiff", ".bmp"]:
+                raw_text = self._extract_from_image(resolved_path)
+            elif ext == ".txt":
+                raw_text = self._extract_from_text(resolved_path)
+            elif ext in [".docx", ".doc"]:
+                raw_text = self._extract_from_docx(resolved_path)
+            elif ext in [".pptx", ".ppt"]:
+                raw_text = self._extract_from_pptx(resolved_path)
+            else:
+                unsupported_error = f"Unsupported file format: '{ext}'. Cannot extract text from '{os.path.basename(resolved_path)}'."
+                logger.warning(unsupported_error)
+                return unsupported_error
+            
+            # For long documents, return a structured preview instead of full text
+            # This prevents context overflow and helps the LLM understand the content better
+            if len(raw_text) > 2000:
+                logger.info(f"📝 Document is long ({len(raw_text)} chars), creating structured preview")
+                
+                # Create a structured preview with beginning, middle sample, and end
+                lines = raw_text.split('\n')
+                total_lines = len(lines)
+                
+                # Take ~25% from start, ~10% from middle, ~10% from end
+                start_count = min(int(total_lines * 0.25), 30)
+                middle_start = int(total_lines * 0.45)
+                middle_count = min(int(total_lines * 0.10), 10)
+                end_count = min(int(total_lines * 0.10), 10)
+                
+                start_text = '\n'.join(lines[:start_count])
+                middle_text = '\n'.join(lines[middle_start:middle_start + middle_count])
+                end_text = '\n'.join(lines[-end_count:]) if end_count > 0 else ""
+                
+                structured_preview = f"""DOCUMENTO ESTRATTO: {os.path.basename(resolved_path)}
+Lunghezza totale: {len(raw_text)} caratteri, {total_lines} righe
+
+=== INIZIO DOCUMENTO ===
+{start_text}
+
+=== SEZIONE CENTRALE (esempio) ===
+{middle_text}
+
+=== FINE DOCUMENTO ===
+{end_text}
+
+[Documento completo estratto ma mostrato in forma riassuntiva per evitare overflow]"""
+                
+                return structured_preview
+            
+            # For short documents, return full text
+            return raw_text
+                
+        except Exception as e:
+            extraction_error = f"An unexpected error occurred during text extraction from '{resolved_path}': {str(e)}"
+            logger.error(extraction_error, exc_info=True)
+            return extraction_error
     
     def _extract_from_pdf(self, file_path: str) -> str:
         """Extract text from PDF with OCR fallback."""
@@ -251,20 +536,207 @@ class DocumentProcessor(BaseWrapper):
             text = "\n".join([page.get_text("text") for page in doc])
             doc.close()
             
-            # Use OCR if no text found (scanned PDF)
             if not text.strip():
+                logger.warning("No text found in PDF, attempting OCR...")
                 return self._extract_from_scanned_pdf(file_path)
+            
             return text
         except Exception as e:
-            return f"Error extracting from PDF: {str(e)}"
+            error_msg = f"Error extracting from PDF: {str(e)}"
+            logger.error(error_msg, exc_info=True)
+            return error_msg
     
     def _extract_from_scanned_pdf(self, file_path: str) -> str:
         """Extract text from scanned PDF using OCR."""
         try:
             images = convert_from_path(file_path)
-            return "\n".join([pytesseract.image_to_string(img) for img in images])
+            # Aggiunto lang='ita+eng' per migliorare l'accuratezza su testi misti
+            text = "\n".join([pytesseract.image_to_string(img, lang='ita+eng') for img in images])
+            return text
         except Exception as e:
-            return f"Error in PDF OCR: {str(e)}"
+            error_msg = str(e)
+            if "poppler" in error_msg.lower() or "Unable to get page count" in error_msg:
+                return (
+                    "ERRORE OCR: Per analizzare questo PDF scansionato, è necessario 'Poppler'.\n\n"
+                    "Segui questi passaggi per installarlo su Windows:\n"
+                    "1. Scarica Poppler da: https://github.com/oschwartz10612/poppler-windows/releases/\n"
+                    "2. Estrai l'archivio in una cartella, ad esempio: C:\\Program Files\\poppler\n"
+                    "3. Aggiungi il percorso della cartella 'bin' (es. C:\\Program Files\\poppler\\bin) al PATH di sistema.\n"
+                    "4. Riavvia il terminale o il tuo IDE."
+                )
+            return f"Error in PDF OCR: {error_msg}"
+    
+    def _extract_from_image(self, file_path: str) -> str:
+        """Extract text from image using OCR."""
+        try:
+            image = Image.open(file_path)
+            # Aggiunto lang='ita+eng' per migliorare l'accuratezza
+            return pytesseract.image_to_string(image, lang='ita+eng')
+        except Exception as e:
+            return f"Error extracting from image: {str(e)}"
+    
+    def _extract_from_text(self, file_path: str) -> str:
+        """Load text file."""
+        try:
+            with open(file_path, 'r', encoding='utf-8') as f:
+                return f.read()
+        except Exception as e:
+            return f"Error reading text file from '{file_path}': {str(e)}"
+    
+    def _extract_from_docx(self, file_path: str) -> str:
+        """Extract text from DOCX (Microsoft Word) files."""
+        try:
+            logger.info(f"📄 Opening DOCX file: {file_path}")
+            doc = Document(file_path)
+            
+            # Extract text from paragraphs
+            full_text = []
+            for paragraph in doc.paragraphs:
+                if paragraph.text.strip():
+                    full_text.append(paragraph.text)
+            
+            # Extract text from tables
+            for table in doc.tables:
+                for row in table.rows:
+                    row_text = []
+                    for cell in row.cells:
+                        if cell.text.strip():
+                            row_text.append(cell.text)
+                    if row_text:
+                        full_text.append(" | ".join(row_text))
+            
+            extracted_text = "\n".join(full_text)
+            logger.info(f"📄 Extracted {len(extracted_text)} characters from DOCX")
+            
+            if not extracted_text.strip():
+                return "Warning: No text content found in DOCX file."
+            
+            return extracted_text
+            
+        except Exception as e:
+            error_msg = f"Error extracting from DOCX: {str(e)}"
+            logger.error(error_msg, exc_info=True)
+            
+            # Provide helpful error for missing python-docx
+            if "No module named" in str(e) or "docx" in str(e).lower():
+                return (
+                    "❌ Errore: La libreria 'python-docx' non è installata.\n\n"
+                    "Per installare, esegui:\n"
+                    "pip install python-docx\n\n"
+                    f"Errore originale: {str(e)}"
+                )
+            
+            return error_msg
+    
+    def _extract_from_pptx(self, file_path: str) -> str:
+        """Extract text from PPTX (Microsoft PowerPoint) files."""
+        try:
+            from pptx import Presentation
+            
+            logger.info(f"📊 Opening PPTX file: {file_path}")
+            prs = Presentation(file_path)
+            
+            # Extract text from all slides
+            full_text = []
+            for slide_num, slide in enumerate(prs.slides, 1):
+                slide_text = [f"--- Slide {slide_num} ---"]
+                
+                # Extract text from shapes
+                for shape in slide.shapes:
+                    if hasattr(shape, "text") and shape.text.strip():
+                        slide_text.append(shape.text)
+                    
+                    # Extract text from tables in shapes
+                    if shape.has_table:
+                        for row in shape.table.rows:
+                            row_text = []
+                            for cell in row.cells:
+                                if cell.text.strip():
+                                    row_text.append(cell.text)
+                            if row_text:
+                                slide_text.append(" | ".join(row_text))
+                
+                if len(slide_text) > 1:  # More than just the slide header
+                    full_text.extend(slide_text)
+            
+            extracted_text = "\n".join(full_text)
+            logger.info(f"📊 Extracted {len(extracted_text)} characters from {len(prs.slides)} slides")
+            
+            if not extracted_text.strip():
+                return "Warning: No text content found in PPTX file."
+            
+            return extracted_text
+            
+        except Exception as e:
+            error_msg = f"Error extracting from PPTX: {str(e)}"
+            logger.error(error_msg, exc_info=True)
+            
+            # Provide helpful error for missing python-pptx
+            if "No module named" in str(e) or "pptx" in str(e).lower():
+                return (
+                    "❌ Errore: La libreria 'python-pptx' non è installata.\n\n"
+                    "Per installare, esegui:\n"
+                    "pip install python-pptx\n\n"
+                    f"Errore originale: {str(e)}"
+                )
+            
+            return error_msg
+    
+    def _extract_from_pdf(self, file_path: str) -> str:
+        """Extract text from PDF with OCR fallback."""
+        from loguru import logger
+        
+        try:
+            logger.info(f"📄 Opening PDF: {file_path}")
+            doc = fitz.open(file_path)
+            logger.info(f"📄 PDF opened successfully. Pages: {len(doc)}")
+            
+            text = "\n".join([page.get_text("text") for page in doc])
+            doc.close()
+            
+            logger.info(f"📄 Extracted {len(text)} characters from PDF")
+            
+            # Use OCR if no text found (scanned PDF)
+            if not text.strip():
+                logger.warning("📄 No text found in PDF, attempting OCR...")
+                return self._extract_from_scanned_pdf(file_path)
+            
+            return text
+        except Exception as e:
+            error_msg = f"Error extracting from PDF: {str(e)}"
+            logger.error(error_msg, exc_info=True)
+            return error_msg
+    
+    def _extract_from_scanned_pdf(self, file_path: str) -> str:
+        """Extract text from scanned PDF using OCR."""
+        from loguru import logger
+        
+        try:
+            logger.info(f"📄 Attempting OCR on PDF: {file_path}")
+            images = convert_from_path(file_path)
+            logger.info(f"📄 Converted PDF to {len(images)} images")
+            
+            text = "\n".join([pytesseract.image_to_string(img) for img in images])
+            logger.info(f"📄 OCR extracted {len(text)} characters")
+            return text
+            
+        except Exception as e:
+            error_msg = str(e)
+            logger.error(f"📄 OCR failed: {error_msg}")
+            
+            # Provide helpful error message for Poppler installation
+            if "poppler" in error_msg.lower() or "Unable to get page count" in error_msg:
+                return (
+                    f"❌ OCR non disponibile: Poppler non è installato.\n\n"
+                    f"Il PDF sembra essere scansionato (senza testo estraibile) e richiede OCR.\n\n"
+                    f"Per installare Poppler su Windows:\n"
+                    f"1. Scarica Poppler da: https://github.com/oschwartz10612/poppler-windows/releases/\n"
+                    f"2. Estrai l'archivio in una cartella (es. C:\\poppler)\n"
+                    f"3. Aggiungi C:\\poppler\\Library\\bin al PATH di sistema\n\n"
+                    f"Errore completo: {error_msg}"
+                )
+            
+            return f"Error in PDF OCR: {error_msg}"
     
     def _extract_from_image(self, file_path: str) -> str:
         """Extract text from image using OCR."""
@@ -280,7 +752,110 @@ class DocumentProcessor(BaseWrapper):
             with open(file_path, 'r', encoding='utf-8') as f:
                 return f.read()
         except Exception as e:
-            return f"Error reading text file: {str(e)}"
+            return f"Error reading text file from '{file_path}': {str(e)}\nFile exists: {os.path.exists(file_path)}"
+
+
+class UniversalDocumentSummarizer(BaseWrapper):
+    """Universal document summarization for all file types (PDF, PPTX, DOCX, etc.)."""
+    
+    def validate_dependencies(self):
+        """Validate summarization dependencies."""
+        pass
+    
+    def __init__(self):
+        super().__init__()
+        self.processor = DocumentProcessor()
+    
+    def summarize(self, file_path: str) -> str:
+        """
+        Summarize any document type (PDF, PPTX, DOCX, TXT).
+        Extracts text and generates an intelligent summary.
+        """
+        try:
+            from study_buddy.utils.llm import llm
+            
+            resolved_path = resolve_file_path(file_path)
+            logger.info(f"📝 Summarizing document: {resolved_path}")
+            
+            if not os.path.exists(resolved_path):
+                return f"Error: File not found at {resolved_path}"
+            
+            # Extract text from document
+            ext = FileProcessor.get_file_extension(resolved_path)
+            logger.info(f"Document type: {ext}")
+            
+            # Get raw text
+            if ext == ".pdf":
+                raw_text = self.processor._extract_from_pdf(resolved_path)
+            elif ext in [".pptx", ".ppt"]:
+                raw_text = self.processor._extract_from_pptx(resolved_path)
+            elif ext in [".docx", ".doc"]:
+                raw_text = self.processor._extract_from_docx(resolved_path)
+            elif ext == ".txt":
+                raw_text = self.processor._extract_from_text(resolved_path)
+            else:
+                return f"Formato non supportato per il riassunto: {ext}"
+            
+            if raw_text.startswith("Error"):
+                return raw_text
+            
+            # Limit text for summarization (take beginning and key parts)
+            text_for_summary = raw_text[:3500] if len(raw_text) > 3500 else raw_text
+            
+            # Generate summary using LLM
+            summary_prompt = f"""Analizza questo documento e crea un riassunto dettagliato in italiano.
+
+DOCUMENTO:
+{text_for_summary}
+
+Fornisci un riassunto che includa:
+- Di cosa tratta il documento (2-3 righe)
+- I punti chiave o sezioni principali
+- Eventuali informazioni tecniche rilevanti
+- Una breve conclusione
+
+Riassunto:"""
+
+            logger.info("Generating summary with LLM...")
+            summary_response = llm.invoke([{"role": "user", "content": summary_prompt}], max_tokens=1500)
+            summary_text = summary_response.content if hasattr(summary_response, 'content') else str(summary_response)
+            
+            # Handle case where content might be a list of dicts
+            if isinstance(summary_text, list):
+                # Extract 'text' field from dict items if present
+                text_parts = []
+                for item in summary_text:
+                    if isinstance(item, dict) and 'text' in item:
+                        text_parts.append(item['text'])
+                    else:
+                        text_parts.append(str(item))
+                summary_text = '\n'.join(text_parts)
+            # Handle case where content is a single dict with 'text' key
+            elif isinstance(summary_text, dict) and 'text' in summary_text:
+                summary_text = summary_text['text']
+            summary_text = str(summary_text)  # Ensure it's a string
+            
+            # Clean the summary from encoded data/signatures
+            if summary_text:
+                lines = summary_text.split('\n')
+                cleaned_lines = []
+                for line in lines:
+                    # Skip lines that look like encoded data (long strings without spaces)
+                    if len(line) > 100 and ' ' not in line[:50]:
+                        logger.warning(f"Skipping suspicious encoded line in summary (length: {len(line)})")
+                        continue
+                    # Skip lines that are just JSON-like metadata
+                    if line.strip().startswith('"type":') or line.strip().startswith('{'):
+                        continue
+                    cleaned_lines.append(line)
+                summary_text = '\n'.join(cleaned_lines).strip()
+            
+            filename = os.path.basename(resolved_path)
+            return f"**Riassunto di: {filename}**\n\n{summary_text}"
+            
+        except Exception as e:
+            logger.error(f"Error in universal summarization: {e}", exc_info=True)
+            return f"Errore durante il riassunto: {str(e)}"
 
 
 class DocumentSummarizer(BaseWrapper):
@@ -852,50 +1427,241 @@ class WikidataSearcher(BaseWrapper):
 def create_basic_tools() -> List[Tool]:
     """Create basic search and information tools."""
     # Initialize API wrappers
-    web_search = TavilySearch(
-        max_results=5,
-        search_depth="advanced",
-        include_answer=True,
-        include_raw_content=True,
-        include_images=True
-    )
+    
+    # Configure Tavily Search with API key if available
+    tavily_kwargs = {
+        "max_results": 5,
+        "search_depth": "advanced",
+        "include_answer": True,
+        "include_raw_content": True,
+        "include_images": True
+    }
+    
+    if Config.TAVILY_API_KEY:
+        tavily_kwargs["tavily_api_key"] = Config.TAVILY_API_KEY
+    else:
+        logger.warning("TAVILY_API_KEY not set in Config. Web search may fail.")
+
+    web_search = TavilySearch(**tavily_kwargs)
     
     youtube_search = YouTubeSearchTool()
     wikipedia = WikipediaQueryRun(api_wrapper=WikipediaAPIWrapper())
-    # arxiv = ArxivQueryRun()
-    
-    google_books = None
-    google_lens = None
-    
-    try:
-        google_books = GoogleBooksQueryRun(
-            api_wrapper=GoogleBooksWrapper(
-                google_books_api_key=Config.GOOGLE_API_KEY
-            )
-        )
-    except ValueError:
-        print("Warning: Google Books API key not found")
-    
-    try:
-        google_lens = GoogleLensQueryRun(api_wrapper=GoogleLensAPIWrapper())
-    except ValueError:
-        print("Warning: Google Lens API key not found")
-    
     google_scholar = GoogleScholarQueryRun(api_wrapper=GoogleScholarWrapper())
-    
     retriever = VectorStoreRetriever()
-    
     wikidata_searcher = WikidataSearcher()
+    
+    google_lens = None
+    try:
+        # Prefer GOOGLE_LENS_API_KEY but allow SERP_API_KEY for backward compatibility
+        lens_key = None
+        if Config.GOOGLE_LENS_API_KEY:
+            lens_key = Config.GOOGLE_LENS_API_KEY
+        elif Config.SERP_API_KEY:
+            lens_key = Config.SERP_API_KEY
+
+        if not lens_key:
+            # Will be caught by the except below and a fallback tool will be registered
+            raise ValueError("GOOGLE_LENS_API_KEY or SERP_API_KEY must be set in environment variables")
+
+        lens_api_wrapper = GoogleLensAPIWrapper(serp_api_key=lens_key)
+        
+        def run_google_lens_analysis(query: str) -> str:
+            """
+            Analyzes an image from a file path or URL using Google Lens.
+            
+            For local files, automatically uploads them to imgbb (temporary hosting)
+            to get a public URL that Google Lens can access. Falls back to OCR if
+            upload fails or IMGBB_API_KEY is not set.
+            """
+            resolved_path = resolve_file_path(query)
+            logger.info(f"Analyzing image with Google Lens: {resolved_path}")
+
+            # Check if it's already a public URL
+            if resolved_path.startswith("http://") or resolved_path.startswith("https://"):
+                logger.info(f"Using public URL directly: {resolved_path}")
+                raw_result = lens_api_wrapper.run(resolved_path)
+                
+                # Parse and structure the Google Lens output for better LLM understanding
+                structured_result = "🔍 GOOGLE LENS ANALYSIS - IMAGE SUCCESSFULLY ANALYZED\n\n"
+                
+                # Try to extract main visual descriptions from the results
+                # Look for common patterns in Google Lens results (titles, text matches, etc.)
+                lines = raw_result.split('\n')
+                visual_subjects = []
+                
+                # Extract visual information from titles
+                for line in lines:
+                    if 'Title:' in line:
+                        title = line.split('Title:')[1].strip()
+                        # Look for common animal/object descriptions
+                        keywords = ['dog', 'cat', 'puppy', 'kitten', 'terrier', 'animal', 'bird', 'car', 'building', 'person', 'food']
+                        for keyword in keywords:
+                            if keyword.lower() in title.lower() and keyword not in visual_subjects:
+                                visual_subjects.append(keyword.title())
+                
+                if visual_subjects:
+                    structured_result += f"DETECTED VISUAL CONTENT: {', '.join(visual_subjects)}\n\n"
+                
+                # Truncate the raw detailed results but keep the summary clear
+                if len(raw_result) > 2500:
+                    logger.warning(f"Google Lens returned {len(raw_result)} chars, truncating details to 2500")
+                    structured_result += "DETAILED SEARCH RESULTS (showing first 2500 chars):\n" + raw_result[:2500] + "\n\n[...results truncated for context limit...]"
+                else:
+                    structured_result += "DETAILED SEARCH RESULTS:\n" + raw_result
+                
+                return structured_result
+            
+            # Check if local file exists
+            if not os.path.exists(resolved_path):
+                return f"Error: File not found for Google Lens analysis at '{resolved_path}'"
+            
+            # Verify it's an image file
+            ext = FileProcessor.get_file_extension(resolved_path)
+            if ext not in [".png", ".jpg", ".jpeg", ".tiff", ".bmp", ".gif", ".webp"]:
+                return f"Error: File '{os.path.basename(resolved_path)}' is not a supported image format (got {ext})"
+            
+            # Try to upload local file to imgbb for public access
+            public_url = FileProcessor.upload_image_to_imgbb(resolved_path)
+            
+            if public_url:
+                # Successfully uploaded, use Google Lens with public URL
+                logger.info(f"Analyzing uploaded image with Google Lens: {public_url}")
+                try:
+                    raw_result = lens_api_wrapper.run(public_url)
+                    
+                    # Parse and structure the Google Lens output for better LLM understanding
+                    structured_result = "🔍 GOOGLE LENS ANALYSIS - IMAGE SUCCESSFULLY ANALYZED\n\n"
+                    
+                    # Try to extract main visual descriptions from the results
+                    # Look for common patterns in Google Lens results (titles, text matches, etc.)
+                    lines = raw_result.split('\n')
+                    visual_subjects = []
+                    
+                    # Extract visual information from titles
+                    for line in lines:
+                        if 'Title:' in line:
+                            title = line.split('Title:')[1].strip()
+                            # Look for common animal/object descriptions
+                            keywords = ['dog', 'cat', 'puppy', 'kitten', 'terrier', 'animal', 'bird', 'car', 'building', 'person', 'food']
+                            for keyword in keywords:
+                                if keyword.lower() in title.lower() and keyword not in visual_subjects:
+                                    visual_subjects.append(keyword.title())
+                    
+                    if visual_subjects:
+                        structured_result += f"DETECTED VISUAL CONTENT: {', '.join(visual_subjects)}\n\n"
+                    
+                    # Truncate the raw detailed results but keep the summary clear
+                    if len(raw_result) > 2500:
+                        logger.warning(f"Google Lens returned {len(raw_result)} chars, truncating details to 2500")
+                        structured_result += "DETAILED SEARCH RESULTS (showing first 2500 chars):\n" + raw_result[:2500] + "\n\n[...results truncated for context limit...]"
+                    else:
+                        structured_result += "DETAILED SEARCH RESULTS:\n" + raw_result
+                    
+                    return structured_result
+                except Exception as e:
+                    logger.error(f"Google Lens analysis failed: {e}", exc_info=True)
+                    # Fall through to OCR fallback
+            else:
+                logger.warning("Image upload failed or IMGBB_API_KEY not set, falling back to OCR")
+            
+            # Fallback: use OCR for local images when upload not available
+            try:
+                processor = DocumentProcessor()
+                ocr_text = processor.extract_text(resolved_path)
+                return (
+                    "Note: Google Lens requires a public URL. Image upload failed or is not configured "
+                    "(set IMGBB_API_KEY to enable automatic uploads). "
+                    "Performed OCR on the local image instead:\n\n"
+                    f"{ocr_text}"
+                )
+            except Exception as e2:
+                logger.error(f"OCR fallback failed: {e2}", exc_info=True)
+                return (
+                    f"Error: Could not analyze local image. Upload to temporary hosting failed "
+                    f"and OCR fallback encountered an error: {str(e2)}"
+                )
+
+        google_lens = StructuredTool.from_function(
+            func=run_google_lens_analysis,
+            name="google_lens_analyze",
+            description="Use this tool to understand and describe the visual content of an image. It identifies objects, scenes, people, places, and landmarks. Use this when the user asks 'what is in this picture?' or 'describe this image'. Do NOT use it to read text from an image.",
+            args_schema=GoogleLensInput
+        )
+    except ValueError as e:
+        # If the SERP_API_KEY is not set, register a graceful fallback tool so
+        # the system can still handle model requests for 'google_lens_analyze'
+        # without failing. The fallback informs the user that Google Lens is
+        # not configured and, when possible, performs OCR on local images to
+        # return useful information.
+        logger.warning(f"Google Lens tool not loaded: {e}")
+
+        def run_google_lens_analysis_stub(query: str) -> str:
+            """Fallback for Google Lens analysis when SERP API key is missing.
+
+            Attempts to resolve the provided path. If the file is an image
+            present locally, performs OCR (via DocumentProcessor.extract_text)
+            and returns the extracted text along with a message indicating
+            that full Google Lens features are disabled.
+            """
+            resolved_path = resolve_file_path(query)
+            logger.info(f"Google Lens fallback called with: {resolved_path}")
+
+            # If file exists and is an image, try OCR to provide something useful
+            if os.path.exists(resolved_path):
+                try:
+                    processor = DocumentProcessor()
+                    ext = FileProcessor.get_file_extension(resolved_path)
+                    if ext in [".png", ".jpg", ".jpeg", ".tiff", ".bmp", ".gif", ".webp"]:
+                        ocr_text = processor.extract_text(resolved_path)
+                        return (
+                            "Google Lens is not configured (GOOGLE_LENS_API_KEY/SERP_API_KEY missing). "
+                            "I performed OCR on the provided image and found the following text:\n\n"
+                            f"{ocr_text}\n\n"
+                            "To enable full Google Lens visual analysis (objects, scenes, landmarks, etc.), "
+                            "set GOOGLE_LENS_API_KEY or SERP_API_KEY in your .env file. "
+                            "Optionally, set IMGBB_API_KEY to enable automatic image uploads for local files."
+                        )
+                    else:
+                        return (
+                            "Google Lens is not configured (GOOGLE_LENS_API_KEY/SERP_API_KEY missing). "
+                            f"Received file: {os.path.basename(resolved_path)} (type: {ext}). "
+                            "Please set the required API key in your .env file to enable Google Lens analysis."
+                        )
+                except Exception as e2:
+                    logger.error(f"Fallback Google Lens OCR failed: {e2}", exc_info=True)
+                    return (
+                        "Google Lens is not configured (GOOGLE_LENS_API_KEY/SERP_API_KEY missing). "
+                        "Additionally, an internal error occurred while attempting local OCR: "
+                        f"{str(e2)}"
+                    )
+
+            # File doesn't exist or is a remote URL — inform the user how to enable
+            return (
+                "Google Lens is not configured (GOOGLE_LENS_API_KEY/SERP_API_KEY missing). "
+                "Please set the required API key in your .env file to enable Google Lens analysis. "
+                f"Requested resource: {query}"
+            )
+
+        google_lens = StructuredTool.from_function(
+            func=run_google_lens_analysis_stub,
+            name="google_lens_analyze",
+            description=(
+                "Fallback Google Lens tool: Google Lens is not configured because "
+                "SERP_API_KEY is missing. This stub will attempt OCR on local images "
+                "and otherwise return instructions to enable the full Google Lens integration."
+            ),
+            args_schema=GoogleLensInput
+        )
     
     tools = [
         Tool(
             name="retrieve_knowledge",
             description="Retrieve information from local knowledge base using semantic search",
-            func=lambda query: retriever.retrieve(query)[0]
+            func=retriever.retrieve # Assumendo che retrieve restituisca una stringa
         ),
         Tool(
             name="web_search",
-            description="Search the web for current information and news",
+            description="Search the web for current information, news, and real-time updates.",
             func=web_search.run
         ),
         Tool(
@@ -908,11 +1674,6 @@ def create_basic_tools() -> List[Tool]:
             description="Search Wikipedia for encyclopedic information",
             func=wikipedia.run
         ),
-        # Tool(
-        #     name="arxiv_search",
-        #     description="Search academic papers on arXiv",
-        #     func=arxiv.run
-        # ),
         Tool(
             name="google_scholar_search",
             description="Search academic literature on Google Scholar",
@@ -925,19 +1686,8 @@ def create_basic_tools() -> List[Tool]:
         )
     ]
     
-    if google_books:
-        tools.append(Tool(
-            name="google_books_search",
-            description="Search for books on Google Books",
-            func=google_books.run
-        ))
-    
     if google_lens:
-        tools.append(Tool(
-            name="google_lens_analyze",
-            description="Analyze images using Google Lens",
-            func=google_lens.run
-        ))
+        tools.append(google_lens)
     
     return tools
 
@@ -945,19 +1695,20 @@ def create_basic_tools() -> List[Tool]:
 def create_document_tools() -> List[Tool]:
     """Create document processing tools."""
     processor = DocumentProcessor()
-    summarizer = DocumentSummarizer()
+    universal_summarizer = UniversalDocumentSummarizer()
     sentiment_analyzer = SentimentAnalyzer()
     
     return [
         Tool(
-            name="extract_text",
-            description="Extract text from PDF, image, or text files using OCR if needed",
-            func=processor.extract_text
-        ),
-        Tool(
             name="summarize_document",
-            description="Generate a summary of a PDF document with Medium length and Key Takeaways style",
-            func=summarizer.summarize
+            description="Riassumi qualsiasi documento (PDF, PPTX, DOCX, TXT). Usa questo tool quando l'utente chiede un riassunto. NON usare extract_text per riassunti - usa direttamente questo tool.",
+            func=universal_summarizer.summarize
+        ),
+        StructuredTool.from_function(
+            func=processor.extract_text,
+            name="extract_text",
+            description="Estrai il TESTO GREZZO da un file quando l'utente vuole VEDERE o LEGGERE il contenuto completo. NON usare questo per riassunti - usa summarize_document invece.",
+            args_schema=FilePathInput
         ),
         Tool(
             name="analyze_sentiment",
@@ -1139,45 +1890,41 @@ def create_data_analysis_tools() -> List[Tool]:
 # =============================================================================
 
 def get_all_tools() -> List[Tool]:
-    """Assemble all available tools with error handling."""
+    """Assemble all available tools with enhanced logging and error handling."""
     all_tools = []
     
-    print("Initializing tools...")
+    with LogContext("tool_initialization", logger) as log_ctx:
+        logger.info("🔧 Starting tool initialization")
+        
+        tool_categories = {
+            "basic": create_basic_tools,
+            "document": create_document_tools,
+            "audio": create_audio_tools,
+            "multimedia": create_multimedia_tools,
+            "data": create_data_analysis_tools
+        }
+        
+        for category, creator_func in tool_categories.items():
+            try:
+                with LogContext(f"{category}_tools", logger):
+                    tools = creator_func()
+                    all_tools.extend(tools)
+                    logger.success(f"✅ Loaded {len(tools)} {category} tools")
+                    
+                    # Log individual tool details
+                    for tool in tools:
+                        logger.debug(f"  - {tool.name}: {tool.description[:100]}...")
+                        
+            except Exception as e:
+                logger.error(f"❌ Failed to load {category} tools: {str(e)}")
+                logger.exception(e)  # Log full traceback
+        
+        # Log final tool initialization summary
+        logger.success(f"""
+📊 Tool Initialization Summary:
+   Total Tools: {len(all_tools)}
+   Categories Loaded: {sum(1 for t in tool_categories if any(tool for tool in all_tools if tool.name.startswith(t)))}
+   Tool Names: {[tool.name for tool in all_tools]}
+""")
     
-    try:
-        basic_tools = create_basic_tools()
-        all_tools.extend(basic_tools)
-        print(f"Loaded {len(basic_tools)} basic tools")
-    except Exception as e:
-        print(f"Error loading basic tools: {e}")
-    
-    try:
-        doc_tools = create_document_tools()
-        all_tools.extend(doc_tools)
-        print(f"Loaded {len(doc_tools)} document tools")
-    except Exception as e:
-        print(f"Error loading document tools: {e}")
-    
-    try:
-        audio_tools = create_audio_tools()
-        all_tools.extend(audio_tools)
-        print(f"Loaded {len(audio_tools)} audio tools")
-    except Exception as e:
-        print(f"Error loading audio tools: {e}")
-    
-    try:
-        multimedia_tools = create_multimedia_tools()
-        all_tools.extend(multimedia_tools)
-        print(f"Loaded {len(multimedia_tools)} multimedia tools")
-    except Exception as e:
-        print(f"Error loading multimedia tools: {e}")
-    
-    try:
-        data_tools = create_data_analysis_tools()
-        all_tools.extend(data_tools)
-        print(f"Loaded {len(data_tools)} data analysis tools")
-    except Exception as e:
-        print(f"Error loading data analysis tools: {e}")
-    
-    print(f"Total tools loaded: {len(all_tools)}")
     return all_tools

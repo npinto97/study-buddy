@@ -1,8 +1,10 @@
-llm:
-  model: "meta-llama/Llama-3.3-70B-Instruct-Turbo"  # "gpt-4o"
-
 embeddings:
-  model: "BAAI/bge-m3"  # "sentence-transformers/all-MiniLM-L6-v2"
-
+  model: BAAI/bge-m3
+llm:
+  gemini:
+    model: gemini-2.5-flash
+  provider: together
+  together:
+    model: meta-llama/Llama-3.3-70B-Instruct-Turbo
 vector_store:
-  type: "faiss"  # Opzioni: "in_memory", "faiss"
+  type: faiss

@@ -2,7 +2,7 @@ from pathlib import Path
 from typing import Dict, Optional, List
 import logging
 import ffmpeg
-from langchain.schema import Document
+from langchain_core.documents import Document
 from study_buddy.config import TEMP_DATA_DIR
 import assemblyai as aai
 import os

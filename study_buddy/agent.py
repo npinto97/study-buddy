@@ -1,7 +1,14 @@
-from loguru import logger
+from study_buddy.utils.logging_config import get_logger, LogContext, metrics
+
+logger = get_logger("agent")
+import time
+from typing import Dict, Any
 
 from langgraph.graph import StateGraph
 from langgraph.prebuilt import tools_condition
+
+# Enable detailed logging for agent operations
+logger = logger.bind(context="agent")
 
 from study_buddy.utils.memory import MemorySaver
 from study_buddy.config import IMAGES_DIR

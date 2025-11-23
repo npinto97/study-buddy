@@ -1,7 +1,7 @@
 import requests
 from youtube_transcript_api import YouTubeTranscriptApi
 from bs4 import BeautifulSoup
-from langchain.schema import Document
+from langchain_core.documents import Document
 from study_buddy.config import logger
 
 
