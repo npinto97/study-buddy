@@ -38,7 +38,7 @@ logger.add(
 
 class LogContext:
     """Context manager for tracking operation timing and logging."""
-    def __init__(self, context_name: str, logger_instance: Optional[logger] = None):
+    def __init__(self, context_name: str, logger_instance=None):
         self.context_name = context_name
         self.logger = logger_instance or logger.bind(context=context_name)
         self.start_time = None
@@ -98,6 +98,6 @@ metrics = PerformanceMetrics()
 # Initialize default logger with main context
 logger = logger.bind(context="main")
 
-def get_logger(context: str = "main") -> logger:
+def get_logger(context: str = "main"):
     """Get a logger instance for a specific context."""
     return logger.bind(context=context)

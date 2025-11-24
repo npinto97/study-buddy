@@ -167,41 +167,53 @@ Univox is designed to be **trustworthy**:
 
 ## **Installation**
 
-### 1. Install Tesseract OCR
+### Quick Start (Recommended)
 
-1. Download the installer:
-   [Tesseract OCR – UB Mannheim](https://github.com/UB-Mannheim/tesseract/wiki)
-2. Install it in the default directory.
-3. Add these paths to **System Environment Variables**:
+For the easiest installation experience, use the automated setup script:
 
-   ```
-   C:\Program Files\Tesseract-OCR
-   C:\Program Files\Tesseract-OCR\tesseract.exe
-   ```
-4. Verify installation:
+```powershell
+.\setup.ps1
+```
 
-   ```bash
-   tesseract --version
-   ```
+This script will:
+- ✓ Detect your GPU and install the appropriate PyTorch version
+- ✓ Create and configure the virtual environment
+- ✓ Install all required dependencies automatically
+- ✓ Verify the installation
 
----
+### Detailed Installation Guide
 
-### 2. Set Up the Python Environment
+For manual installation, troubleshooting, or more details, see **[INSTALLATION.md](INSTALLATION.md)**.
+
+The guide covers:
+- Prerequisites and system requirements
+- Manual installation steps
+- GPU configuration
+- Common issues and solutions
+- API key configuration
+
+### Quick Manual Setup
+
+If you prefer manual installation:
 
 ```bash
-git clone https://github.com/npinto97/univox.git
-cd univox
-
+# 1. Create virtual environment
 python -m venv venv
-venv\Scripts\activate
+.\venv\Scripts\Activate.ps1
 
-pip install --upgrade pip
+# 2. Install PyTorch (GPU version)
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu128
+
+# 3. Install dependencies
 pip install -r requirements.txt
+
+# 4. Install additional packages
+pip install ffmpeg-python youtube-transcript-api wikipedia google-search-results
 ```
 
 ---
 
-### 3. GPU Configuration (Optional but Recommended)
+### GPU Configuration (Optional but Recommended)
 
 Check CUDA availability:
 
@@ -209,9 +221,12 @@ Check CUDA availability:
 nvidia-smi
 ```
 
-Then install the correct **CUDA** and **cuDNN** versions for your GPU.
-For RTX 5080, **CUDA 12.x** is recommended.
-See [NVIDIA CUDA downloads](https://developer.nvidia.com/cuda-downloads) for more details.
+The setup script automatically detects your GPU and installs the correct PyTorch version.
+For manual installation with GPU support, use CUDA 12.8:
+
+```bash
+pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu128
+```
 
 ---
 

@@ -130,8 +130,8 @@ def load_config(path: Path) -> AppConfig:
 CONFIG = load_config(CONFIG_PATH)
 
 # Handling the OpenAI API Key
-if not os.environ.get("OPENAI_API_KEY"):
-    os.environ["OPENAI_API_KEY"] = getpass.getpass("Enter API key for OpenAI: ")
+# if not os.environ.get("OPENAI_API_KEY"):
+#     os.environ["OPENAI_API_KEY"] = getpass.getpass("Enter API key for OpenAI: ")
 
 # Advanced configuration of loguru for tqdm (if installed)
 try:

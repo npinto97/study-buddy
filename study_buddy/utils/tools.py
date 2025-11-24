@@ -21,7 +21,57 @@ from docx import Document  # pip install python-docx
 
 from pydantic import BaseModel, Field
 from langchain_core.tools import Tool
-from langchain.tools import StructuredTool
+
+# Compatibility: StructuredTool moved between langchain versions.
+# Try to import it; if unavailable, provide a lightweight fallback
+# that implements `from_function` used by this codebase.
+try:
+    from langchain.tools import StructuredTool
+except Exception:
+    class StructuredTool:
+        """Lightweight fallback for langchain.tools.StructuredTool.
+
+        Provides a `from_function` method that returns a `Tool` wrapping
+        the provided function. If `args_schema` (a Pydantic model class)
+        is provided, input will be validated before calling the function.
+        This fallback is intentionally minimal and only intended to keep
+        older/newer langchain installations compatible with the project.
+        """
+
+        @staticmethod
+        def from_function(func, name: str, description: str, args_schema=None):
+            def wrapper(*args, **kwargs):
+                # If an args_schema (Pydantic model class) is provided, try to
+                # validate inputs and call the wrapped function with the
+                # validated dict. Support calling with kwargs, a single dict
+                # positional, or positional arguments mapped to model fields.
+                if args_schema is not None:
+                    try:
+                        # If kwargs supplied, validate directly
+                        if kwargs:
+                            validated = args_schema(**kwargs)
+                            return func(**validated.dict())
+
+                        # If a single dict positional was supplied
+                        if len(args) == 1 and isinstance(args[0], dict):
+                            validated = args_schema(**args[0])
+                            return func(**validated.dict())
+
+                        # Map positional args to model fields if possible
+                        if len(args) >= 1 and hasattr(args_schema, "__fields__"):
+                            fields = list(args_schema.__fields__.keys())
+                            mapped = {fields[i]: args[i] for i in range(min(len(args), len(fields)))}
+                            validated = args_schema(**mapped)
+                            return func(**validated.dict())
+
+                    except Exception:
+                        # Re-raise validation errors to surface helpful messages
+                        raise
+
+                # Fallback: call the function directly
+                return func(*args, **kwargs)
+
+            return Tool(name=name, description=description, func=wrapper)
 from langchain_community.document_loaders import PyPDFLoader, TextLoader, CSVLoader
 from langchain_community.llms import Together
 from langchain_community.tools.google_lens import GoogleLensQueryRun
@@ -32,7 +82,21 @@ from langchain_community.tools.google_books import GoogleBooksQueryRun
 from langchain_community.utilities.google_books import GoogleBooksAPIWrapper
 from langchain_community.tools.google_scholar import GoogleScholarQueryRun
 from langchain_community.utilities.google_scholar import GoogleScholarAPIWrapper
-from langchain_tavily import TavilySearch
+# Tavily may not be installed in all environments; provide a lightweight
+# fallback that reports the feature is unavailable. This prevents import
+# errors during app startup and allows the rest of the tools to load.
+try:
+    from langchain_tavily import TavilySearch
+except Exception:
+    class TavilySearch:
+        def __init__(self, *args, **kwargs):
+            self.available = False
+
+        def run(self, *args, **kwargs):
+            return (
+                "TavilySearch is not installed in this environment. "
+                "Install the 'langchain-tavily' package or set up an alternative web search provider."
+            )
 # from langchain_community.tools.arxiv.tool import ArxivQueryRun
 from langchain.text_splitter import CharacterTextSplitter
 
