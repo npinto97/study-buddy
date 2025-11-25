@@ -1,0 +1,188 @@
+2025-11-25 21:56:10 | INFO     | study_buddy.config:<module>:74 | Project root path resolved to: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy
+[32m2025-11-25 21:56:10.949[0m | [1mINFO    [0m | [36mstudy_buddy.config[0m:[36m<module>[0m:[36m152[0m - [1mLangSmith Tracing: False[0m
+[32m2025-11-25 21:56:10.950[0m | [1mINFO    [0m | [36mstudy_buddy.config[0m:[36m<module>[0m:[36m153[0m - [1mLangSmith Endpoint: None[0m
+[32m2025-11-25 21:56:10.950[0m | [1mINFO    [0m | [36mstudy_buddy.utils.embeddings[0m:[36minitialize_gpu_embeddings[0m:[36m8[0m - [1mInitializing Embeddings with model: BAAI/bge-m3[0m
+[32m2025-11-25 21:56:10.968[0m | [1mINFO    [0m | [36mstudy_buddy.utils.embeddings[0m:[36minitialize_gpu_embeddings[0m:[36m14[0m - [1mGPU detected: NVIDIA GeForce RTX 3060 (12.9 GB)[0m
+[32m2025-11-25 21:56:10.968[0m | [1mINFO    [0m | [36mstudy_buddy.utils.embeddings[0m:[36minitialize_gpu_embeddings[0m:[36m15[0m - [1mUsing GPU for embeddings...[0m
+[32m2025-11-25 21:56:20.246[0m | [1mINFO    [0m | [36mstudy_buddy.utils.embeddings[0m:[36minitialize_gpu_embeddings[0m:[36m38[0m - [1mEmbeddings with model BAAI/bge-m3 successfully initialized on CUDA.[0m
+Query: qual e la mail del professor giovanni semeraro?
+[32m2025-11-25 21:56:20.351[0m | [1mINFO    [0m | [36mstudy_buddy.utils.logging_config[0m:[36m__enter__[0m:[36m48[0m - [1m🔄 Starting rag_retrieval[0m
+[32m2025-11-25 21:56:20.351[0m | [1mINFO    [0m | [36mstudy_buddy.utils.tools[0m:[36mretrieve[0m:[36m351[0m - [1m
+🔍 RAG Retrieval Process:
+   Query: qual e la mail del professor giovanni semeraro?
+   Requested Results: 4
+   Min Score Threshold: 0.3
+[0m
+[32m2025-11-25 21:56:20.741[0m | [1mINFO    [0m | [36mstudy_buddy.vectorstore_pipeline.vector_store_builder[0m:[36mget_vector_store[0m:[36m310[0m - [1mFAISS vector store loaded successfully.[0m
+[32m2025-11-25 21:56:20.741[0m | [34m[1mDEBUG   [0m | [36mstudy_buddy.utils.tools[0m:[36mretrieve[0m:[36m364[0m - [34m[1m
+📚 Vector Store Details:
+
+   Location: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\faiss_index
+   Type: FAISS
+   Initialization Time: 0.390s
+[0m
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00,  2.17it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00,  2.17it/s]
+[32m2025-11-25 21:56:21.208[0m | [34m[1mDEBUG   [0m | [36mstudy_buddy.utils.tools[0m:[36mretrieve[0m:[36m380[0m - [34m[1m
+🧬 Embedding Validation:
+   Dimension: 1024
+   Test Time: 0.467s
+   Model: HuggingFaceEmbeddings
+[0m
+
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00, 46.28it/s]
+[32m2025-11-25 21:56:21.244[0m | [1mINFO    [0m | [36mstudy_buddy.utils.tools[0m:[36mretrieve[0m:[36m413[0m - [1m🔍 Contact query detected - performing hybrid search with keyword matching[0m
+[32m2025-11-25 21:56:21.245[0m | [1mINFO    [0m | [36mstudy_buddy.utils.tools[0m:[36mretrieve[0m:[36m436[0m - [1m   Extracted name: giovanni semeraro[0m
+[32m2025-11-25 21:56:21.256[0m | [1mINFO    [0m | [36mstudy_buddy.utils.tools[0m:[36mretrieve[0m:[36m455[0m - [1m   ✓ Found contact info for giovanni semeraro in C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\univox\data\raw\slides\InformationFiltering_1_Introduction.pdf[0m
+[32m2025-11-25 21:56:21.260[0m | [1mINFO    [0m | [36mstudy_buddy.utils.tools[0m:[36mretrieve[0m:[36m455[0m - [1m   ✓ Found contact info for giovanni semeraro in C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\univox\data\raw\slides\InformationFiltering_1_Introduction.pdf[0m
+[32m2025-11-25 21:56:21.262[0m | [1mINFO    [0m | [36mstudy_buddy.utils.tools[0m:[36mretrieve[0m:[36m455[0m - [1m   ✓ Found contact info for giovanni semeraro in C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\univox\data\raw\references\On_the_tip_of_my_thought_playing_the_Gui.pdf[0m
+[32m2025-11-25 21:56:21.265[0m | [1mINFO    [0m | [36mstudy_buddy.utils.tools[0m:[36mretrieve[0m:[36m455[0m - [1m   ✓ Found contact info for giovanni semeraro in C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\univox\data\raw\references\combining_learning_and_word_sense_disambiguation_for_intelligent_user_profiling.pdf[0m
+[32m2025-11-25 21:56:21.268[0m | [1mINFO    [0m | [36mstudy_buddy.utils.tools[0m:[36mretrieve[0m:[36m455[0m - [1m   ✓ Found contact info for giovanni semeraro in C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\univox\data\raw\syllabuses\SIIA_syllabus.pdf[0m
+[32m2025-11-25 21:56:21.268[0m | [1mINFO    [0m | [36mstudy_buddy.utils.tools[0m:[36mretrieve[0m:[36m455[0m - [1m   ✓ Found contact info for giovanni semeraro in C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\univox\data\raw\syllabuses\SIIA_syllabus.pdf[0m
+[32m2025-11-25 21:56:21.270[0m | [1mINFO    [0m | [36mstudy_buddy.utils.tools[0m:[36mretrieve[0m:[36m455[0m - [1m   ✓ Found contact info for giovanni semeraro in C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\univox\data\raw\slides\Lesson_01_Presentation_Semantics_in_IIA.pdf[0m
+[32m2025-11-25 21:56:21.270[0m | [1mINFO    [0m | [36mstudy_buddy.utils.tools[0m:[36mretrieve[0m:[36m455[0m - [1m   ✓ Found contact info for giovanni semeraro in C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\univox\data\raw\slides\Lesson_01_Presentation_Semantics_in_IIA.pdf[0m
+[32m2025-11-25 21:56:21.270[0m | [1mINFO    [0m | [36mstudy_buddy.utils.tools[0m:[36mretrieve[0m:[36m455[0m - [1m   ✓ Found contact info for giovanni semeraro in C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\univox\data\raw\slides\Lesson_01_Presentation_Semantics_in_IIA.pdf[0m
+[32m2025-11-25 21:56:21.272[0m | [1mINFO    [0m | [36mstudy_buddy.utils.tools[0m:[36mretrieve[0m:[36m455[0m - [1m   ✓ Found contact info for giovanni semeraro in C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\univox\data\raw\slides\Lesson_02_RS_1_Recommender_Systems-Basic_concepts.pdf[0m
+[32m2025-11-25 21:56:21.280[0m | [1mINFO    [0m | [36mstudy_buddy.utils.tools[0m:[36mretrieve[0m:[36m455[0m - [1m   ✓ Found contact info for giovanni semeraro in C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\univox\data\raw\slides\Lesson_04_RS_Advances_in_CBRS_Gotheborg_2019_Part_1.pdf[0m
+[32m2025-11-25 21:56:21.282[0m | [1mINFO    [0m | [36mstudy_buddy.utils.tools[0m:[36mretrieve[0m:[36m455[0m - [1m   ✓ Found contact info for giovanni semeraro in C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\univox\data\raw\references\combining_learning_and_word_sense_disambiguation_for_intelligent_user_profiling.pdf[0m
+[32m2025-11-25 21:56:21.286[0m | [1mINFO    [0m | [36mstudy_buddy.utils.tools[0m:[36mretrieve[0m:[36m455[0m - [1m   ✓ Found contact info for giovanni semeraro in C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\univox\data\raw\references\learning_word_embeddings_from_wikipedia_for_content_based_recommender_systems.pdf[0m
+[32m2025-11-25 21:56:21.287[0m | [1mINFO    [0m | [36mstudy_buddy.utils.tools[0m:[36mretrieve[0m:[36m455[0m - [1m   ✓ Found contact info for giovanni semeraro in C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\univox\data\raw\references\together_is_better_hybrid_recommendations_combining_graph_embeddings_and_contextualized_word_representations.pdf[0m
+[32m2025-11-25 21:56:21.288[0m | [1mINFO    [0m | [36mstudy_buddy.utils.tools[0m:[36mretrieve[0m:[36m455[0m - [1m   ✓ Found contact info for giovanni semeraro in C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\univox\data\raw\references\advanced_natural_based_interaction_for_the_italian_language_llamantino_3_anita.pdf[0m
+[32m2025-11-25 21:56:21.288[0m | [1mINFO    [0m | [36mstudy_buddy.utils.tools[0m:[36mretrieve[0m:[36m455[0m - [1m   ✓ Found contact info for giovanni semeraro in C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\univox\data\raw\references\advanced_natural_based_interaction_for_the_italian_language_llamantino_3_anita.pdf[0m
+[32m2025-11-25 21:56:21.292[0m | [1mINFO    [0m | [36mstudy_buddy.utils.tools[0m:[36mretrieve[0m:[36m455[0m - [1m   ✓ Found contact info for giovanni semeraro in C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\univox\data\raw\references\Combining_Graph_Neural_Networks_and_Sentence_ecnoders_for_knowledge_aware_recommendations.pdf[0m
+[32m2025-11-25 21:56:21.298[0m | [1mINFO    [0m | [36mstudy_buddy.utils.tools[0m:[36mretrieve[0m:[36m455[0m - [1m   ✓ Found contact info for giovanni semeraro in C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\univox\data\raw\references\together_is_better_hybrid_recommendations_combining_graphs_embeddings_and_contestualized_word_representations.pdf[0m
+[32m2025-11-25 21:56:21.303[0m | [1mINFO    [0m | [36mstudy_buddy.utils.tools[0m:[36mretrieve[0m:[36m455[0m - [1m   ✓ Found contact info for giovanni semeraro in C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\univox\data\raw\references\Combining_Graph_Neural_Networks_and_Sentence_ecnoders_for_knowledge_aware_recommendations.pdf[0m
+[32m2025-11-25 21:56:21.312[0m | [1mINFO    [0m | [36mstudy_buddy.utils.tools[0m:[36mretrieve[0m:[36m455[0m - [1m   ✓ Found contact info for giovanni semeraro in C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\univox\data\raw\references\together_is_better_hybrid_recommendations_combining_graphs_embeddings_and_contestualized_word_representations.pdf[0m
+[32m2025-11-25 21:56:21.316[0m | [1mINFO    [0m | [36mstudy_buddy.utils.tools[0m:[36mretrieve[0m:[36m455[0m - [1m   ✓ Found contact info for giovanni semeraro in C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\univox\data\raw\references\combining_text_summarization_and_aspect_based_sentiment_analysis_of_users_reviews_to_justify_recommendations.pdf[0m
+[32m2025-11-25 21:56:21.317[0m | [1mINFO    [0m | [36mstudy_buddy.utils.tools[0m:[36mretrieve[0m:[36m455[0m - [1m   ✓ Found contact info for giovanni semeraro in C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\univox\data\raw\references\exploiting_distributional_semantics_models_for_natural_language_context_aware_justifications_for_recommender_systems.pdf[0m
+[32m2025-11-25 21:56:21.317[0m | [1mINFO    [0m | [36mstudy_buddy.utils.tools[0m:[36mretrieve[0m:[36m455[0m - [1m   ✓ Found contact info for giovanni semeraro in C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\univox\data\raw\references\exploiting_distributional_semantics_models_for_natural_language_context_aware_justifications_for_recommender_systems.pdf[0m
+[32m2025-11-25 21:56:21.317[0m | [1mINFO    [0m | [36mstudy_buddy.utils.tools[0m:[36mretrieve[0m:[36m455[0m - [1m   ✓ Found contact info for giovanni semeraro in C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\univox\data\raw\references\exploring_the_effects_of_natural_language_justifications_in_food_recommender_systems.pdf[0m
+[32m2025-11-25 21:56:21.319[0m | [1mINFO    [0m | [36mstudy_buddy.utils.tools[0m:[36mretrieve[0m:[36m455[0m - [1m   ✓ Found contact info for giovanni semeraro in C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\univox\data\raw\slides\Lesson_11_the_long_journey_to_large_language_models_the_nlp_breakthrough.pdf[0m
+[32m2025-11-25 21:56:21.320[0m | [1mINFO    [0m | [36mstudy_buddy.utils.tools[0m:[36mretrieve[0m:[36m455[0m - [1m   ✓ Found contact info for giovanni semeraro in C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\univox\data\raw\references\a_virtual_assistant_for_the_movie_domain_exploiting_natural_language_preference_elicitation_strategies.pdf[0m
+[32m2025-11-25 21:56:21.320[0m | [1mINFO    [0m | [36mstudy_buddy.utils.tools[0m:[36mretrieve[0m:[36m455[0m - [1m   ✓ Found contact info for giovanni semeraro in C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\univox\data\raw\references\a_virtual_assistant_for_the_movie_domain_exploiting_natural_language_preference_elicitation_strategies.pdf[0m
+[32m2025-11-25 21:56:21.322[0m | [1mINFO    [0m | [36mstudy_buddy.utils.tools[0m:[36mretrieve[0m:[36m455[0m - [1m   ✓ Found contact info for giovanni semeraro in C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\univox\data\raw\references\advanced_natural_based_interaction_for_the_italian_language_llamantino_3_anita.pdf[0m
+[32m2025-11-25 21:56:21.322[0m | [1mINFO    [0m | [36mstudy_buddy.utils.tools[0m:[36mretrieve[0m:[36m455[0m - [1m   ✓ Found contact info for giovanni semeraro in C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\univox\data\raw\references\advanced_natural_based_interaction_for_the_italian_language_llamantino_3_anita.pdf[0m
+[32m2025-11-25 21:56:21.322[0m | [1mINFO    [0m | [36mstudy_buddy.utils.tools[0m:[36mretrieve[0m:[36m455[0m - [1m   ✓ Found contact info for giovanni semeraro in C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\univox\data\raw\references\alberto_italian_bert_language_understanding_model_for_nlp_challenging_tasks_based_on_tweets.pdf[0m
+[32m2025-11-25 21:56:21.330[0m | [1mINFO    [0m | [36mstudy_buddy.utils.tools[0m:[36mretrieve[0m:[36m455[0m - [1m   ✓ Found contact info for giovanni semeraro in C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\univox\data\raw\references\llamantino_llama_2_models_for_effective_text_generation_in_italian_language.pdf[0m
+[32m2025-11-25 21:56:21.336[0m | [32m[1mSUCCESS [0m | [36mstudy_buddy.utils.tools[0m:[36mretrieve[0m:[36m459[0m - [32m[1m   Found 31 documents via keyword search[0m
+[32m2025-11-25 21:56:21.336[0m | [1mINFO    [0m | [36mstudy_buddy.utils.tools[0m:[36mretrieve[0m:[36m471[0m - [1m   Hybrid results: 4 documents (keyword + semantic)[0m
+[32m2025-11-25 21:56:21.336[0m | [1mINFO    [0m | [36mstudy_buddy.utils.tools[0m:[36mretrieve[0m:[36m473[0m - [1m
+🎯 Search Performance:
+   Time: 0.036s
+   Raw Results: 8
+   Filtered Results: 8
+   Final Results: 4
+   Avg Score: 1.5000
+[0m
+[32m2025-11-25 21:56:21.336[0m | [1mINFO    [0m | [36mstudy_buddy.utils.tools[0m:[36mretrieve[0m:[36m519[0m - [1m
+Document 1:
+• Score: 1.5000
+• Source: InformationFiltering_1_Introduction.pdf
+• Page/Section: N/A
+• Type: slide
+• Length: 995 chars
+• Content Preview:
+----------------------------------------
+Information Filtering e Recommender Systems
+
+Giovanni Semeraro giovanni.semeraro@uniba.it
+
+giovanni.semeraro@uniba.it
+
+Marco de Gemmis marco.degemmis@uniba.it
+
+marco.degemmis@uniba.it
+
+Pasquale Lops p...
+----------------------------------------
+[0m
+[32m2025-11-25 21:56:21.336[0m | [1mINFO    [0m | [36mstudy_buddy.utils.tools[0m:[36mretrieve[0m:[36m519[0m - [1m
+Document 2:
+• Score: 1.5000
+• Source: InformationFiltering_1_Introduction.pdf
+• Page/Section: N/A
+• Type: slide
+• Length: 995 chars
+• Content Preview:
+----------------------------------------
+Information Filtering e Recommender Systems
+
+Giovanni Semeraro giovanni.semeraro@uniba.it
+
+giovanni.semeraro@uniba.it
+
+Marco de Gemmis marco.degemmis@uniba.it
+
+marco.degemmis@uniba.it
+
+Pasquale Lops p...
+----------------------------------------
+[0m
+[32m2025-11-25 21:56:21.336[0m | [1mINFO    [0m | [36mstudy_buddy.utils.tools[0m:[36mretrieve[0m:[36m519[0m - [1m
+Document 3:
+• Score: 1.5000
+• Source: On_the_tip_of_my_thought_playing_the_Gui.pdf
+• Page/Section: N/A
+• Type: reference
+• Length: 247 chars
+• Content Preview:
+----------------------------------------
+On the Tip of My Thought: Playing the Guillotine Game
+
+Giovanni Semeraro, Pasquale Lops, Pierpaolo Basile, Marco de Gemmis Department of Informatics - University of Bari “Aldo Moro”, Italy {semeraro, ...
+----------------------------------------
+[0m
+[32m2025-11-25 21:56:21.336[0m | [1mINFO    [0m | [36mstudy_buddy.utils.tools[0m:[36mretrieve[0m:[36m519[0m - [1m
+Document 4:
+• Score: 1.5000
+• Source: combining_learning_and_word_sense_disambiguation_for_intelligent_user_profiling.pdf
+• Page/Section: N/A
+• Type: reference
+• Length: 258 chars
+• Content Preview:
+----------------------------------------
+Combining Learning and Word Sense Disambiguation for Intelligent User Proﬁling∗
+
+Giovanni Semeraro, Marco Degemmis, Pasquale Lops, Pierpaolo Basile Department of Informatics University of Bari, Italy ...
+----------------------------------------
+[0m
+[32m2025-11-25 21:56:21.336[0m | [32m[1mSUCCESS [0m | [36mstudy_buddy.utils.tools[0m:[36mretrieve[0m:[36m530[0m - [32m[1m
+📊 Retrieval Metrics:
+   Documents Retrieved: 4
+   Average Score: 1.5000
+   Score Range: 1.5000 - 1.5000
+   Avg Content Length: 624
+   Total Process Time: 0.894s
+[0m
+[32m2025-11-25 21:56:21.336[0m | [32m[1mSUCCESS [0m | [36mstudy_buddy.utils.logging_config[0m:[36m__exit__[0m:[36m54[0m - [32m[1m✅ rag_retrieval completed in 0.99s[0m
+
+--- Results ---
+[Source 1] InformationFiltering_1_Introduction.pdf (Page N/A)
+Relevance: 1.5000
+Information Filtering e Recommender Systems
+
+Giovanni Semeraro giovanni.semeraro@uniba.it
+
+giovanni.semeraro@uniba.it
+
+Marco de Gemmis marco.degemmis@uniba.it
+
+marco.degemmis@uniba.it
+
+Pasquale Lops pasquale.lops@uniba.it
+
+pasquale.lops@uniba.it
+
+Cataldo Musto cataldo.musto@uniba.it
+
+cataldo.musto@uniba.it
+
+Semantic Web Access and Personalization research group http://www.di.uniba.it/~swap http://www.di.uniba.it/~swa...
+
+--- Paths ---
+C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\univox\data\raw\slides\InformationFiltering_1_Introduction.pdf
+C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\univox\data\raw\slides\InformationFiltering_1_Introduction.pdf
+C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\univox\data\raw\references\On_the_tip_of_my_thought_playing_the_Gui.pdf
+C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\univox\data\raw\references\combining_learning_and_word_sense_disambiguation_for_intelligent_user_profiling.pdf

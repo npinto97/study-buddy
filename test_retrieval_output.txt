@@ -1,0 +1,129 @@
+[32m2025-11-25 21:49:03.628[0m | [1mINFO    [0m | [36mstudy_buddy.config[0m:[36m<module>[0m:[36m152[0m - [1mLangSmith Tracing: False[0m
+[32m2025-11-25 21:49:03.629[0m | [1mINFO    [0m | [36mstudy_buddy.config[0m:[36m<module>[0m:[36m153[0m - [1mLangSmith Endpoint: None[0m
+[32m2025-11-25 21:49:03.629[0m | [1mINFO    [0m | [36mstudy_buddy.utils.embeddings[0m:[36minitialize_gpu_embeddings[0m:[36m8[0m - [1mInitializing Embeddings with model: BAAI/bge-m3[0m
+[32m2025-11-25 21:49:03.690[0m | [1mINFO    [0m | [36mstudy_buddy.utils.embeddings[0m:[36minitialize_gpu_embeddings[0m:[36m14[0m - [1mGPU detected: NVIDIA GeForce RTX 3060 (12.9 GB)[0m
+[32m2025-11-25 21:49:03.690[0m | [1mINFO    [0m | [36mstudy_buddy.utils.embeddings[0m:[36minitialize_gpu_embeddings[0m:[36m15[0m - [1mUsing GPU for embeddings...[0m
+[32m2025-11-25 21:49:13.891[0m | [1mINFO    [0m | [36mstudy_buddy.utils.embeddings[0m:[36minitialize_gpu_embeddings[0m:[36m38[0m - [1mEmbeddings with model BAAI/bge-m3 successfully initialized on CUDA.[0m
+Query: qual e la mail del professor giovanni semeraro?
+[32m2025-11-25 21:49:14.014[0m | [1mINFO    [0m | [36mstudy_buddy.utils.logging_config[0m:[36m__enter__[0m:[36m48[0m - [1m🔄 Starting rag_retrieval[0m
+[32m2025-11-25 21:49:14.014[0m | [1mINFO    [0m | [36mstudy_buddy.utils.tools[0m:[36mretrieve[0m:[36m351[0m - [1m
+🔍 RAG Retrieval Process:
+   Query: qual e la mail del professor giovanni semeraro?
+   Requested Results: 4
+   Min Score Threshold: 0.3
+[0m
+[32m2025-11-25 21:49:14.478[0m | [1mINFO    [0m | [36mstudy_buddy.vectorstore_pipeline.vector_store_builder[0m:[36mget_vector_store[0m:[36m310[0m - [1mFAISS vector store loaded successfully.[0m
+[32m2025-11-25 21:49:14.478[0m | [34m[1mDEBUG   [0m | [36mstudy_buddy.utils.tools[0m:[36mretrieve[0m:[36m364[0m - [34m[1m
+📚 Vector Store Details:
+   Location: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\faiss_index
+   Type: FAISS
+   Initialization Time: 0.464s
+[0m
+[32m2025-11-25 21:49:15.108[0m | [34m[1mDEBUG   [0m | [36mstudy_buddy.utils.tools[0m:[36mretrieve[0m:[36m380[0m - [34m[1m
+🧬 Embedding Validation:
+   Dimension: 1024
+   Test Time: 0.630s
+   Model: HuggingFaceEmbeddings
+[0m
+[32m2025-11-25 21:49:15.148[0m | [1mINFO    [0m | [36mstudy_buddy.utils.tools[0m:[36mretrieve[0m:[36m408[0m - [1m
+🎯 Search Performance:
+   Time: 0.038s
+   Raw Results: 8
+   Filtered Results: 8
+   Final Results: 4
+   Avg Score: 1.0179
+[0m
+[32m2025-11-25 21:49:15.149[0m | [1mINFO    [0m | [36mstudy_buddy.utils.tools[0m:[36mretrieve[0m:[36m454[0m - [1m
+Document 1:
+• Score: 1.0259
+• Source: linked_open_data_to_support_content-based_recommender_systems.pdf
+• Page/Section: N/A
+• Type: reference
+• Length: 469 chars
+• Content Preview:
+----------------------------------------
+Available	from:	Tommaso	Di	Noia Retrieved	on:	12	May	2016
+
+Linked Open Data to support Content-based Recommender Systems
+
+Tommaso Di Noia1, Roberto Mirizzi1, Vito Claudio Ostuni1, Davide Romito1, Mark...
+----------------------------------------
+[0m
+[32m2025-11-25 21:49:15.149[0m | [1mINFO    [0m | [36mstudy_buddy.utils.tools[0m:[36mretrieve[0m:[36m454[0m - [1m
+Document 2:
+• Score: 1.0239
+• Source: On_the_tip_of_my_thought_playing_the_Gui.pdf
+• Page/Section: N/A
+• Type: reference
+• Length: 247 chars
+• Content Preview:
+----------------------------------------
+On the Tip of My Thought: Playing the Guillotine Game
+
+Giovanni Semeraro, Pasquale Lops, Pierpaolo Basile, Marco de Gemmis Department of Informatics - University of Bari “Aldo Moro”, Italy {semeraro, ...
+----------------------------------------
+[0m
+[32m2025-11-25 21:49:15.149[0m | [1mINFO    [0m | [36mstudy_buddy.utils.tools[0m:[36mretrieve[0m:[36m454[0m - [1m
+Document 3:
+• Score: 1.0133
+• Source: Lesson_04_RS_Advances_in_CBRS_Gotheborg_2019_Part_1.pdf
+• Page/Section: N/A
+• Type: slide
+• Length: 881 chars
+• Content Preview:
+----------------------------------------
+Advances in Content-based RecSys
+
+Marco de Gemmis, Pasquale Lops, Cataldo Musto, Fedelucio Narducci, Giovanni Semeraro Department of Computer Science University of Bari Aldo Moro, Italy
+
+Advances in C...
+----------------------------------------
+[0m
+[32m2025-11-25 21:49:15.149[0m | [1mINFO    [0m | [36mstudy_buddy.utils.tools[0m:[36mretrieve[0m:[36m454[0m - [1m
+Document 4:
+• Score: 1.0084
+• Source: SIIA_syllabus.pdf
+• Page/Section: N/A
+• Type: syllabus
+• Length: 912 chars
+• Content Preview:
+----------------------------------------
+080 5442140
+
+Sede
+
+Dipartimento di Informatica, Via Orabona 4, 70125, Bari. Stanza n.757, 7^ piano.
+
+Sede virtuale
+
+Piattaforma e-learning UNIBA - https://elearning.uniba.it/
+
+Sito web del docente
+
+ht...
+----------------------------------------
+[0m
+[32m2025-11-25 21:49:15.149[0m | [32m[1mSUCCESS [0m | [36mstudy_buddy.utils.tools[0m:[36mretrieve[0m:[36m465[0m - [32m[1m
+📊 Retrieval Metrics:
+   Documents Retrieved: 4
+   Average Score: 1.0179
+   Score Range: 1.0084 - 1.0259
+   Avg Content Length: 627
+   Total Process Time: 1.132s
+[0m
+[32m2025-11-25 21:49:15.149[0m | [32m[1mSUCCESS [0m | [36mstudy_buddy.utils.logging_config[0m:[36m__exit__[0m:[36m54[0m - [32m[1m✅ rag_retrieval completed in 1.13s[0m
+
+--- Results ---
+[Source 1] linked_open_data_to_support_content-based_recommender_systems.pdf (Page N/A)
+Relevance: 1.0259
+Available	from:	Tommaso	Di	Noia Retrieved	on:	12	May	2016
+
+Linked Open Data to support Content-based Recommender Systems
+
+Tommaso Di Noia1, Roberto Mirizzi1, Vito Claudio Ostuni1, Davide Romito1, Markus Zanker2∗ 1Politecnico di Bari – Via Orabona, 4 – 70125 Bari, Italy 2Inst. of Applied Informatics, University Klagenfurt – Universitätstraße, 65-67 – 9020 Klagenfurt, Austria t.dinoia@poliba.i...
+
+--- Paths ---
+C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\univox\data\raw\references\linked_open_data_to_support_content-based_recommender_systems.pdf
+C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\univox\data\raw\references\On_the_tip_of_my_thought_playing_the_Gui.pdf
+C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\univox\data\raw\slides\Lesson_04_RS_Advances_in_CBRS_Gotheborg_2019_Part_1.pdf
+C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\univox\data\raw\syllabuses\SIIA_syllabus.pdf

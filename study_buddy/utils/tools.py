@@ -405,13 +405,78 @@ class VectorStoreRetriever(BaseWrapper):
                 filtered_docs.sort(key=lambda x: x[1], reverse=True)
                 final_docs = filtered_docs[:k]
                 
+                # HYBRID SEARCH: Detect contact-related queries and add keyword search
+                contact_keywords = ['mail', 'email', 'e-mail', 'telefono', 'phone', 'contatto', 'contact']
+                is_contact_query = any(keyword in query.lower() for keyword in contact_keywords)
+                
+                if is_contact_query:
+                    logger.info("🔍 Contact query detected - performing hybrid search with keyword matching")
+                    
+                    # Extract person name from query (simple heuristic)
+                    import re
+                    # Look for common patterns like "professor X" or just names
+                    name_patterns = [
+                        r'(?:professor|prof\.?|dott\.?)\s+([a-zA-Z]+(?:\s+[a-zA-Z]+)*)',
+                        r'(?:di|del)\s+([a-zA-Z]+(?:\s+[a-zA-Z]+)*)',
+                    ]
+                    person_name = None
+                    for pattern in name_patterns:
+                        match = re.search(pattern, query, re.IGNORECASE)
+                        if match:
+                            person_name = match.group(1).strip()
+                            break
+                    
+                    # Fallback: take last capitalized word(s) as name
+                    if not person_name:
+                        words = query.split()
+                        capitalized = [w for w in words if w and w[0].isupper()]
+                        if capitalized:
+                            person_name = ' '.join(capitalized[-2:]) if len(capitalized) >= 2 else capitalized[-1]
+                    
+                    logger.info(f"   Extracted name: {person_name}")
+                    
+                    # Search for documents containing both the name and contact patterns
+                    docstore = vector_store.docstore._dict
+                    keyword_matches = []
+                    
+                    for doc_id, doc in docstore.items():
+                        content_lower = doc.page_content.lower()
+                        
+                        # Check if document contains the person's name
+                        if person_name and person_name.lower() in content_lower:
+                            # Check if it contains email or phone patterns
+                            has_email = '@' in doc.page_content and any(domain in content_lower for domain in ['.it', '.com', '.edu'])
+                            has_phone = bool(re.search(r'\d{3}[-\s]?\d{7}', doc.page_content))
+                            
+                            if has_email or has_phone:
+                                # Calculate a synthetic score based on relevance
+                                score = 1.5  # Higher than semantic search to prioritize
+                                keyword_matches.append((doc, score))
+                                logger.info(f"   ✓ Found contact info for {person_name} in {doc.metadata.get('file_path', 'Unknown')}")
+                    
+                    # Merge keyword matches with semantic results
+                    if keyword_matches:
+                        logger.success(f"   Found {len(keyword_matches)} documents via keyword search")
+                        # Add keyword matches at the beginning (higher priority)
+                        all_docs = keyword_matches + final_docs
+                        # Remove duplicates (keep first occurrence)
+                        seen_ids = set()
+                        unique_docs = []
+                        for doc, score in all_docs:
+                            doc_id = id(doc)
+                            if doc_id not in seen_ids:
+                                seen_ids.add(doc_id)
+                                unique_docs.append((doc, score))
+                        final_docs = unique_docs[:k]
+                        logger.info(f"   Hybrid results: {len(final_docs)} documents (keyword + semantic)")
+                
                 logger.info(f"""
 🎯 Search Performance:
    Time: {search_time:.3f}s
    Raw Results: {len(retrieved_docs)}
    Filtered Results: {len(filtered_docs)}
    Final Results: {len(final_docs)}
-   Avg Score: {sum(score for _, score in final_docs) / len(final_docs):.4f}
+   Avg Score: {sum(score for _, score in final_docs) / len(final_docs) if final_docs else 0:.4f}
 """)
                 
                 # Process results with detailed metadata

@@ -1,0 +1,297 @@
+2025-11-25 21:53:52 | INFO     | study_buddy.config:<module>:74 | Project root path resolved to: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy
+[32m2025-11-25 21:53:52.072[0m | [1mINFO    [0m | [36mstudy_buddy.config[0m:[36m<module>[0m:[36m152[0m - [1mLangSmith Tracing: False[0m
+[32m2025-11-25 21:53:52.072[0m | [1mINFO    [0m | [36mstudy_buddy.config[0m:[36m<module>[0m:[36m153[0m - [1mLangSmith Endpoint: None[0m
+[32m2025-11-25 21:53:52.072[0m | [1mINFO    [0m | [36mstudy_buddy.utils.embeddings[0m:[36minitialize_gpu_embeddings[0m:[36m8[0m - [1mInitializing Embeddings with model: BAAI/bge-m3[0m
+[32m2025-11-25 21:53:52.093[0m | [1mINFO    [0m | [36mstudy_buddy.utils.embeddings[0m:[36minitialize_gpu_embeddings[0m:[36m14[0m - [1mGPU detected: NVIDIA GeForce RTX 3060 (12.9 GB)[0m
+[32m2025-11-25 21:53:52.094[0m | [1mINFO    [0m | [36mstudy_buddy.utils.embeddings[0m:[36minitialize_gpu_embeddings[0m:[36m15[0m - [1mUsing GPU for embeddings...[0m
+[32m2025-11-25 21:54:02.397[0m | [1mINFO    [0m | [36mstudy_buddy.utils.embeddings[0m:[36minitialize_gpu_embeddings[0m:[36m38[0m - [1mEmbeddings with model BAAI/bge-m3 successfully initialized on CUDA.[0m
+Loading FAISS index from: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\faiss_index
+[32m2025-11-25 21:54:03.393[0m | [1mINFO    [0m | [36mstudy_buddy.vectorstore_pipeline.vector_store_builder[0m:[36mget_vector_store[0m:[36m310[0m - [1mFAISS vector store loaded successfully.[0m
+Total documents in index: 22414
+
+================================================================================
+SAMPLE DOCUMENTS (first 10):
+================================================================================
+
+Doc 1:
+  ID: b3e49059-f540-4923-8adb-def537201a84
+  Metadata: {'course_name': "Metodi per il Ritrovamento dell'Informazione (MRI)", 'course_description': "L'insegnamento si propone di introdurre: i fondamenti teorici e pratici per la realizzazione di sistemi di ritrovamento efiltraggio delle informazioni.", 'lesson_number': None, 'lesson_title': None, 'type': 'syllabus', 'file_path': 'C:\\Users\\Utente\\OneDrive - Università degli Studi di Bari\\Universita\\Magistrale\\II Anno\\I Semestre\\Semantics\\Project\\univox\\data\\raw\\syllabuses\\MRI_syllabus.pdf'}
+  Content preview: Principali informazioni sull’insegnamento
+
+Denominazione dell’insegnamento
+
+Metodi per il Ritrovamento dell’Informazione
+
+Corso di studio
+
+Informatica triennale (L31) – sede di Bari
+
+Anno Accademico
+
+...
+
+Doc 2:
+  ID: 6c8c085b-0e18-4eea-8279-fb24d54bb496
+  Metadata: {'course_name': "Metodi per il Ritrovamento dell'Informazione (MRI)", 'course_description': "L'insegnamento si propone di introdurre: i fondamenti teorici e pratici per la realizzazione di sistemi di ritrovamento efiltraggio delle informazioni.", 'lesson_number': None, 'lesson_title': None, 'type': 'syllabus', 'file_path': 'C:\\Users\\Utente\\OneDrive - Università degli Studi di Bari\\Universita\\Magistrale\\II Anno\\I Semestre\\Semantics\\Project\\univox\\data\\raw\\syllabuses\\MRI_syllabus.pdf'}
+  Content preview: Pasquale Lops
+
+Indirizzo mail
+
+pasquale.lops@uniba.it
+
+Telefono
+
+080-5442276
+
+Sede
+
+Dipartimento di Informatica, Campus Universitario, Via E. Orabona 4, 70126, Bari. Ufficio n.760, 7° piano.
+
+Sede vir...
+
+Doc 3:
+  ID: 1e7e39fe-0133-4ede-a1e5-f71cd3e7bd8c
+  Metadata: {'course_name': "Metodi per il Ritrovamento dell'Informazione (MRI)", 'course_description': "L'insegnamento si propone di introdurre: i fondamenti teorici e pratici per la realizzazione di sistemi di ritrovamento efiltraggio delle informazioni.", 'lesson_number': None, 'lesson_title': None, 'type': 'syllabus', 'file_path': 'C:\\Users\\Utente\\OneDrive - Università degli Studi di Bari\\Universita\\Magistrale\\II Anno\\I Semestre\\Semantics\\Project\\univox\\data\\raw\\syllabuses\\MRI_syllabus.pdf'}
+  Content preview: Contenuti di insegnamento (Programma)
+
+L’insegnamento si propone di introdurre: •
+
+i fondamenti teorici e pratici per la realizzazione di sistemi di ritrovamento e filtraggio delle informazioni.
+
+Le s...
+
+Doc 4:
+  ID: 830f2b70-1ee6-4376-ae67-ea226a7398ea
+  Metadata: {'course_name': "Metodi per il Ritrovamento dell'Informazione (MRI)", 'course_description': "L'insegnamento si propone di introdurre: i fondamenti teorici e pratici per la realizzazione di sistemi di ritrovamento efiltraggio delle informazioni.", 'lesson_number': None, 'lesson_title': None, 'type': 'syllabus', 'file_path': 'C:\\Users\\Utente\\OneDrive - Università degli Studi di Bari\\Universita\\Magistrale\\II Anno\\I Semestre\\Semantics\\Project\\univox\\data\\raw\\syllabuses\\MRI_syllabus.pdf'}
+  Content preview: La numerazione degli argomenti ne indica l’ordine di presentazione e di studio.
+
+1. Accesso Intelligente all'Informazione e gestione dell'informazione non strutturata
+
+Text Mining: estrazione di conos...
+
+Doc 5:
+  ID: 451e473a-3836-423d-9132-861d6d61eb32
+  Metadata: {'course_name': "Metodi per il Ritrovamento dell'Informazione (MRI)", 'course_description': "L'insegnamento si propone di introdurre: i fondamenti teorici e pratici per la realizzazione di sistemi di ritrovamento efiltraggio delle informazioni.", 'lesson_number': None, 'lesson_title': None, 'type': 'syllabus', 'file_path': 'C:\\Users\\Utente\\OneDrive - Università degli Studi di Bari\\Universita\\Magistrale\\II Anno\\I Semestre\\Semantics\\Project\\univox\\data\\raw\\syllabuses\\MRI_syllabus.pdf'}
+  Content preview: o Curve di precision-recall o Mean Average Precision (MAP) o normalized Discounted Cumulative Gain (nDCG)
+
+Rank Correlation Metrics
+
+o Coefficienti di Spearman e Kendall Tau
+
+Lezioni frontali: 13 ore ...
+
+Doc 6:
+  ID: 9f6d5d95-e09b-49a3-92aa-40e3ea935460
+  Metadata: {'course_name': "Metodi per il Ritrovamento dell'Informazione (MRI)", 'course_description': "L'insegnamento si propone di introdurre: i fondamenti teorici e pratici per la realizzazione di sistemi di ritrovamento efiltraggio delle informazioni.", 'lesson_number': None, 'lesson_title': None, 'type': 'syllabus', 'file_path': 'C:\\Users\\Utente\\OneDrive - Università degli Studi di Bari\\Universita\\Magistrale\\II Anno\\I Semestre\\Semantics\\Project\\univox\\data\\raw\\syllabuses\\MRI_syllabus.pdf'}
+  Content preview: Metodologie e metriche per la valutazione di Recommender Systems Lezioni frontali: 14 ore Esercitazioni: 6 ore
+
+Ricardo Baeza-Yates and Berthier Ribeiro-Neto. Modern Information Retrieval: The Concept...
+
+Doc 7:
+  ID: 90d54648-8b79-47c0-9275-8e4b14875d18
+  Metadata: {'course_name': "Metodi per il Ritrovamento dell'Informazione (MRI)", 'course_description': "L'insegnamento si propone di introdurre: i fondamenti teorici e pratici per la realizzazione di sistemi di ritrovamento efiltraggio delle informazioni.", 'lesson_number': None, 'lesson_title': None, 'type': 'syllabus', 'file_path': 'C:\\Users\\Utente\\OneDrive - Università degli Studi di Bari\\Universita\\Magistrale\\II Anno\\I Semestre\\Semantics\\Project\\univox\\data\\raw\\syllabuses\\MRI_syllabus.pdf'}
+  Content preview: Dietmar Jannach, Markus Zanker, Alexander Felferning, Gerhard Friedrich. Recommender Systems An Introduction, Cambridge University Press, 2010. ISBN: 978-0521493369.
+
+Nella sezione seguente è specific...
+
+Doc 8:
+  ID: fa04b640-8ef0-4465-8cd8-91df087dd9b1
+  Metadata: {'course_name': "Metodi per il Ritrovamento dell'Informazione (MRI)", 'course_description': "L'insegnamento si propone di introdurre: i fondamenti teorici e pratici per la realizzazione di sistemi di ritrovamento efiltraggio delle informazioni.", 'lesson_number': None, 'lesson_title': None, 'type': 'syllabus', 'file_path': 'C:\\Users\\Utente\\OneDrive - Università degli Studi di Bari\\Universita\\Magistrale\\II Anno\\I Semestre\\Semantics\\Project\\univox\\data\\raw\\syllabuses\\MRI_syllabus.pdf'}
+  Content preview: Si specificano di seguito, per ogni argomento del programma, i capitoli dei testi dai quali studiare. 1. strutturata [Baeza-Yates] Capitolo 1, Capitolo 2 (sezione 2.1, 2.2) 2. [Baeza-Yates] Capitolo 3...
+
+Doc 9:
+  ID: 70dda064-9a17-4146-808f-82fbc75bad35
+  Metadata: {'course_name': "Metodi per il Ritrovamento dell'Informazione (MRI)", 'course_description': "L'insegnamento si propone di introdurre: i fondamenti teorici e pratici per la realizzazione di sistemi di ritrovamento efiltraggio delle informazioni.", 'lesson_number': None, 'lesson_title': None, 'type': 'syllabus', 'file_path': 'C:\\Users\\Utente\\OneDrive - Università degli Studi di Bari\\Universita\\Magistrale\\II Anno\\I Semestre\\Semantics\\Project\\univox\\data\\raw\\syllabuses\\MRI_syllabus.pdf'}
+  Content preview: Information Retrieval
+
+Metriche per la valutazione dei sistemi di IR
+
+Text Categorization
+
+Accesso Personalizzato all’Informazione e Recommender Systems
+
+Per ogni argomento è inoltre disponibile una d...
+
+Doc 10:
+  ID: ae7b3e99-a05c-4d9c-9cd9-80dfac172ea1
+  Metadata: {'course_name': "Metodi per il Ritrovamento dell'Informazione (MRI)", 'course_description': "L'insegnamento si propone di introdurre: i fondamenti teorici e pratici per la realizzazione di sistemi di ritrovamento efiltraggio delle informazioni.", 'lesson_number': None, 'lesson_title': None, 'type': 'syllabus', 'file_path': 'C:\\Users\\Utente\\OneDrive - Università degli Studi di Bari\\Universita\\Magistrale\\II Anno\\I Semestre\\Semantics\\Project\\univox\\data\\raw\\syllabuses\\MRI_syllabus.pdf'}
+  Content preview: 30 ore
+
+139 ore
+
+CFU/ETCS
+
+9 CFU
+
+7 CFU
+
+2 CFU
+
+Metodi didattici
+
+Lezioni frontali condotte con l’ausilio di trasparenze rese disponibili tramite la piattaforma di e-learning prima delle lezioni
+
+Eser...
+
+================================================================================
+SEARCHING FOR SEMERARO + EMAIL/CONTACT INFO:
+================================================================================
+
+Found 67 documents with Semeraro + potential contact info
+
+--- Document 1 ---
+Source: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\univox\data\raw\books\Book_on_Semantics_in_Adaptive_And_Personalized_Systems.pdf
+Type: book
+Content:
+[174] Musto C, Basile P, Lops P, de Gemmis M, Semeraro G (2014) Linked Open Data-enabled strategies for top-n recommendations. In: Bogers T, Koolen M, Cantador I (eds) Proceedings of the 1st Workshop on New Trends in Content- based Recommender Systems co-located with the 8th ACM Conference on Recommender Systems, CBRecSys@RecSys 2014, Foster City, Silicon Val- ley, California, USA, October 6, 2014., CEUR-WS.org, CEUR Workshop Proceedings, vol 1245, pp 49–56
+
+[175] Musto C, Semeraro G, Lops P, de Gemmis M (2015) Crowdpulse: A frame- work for real-time semantic analysis of social streams. Information Systems 54:127–146
+
+[176] Musto C, Narducci F, Lops P, de Gemmis M, Semeraro G (2016) Explod: A framework for explaining recommendations based on the linked open data cloud. In: Proceedings of the 10th ACM Conference on Recommender Sys- tems, ACM, pp 151–154
+
+References
+--------------------------------------------------------------------------------
+
+--- Document 2 ---
+Source: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\univox\data\raw\slides\InformationFiltering_1_Introduction.pdf
+Type: slide
+Content:
+Information Filtering e Recommender Systems
+
+Giovanni Semeraro giovanni.semeraro@uniba.it
+
+giovanni.semeraro@uniba.it
+
+Marco de Gemmis marco.degemmis@uniba.it
+
+marco.degemmis@uniba.it
+
+Pasquale Lops pasquale.lops@uniba.it
+
+pasquale.lops@uniba.it
+
+Cataldo Musto cataldo.musto@uniba.it
+
+cataldo.musto@uniba.it
+
+Semantic Web Access and Personalization research group http://www.di.uniba.it/~swap http://www.di.uniba.it/~swap
+
+One minute on the Web
+
+Dati prodotti in un anno (2010)
+
+~1200 exabytes
+
+Dati prodotti in un anno (2010)
+
+~1200 exabytes
+
+How big is an Exabyte?
+
+How much data?
+
+Information Overload
+
+Information Overload
+
+Information Overload
+
+Information Overload
+
+Information Overload
+
+Information Overload
+
+Information Overload
+
+(4482 sneakers!)
+
+Information Overload
+
+Paradox of Choice (Barry Schwartz)
+
+https://www.ted.com/talks/barry_schwartz_on_the_paradox_of_choice?language=it
+
+accessing information has never been easier, but sifting through it has never been harder (M. Shapiro)
+--------------------------------------------------------------------------------
+
+--- Document 3 ---
+Source: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\univox\data\raw\slides\InformationFiltering_1_Introduction.pdf
+Type: slide
+Content:
+Information Filtering e Recommender Systems
+
+Giovanni Semeraro giovanni.semeraro@uniba.it
+
+giovanni.semeraro@uniba.it
+
+Marco de Gemmis marco.degemmis@uniba.it
+
+marco.degemmis@uniba.it
+
+Pasquale Lops pasquale.lops@uniba.it
+
+pasquale.lops@uniba.it
+
+Cataldo Musto cataldo.musto@uniba.it
+
+cataldo.musto@uniba.it
+
+Semantic Web Access and Personalization research group http://www.di.uniba.it/~swap http://www.di.uniba.it/~swap
+
+One minute on the Web
+
+Dati prodotti in un anno (2010)
+
+~1200 exabytes
+
+Dati prodotti in un anno (2010)
+
+~1200 exabytes
+
+How big is an Exabyte?
+
+How much data?
+
+Information Overload
+
+Information Overload
+
+Information Overload
+
+Information Overload
+
+Information Overload
+
+Information Overload
+
+Information Overload
+
+(4482 sneakers!)
+
+Information Overload
+
+Paradox of Choice (Barry Schwartz)
+
+https://www.ted.com/talks/barry_schwartz_on_the_paradox_of_choice?language=it
+
+accessing information has never been easier, but sifting through it has never been harder (M. Shapiro)
+--------------------------------------------------------------------------------
+
+--- Document 4 ---
+Source: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\univox\data\raw\references\On_the_tip_of_my_thought_playing_the_Gui.pdf
+Type: reference
+Content:
+On the Tip of My Thought: Playing the Guillotine Game
+
+Giovanni Semeraro, Pasquale Lops, Pierpaolo Basile, Marco de Gemmis Department of Informatics - University of Bari “Aldo Moro”, Italy {semeraro, lops, basilepp, degemmis}@di.uniba.it
+
+Abstract
+--------------------------------------------------------------------------------
+
+--- Document 5 ---
+Source: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\univox\data\raw\references\uniba_jigsaw_algorithm_for_word_sense_disambiguation.pdf
+Type: reference
+Content:
+UNIBA:JIGSAWalgorithmforWordSenseDisambiguationP.BasileandM.deGemmisandA.L.GentileandP.LopsandG.SemeraroDepartmentofComputerScience-UniversityofBari-ViaE.Orabona,470125BariITALY{basilepp,degemmis,al.gentile,lops,semeraro}@di.uniba.itAbstractWordSenseDisambiguation(WSD)istra-ditionallyconsideredanAI-hardproblem.Abreakthroughinthisﬁeldwouldhaveasigniﬁcantimpactonmanyrelevantweb-basedapplications,suchasinformationre-trievalandinformationextraction.Thispa-perdescribesJIGSAW,aknowledge-basedWSDsystemthatattempstodisambiguateallwordsinatextbyexploitingWordNet1senses.Themainassumptionisthataspe-ciﬁcstrategyforeachPart-Of-Speech(POS)isbetterthanasinglestrategy.Weevalu-atedtheaccuracyofJIGSAWonSemEval-2007task1competition2.Thistaskisanapplication-drivenone,wheretheapplica-tionisaﬁxedcross-lingualinformationre-trievalsystem.ParticipantsdisambiguatetextbyassigningWordNetsynsets,thenthesystemhastodotheexpansiontootherlan-guages,indextheexpandeddocumentsandruntheretrievalforallthelanguagesinbatch.T
+--------------------------------------------------------------------------------
