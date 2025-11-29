@@ -590,7 +590,16 @@ class DocumentProcessor(BaseWrapper):
         logger.info(f"📄 Path resolved to: {repr(resolved_path)}")
         
         if not os.path.exists(resolved_path):
-            error_message = f"Error: no such file found at the resolved path: '{resolved_path}'"
+            # Check if it's a path issue (e.g. old project name 'univox' vs 'study-buddy')
+            if 'univox' in resolved_path and 'study-buddy' in os.getcwd():
+                logger.warning(f"Detected potential path mismatch: 'univox' in path but current dir is 'study-buddy'")
+            
+            error_message = (
+                f"FILE NON TROVATO: Il sistema non riesce a leggere il file '{os.path.basename(resolved_path)}'.\n"
+                f"Percorso cercato: {resolved_path}\n\n"
+                "POSSIBILE CAUSA: Il file è stato indicizzato in precedenza (es. nel progetto 'univox') ma non è fisicamente presente nella cartella di lavoro attuale ('study-buddy').\n"
+                "SOLUZIONE: Per analizzare questo file, devi caricarlo nuovamente tramite l'interfaccia ('Upload Document')."
+            )
             logger.error(error_message)
             return error_message
 
