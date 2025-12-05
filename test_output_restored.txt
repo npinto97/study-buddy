@@ -1,0 +1,129 @@
+2025-12-02T21:01:16.790979+0100 INFO Project root path resolved to: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy
+[32m2025-12-02 21:01:16.799[0m | [1mINFO    [0m | [36mstudy_buddy.config[0m:[36m<module>[0m:[36m129[0m - [1mLangSmith Tracing: False[0m
+[32m2025-12-02 21:01:16.801[0m | [1mINFO    [0m | [36mstudy_buddy.config[0m:[36m<module>[0m:[36m130[0m - [1mLangSmith Endpoint: None[0m
+[32m2025-12-02 21:01:16.934[0m | [1mINFO    [0m | [36mstudy_buddy.utils.embeddings[0m:[36minitialize_gpu_embeddings[0m:[36m8[0m - [1mInitializing Embeddings with model: BAAI/bge-m3[0m
+[32m2025-12-02 21:01:16.957[0m | [1mINFO    [0m | [36mstudy_buddy.utils.embeddings[0m:[36minitialize_gpu_embeddings[0m:[36m14[0m - [1mGPU detected: NVIDIA GeForce RTX 3060 (12.9 GB)[0m
+[32m2025-12-02 21:01:16.957[0m | [1mINFO    [0m | [36mstudy_buddy.utils.embeddings[0m:[36minitialize_gpu_embeddings[0m:[36m15[0m - [1mUsing GPU for embeddings...[0m
+[32m2025-12-02 21:01:36.061[0m | [1mINFO    [0m | [36mstudy_buddy.utils.embeddings[0m:[36minitialize_gpu_embeddings[0m:[36m38[0m - [1mEmbeddings with model BAAI/bge-m3 successfully initialized on CUDA.[0m
+Initializing HybridRetriever...
+[32m2025-12-02 21:01:36.779[0m | [1mINFO    [0m | [36mstudy_buddy.vectorstore_pipeline.vector_store_builder[0m:[36mget_vector_store[0m:[36m501[0m - [1mFAISS vector store loaded successfully.[0m
+[32m2025-12-02 21:01:36.799[0m | [1mINFO    [0m | [36mstudy_buddy.utils.retriever[0m:[36m__init__[0m:[36m41[0m - [1mBM25 Retriever loaded successfully.[0m
+
+--- Query: According to the MRI_syllabus.pdf, who is the professor for the 'Metodi per il Ritrovamento dell'Informazione' course? ---
+[32m2025-12-02 21:01:37.309[0m | [1mINFO    [0m | [36mstudy_buddy.utils.retriever[0m:[36m_get_relevant_documents[0m:[36m58[0m - [1mHybrid Retrieval for query: 'According to the MRI_syllabus.pdf, who is the professor for the 'Metodi per il Ritrovamento dell'Informazione' course?'[0m
+
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00,  1.30it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00,  1.30it/s]
+[32m2025-12-02 21:01:38.109[0m | [1mINFO    [0m | [36mstudy_buddy.utils.retriever[0m:[36m_get_relevant_documents[0m:[36m62[0m - [1mVector search returned 20 docs.[0m
+[32m2025-12-02 21:01:38.119[0m | [1mINFO    [0m | [36mstudy_buddy.utils.retriever[0m:[36m_get_relevant_documents[0m:[36m70[0m - [1mBM25 search returned 4 docs.[0m
+[32m2025-12-02 21:01:38.120[0m | [1mINFO    [0m | [36mstudy_buddy.utils.retriever[0m:[36m_get_relevant_documents[0m:[36m83[0m - [1mCombined unique docs: 5[0m
+[32m2025-12-02 21:01:38.120[0m | [1mINFO    [0m | [36mstudy_buddy.utils.retriever[0m:[36m_get_relevant_documents[0m:[36m89[0m - [1mRe-ranking documents...[0m
+[32m2025-12-02 21:01:38.822[0m | [1mINFO    [0m | [36mstudy_buddy.utils.retriever[0m:[36m_get_relevant_documents[0m:[36m115[0m - [1mRe-ranking complete. Returning top 5 docs.[0m
+Retrieved 5 documents.
+[1] Source: Unknown | Score: 0.8996899127960205
+    Content snippet: # MRI_2024_25
+Metodi per il Ritrovamento dell'Informazione 2024/2025 - Laurea Triennale in Informatica - Dipartimento di Informatica, Università degli Studi di Bari Aldo Moro....
+[2] Source: Unknown | Score: 0.6421765089035034
+    Content snippet: # MRI-24-25_CBRS
+
+Notebook e dati per le esercitazioni sui Content-based RecSys, per il corso "Metodi per il Ritrovamento dell'Informazione", anno accademico 2024-2025....
+[3] Source: Unknown | Score: 1.627210440346971e-05
+    Content snippet: CHAPTERS
+DBpedia features around 20 language chapters which are concerned with the improvement and extraction of data from the language-specific Wikipedia versions. The chapters are part of the DBpedi...
+[4] Source: Unknown | Score: 1.520795649412321e-05
+    Content snippet: NOTICE: the code has not been released yet, we apologize for the delay, it will be available asap!
+
+Developed by: Pierpaolo Basile, Elio Musacchio, Marco Polignano, Lucia Siciliani, Giuseppe Fiameni, ...
+[5] Source: Unknown | Score: 1.4808879313932266e-05
+    Content snippet: chosen method, as well as a very clear statement of the philosophical 
+and historical background. This can be extremely useful for anyone 
+who wants to use MAS without preconceived ideas about how to ...
+
+--- Query: Find the email address for Professor Giovanni Semeraro in the SIIA_syllabus.pdf. ---
+[32m2025-12-02 21:01:38.823[0m | [1mINFO    [0m | [36mstudy_buddy.utils.retriever[0m:[36m_get_relevant_documents[0m:[36m58[0m - [1mHybrid Retrieval for query: 'Find the email address for Professor Giovanni Semeraro in the SIIA_syllabus.pdf.'[0m
+
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00, 24.27it/s]
+[32m2025-12-02 21:01:38.878[0m | [1mINFO    [0m | [36mstudy_buddy.utils.retriever[0m:[36m_get_relevant_documents[0m:[36m62[0m - [1mVector search returned 20 docs.[0m
+[32m2025-12-02 21:01:38.882[0m | [1mINFO    [0m | [36mstudy_buddy.utils.retriever[0m:[36m_get_relevant_documents[0m:[36m70[0m - [1mBM25 search returned 4 docs.[0m
+[32m2025-12-02 21:01:38.882[0m | [1mINFO    [0m | [36mstudy_buddy.utils.retriever[0m:[36m_get_relevant_documents[0m:[36m83[0m - [1mCombined unique docs: 5[0m
+[32m2025-12-02 21:01:38.882[0m | [1mINFO    [0m | [36mstudy_buddy.utils.retriever[0m:[36m_get_relevant_documents[0m:[36m89[0m - [1mRe-ranking documents...[0m
+[32m2025-12-02 21:01:39.250[0m | [1mINFO    [0m | [36mstudy_buddy.utils.retriever[0m:[36m_get_relevant_documents[0m:[36m115[0m - [1mRe-ranking complete. Returning top 5 docs.[0m
+Retrieved 5 documents.
+[1] Source: Unknown | Score: 0.14589129388332367
+    Content snippet: @misc{basile2023llamantino,
+      title={LLaMAntino: LLaMA 2 Models for Effective Text Generation in Italian Language}, 
+      author={Pierpaolo Basile and Elio Musacchio and Marco Polignano and Lucia...
+[2] Source: Unknown | Score: 0.0005208731163293123
+    Content snippet: NOTICE: the code has not been released yet, we apologize for the delay, it will be available asap!
+
+Developed by: Pierpaolo Basile, Elio Musacchio, Marco Polignano, Lucia Siciliani, Giuseppe Fiameni, ...
+[3] Source: Unknown | Score: 3.742246190086007e-05
+    Content snippet: **Authors**: Stephanie Lin, University of Oxford (<sylin07@gmail.com>), Jacob Hilton, OpenAI (<jhilton@openai.com>), Owain Evans, University of Oxford (<owaine@gmail.com>)
+
+<!---
+### Abstract...
+[4] Source: Unknown | Score: 2.5784651370486245e-05
+    Content snippet: Attribution example:
+
+Alammar, J (2018). The Illustrated Transformer [Blog post]. Retrieved from https://jalammar.github.io/illustrated-transformer/
+
+Note: If you translate any of the posts, let me kn...
+[5] Source: Unknown | Score: 2.2066225938033313e-05
+    Content snippet: EnglishDutch (Netherlands)ContactImprove Your Influence in 30 DaysSign up for The Art of Designing Behaviour, a 30-day inbox training with 11 email lessons, practical assignments, and a workbook to he...
+
+--- Query: What are the office hours for Professor Pasquale Lops as listed in the MRI syllabus? ---
+[32m2025-12-02 21:01:39.250[0m | [1mINFO    [0m | [36mstudy_buddy.utils.retriever[0m:[36m_get_relevant_documents[0m:[36m58[0m - [1mHybrid Retrieval for query: 'What are the office hours for Professor Pasquale Lops as listed in the MRI syllabus?'[0m
+
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00, 10.25it/s]
+
+[32m2025-12-02 21:01:39.360[0m | [1mINFO    [0m | [36mstudy_buddy.utils.retriever[0m:[36m_get_relevant_documents[0m:[36m62[0m - [1mVector search returned 20 docs.[0m
+[32m2025-12-02 21:01:39.366[0m | [1mINFO    [0m | [36mstudy_buddy.utils.retriever[0m:[36m_get_relevant_documents[0m:[36m70[0m - [1mBM25 search returned 4 docs.[0m
+[32m2025-12-02 21:01:39.366[0m | [1mINFO    [0m | [36mstudy_buddy.utils.retriever[0m:[36m_get_relevant_documents[0m:[36m83[0m - [1mCombined unique docs: 6[0m
+[32m2025-12-02 21:01:39.366[0m | [1mINFO    [0m | [36mstudy_buddy.utils.retriever[0m:[36m_get_relevant_documents[0m:[36m89[0m - [1mRe-ranking documents...[0m
+[32m2025-12-02 21:01:39.632[0m | [1mINFO    [0m | [36mstudy_buddy.utils.retriever[0m:[36m_get_relevant_documents[0m:[36m115[0m - [1mRe-ranking complete. Returning top 5 docs.[0m
+Retrieved 5 documents.
+[1] Source: Unknown | Score: 3.514885975164361e-05
+    Content snippet: </p>
+</details>...
+[2] Source: Unknown | Score: 1.9402299585635774e-05
+    Content snippet: applications.
+The main application of multi-agent systems at the 
+moment can be listed as follows:...
+[3] Source: Unknown | Score: 1.5719293514848687e-05
+    Content snippet: chosen method, as well as a very clear statement of the philosophical 
+and historical background. This can be extremely useful for anyone 
+who wants to use MAS without preconceived ideas about how to ...
+[4] Source: Unknown | Score: 1.539567529107444e-05
+    Content snippet: ”The animal didn't cross the street because it was too tired”
+What does “it” in this sentence refer to? Is it referring to the street or to the animal? It’s a simple question to a human, but not as si...
+[5] Source: Unknown | Score: 1.5112247638171539e-05
+    Content snippet: Multiplying x1 by the WQ weight matrix produces q1, the "query" vector associated with that word. We end up creating a "query", a "key", and a "value" projection of each word in the input sentence.
+
+
+...
+
+--- Query: What are the five criteria for the final grade attribution in the SIIA course syllabus? ---
+[32m2025-12-02 21:01:39.633[0m | [1mINFO    [0m | [36mstudy_buddy.utils.retriever[0m:[36m_get_relevant_documents[0m:[36m58[0m - [1mHybrid Retrieval for query: 'What are the five criteria for the final grade attribution in the SIIA course syllabus?'[0m
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00, 15.54it/s]
+[32m2025-12-02 21:01:39.709[0m | [1mINFO    [0m | [36mstudy_buddy.utils.retriever[0m:[36m_get_relevant_documents[0m:[36m62[0m - [1mVector search returned 20 docs.[0m
+[32m2025-12-02 21:01:39.715[0m | [1mINFO    [0m | [36mstudy_buddy.utils.retriever[0m:[36m_get_relevant_documents[0m:[36m70[0m - [1mBM25 search returned 4 docs.[0m
+[32m2025-12-02 21:01:39.715[0m | [1mINFO    [0m | [36mstudy_buddy.utils.retriever[0m:[36m_get_relevant_documents[0m:[36m83[0m - [1mCombined unique docs: 8[0m
+[32m2025-12-02 21:01:39.715[0m | [1mINFO    [0m | [36mstudy_buddy.utils.retriever[0m:[36m_get_relevant_documents[0m:[36m89[0m - [1mRe-ranking documents...[0m
+[32m2025-12-02 21:01:40.416[0m | [1mINFO    [0m | [36mstudy_buddy.utils.retriever[0m:[36m_get_relevant_documents[0m:[36m115[0m - [1mRe-ranking complete. Returning top 5 docs.[0m
+Retrieved 5 documents.
+[1] Source: Unknown | Score: 2.1054758690297604e-05
+    Content snippet: identify the most important: representational, organisational, 
+conative, interactional, productive and preservative. Different roles 
+are associated with each of these functions among the elements in...
+[2] Source: Unknown | Score: 1.8851837012334727e-05
+    Content snippet: The fifth step is to multiply each value vector by the softmax score (in preparation to sum them up). The intuition here is to keep intact the values of the word(s) we want to focus on, and drown-out ...
+[3] Source: Unknown | Score: 1.844232974690385e-05
+    Content snippet: important operational problem areas for the DoD (intelligence analysis and autonomous systems).In addition, researchers are examining the psychology of explanation.XAI research prototypes are tested a...
+[4] Source: Unknown | Score: 1.7600528735783882e-05
+    Content snippet: * **MC1 (Single-true)**: Given a question and 4-5 answer choices, select the only correct answer. The model's selection is the answer choice to which it assigns the highest log-probability of completi...
+[5] Source: Unknown | Score: 1.6656360458000563e-05
+    Content snippet: 2025 Update: We’ve built a free short course that brings the contents of this post up-to-date with animations:...

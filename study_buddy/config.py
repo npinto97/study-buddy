@@ -10,7 +10,7 @@ import pytesseract
 from PIL import Image
 
 
-from langchain_docling import DoclingLoader
+# from langchain_docling import DoclingLoader
 from langchain_community.document_loaders import (TextLoader,
                                                   UnstructuredMarkdownLoader,
                                                   UnstructuredPDFLoader,
@@ -18,7 +18,10 @@ from langchain_community.document_loaders import (TextLoader,
                                                   UnstructuredExcelLoader,
                                                   UnstructuredPowerPointLoader,
                                                   UnstructuredHTMLLoader,
-                                                  UnstructuredEPubLoader)
+                                                  UnstructuredEPubLoader,
+                                                  UnstructuredWordDocumentLoader,
+                                                  NotebookLoader,
+                                                  UnstructuredFileLoader)
 
 
 def image_loader(filepath: str):
@@ -33,7 +36,9 @@ FILE_LOADERS = {
     ".pdf": UnstructuredPDFLoader,
     ".txt": TextLoader,
     ".md": UnstructuredMarkdownLoader,
-    ".docx": DoclingLoader,
+    ".docx": UnstructuredWordDocumentLoader,
+    ".doc": UnstructuredFileLoader,
+    ".ipynb": NotebookLoader,
     ".csv": UnstructuredCSVLoader,
     ".xlsx": UnstructuredExcelLoader,
     ".pptx": UnstructuredPowerPointLoader,

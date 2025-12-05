@@ -4,7 +4,7 @@
 import hashlib
 from pathlib import Path
 import json
-from langchain.schema import Document
+from langchain_core.documents import Document
 
 from study_buddy.config import (
     logger, SUPPORTED_EXTENSIONS, FILE_LOADERS, AUDIO_EXTENSIONS, VIDEO_EXTENSIONS,
@@ -82,9 +82,13 @@ def scan_directory_for_new_documents(processed_hashes: set, parsed_data_file: Pa
         logger.error(f"File {parsed_data_file} non trovato!")
         return new_docs, new_hashes
 
+    logger.info(f"DEBUG: Scanning directory. Parsed data file: {parsed_data_file}")
+
     # Carica il JSON dei file elaborati
     with open(parsed_data_file, "r", encoding="utf-8") as f:
         parsed_data = json.load(f)
+    
+    logger.info(f"DEBUG: Loaded {len(parsed_data)} entries from parsed data.")
 
     for entry in parsed_data:
         metadata = {
@@ -132,18 +136,22 @@ def scan_directory_for_new_documents(processed_hashes: set, parsed_data_file: Pa
 
             if not filepath.exists():
                 logger.warning(f"File not found: {filepath}")
+                logger.info(f"DEBUG: File not found: {filepath}")
                 continue
 
             doc_hash = compute_file_hash(filepath)
+            logger.info(f"DEBUG: Processing {filepath}, Hash: {doc_hash}")
 
             if doc_hash in processed_hashes:
                 logger.info(f"Local document already processed: {filepath}")
+                logger.info(f"DEBUG: Already processed: {filepath}")
                 continue
 
             logger.info(f"Uploading new document: {filepath}")
 
             try:
                 documents = load_document(filepath)
+                logger.info(f"DEBUG: Loaded {len(documents)} docs from {filepath}")
                 for doc in documents:
                     # Aggiunge i metadati al documento
                     metadata["file_path"] = str(filepath)

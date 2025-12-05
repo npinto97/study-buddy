@@ -1,72 +1,94 @@
 from loguru import logger
-
 from langgraph.graph import StateGraph
 from langgraph.prebuilt import tools_condition
-
 from study_buddy.utils.memory import MemorySaver
 from study_buddy.config import IMAGES_DIR
-
 from study_buddy.utils.state import AgentState
-
-from study_buddy.utils.nodes import call_model, tool_node
-
+from study_buddy.utils.nodes import call_model, tool_node, grade_documents, transform_query
+from langchain_core.messages import ToolMessage
 import os
+
+print("[DEBUG] agent.py imports finished")
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
 
+# Define the graph
+print("Defining workflow graph...")
+workflow = StateGraph(AgentState)
+workflow.add_node("agent", call_model)
+workflow.add_node("tools", tool_node)
+workflow.add_node("grade_documents", grade_documents)
+workflow.add_node("transform_query", transform_query)
 
-def build_compiled_graph():
-    graph_builder = StateGraph(AgentState)
+workflow.set_entry_point("agent")
 
-    graph_builder.add_node("agent", call_model)
-    graph_builder.add_node("tools", tool_node)
+workflow.add_conditional_edges(
+    "agent",
+    tools_condition
+)
 
-    graph_builder.set_entry_point("agent")
+def should_grade_or_continue(state):
+    """
+    Check if we should grade documents or continue to agent.
+    Only grade if the last tool call was 'retrieve_knowledge'.
+    """
+    messages = state["messages"]
+    last_message = messages[-1]
+    
+    if isinstance(last_message, ToolMessage):
+        # We need to check which tool generated this message.
+        # ToolMessage has 'name' attribute which corresponds to tool name.
+        if last_message.name == "retrieve_knowledge":
+            return "grade_documents"
+            
+    return "agent"
 
-    graph_builder.add_conditional_edges(
-        "agent",
-        tools_condition
-    )
+def check_relevance(state):
+    """
+    Check the outcome of grading.
+    If relevant -> agent
+    If irrelevant -> transform_query
+    """
+    messages = state["messages"]
+    last_message = messages[-1]
+    
+    # If grade_documents returned a SystemMessage saying "NOT relevant", we go to transform
+    # But grade_documents returns a dict update.
+    # We can check the content of the last message added.
+    
+    if isinstance(last_message, ToolMessage):
+        # This means grade_documents returned empty list (relevant)
+        return "agent"
+        
+    if "NOT relevant" in last_message.content:
+        return "transform_query"
+        
+    return "agent"
 
-    graph_builder.add_edge("tools", "agent")
+workflow.add_conditional_edges(
+    "tools",
+    should_grade_or_continue,
+    {
+        "grade_documents": "grade_documents",
+        "agent": "agent"
+    }
+)
 
-    memory = MemorySaver()
+workflow.add_conditional_edges(
+    "grade_documents",
+    check_relevance,
+    {
+        "transform_query": "transform_query",
+        "agent": "agent"
+    }
+)
 
-    return graph_builder.compile(checkpointer=memory)
+workflow.add_edge("transform_query", "agent")
 
+# Initialize memory
+print("Initializing memory...")
+memory = MemorySaver()
 
-compiled_graph = build_compiled_graph()
-
-# if not os.path.exists(IMAGES_DIR):
-#     os.makedirs(IMAGES_DIR)
-
-# output_file_path = os.path.join(IMAGES_DIR, "agents_graph.png")
-# compiled_graph.get_graph().draw_mermaid_png(output_file_path=output_file_path)
-
-# logger.info(f"Graph saved to: {output_file_path}")
-
-
-# Run chatbot loop
-# config = {"configurable": {"thread_id": "8"}}
-
-# while True:
-#     user_input = input("User: ")
-#     if user_input.lower() in ["quit", "exit", "q"]:
-#         print("Goodbye!")
-#         break
-
-#     events = compiled_graph.stream(
-#         {"messages": [{"role": "user", "content": user_input}]},
-#         config,
-#         stream_mode="values",
-#     )
-#     for event in events:
-#         # print("DEBUG: Messages:", event["messages"])
-#         event["messages"][-1].pretty_print()
-
-#     for message_chunk, metadata in compiled_graph.stream(
-#         {"messages": [{"role": "user", "content": user_input}]},
-#         config,
-#         stream_mode="messages",
-#     ):
-#         if message_chunk.content:
-#             print(message_chunk.content, end="", flush=True)
+# Compile the graph
+print("Compiling graph...")
+compiled_graph = workflow.compile(checkpointer=memory)
+print("Graph compiled successfully.")

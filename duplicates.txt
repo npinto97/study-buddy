@@ -1,0 +1,23 @@
+Total paths: 304
+Unique paths: 284
+Duplicate paths: 18
+
+Duplicates:
+C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\books\Book_on_Semantics_in_Adaptive_And_Personalized_Systems.pdf: 2
+C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\slides\InformationFiltering_1_Introduction.pdf: 2
+C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references\Knowledge_Discovery_in_Textual_Databases_(KDT).pdf: 3
+C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references\Text_mining_as_integration_of_several_re.pdf: 3
+C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\exercises\solved_exercises\TFIDF_Ranking_Solved_Exercise_2.pdf: 2
+C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references\uniba_jigsaw_algorithm_for_word_sense_disambiguation.pdf: 2
+C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references\combining_learning_and_word_sense_disambiguation_for_intelligent_user_profiling.pdf: 2
+C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references\learning_and_revising_user_profiles_the_identification_of_interesting_web_sites.pdf: 2
+C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\supplementary_materials/Lesson_04_TBL-Hendler-Lassila_The_Semantic_Web_ Scientific_American_May_2001.pdf: 2
+C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references\advanced_natural_based_interaction_for_the_italian_language_llamantino_3_anita.pdf: 2
+C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references\attention_is_all_you_need.pdf: 2
+C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references\bert_pre_training_of_deep_bidirectional_transformers_for_language_understanding.pdf: 2
+C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references\Combining_Graph_Neural_Networks_and_Sentence_ecnoders_for_knowledge_aware_recommendations.pdf: 2
+C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references\together_is_better_hybrid_recommendations_combining_graphs_embeddings_and_contestualized_word_representations.pdf: 2
+C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references\a_spreading_activation_theory_of_memory.pdf: 2
+C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references\pre_train_prompt_and_predict_a_systematic_survey_of_prompting_methods_in_natural_language_processing.pdf: 2
+C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references\questioning_the_survey_responses_of_large_language_models.pdf: 2
+C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references\generating_post_hoc_review_based_natural_language_justifications_for_recommender_systems.pdf: 2

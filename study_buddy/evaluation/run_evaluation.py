@@ -2,14 +2,14 @@ import json
 import asyncio
 from pathlib import Path
 from tqdm import tqdm
-
 from study_buddy.agent import compiled_graph
 from study_buddy.vectorstore_pipeline.vector_store_builder import get_vector_store
 from study_buddy.config import FAISS_INDEX_DIR
 from study_buddy.utils.tools import close_sandboxes
 
-EVALUATION_DATASET_PATH = Path("evaluation_dataset.json")
-EVALUATION_RESULTS_PATH = Path("evaluation_results.json")
+BASE_DIR = Path(__file__).parent
+EVALUATION_DATASET_PATH = BASE_DIR / "evaluation_dataset.json"
+EVALUATION_RESULTS_PATH = BASE_DIR / "evaluation_results.json"
 
 async def run_agent(task_input, config):
     # config = {"configurable": {"thread_id": "evaluation-thread"}}
@@ -36,9 +36,6 @@ def get_retrieved_chunks(query: str, k: int = 3):
     retrieved_ids = []
     for doc in retrieved_docs:
         source_file = Path(doc.metadata.get("file_path", "")).stem
-        # Troviamo il numero del chunk dal contenuto, se il nostro script lo ha salvato
-        # In alternativa, usiamo una logica per derivarlo se necessario
-        # Per ora, usiamo il nome del file come proxy
         retrieved_ids.append(source_file)
         
     return retrieved_docs
@@ -48,13 +45,15 @@ async def main():
         with open(EVALUATION_DATASET_PATH, "r", encoding="utf-8") as f:
             evaluation_dataset = json.load(f)
 
+        print(f"Loaded {len(evaluation_dataset)} items from dataset.")
         evaluation_results = []
 
         for task_item in tqdm(evaluation_dataset, desc="Running Evaluation"):
-            # ... (il tuo loop di valutazione rimane identico) ...
             task_id = task_item["id"]
             task_type = task_item["type"]
             task_prompt = task_item["task"]
+            
+            print(f"Processing task: {task_id}")
             
             config = {"configurable": {"thread_id": task_id}}
 

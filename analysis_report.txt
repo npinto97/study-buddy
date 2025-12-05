@@ -1,0 +1,10 @@
+
+--- Running Classic Retrieval Evaluation ---
+Mean Precision@3: 0.0000
+Mean Reciprocal Rank (MRR): 0.0000
+
+--- Running RAGAS Semantic Evaluation ---
+No RAG tasks found to evaluate.
+
+--- Running Tool Use Evaluation ---
+No TOOL tasks found to evaluate.

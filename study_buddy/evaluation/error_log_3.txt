@@ -1,0 +1,4 @@
+  File "C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\study_buddy\evaluation\analyze_results.py", line 70
+    data.append({
+                ^
+SyntaxError: '{' was never closed

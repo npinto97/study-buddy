@@ -1,0 +1,4 @@
+  File "study_buddy/vectorstore_pipeline/vector_store_builder.py", line 326
+    allow_dangerous_deserialization=True
+                                    
+SyntaxError: invalid syntax. Perhaps you forgot a comma?

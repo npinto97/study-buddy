@@ -1,0 +1,6 @@
+C:\Users\Utente\AppData\Local\Programs\Python\Python310\lib\site-packages\google\api_core\_python_version_support.py:266: FutureWarning: You are using a Python version (3.10.11) which Google will stop supporting in new releases of google.api_core once it reaches its end of life (2026-10-04). Please upgrade to the latest Python version, or at least Python 3.11, to continue receiving updates for google.api_core past that date.
+  warnings.warn(message, FutureWarning)
+Traceback (most recent call last):
+  File "C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\study_buddy\evaluation\analyze_results.py", line 11, in <module>
+    from langchain_together import TogetherAIEmbeddings
+ImportError: cannot import name 'TogetherAIEmbeddings' from 'langchain_together' (C:\Users\Utente\AppData\Local\Programs\Python\Python310\lib\site-packages\langchain_together\__init__.py)

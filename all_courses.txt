@@ -1,0 +1,1002 @@
+Total entries: 347
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: syllabus | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\syllabuses/MRI_syllabus.pdf
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: book | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\books/Book_on_Semantics_in_Adaptive_And_Personalized_Systems.pdf
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: book | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\books/Book_on_introduction_to_Information_Retrieval.pdf
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: slide | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\slides/InformationFiltering_1_Introduction.pdf
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/Knowledge_Discovery_in_Textual_Databases_(KDT).pdf
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/Text_mining_as_integration_of_several_re.pdf
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: slide | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\slides/InformationRetrieval_2_Boolean_Vector_Space_Models.pdf
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/Knowledge_Discovery_in_Textual_Databases_(KDT).pdf
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/Text_mining_as_integration_of_several_re.pdf
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: supplementary_material | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\supplementary_materials/Suggested_reading_Collaborative_Filtering.pdf
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: exercise | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\exercises/solved_exercises/Cosine_Similarity_Solved_Exercise_2.pdf
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: slide | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\slides/InformationRetrieval_3_Relevance_Feedback.pdf
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: exercise | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\exercises/solved_exercises/TFIDF_Ranking_Solved_Exercise_2.pdf
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: slide | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\slides/InformationRetrieval_4_Valutation.pdf
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/IR_evaluation_methods_for_retrieving_highly_relevant_documents.pdf
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/Cumulated_Gain-Based_Evaluation_Of_IR_Techniques.pdf
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: slide | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\slides/InformationRetrieval_5_Text_Categorization.pdf
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/The_InfoFinder_Agent_Learning_User_Inter.pdf
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/Remembrance_Agent_A_continuously_running_automated_information_retrieval_system.pdf
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/Machine_Learning_in_Automated_Text_Categorization.pdf
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: slide | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\slides/Link_Analysis_and_Page_Rank.pdf
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: slide | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\slides/InformationFiltering_1_Introduction.pdf
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/Hybrid_Recommender_Systems_Survey_and_Experiments.pdf
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/Collaborative_Filtering_and_Recommendation_Systems.pdf
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/Amazon-Recommendations.pdf
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/Content-based_Recommender_Systems:_State_of_the_Art_and_Trends.pdf
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/On_the_tip_of_my_thought_playing_the_Gui.pdf
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/Matrix_Factorization_Techniques_for_Recommender_Systems.pdf
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: slide | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\slides/InformationFiltering_2_Collaborative_Filtering.pdf
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/Towards_the_Next_Generation_of_Recommender_Systems.pdf
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/Empirical_Analysis_of_Predictive_Algorithms_for_Collaborative_Filtering.pdf
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/RF-Rec:_Fast_and_Accurate_Computation_of_Recommendations_Based_on_Rating_Frequencies.pdf
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/Eigentaste:_A_Constant_Time_Collaborative_Filtering_Algorithm.pdf
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/An_Empirical_Analysis_of_Design_Choices_in_Neighborhood-Based_Collaborative_Filtering_Algorithms.pdf
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/Evaluating_Collaborative_Filtering_Recommender_Systems.pdf
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/Latent_Semantic_Models_for_Collaborative_Filtering.pdf
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/Applying_Associative_Retrieval_Techniques_to_Alleviate_the_Sparsity_Problem_in_Collaborative_Filtering.pdf
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/Slope_One_Predictors_for_Online_Rating-Based_Collaborative_Filtering.pdf
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/Application_of_Dimensionality_Reduction_in_Recommender_System.pdf
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/A_Recursive_Prediction_Algorithm_for_Collaborative_Filtering_Recommender_Systems.pdf
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: slide | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\slides/InformationFiltering_3_Content_based_Filtering.pdf
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/uniba_jigsaw_algorithm_for_word_sense_disambiguation.pdf
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/A_content_collaborative_recommender_that.pdf
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/combining_learning_and_word_sense_disambiguation_for_intelligent_user_profiling.pdf
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/WordNetSimilarity_Measuring_the_Relatedness_of_Concepts.pdf
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/learning_and_revising_user_profiles_the_identification_of_interesting_web_sites.pdf
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: supplementary_material | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\supplementary_materials/Chapter_VI_Information_Extraction.pdf
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: slide | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\slides/InformationFiltering_4_Evaluation.pdf
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/Knowledge_Discovery_in_Textual_Databases_(KDT).pdf
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/Text_mining_as_integration_of_several_re.pdf
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/Stability_of_Recommendation_Algorithms.pdf
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: slide | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\slides/Information_Access_with_Apache_Lucene.pdf
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: exercise | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\exercises/notebooks/Jupyter_Notebook_MRI_with_spaCy.ipynb
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: external_resource | Path: Unknown
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: external_resource | Path: Unknown
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: exercise | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\exercises/exam_papers/MRI_Exam_Paper_1.docx
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: exercise | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\exercises/exam_papers/MRI_Exam_Paper_2.doc
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: exercise | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\exercises/exam_papers/MRI_Exam_Paper_3.doc
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: exercise | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\exercises/exam_papers/MRI_Exam_Paper_4.doc
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: exercise | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\exercises/exam_papers/MRI_Exam_Paper_5.doc
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: exercise | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\exercises/exam_papers/MRI_Exam_Paper_6.doc
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: exercise | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\exercises/exam_papers/MRI_Exam_Paper_7.doc
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: exercise | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\exercises/exam_papers/MRI_Exam_Paper_8.doc
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: exercise | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\exercises/exam_papers/MRI_Exam_Paper_9.doc
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: exercise | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\exercises/exam_papers/MRI_Exam_Paper_10.doc
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: exercise | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\exercises/exam_papers/MRI_Exam_Paper_11.doc
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: exercise | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\exercises/exam_papers/MRI_Exam_Paper_12.doc
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: exercise | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\exercises/exam_papers/MRI_Exam_Paper_13.doc
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: exercise | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\exercises/exam_papers/MRI_Exam_Paper_14.doc
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: exercise | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\exercises/exam_papers/MRI_Exam_Paper_15.doc
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: exercise | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\exercises/exam_papers/MRI_Exam_Paper_16.doc
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: exercise | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\exercises/exam_papers/MRI_Exam_Paper_17.doc
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: exercise | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\exercises/exam_papers/MRI_Exam_Paper_18.doc
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: exercise | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\exercises/exam_papers/MRI_Exam_Paper_19.doc
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: exercise | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\exercises/exam_papers/MRI_Exam_Paper_20.doc
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: exercise | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\exercises/exam_papers/MRI_Exam_Paper_21.doc
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: exercise | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\exercises/exam_papers/MRI_Exam_Paper_22.doc
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: exercise | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\exercises/exam_papers/MRI_Exam_Paper_23.doc
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: exercise | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\exercises/exam_papers/MRI_Exam_Paper_24.doc
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: exercise | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\exercises/exam_papers/MRI_Exam_Paper_25.doc
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: exercise | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\exercises/exam_papers/MRI_Exam_Paper_26.doc
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: exercise | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\exercises/exam_papers/MRI_Exam_Paper_27.doc
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: exercise | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\exercises/exam_papers/MRI_Exam_Paper_28.pdf
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: exercise | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\exercises/exam_papers/MRI_Exam_Paper_29.pdf
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: exercise | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\exercises/exam_papers/MRI_Exam_Paper_30.pdf
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: exercise | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\exercises/exam_papers/MRI_Exam_Paper_31.pdf
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: exercise | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\exercises/exam_papers/MRI_Exam_Paper_32.pdf
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: exercise | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\exercises/exam_papers/MRI_Exam_Paper_33.doc
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: exercise | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\exercises/exam_papers/MRI_Exam_Paper_34.docx
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: exercise | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\exercises/exam_papers/MRI_Exam_Paper_35.doc
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: exercise | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\exercises/exam_papers/MRI_Exam_Paper_36.docx
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: exercise | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\exercises/exam_papers/MRI_Exam_Paper_37.docx
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: exercise | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\exercises/exam_papers/MRI_Exam_Paper_38.doc
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: exercise | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\exercises/exam_papers/MRI_Exam_Paper_39.doc
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: exercise | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\exercises/exam_papers/MRI_Exam_Paper_40.doc
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: exercise | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\exercises/exam_papers/MRI_Exam_Paper_41.pdf
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: exercise | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\exercises/exam_papers/MRI_Exam_Paper_42.pdf
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: exercise | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\exercises/exam_papers/MRI_Exam_Paper_43.pdf
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: exercise | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\exercises/exam_papers/MRI_Exam_Paper_44.pdf
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: exercise | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\exercises/exam_papers/MRI_Exam_Paper_45.pdf
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: exercise | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\exercises/exam_papers/MRI_Exam_Paper_46.pdf
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: exercise | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\exercises/exam_papers/MRI_Exam_Paper_47.pdf
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: exercise | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\exercises/exam_papers/MRI_Midterm_Exam_1.doc
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: exercise | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\exercises/exam_papers/MRI_Midterm_Exam_2.doc
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: exercise | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\exercises/exam_papers/MRI_Midterm_Exam_3.doc
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: exercise | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\exercises/exam_papers/MRI_Midterm_Exam_4.doc
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: exercise | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\exercises/exam_papers/MRI_Midterm_Exam_5.doc
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: exercise | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\exercises/exam_papers/MRI_Midterm_Exam_6.doc
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: exercise | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\exercises/solved_exercises/Bayesian_Classificator_Solved_Exercise_1.pdf
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: exercise | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\exercises/solved_exercises/Bayesian_Classificator_Solved_Exercise_2.pdf
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: exercise | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\exercises/solved_exercises/Bayesian_Classificator_Solved_Exercise_3.pdf
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: exercise | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\exercises/solved_exercises/Bayesian_Classificator_Solved_Exercise_4.pdf
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: exercise | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\exercises/solved_exercises/Collaborative_Filtering_Solved_Exercise_1.pdf
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: exercise | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\exercises/solved_exercises/Collaborative_Filtering_Solved_Exercise_2.pdf
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: exercise | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\exercises/solved_exercises/Collaborative_Filtering_Solved_Exercise_3.pdf
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: exercise | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\exercises/solved_exercises/Cosine_similarity_Solved_exercise_1.pdf
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: exercise | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\exercises/solved_exercises/Cosine_similarity_Solved_exercise_2.pdf
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: exercise | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\exercises/solved_exercises/MRI_Completed_Midterm_Exam.pdf
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: exercise | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\exercises/solved_exercises/MRI_Completed_mock_exam_1.pdf
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: exercise | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\exercises/solved_exercises/MRI_Completed_mock_exam_2.pdf
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: exercise | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\exercises/solved_exercises/MRI_Completed_mock_exam_3.pdf
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: exercise | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\exercises/solved_exercises/MRI_Completed_mock_exam_4.pdf
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: exercise | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\exercises/solved_exercises/MRI_Completed_mock_exam_5.pdf
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: exercise | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\exercises/solved_exercises/MRI_Completed_mock_exam_6.pdf
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: exercise | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\exercises/solved_exercises/MRI_Completed_mock_exam_7.pdf
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: exercise | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\exercises/solved_exercises/MRI_Completed_mock_exam_8.pdf
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: exercise | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\exercises/solved_exercises/PageRank_Solved_Exercise_1.pdf
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: exercise | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\exercises/solved_exercises/TFIDF_Ranking_Solved_Exercise_1.pdf
+Entry: Metodi per il Ritrovamento dell'Informazione (MRI) | Type: exercise | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\exercises/solved_exercises/TFIDF_Ranking_Solved_Exercise_2.pdf
+Entry: Semantic Intelligent Information Access (SIIA) | Type: syllabus | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\syllabuses/SIIA_syllabus.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: book | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\books/Book_on_Semantics_in_Adaptive_And_Personalized_Systems.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: slide | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\slides/Lesson_01_Presentation_Semantics_in_IIA.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/experimental_evidence_of_massive_scale_emotional_contagion_through_social_networks.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/grouplens_an_open_architecture_for_collaborative_filtering_of_netnews.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/editorial_expression_of_concern_and_correction.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: supplementary_material | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\supplementary_materials/Lesson_01_The_ancient_book_of_wisdom_at_the_heart_of_every_computer.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: supplementary_material | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\supplementary_materials/Lesson_01_The_Long_Tail.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: supplementary_material | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\supplementary_materials/Lesson_01_The_Unreasonable_Effectiveness_of_Data.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: supplementary_material | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\supplementary_materials/Lesson_01_The_Web_is_still_a_DARPA_weapon.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: supplementary_material | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\supplementary_materials/Lesson_01_What_is_Informatics.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: external_resource | Path: Unknown
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: external_resource | Path: Unknown
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: slide | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\slides/Lesson_02_RS_1_Recommender_Systems-Basic_concepts.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/Lesson_02_RS_1_Burke2002_Article_HybridRecommenderSystemsSurvey.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/Lesson_02_RS_1_Xiao_Benbasat_E-Commerce_Product_Recommendation_Agents_Use_Characteristics_and_Impact.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/Lesson_02_paper_ACM_RecSys_2009-PilszyTikk.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/Lesson_02_RS_1_Garcia-Molina_Koutrika_Parameswaran_IRIF_CACMpaper.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/Lesson_02_RS_2_Hanani_Shapira_and_P_Shoval_Information_Filtering_Overview_of_Issues_Research_and_Systems_UMUAI_2001.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: supplementary_material | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\supplementary_materials/Lesson_02_Berkeley_How_much_info_2003_printable_report.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: supplementary_material | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\supplementary_materials/Lesson_02_Information_filtering_and_information_retrieval_2_sides_of_the_same_coin.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: supplementary_material | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\supplementary_materials/Lesson_02_The_NETFLIX_case_NETFLIXvsBlockbuster.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: video | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\multimedia/videos/Barry_Schwartz_The_paradox_of_choice_TED_Talk.mp4
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: video | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\multimedia/videos/Lesson_02_Eli_Pariser_2011_Beware_online_filter_bubbles.mp4
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: external_resource | Path: Unknown
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: external_resource | Path: Unknown
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: slide | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\slides/Lesson_03_RecSys_in_Python_SIIA_24.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/Lesson_03_BPR_Bayesian_Personalized_Ranking_from_Implicit_Feedback_UAI2009.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/Lesson_03_WARP_WSABIE_Scaling_Up_To_Large_Vocabulary_Image_Annotation_IJCAI2011.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: external_resource | Path: Unknown
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: slide | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\slides/Lesson_04_RS_Advances_in_CBRS_Gotheborg_2019_Part_1.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: slide | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\slides/Lesson_04_RS_Advances_in_CBRS_Gotheborg_2019_Part_2_Exogenous_Semantics.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/combining_learning_and_word_sense_disambiguation_for_intelligent_user_profiling.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/Content-Based_Recommendation_Systems.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/Lesson_04_Introducing_linked_open_data_in_graph-based_recommender_systems.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/Lesson_04_Semantics-aware_Recommender_Systems_exploiting_Linked_Open_Data_and_graph-based_features.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/the_page_rank_citation_ranking_bringing_order_to_the_wild.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/topic_sensitive_pagerank_a_context_sensitive_ranking_algorithm_for_web_search.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/uniba_jigsaw_algorithm_for_word_sense_disambiguation.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/wordnet_a_lexical_database_for_english.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: supplementary_material | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\supplementary_materials/Lesson_04_TBL-Hendler-Lassila_The_Semantic_Web_ Scientific_American_May_2001.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: supplementary_material | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\supplementary_materials/semantic-web.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: video | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\multimedia/videos/2006-hans-rosling-005-fallback-c3d98a9ebcba77e543774e749251147a-1200k.mp4
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: video | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\multimedia/videos/2009-tim-berners-lee-009-fallback-84ea51342ae313c2e49f86da9b59d564-1200k.mp4
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: video | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\multimedia/videos/2010u-tim-berners-lee-003-fallback-2ac11ea6fd5b0a64ff2388b9ca79cc60-1200k.mp4
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: external_resource | Path: Unknown
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: external_resource | Path: Unknown
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: external_resource | Path: Unknown
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: external_resource | Path: Unknown
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: external_resource | Path: Unknown
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: external_resource | Path: Unknown
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: slide | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\slides/Lesson_05_KARS_Representations.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/entity_linking_meets_word_sense_disambiguation_a_unified_approach.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/graph_embedding_techniques_applications_and_performance_a_survey.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/intro_to_Latent_Semantic_Analysis.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/introducing_linked_open_data_in_graph_based_recommender_systems.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/knowledge_graph_embedding_for_link_prediction_a_comparative_analysis.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/learning_and_revising_user_profiles_the_identification_of_interesting_web_sites.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/learning_word_embeddings_from_wikipedia_for_content_based_recommender_systems.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/linked_open_data_to_support_content-based_recommender_systems.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/non_negative_tensor_factorization_with_rescal.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/Ontology-based_Recommender_Systems_preview.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/together_is_better_hybrid_recommendations_combining_graph_embeddings_and_contextualized_word_representations.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: supplementary_material | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\supplementary_materials/Lesson_04_TBL-Hendler-Lassila_The_Semantic_Web_ Scientific_American_May_2001.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: slide | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\slides/Lesson_06_Large_Language_Models.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: slide | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\slides/Lesson_06_Large_Multimodal_Models.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/advanced_natural_based_interaction_for_the_italian_language_llamantino_3_anita.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/attention_is_all_you_need.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/direct_preference_optimization_your_language_model_is_secretly_a_reward_model.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/glue_a_multi_task_benchmark_and_analysis_platform_for_natural_language_understanding.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/hellaswag_can_machine_really_finish_your_sentece.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/neural_machine_translation_by_jointly_learning_to_align_and_translate.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/sequence-to-sequence-learning-with-neural-networks-Paper.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/superglue.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: external_resource | Path: Unknown
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: external_resource | Path: Unknown
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: external_resource | Path: Unknown
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: external_resource | Path: Unknown
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: external_resource | Path: Unknown
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: external_resource | Path: Unknown
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: external_resource | Path: Unknown
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: external_resource | Path: Unknown
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: slide | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\slides/lesson_07_13_nov_2024_multi_modal_knowledge_aware_recommender_systems.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: slide | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\slides/lesson_07_13_nov_2024_recommender_systems_based_on_neuro-symbolic_graph_embedding_with_fol_rules.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: slide | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\slides/lesson_07_13_Nov_2024_Sustainable_RecSys.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/a_closer_look_at_spatiotemporal_convolutions_for_action_recognition.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/a_comprehensive_survey_of_knowledge_graph_based_recommender_systems_technologies_development_and_contributions.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/a_survey_on_long_text_modeling_with_transformers.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/an_image_is_worth_16x16_words_transformers_for_image_recognition_at_scale.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/bert_pre_training_of_deep_bidirectional_transformers_for_language_understanding.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/Combining_Graph_Neural_Networks_and_Sentence_ecnoders_for_knowledge_aware_recommendations.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/composition_based_multi_relational_graph_convolutional_networks.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/Conversational_Recommender_System.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/fast_and_exact_rule_mining_with_amie_3.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/formalizing_multimedia_recommendations_through_multimodal_deep_learning.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/jointly_embedding_knowledge_graphs_and_logical_rules.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/minilm-deep-self-attention-distillation-for-task-agnostic-compression-of-pre-trained-transformers.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/neuro-symbolic-artificial-intelligence-current-trends.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/recbole_2_towards_a_more_up_to_date_recommendation_library.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/sentence_bert_sentence_embeddings_using_siamese_bert_networks.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/together_is_better_hybrid_recommendations_combining_graphs_embeddings_and_contestualized_word_representations.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/very_deep_convolutional_networks_for_large_scale_image_recognition.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: exercise | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\exercises/notebooks/Lesson_07_Notebook_Carbon_Footprint_of_Recommendation_algorithms.ipynb
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: external_resource | Path: Unknown
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: external_resource | Path: Unknown
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: external_resource | Path: Unknown
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: slide | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\slides/Lesson_08_Large_Language_Models_in_Recommender_Systems.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/a_large_language_model_enhanced_conversational_recommender_system.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/a_spreading_activation_theory_of_memory.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/a_survey_on_large_language_models_for_recommendation.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/attention_is_all_you_need.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/bert_pre_training_of_deep_bidirectional_transformers_for_language_understanding.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/bert4rec_sequential_recommendation_with_bidirectional_encoder_representations_from_transformer.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/chain_of_thought_prompting_elicits_reasoning_in_large_language_models.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/clayrs_an_end_to_end_framework_for_reproducible_knowledge_aware_recommender_systems.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/Combining_Graph_Neural_Networks_and_Sentence_ecnoders_for_knowledge_aware_recommendations.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/how_to_index_item_ids_for_recommendation_foundation_models.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/large_language_models_are_competitive_near_cold_start_recommenders_for_language_and_item_based_preferences.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/llm_based_generation_of_item_description_for_recommendation_system.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/llm_generated_explanations_for_recommender_systems.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/llm_rec_personalized_recommendation_via_prompting_large_language_models.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/lora_low_rank_adaptation_of_large_language_models.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/NIPS-2000-a-neural-probabilistic-language-model-Paper.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/once_boosting_content_based_recommendation_with_both_open_and_closed_source_large_language_models.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/openp5_benchmarking_foundation_models_for_recommendation.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/pre_train_prompt_and_predict_a_systematic_survey_of_prompting_methods_in_natural_language_processing.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/prompt_learning_for_news_recommendation.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/questioning_the_survey_responses_of_large_language_models.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/recommendation_as_instruction_following_a_large_language_model_empowered_recommendation_approach.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/recommendation_as_language_processing_rlp_a_unified_pretrain_personalized_prompt_predict_paradigm_p5.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/recommender_systems_in_the_era_of_large_language_models.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/tallrec_an_effective_and_efficient_tuning_framework_to_align_large_language_model_with_recommendation.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/together_is_better_hybrid_recommendations_combining_graphs_embeddings_and_contestualized_word_representations.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/u_bert_pre_training_user_representations_for_improved_recommendation.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/uncovering_chatgpts_capabilities_in_recommender_systems.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: external_resource | Path: Unknown
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: external_resource | Path: Unknown
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: external_resource | Path: Unknown
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: slide | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\slides/Lesson_09_RecSys_Evaluation_part_1_Basics_Binary_relevance.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: slide | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\slides/Lesson_09_RecSys_Evaluation_part_2_Graded-relevance.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/novelty_and_diversity_in_top_n_recommendation_analysis_and_evaluation.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/rank_and_relevance_in_novelty_and_diversity_metrics_for_recommender_systems.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/stability_of_recommendation_algorithms.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/temporal_diversity_in_recommender_systems.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/the_unfairness_of_popularity_bias_in_recommendation.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: supplementary_material | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\supplementary_materials/training_and_testing_of_recommender_systems_on_data_missing_not_at_random.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: slide | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\slides/Lesson_10_natural_language_explanations_for_recommender_systems.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/combining_text_summarization_and_aspect_based_sentiment_analysis_of_users_reviews_to_justify_recommendations.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/designing_and_evaluating_explanations_for_recommender_systems.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/explaining_collaborative_filtering_recommendations.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/exploiting_distributional_semantics_models_for_natural_language_context_aware_justifications_for_recommender_systems.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/exploring_the_effects_of_natural_language_justifications_in_food_recommender_systems.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/generating_post_hoc_review_based_natural_language_justifications_for_recommender_systems.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: external_resource | Path: Unknown
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: external_resource | Path: Unknown
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: slide | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\slides/Lesson_11_conversational_recommender_systems.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: slide | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\slides/Lesson_11_the_long_journey_to_large_language_models_the_nlp_breakthrough.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/references/a_neural_probabilistic_language_model.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/a_personalized_system_for_conversational_recommendations.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/a_spreading_activation_theory_of_memory.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/a_survey_on_conversational_recommender_systems.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/a_systematic_review_on_implicit_and_explicit_aspect_extraction_in_sentiment_analysis.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/a_virtual_assistant_for_the_movie_domain_exploiting_natural_language_preference_elicitation_strategies.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/adapting_bloom_to_a_new_language_a_case_study_for_the_italian.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/advanced_natural_based_interaction_for_the_italian_language_llamantino_3_anita.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/alberto_italian_bert_language_understanding_model_for_nlp_challenging_tasks_based_on_tweets.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/ares_alternating_reinforcement_learning_and_supervised_fine_tuning_for_enhanced_multi_modal_chain_of_thought_reasoning_through_diverse_ai_feedback.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/autogen_enabling_next_gen_llm_applications_via_multi_agent_conversation.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/calamita_challenge_the_abilities_of_language_models_in_italian.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/conversational_recommendation_based_on_end_to_end_learning_how_far_are_we.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/critic_large_language_models_can_self_correct_with_tool_interactive_critiquing.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/distributed_artificial_intelligence_taxonomy_review_framework_and_reference_architecture.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/gender_bias_in_large_language_models_across_multiple_languages.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/generating_post_hoc_review_based_natural_language_justifications_for_recommender_systems.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/generation_based_vs_retrieval_based_conversational_recommendation_a_user_centric_comparison.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/gorilla_large_language_model_connected_with_massive_apis.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/imagebind_one_embedding_space_to_bind_them_all.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/improving_conversational_recommender_systems_via_transformer_based_sequential_modelling.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/interactive_critiquing_for_catalog_navigation_in_e_commerce.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/intervenor_prompting_the_coding_ability_of_large_language_models_with_the_interactive_chain_of_repair.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/kecrs_towards_knowledge_enriched_conversational_recommendation_system.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/knowledge_solver_teaching_llms_to_search_for_domain_knowledge_from_knowledge_graphs.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/language_models_are_few_shot_learners.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/llamantino_llama_2_models_for_effective_text_generation_in_italian_language.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/logically_consistent_language_models_via_neuro_symbolic_integration.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/memorybank_enhancing_large_language_models_with_long_term_memory.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/metagpt_meta_programming_for_a_multi_agent_collaborative_framework.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/on_the_impact_of_language_adaptation_for_large_language_models_a_case_study_for_the_italian_language_using_only_open_resources.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/opendialkg_explainable_conversational_reasoning_with_attention_based_walks_over_knowledge_graphs.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/personalllm_tailoring_llms_to_individual_preferences.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/pre_train_prompt_and_predict_a_systematic_survey_of_prompting_methods_in_natural_language_processing.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/questioning_the_survey_responses_of_large_language_models.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/rapid_development_of_knowledge_based_conversational_recommender_applications_with_advisor_suite.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/reflexion_language_agents_with_verbal_reinforcement_learning.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/retrieval_augmented_generation_for_large_language_models_a_survey.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/self_refine_iterative_refinement_with_self_feedback.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/think_in_memory_recalling_and_post_thinking_enable_llms_with_long_term_memory.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/towards_question_based_recommender_systems.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/understanding_the_planning_of_llm_agents_a_survey.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/wikichat_stopping_the_hallucination_of_large_language_model_chatbots_by_few_shot_grounding_on_wikipedia.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: external_resource | Path: Unknown
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: external_resource | Path: Unknown
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: external_resource | Path: Unknown
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: external_resource | Path: Unknown
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: external_resource | Path: Unknown
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: external_resource | Path: Unknown
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: external_resource | Path: Unknown
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: external_resource | Path: Unknown
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: external_resource | Path: Unknown
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: external_resource | Path: Unknown
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: external_resource | Path: Unknown
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: external_resource | Path: Unknown
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: external_resource | Path: Unknown
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: external_resource | Path: Unknown
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: slide | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\slides/Lesson_12_Large_Multomodal_Models_Traning_and_Evaluation.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/look_at_the_text_instruction_tuned_language_models_are_more_robust_multiple_choice_selectors_than_you_think.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: reference | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\references/mllm_as_a_judge_assessing_multimodal_llm_as_a_judge_with_vision_language_benchmark.pdf
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.
+Entry: Semantic Intelligent Information Access (SIIA) | Type: exercise | Path: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\data\raw\exercises/notebooks/LMM_Ex.ipynb
+Found SIIA Course: Semantic Intelligent Information Access (SIIA)
+Content length: 0
+WARNING: No grading keywords found in SIIA content.

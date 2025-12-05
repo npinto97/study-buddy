@@ -1,0 +1,189 @@
+2025-11-30T18:13:41.023223+0100 INFO Project root path resolved to: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy
+[32m2025-11-30 18:13:41.028[0m | [1mINFO    [0m | [36mstudy_buddy.config[0m:[36m<module>[0m:[36m129[0m - [1mLangSmith Tracing: False[0m
+[32m2025-11-30 18:13:41.029[0m | [1mINFO    [0m | [36mstudy_buddy.config[0m:[36m<module>[0m:[36m130[0m - [1mLangSmith Endpoint: None[0m
+[32m2025-11-30 18:13:41.091[0m | [1mINFO    [0m | [36mstudy_buddy.utils.embeddings[0m:[36minitialize_gpu_embeddings[0m:[36m8[0m - [1mInitializing Embeddings with model: BAAI/bge-m3[0m
+[32m2025-11-30 18:13:41.104[0m | [1mINFO    [0m | [36mstudy_buddy.utils.embeddings[0m:[36minitialize_gpu_embeddings[0m:[36m14[0m - [1mGPU detected: NVIDIA GeForce RTX 3060 (12.9 GB)[0m
+[32m2025-11-30 18:13:41.104[0m | [1mINFO    [0m | [36mstudy_buddy.utils.embeddings[0m:[36minitialize_gpu_embeddings[0m:[36m15[0m - [1mUsing GPU for embeddings...[0m
+
+[32m2025-11-30 18:13:49.395[0m | [1mINFO    [0m | [36mstudy_buddy.utils.embeddings[0m:[36minitialize_gpu_embeddings[0m:[36m38[0m - [1mEmbeddings with model BAAI/bge-m3 successfully initialized on CUDA.[0m
+Initializing HybridRetriever...
+[32m2025-11-30 18:13:49.601[0m | [1mINFO    [0m | [36mstudy_buddy.vectorstore_pipeline.vector_store_builder[0m:[36mget_vector_store[0m:[36m501[0m - [1mFAISS vector store loaded successfully.[0m
+[32m2025-11-30 18:13:49.611[0m | [1mINFO    [0m | [36mstudy_buddy.utils.retriever[0m:[36m__init__[0m:[36m41[0m - [1mBM25 Retriever loaded successfully.[0m
+
+--- Query: According to the MRI_syllabus.pdf, who is the professor for the 'Metodi per il Ritrovamento dell'Informazione' course? ---
+[32m2025-11-30 18:13:49.820[0m | [1mINFO    [0m | [36mstudy_buddy.utils.retriever[0m:[36m_get_relevant_documents[0m:[36m58[0m - [1mHybrid Retrieval for query: 'According to the MRI_syllabus.pdf, who is the professor for the 'Metodi per il Ritrovamento dell'Informazione' course?'[0m
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00,  5.69it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00,  5.69it/s]
+[32m2025-11-30 18:13:50.002[0m | [1mINFO    [0m | [36mstudy_buddy.utils.retriever[0m:[36m_get_relevant_documents[0m:[36m62[0m - [1mVector search returned 20 docs.[0m
+[32m2025-11-30 18:13:50.005[0m | [1mINFO    [0m | [36mstudy_buddy.utils.retriever[0m:[36m_get_relevant_documents[0m:[36m70[0m - [1mBM25 search returned 4 docs.[0m
+[32m2025-11-30 18:13:50.005[0m | [1mINFO    [0m | [36mstudy_buddy.utils.retriever[0m:[36m_get_relevant_documents[0m:[36m83[0m - [1mCombined unique docs: 18[0m
+[32m2025-11-30 18:13:50.005[0m | [1mINFO    [0m | [36mstudy_buddy.utils.retriever[0m:[36m_get_relevant_documents[0m:[36m89[0m - [1mRe-ranking documents...[0m
+[32m2025-11-30 18:13:50.877[0m | [1mINFO    [0m | [36mstudy_buddy.utils.retriever[0m:[36m_get_relevant_documents[0m:[36m115[0m - [1mRe-ranking complete. Returning top 5 docs.[0m
+Retrieved 5 documents.
+[1] Source: Unknown | Score: 0.9183719754219055
+    Content snippet: # MRI_2024_25
+
+Metodi per il Ritrovamento dell'Informazione 2024/2025 - Laurea Triennale in Informatica - Dipartimento di Informatica, Università degli Studi di Bari Aldo Moro....
+[2] Source: Unknown | Score: 0.708147406578064
+    Content snippet: # MRI-24-25_CBRS
+
+Notebook e dati per le esercitazioni sui Content-based RecSys, per il corso "Metodi per il Ritrovamento dell'Informazione", anno accademico 2024-2025....
+[3] Source: Unknown | Score: 1.827031883294694e-05
+    Content snippet: Multimodality and Large Multimodal Models (LMMs)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Multimodality and Large Multimodal Models (LMMs) | Chip Huyen
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Chip Huyen
+
+
+
+
+
+
+
+
+
+
+
+
+Blog
+Books
+Events
+
+AI Gui...
+[4] Source: Unknown | Score: 1.5288314898498356e-05
+    Content snippet: Metric
+hellaswag_it acc_norm
+arc_it acc_norm
+m_mmlu_it 5-shot acc
+Average
+
+
+Accuracy Normalized
+0.6566
+0.5004
+0.6084
+0.588
+
+
+
+
+
+
+
+
+
+		Citation
+	
+
+If you use this model in your research, please cite th...
+[5] Source: Unknown | Score: 1.514798805146711e-05
+    Content snippet: InformationRetrievalEvaluator
+Queries (qid => question), Corpus (cid => document), and relevant documents (qid => set[cid]).
+
+NanoBEIREvaluator
+No data required.
+
+MSEEvaluator
+Source sentences to embe...
+
+--- Query: Find the email address for Professor Giovanni Semeraro in the SIIA_syllabus.pdf. ---
+[32m2025-11-30 18:13:50.877[0m | [1mINFO    [0m | [36mstudy_buddy.utils.retriever[0m:[36m_get_relevant_documents[0m:[36m58[0m - [1mHybrid Retrieval for query: 'Find the email address for Professor Giovanni Semeraro in the SIIA_syllabus.pdf.'[0m
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00, 42.42it/s]
+[32m2025-11-30 18:13:50.907[0m | [1mINFO    [0m | [36mstudy_buddy.utils.retriever[0m:[36m_get_relevant_documents[0m:[36m62[0m - [1mVector search returned 20 docs.[0m
+[32m2025-11-30 18:13:50.910[0m | [1mINFO    [0m | [36mstudy_buddy.utils.retriever[0m:[36m_get_relevant_documents[0m:[36m70[0m - [1mBM25 search returned 4 docs.[0m
+[32m2025-11-30 18:13:50.910[0m | [1mINFO    [0m | [36mstudy_buddy.utils.retriever[0m:[36m_get_relevant_documents[0m:[36m83[0m - [1mCombined unique docs: 16[0m
+[32m2025-11-30 18:13:50.910[0m | [1mINFO    [0m | [36mstudy_buddy.utils.retriever[0m:[36m_get_relevant_documents[0m:[36m89[0m - [1mRe-ranking documents...[0m
+[32m2025-11-30 18:13:52.035[0m | [1mINFO    [0m | [36mstudy_buddy.utils.retriever[0m:[36m_get_relevant_documents[0m:[36m115[0m - [1mRe-ranking complete. Returning top 5 docs.[0m
+Retrieved 5 documents.
+[1] Source: Unknown | Score: 0.0009104519849643111
+    Content snippet: Repository: https://github.com/swapUniba/LLaMAntino
+
+NOTICE: the code has not been released yet, we apologize for the delay, it will be available asap!
+
+Developed by: Pierpaolo Basile, Elio Musacchio,...
+[2] Source: Unknown | Score: 7.23673656466417e-05
+    Content snippet: Scarica l’articolo in pdf / txt / rtf /...
+[3] Source: Unknown | Score: 2.9436054319376126e-05
+    Content snippet: specific examples: We all know some serious issues are going on.read blogView allADDRESSâs-Gravenhekje 1a1011 TG AmsterdamThe NetherlandsCONTACTDrop us an email(+31) 20 223 46 26APPLIED PSYCHOLOGY O...
+[4] Source: Unknown | Score: 2.8843636755482294e-05
+    Content snippet: Acknowledgements
+Thanks to Illia Polosukhin, Jakob Uszkoreit, Llion Jones , Lukasz Kaiser, Niki Parmar, and Noam Shazeer for providing feedback on earlier versions of this post.
+Please hit me up on Tw...
+[5] Source: Unknown | Score: 2.6260117010679096e-05
+    Content snippet: Prompt Format
+	
+
+This prompt format based on the LLaMA 2 prompt template adapted to the italian language was used:
+" [INST] <<SYS>>\n" \
+"Sei un assistente disponibile, rispettoso e onesto di nome Lla...
+
+--- Query: What are the office hours for Professor Pasquale Lops as listed in the MRI syllabus? ---
+[32m2025-11-30 18:13:52.035[0m | [1mINFO    [0m | [36mstudy_buddy.utils.retriever[0m:[36m_get_relevant_documents[0m:[36m58[0m - [1mHybrid Retrieval for query: 'What are the office hours for Professor Pasquale Lops as listed in the MRI syllabus?'[0m
+
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00, 36.04it/s]
+[32m2025-11-30 18:13:52.071[0m | [1mINFO    [0m | [36mstudy_buddy.utils.retriever[0m:[36m_get_relevant_documents[0m:[36m62[0m - [1mVector search returned 20 docs.[0m
+[32m2025-11-30 18:13:52.073[0m | [1mINFO    [0m | [36mstudy_buddy.utils.retriever[0m:[36m_get_relevant_documents[0m:[36m70[0m - [1mBM25 search returned 4 docs.[0m
+[32m2025-11-30 18:13:52.074[0m | [1mINFO    [0m | [36mstudy_buddy.utils.retriever[0m:[36m_get_relevant_documents[0m:[36m83[0m - [1mCombined unique docs: 19[0m
+[32m2025-11-30 18:13:52.074[0m | [1mINFO    [0m | [36mstudy_buddy.utils.retriever[0m:[36m_get_relevant_documents[0m:[36m89[0m - [1mRe-ranking documents...[0m
+[32m2025-11-30 18:13:53.039[0m | [1mINFO    [0m | [36mstudy_buddy.utils.retriever[0m:[36m_get_relevant_documents[0m:[36m115[0m - [1mRe-ranking complete. Returning top 5 docs.[0m
+Retrieved 5 documents.
+[1] Source: Unknown | Score: 3.187429683748633e-05
+    Content snippet: </p>
+</details>...
+[2] Source: Unknown | Score: 2.984654565807432e-05
+    Content snippet: # MRI_2024_25
+Metodi per il Ritrovamento dell'Informazione 2024/2025 - Laurea Triennale in Informatica - Dipartimento di Informatica, Università degli Studi di Bari Aldo Moro....
+[3] Source: Unknown | Score: 2.860676613636315e-05
+    Content snippet: # MRI-24-25_CBRS
+
+Notebook e dati per le esercitazioni sui Content-based RecSys, per il corso "Metodi per il Ritrovamento dell'Informazione", anno accademico 2024-2025....
+[4] Source: Unknown | Score: 1.6515823517693207e-05
+    Content snippet: theoretical backgrounds. These include the American DAI school 
+(Lesser, Gasser, Sycara), the Rational Agents branch (Rao and 
+Georgeff, Shoham, Castelfranchi), the branch focusing on Speech Acts 
+(Fi...
+[5] Source: Unknown | Score: 1.6504942323081195e-05
+    Content snippet: Scarica l’articolo in pdf / txt / rtf /...

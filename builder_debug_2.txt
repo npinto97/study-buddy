@@ -1,0 +1,184 @@
+2025-12-02T21:06:29.450018+0100 INFO Project root path resolved to: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy
+C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\study_buddy\vectorstore_pipeline\vector_store_builder.py:56: PydanticDeprecatedSince20: The `dict` method is deprecated; use `model_dump` instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.12/migration/
+  "docs": [doc.dict() for doc in docs],
+[32m2025-12-02 21:06:29.464[0m | [1mINFO    [0m | [36mstudy_buddy.config[0m:[36m<module>[0m:[36m129[0m - [1mLangSmith Tracing: False[0m
+[32m2025-12-02 21:06:29.466[0m | [1mINFO    [0m | [36mstudy_buddy.config[0m:[36m<module>[0m:[36m130[0m - [1mLangSmith Endpoint: None[0m
+[32m2025-12-02 21:06:29.467[0m | [1mINFO    [0m | [36mstudy_buddy.utils.embeddings[0m:[36minitialize_gpu_embeddings[0m:[36m8[0m - [1mInitializing Embeddings with model: BAAI/bge-m3[0m
+[32m2025-12-02 21:06:29.522[0m | [1mINFO    [0m | [36mstudy_buddy.utils.embeddings[0m:[36minitialize_gpu_embeddings[0m:[36m14[0m - [1mGPU detected: NVIDIA GeForce RTX 3060 (12.9 GB)[0m
+[32m2025-12-02 21:06:29.522[0m | [1mINFO    [0m | [36mstudy_buddy.utils.embeddings[0m:[36minitialize_gpu_embeddings[0m:[36m15[0m - [1mUsing GPU for embeddings...[0m
+[32m2025-12-02 21:06:48.196[0m | [1mINFO    [0m | [36mstudy_buddy.utils.embeddings[0m:[36minitialize_gpu_embeddings[0m:[36m38[0m - [1mEmbeddings with model BAAI/bge-m3 successfully initialized on CUDA.[0m
+[32m2025-12-02 21:06:48.839[0m | [1mINFO    [0m | [36m__main__[0m:[36moptimize_gpu_memory[0m:[36m38[0m - [1mGPU Memory optimized:[0m
+[32m2025-12-02 21:06:48.839[0m | [1mINFO    [0m | [36m__main__[0m:[36moptimize_gpu_memory[0m:[36m39[0m - [1m   - Memory limit: 11.0GB / 12.9GB[0m
+[32m2025-12-02 21:06:48.840[0m | [1mINFO    [0m | [36m__main__[0m:[36moptimize_gpu_memory[0m:[36m40[0m - [1m   - Batch size embeddings: 32[0m
+[32m2025-12-02 21:06:48.840[0m | [1mINFO    [0m | [36m__main__[0m:[36minitialize_faiss_store[0m:[36m107[0m - [1mLoading FAISS vector store from C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\faiss_index[0m
+[32m2025-12-02 21:06:48.920[0m | [1mINFO    [0m | [36m__main__[0m:[36minitialize_faiss_store[0m:[36m114[0m - [1mFAISS vector store loaded successfully.[0m
+[32m2025-12-02 21:06:48.946[0m | [1mINFO    [0m | [36m__main__[0m:[36mload_temp_docs[0m:[36m73[0m - [1mTemporary documents and hashes loaded successfully.[0m
+[32m2025-12-02 21:06:48.953[0m | [1mINFO    [0m | [36m__main__[0m:[36msave_temp_docs[0m:[36m59[0m - [1mTemporary documents and hashes saved successfully.[0m
+[32m2025-12-02 21:06:48.953[0m | [1mINFO    [0m | [36m__main__[0m:[36minitialize_faiss_store[0m:[36m129[0m - [1mUpdating vector store with 29 new documents...[0m
+[32m2025-12-02 21:06:48.954[0m | [1mINFO    [0m | [36m__main__[0m:[36mindex_documents[0m:[36m432[0m - [1mStarting GPU-accelerated document indexing...[0m
+[32m2025-12-02 21:06:48.954[0m | [1mINFO    [0m | [36m__main__[0m:[36mindex_documents[0m:[36m433[0m - [1m   - Total documents: 29[0m
+[32m2025-12-02 21:06:48.954[0m | [1mINFO    [0m | [36m__main__[0m:[36mindex_documents[0m:[36m434[0m - [1m   - Chunk size: 500[0m
+[32m2025-12-02 21:06:48.954[0m | [1mINFO    [0m | [36m__main__[0m:[36mindex_documents[0m:[36m435[0m - [1m   - Batch size: 64[0m
+[32m2025-12-02 21:06:48.954[0m | [1mINFO    [0m | [36m__main__[0m:[36mindex_documents[0m:[36m436[0m - [1m   - GPU batch size: 32[0m
+[32m2025-12-02 21:06:48.954[0m | [1mINFO    [0m | [36m__main__[0m:[36mbatch_process_documents[0m:[36m420[0m - [1mProcessing 29 documents in 1 batches (size: 64)[0m
+[32m2025-12-02 21:06:48.954[0m | [1mINFO    [0m | [36m__main__[0m:[36mbatch_process_documents[0m:[36m425[0m - [1mBatch 1/1: 29 documents[0m
+[32m2025-12-02 21:06:49.023[0m | [1mINFO    [0m | [36m__main__[0m:[36mindex_documents[0m:[36m451[0m - [1mBatch 1: 943 chunks to index...[0m
+[32m2025-12-02 21:06:49.024[0m | [1mINFO    [0m | [36m__main__[0m:[36madd_documents_to_store[0m:[36m381[0m - [1mProcessing 943 documents on RTX 5080...[0m
+[32m2025-12-02 21:06:49.024[0m | [1mINFO    [0m | [36m__main__[0m:[36madd_documents_to_store[0m:[36m390[0m - [1mProcessing batch 1/30 (32 docs)[0m
+
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00,  1.03it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00,  1.03it/s]
+[32m2025-12-02 21:06:50.055[0m | [1mINFO    [0m | [36m__main__[0m:[36madd_documents_to_store[0m:[36m390[0m - [1mProcessing batch 2/30 (32 docs)[0m
+
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00,  1.77it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00,  1.77it/s]
+[32m2025-12-02 21:06:50.656[0m | [1mINFO    [0m | [36m__main__[0m:[36madd_documents_to_store[0m:[36m390[0m - [1mProcessing batch 3/30 (32 docs)[0m
+
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00,  2.60it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00,  2.59it/s]
+[32m2025-12-02 21:06:51.095[0m | [1mINFO    [0m | [36m__main__[0m:[36madd_documents_to_store[0m:[36m390[0m - [1mProcessing batch 4/30 (32 docs)[0m
+
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00,  2.43it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00,  2.43it/s]
+[32m2025-12-02 21:06:51.542[0m | [1mINFO    [0m | [36m__main__[0m:[36madd_documents_to_store[0m:[36m390[0m - [1mProcessing batch 5/30 (32 docs)[0m
+
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00,  2.01it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00,  2.00it/s]
+[32m2025-12-02 21:06:52.080[0m | [1mINFO    [0m | [36m__main__[0m:[36madd_documents_to_store[0m:[36m390[0m - [1mProcessing batch 6/30 (32 docs)[0m
+
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00,  1.94it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00,  1.94it/s]
+[32m2025-12-02 21:06:52.630[0m | [1mINFO    [0m | [36m__main__[0m:[36madd_documents_to_store[0m:[36m390[0m - [1mProcessing batch 7/30 (32 docs)[0m
+
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00,  2.03it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00,  2.02it/s]
+[32m2025-12-02 21:06:53.152[0m | [1mINFO    [0m | [36m__main__[0m:[36madd_documents_to_store[0m:[36m390[0m - [1mProcessing batch 8/30 (32 docs)[0m
+
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00,  2.49it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00,  2.49it/s]
+[32m2025-12-02 21:06:53.579[0m | [1mINFO    [0m | [36m__main__[0m:[36madd_documents_to_store[0m:[36m390[0m - [1mProcessing batch 9/30 (32 docs)[0m
+
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00,  1.91it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00,  1.91it/s]
+[32m2025-12-02 21:06:54.144[0m | [1mINFO    [0m | [36m__main__[0m:[36madd_documents_to_store[0m:[36m390[0m - [1mProcessing batch 10/30 (32 docs)[0m
+
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00,  1.64it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00,  1.64it/s]
+[32m2025-12-02 21:06:54.781[0m | [1mINFO    [0m | [36m__main__[0m:[36madd_documents_to_store[0m:[36m390[0m - [1mProcessing batch 11/30 (32 docs)[0m
+
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00,  1.50it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00,  1.50it/s]
+[32m2025-12-02 21:06:55.472[0m | [1mINFO    [0m | [36m__main__[0m:[36madd_documents_to_store[0m:[36m390[0m - [1mProcessing batch 12/30 (32 docs)[0m
+
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00,  1.61it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00,  1.61it/s]
+[32m2025-12-02 21:06:56.122[0m | [1mINFO    [0m | [36m__main__[0m:[36madd_documents_to_store[0m:[36m390[0m - [1mProcessing batch 13/30 (32 docs)[0m
+
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00,  2.25it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00,  2.25it/s]
+[32m2025-12-02 21:06:56.597[0m | [1mINFO    [0m | [36m__main__[0m:[36madd_documents_to_store[0m:[36m390[0m - [1mProcessing batch 14/30 (32 docs)[0m
+
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00,  1.83it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00,  1.83it/s]
+[32m2025-12-02 21:06:57.170[0m | [1mINFO    [0m | [36m__main__[0m:[36madd_documents_to_store[0m:[36m390[0m - [1mProcessing batch 15/30 (32 docs)[0m
+
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00,  1.95it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00,  1.95it/s]
+[32m2025-12-02 21:06:57.716[0m | [1mINFO    [0m | [36m__main__[0m:[36madd_documents_to_store[0m:[36m390[0m - [1mProcessing batch 16/30 (32 docs)[0m
+
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00,  1.92it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00,  1.92it/s]
+[32m2025-12-02 21:06:58.263[0m | [1mINFO    [0m | [36m__main__[0m:[36madd_documents_to_store[0m:[36m390[0m - [1mProcessing batch 17/30 (32 docs)[0m
+
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00,  1.42it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00,  1.42it/s]
+[32m2025-12-02 21:06:58.996[0m | [1mINFO    [0m | [36m__main__[0m:[36madd_documents_to_store[0m:[36m390[0m - [1mProcessing batch 18/30 (32 docs)[0m
+
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00,  1.92it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00,  1.92it/s]
+[32m2025-12-02 21:06:59.540[0m | [1mINFO    [0m | [36m__main__[0m:[36madd_documents_to_store[0m:[36m390[0m - [1mProcessing batch 19/30 (32 docs)[0m
+
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00,  2.55it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00,  2.55it/s]
+[32m2025-12-02 21:06:59.960[0m | [1mINFO    [0m | [36m__main__[0m:[36madd_documents_to_store[0m:[36m390[0m - [1mProcessing batch 20/30 (32 docs)[0m
+
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00,  2.14it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00,  2.13it/s]
+[32m2025-12-02 21:07:00.467[0m | [1mINFO    [0m | [36m__main__[0m:[36madd_documents_to_store[0m:[36m390[0m - [1mProcessing batch 21/30 (32 docs)[0m
+
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00,  1.42it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00,  1.42it/s]
+[32m2025-12-02 21:07:01.215[0m | [1mINFO    [0m | [36m__main__[0m:[36madd_documents_to_store[0m:[36m390[0m - [1mProcessing batch 22/30 (32 docs)[0m
+
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00,  1.61it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00,  1.61it/s]
+[32m2025-12-02 21:07:01.869[0m | [1mINFO    [0m | [36m__main__[0m:[36madd_documents_to_store[0m:[36m390[0m - [1mProcessing batch 23/30 (32 docs)[0m
+
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00,  1.39it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00,  1.39it/s]
+[32m2025-12-02 21:07:02.621[0m | [1mINFO    [0m | [36m__main__[0m:[36madd_documents_to_store[0m:[36m390[0m - [1mProcessing batch 24/30 (32 docs)[0m
+
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00,  1.54it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00,  1.54it/s]
+[32m2025-12-02 21:07:03.297[0m | [1mINFO    [0m | [36m__main__[0m:[36madd_documents_to_store[0m:[36m390[0m - [1mProcessing batch 25/30 (32 docs)[0m
+
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00,  2.13it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00,  2.13it/s]
+[32m2025-12-02 21:07:03.813[0m | [1mINFO    [0m | [36m__main__[0m:[36madd_documents_to_store[0m:[36m390[0m - [1mProcessing batch 26/30 (32 docs)[0m
+
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00,  2.16it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00,  2.16it/s]
+[32m2025-12-02 21:07:04.304[0m | [1mINFO    [0m | [36m__main__[0m:[36madd_documents_to_store[0m:[36m390[0m - [1mProcessing batch 27/30 (32 docs)[0m
+
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00,  2.11it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00,  2.10it/s]
+[32m2025-12-02 21:07:04.805[0m | [1mINFO    [0m | [36m__main__[0m:[36madd_documents_to_store[0m:[36m390[0m - [1mProcessing batch 28/30 (32 docs)[0m
+
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00,  2.49it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00,  2.49it/s]
+[32m2025-12-02 21:07:05.217[0m | [1mINFO    [0m | [36m__main__[0m:[36madd_documents_to_store[0m:[36m390[0m - [1mProcessing batch 29/30 (32 docs)[0m
+
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00,  2.50it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00,  2.49it/s]
+[32m2025-12-02 21:07:05.706[0m | [1mINFO    [0m | [36m__main__[0m:[36madd_documents_to_store[0m:[36m390[0m - [1mProcessing batch 30/30 (15 docs)[0m
+
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00,  4.01it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00,  4.01it/s]
+[32m2025-12-02 21:07:05.969[0m | [1mINFO    [0m | [36m__main__[0m:[36madd_documents_to_store[0m:[36m397[0m - [1mAll 943 documents successfully indexed on GPU[0m
+[32m2025-12-02 21:07:06.037[0m | [1mINFO    [0m | [36m__main__[0m:[36m_save_faiss_store[0m:[36m413[0m - [1mFAISS vector store saved to C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\faiss_index[0m
+[32m2025-12-02 21:07:06.037[0m | [1mINFO    [0m | [36m__main__[0m:[36mindex_documents[0m:[36m456[0m - [1mBatch 1 completed. Total chunks: 943[0m
+[32m2025-12-02 21:07:06.038[0m | [1mINFO    [0m | [36m__main__[0m:[36msave_processed_hashes[0m:[36m368[0m - [1mProcessed hashes saved successfully.[0m
+[32m2025-12-02 21:07:06.039[0m | [1mINFO    [0m | [36m__main__[0m:[36mindex_documents[0m:[36m474[0m - [1mIndexing completed. 943 total chunks processed.[0m
+[32m2025-12-02 21:07:06.091[0m | [1mINFO    [0m | [36m__main__[0m:[36mindex_documents[0m:[36m484[0m - [1mBuilding BM25 index...[0m
+[32m2025-12-02 21:07:06.195[0m | [1mINFO    [0m | [36m__main__[0m:[36mindex_documents[0m:[36m489[0m - [1mBM25 index saved to C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\faiss_index\bm25_retriever.pkl[0m
+[32m2025-12-02 21:07:06.199[0m | [1mINFO    [0m | [36m__main__[0m:[36minitialize_faiss_store[0m:[36m136[0m - [1mVector store updated successfully.[0m

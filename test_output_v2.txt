@@ -1,0 +1,219 @@
+2025-11-30T18:25:34.586202+0100 INFO Project root path resolved to: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy
+INFO:flashrank.Ranker:Downloading ms-marco-MiniLM-L-12-v2...
+[32m2025-11-30 18:25:34.590[0m | [1mINFO    [0m | [36mstudy_buddy.config[0m:[36m<module>[0m:[36m129[0m - [1mLangSmith Tracing: False[0m
+[32m2025-11-30 18:25:34.591[0m | [1mINFO    [0m | [36mstudy_buddy.config[0m:[36m<module>[0m:[36m130[0m - [1mLangSmith Endpoint: None[0m
+[32m2025-11-30 18:25:34.712[0m | [1mINFO    [0m | [36mstudy_buddy.utils.embeddings[0m:[36minitialize_gpu_embeddings[0m:[36m8[0m - [1mInitializing Embeddings with model: BAAI/bge-m3[0m
+[32m2025-11-30 18:25:34.747[0m | [1mINFO    [0m | [36mstudy_buddy.utils.embeddings[0m:[36minitialize_gpu_embeddings[0m:[36m14[0m - [1mGPU detected: NVIDIA GeForce RTX 3060 (12.9 GB)[0m
+[32m2025-11-30 18:25:34.747[0m | [1mINFO    [0m | [36mstudy_buddy.utils.embeddings[0m:[36minitialize_gpu_embeddings[0m:[36m15[0m - [1mUsing GPU for embeddings...[0m
+[32m2025-11-30 18:25:45.230[0m | [1mINFO    [0m | [36mstudy_buddy.utils.embeddings[0m:[36minitialize_gpu_embeddings[0m:[36m38[0m - [1mEmbeddings with model BAAI/bge-m3 successfully initialized on CUDA.[0m
+Initializing HybridRetriever...
+[32m2025-11-30 18:25:45.479[0m | [1mINFO    [0m | [36mstudy_buddy.vectorstore_pipeline.vector_store_builder[0m:[36mget_vector_store[0m:[36m501[0m - [1mFAISS vector store loaded successfully.[0m
+[32m2025-11-30 18:25:45.491[0m | [1mINFO    [0m | [36mstudy_buddy.utils.retriever[0m:[36m__init__[0m:[36m41[0m - [1mBM25 Retriever loaded successfully.[0m
+
+ms-marco-MiniLM-L-12-v2.zip:   0%|          | 0.00/21.6M [00:00<?, ?iB/s]
+ms-marco-MiniLM-L-12-v2.zip:   6%|▌         | 1.20M/21.6M [00:00<00:01, 12.5MiB/s]
+ms-marco-MiniLM-L-12-v2.zip:  18%|█▊        | 3.96M/21.6M [00:00<00:00, 22.2MiB/s]
+ms-marco-MiniLM-L-12-v2.zip:  29%|██▉       | 6.23M/21.6M [00:00<00:00, 22.7MiB/s]
+ms-marco-MiniLM-L-12-v2.zip:  39%|███▉      | 8.39M/21.6M [00:00<00:00, 22.6MiB/s]
+ms-marco-MiniLM-L-12-v2.zip:  49%|████▉     | 10.6M/21.6M [00:00<00:00, 22.4MiB/s]
+ms-marco-MiniLM-L-12-v2.zip:  59%|█████▉    | 12.8M/21.6M [00:00<00:00, 22.5MiB/s]
+ms-marco-MiniLM-L-12-v2.zip:  72%|███████▏  | 15.6M/21.6M [00:00<00:00, 24.9MiB/s]
+ms-marco-MiniLM-L-12-v2.zip:  83%|████████▎ | 18.0M/21.6M [00:00<00:00, 24.6MiB/s]
+ms-marco-MiniLM-L-12-v2.zip:  96%|█████████▌| 20.7M/21.6M [00:00<00:00, 25.4MiB/s]
+ms-marco-MiniLM-L-12-v2.zip: 100%|██████████| 21.6M/21.6M [00:00<00:00, 23.4MiB/s]
+
+--- Query: According to the MRI_syllabus.pdf, who is the professor for the 'Metodi per il Ritrovamento dell'Informazione' course? ---
+[32m2025-11-30 18:25:47.219[0m | [1mINFO    [0m | [36mstudy_buddy.utils.retriever[0m:[36m_get_relevant_documents[0m:[36m58[0m - [1mHybrid Retrieval for query: 'According to the MRI_syllabus.pdf, who is the professor for the 'Metodi per il Ritrovamento dell'Informazione' course?'[0m
+
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00,  1.73it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00,  1.73it/s]
+[32m2025-11-30 18:25:47.805[0m | [1mINFO    [0m | [36mstudy_buddy.utils.retriever[0m:[36m_get_relevant_documents[0m:[36m62[0m - [1mVector search returned 20 docs.[0m
+[32m2025-11-30 18:25:47.808[0m | [1mINFO    [0m | [36mstudy_buddy.utils.retriever[0m:[36m_get_relevant_documents[0m:[36m70[0m - [1mBM25 search returned 4 docs.[0m
+[32m2025-11-30 18:25:47.809[0m | [1mINFO    [0m | [36mstudy_buddy.utils.retriever[0m:[36m_get_relevant_documents[0m:[36m83[0m - [1mCombined unique docs: 18[0m
+[32m2025-11-30 18:25:47.809[0m | [1mINFO    [0m | [36mstudy_buddy.utils.retriever[0m:[36m_get_relevant_documents[0m:[36m89[0m - [1mRe-ranking documents...[0m
+[32m2025-11-30 18:25:48.307[0m | [1mINFO    [0m | [36mstudy_buddy.utils.retriever[0m:[36m_get_relevant_documents[0m:[36m115[0m - [1mRe-ranking complete. Returning top 5 docs.[0m
+Retrieved 5 documents.
+[1] Source: Unknown | Score: 0.9252886772155762
+    Content snippet: # MRI_2024_25
+Metodi per il Ritrovamento dell'Informazione 2024/2025 - Laurea Triennale in Informatica - Dipartimento di Informatica, Università degli Studi di Bari Aldo Moro....
+[2] Source: Unknown | Score: 0.7088027000427246
+    Content snippet: # MRI-24-25_CBRS
+
+Notebook e dati per le esercitazioni sui Content-based RecSys, per il corso "Metodi per il Ritrovamento dell'Informazione", anno accademico 2024-2025....
+[3] Source: Unknown | Score: 2.315121855644975e-05
+    Content snippet: **Authors**: Stephanie Lin, University of Oxford (<sylin07@gmail.com>), Jacob Hilton, OpenAI (<jhilton@openai.com>), Owain Evans, University of Oxford (<owaine@gmail.com>)
+
+<!---
+### Abstract...
+[4] Source: Unknown | Score: 2.2854919734527357e-05
+    Content snippet: Multimodality and Large Multimodal Models (LMMs)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Multimodality and Large Multimodal Models (LMMs) | Chip Huyen
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Chip Huyen
+
+
+
+
+
+
+
+
+
+
+
+
+Blog
+Books
+Events
+
+AI Gui...
+[5] Source: Unknown | Score: 1.9419885575189255e-05
+    Content snippet: BLIP-2: Bootstrapping Language-Image Pre-training with Frozen Image Encoders and Large Language Models
+[LAVIN] Cheap and Quick: Efficient Vision-Language Instruction Tuning for Large Language Models
+L...
+
+--- Query: Find the email address for Professor Giovanni Semeraro in the SIIA_syllabus.pdf. ---
+[32m2025-11-30 18:25:48.309[0m | [1mINFO    [0m | [36mstudy_buddy.utils.retriever[0m:[36m_get_relevant_documents[0m:[36m58[0m - [1mHybrid Retrieval for query: 'Find the email address for Professor Giovanni Semeraro in the SIIA_syllabus.pdf.'[0m
+
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00, 34.80it/s]
+[32m2025-11-30 18:25:48.346[0m | [1mINFO    [0m | [36mstudy_buddy.utils.retriever[0m:[36m_get_relevant_documents[0m:[36m62[0m - [1mVector search returned 20 docs.[0m
+[32m2025-11-30 18:25:48.350[0m | [1mINFO    [0m | [36mstudy_buddy.utils.retriever[0m:[36m_get_relevant_documents[0m:[36m70[0m - [1mBM25 search returned 4 docs.[0m
+[32m2025-11-30 18:25:48.350[0m | [1mINFO    [0m | [36mstudy_buddy.utils.retriever[0m:[36m_get_relevant_documents[0m:[36m83[0m - [1mCombined unique docs: 15[0m
+[32m2025-11-30 18:25:48.350[0m | [1mINFO    [0m | [36mstudy_buddy.utils.retriever[0m:[36m_get_relevant_documents[0m:[36m89[0m - [1mRe-ranking documents...[0m
+[32m2025-11-30 18:25:48.765[0m | [1mINFO    [0m | [36mstudy_buddy.utils.retriever[0m:[36m_get_relevant_documents[0m:[36m115[0m - [1mRe-ranking complete. Returning top 5 docs.[0m
+Retrieved 5 documents.
+[1] Source: Unknown | Score: 0.2226674109697342
+    Content snippet: Citation instructions
+	
+
+@misc{polignano2024advanced,
+      title={Advanced Natural-based interaction for the ITAlian language: LLaMAntino-3-ANITA}, 
+      author={Marco Polignano and Pierpaolo Basile...
+[2] Source: Unknown | Score: 0.1529051512479782
+    Content snippet: @misc{basile2023llamantino,
+      title={LLaMAntino: LLaMA 2 Models for Effective Text Generation in Italian Language}, 
+      author={Pierpaolo Basile and Elio Musacchio and Marco Polignano and Lucia...
+[3] Source: Unknown | Score: 0.00841144286096096
+    Content snippet: Accuracy Normalized
+0.6566
+0.5004
+0.6084
+0.588
+
+
+
+
+
+
+
+
+
+		Citation
+	
+
+If you use this model in your research, please cite the following:
+@misc{basile2023llamantino,
+      title={LLaMAntino: LLaMA 2 Mo...
+[4] Source: Unknown | Score: 0.0007243013242259622
+    Content snippet: NOTICE: the code has not been released yet, we apologize for the delay, it will be available asap!
+
+Developed by: Pierpaolo Basile, Elio Musacchio, Marco Polignano, Lucia Siciliani, Giuseppe Fiameni, ...
+[5] Source: Unknown | Score: 5.866970241186209e-05
+    Content snippet: Scarica l’articolo in pdf / txt / rtf /...
+
+--- Query: What are the office hours for Professor Pasquale Lops as listed in the MRI syllabus? ---
+[32m2025-11-30 18:25:48.765[0m | [1mINFO    [0m | [36mstudy_buddy.utils.retriever[0m:[36m_get_relevant_documents[0m:[36m58[0m - [1mHybrid Retrieval for query: 'What are the office hours for Professor Pasquale Lops as listed in the MRI syllabus?'[0m
+
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00, 38.34it/s]
+[32m2025-11-30 18:25:48.800[0m | [1mINFO    [0m | [36mstudy_buddy.utils.retriever[0m:[36m_get_relevant_documents[0m:[36m62[0m - [1mVector search returned 20 docs.[0m
+[32m2025-11-30 18:25:48.803[0m | [1mINFO    [0m | [36mstudy_buddy.utils.retriever[0m:[36m_get_relevant_documents[0m:[36m70[0m - [1mBM25 search returned 4 docs.[0m
+[32m2025-11-30 18:25:48.804[0m | [1mINFO    [0m | [36mstudy_buddy.utils.retriever[0m:[36m_get_relevant_documents[0m:[36m83[0m - [1mCombined unique docs: 18[0m
+[32m2025-11-30 18:25:48.804[0m | [1mINFO    [0m | [36mstudy_buddy.utils.retriever[0m:[36m_get_relevant_documents[0m:[36m89[0m - [1mRe-ranking documents...[0m
+[32m2025-11-30 18:25:49.307[0m | [1mINFO    [0m | [36mstudy_buddy.utils.retriever[0m:[36m_get_relevant_documents[0m:[36m115[0m - [1mRe-ranking complete. Returning top 5 docs.[0m
+Retrieved 5 documents.
+[1] Source: Unknown | Score: 3.067325087613426e-05
+    Content snippet: </p>
+</details>...
+
+[2] Source: Unknown | Score: 2.695695911825169e-05
+    Content snippet: # MRI-24-25_CBRS
+
+Notebook e dati per le esercitazioni sui Content-based RecSys, per il corso "Metodi per il Ritrovamento dell'Informazione", anno accademico 2024-2025....
+[3] Source: Unknown | Score: 2.5068677132367156e-05
+    Content snippet: # MRI_2024_25
+Metodi per il Ritrovamento dell'Informazione 2024/2025 - Laurea Triennale in Informatica - Dipartimento di Informatica, Università degli Studi di Bari Aldo Moro....
+[4] Source: Unknown | Score: 1.9607017748057842e-05
+    Content snippet: applications.
+The main application of multi-agent systems at the 
+moment can be listed as follows:...
+[5] Source: Unknown | Score: 1.639855508983601e-05
+    Content snippet: LLaMAntino-2-70b-hf-UltraChat-ITA is a Large Language Model (LLM) that is an instruction-tuned version of LLaMAntino-2-70b (an italian-adapted LLaMA 2 - 70B). 
+This model aims to provide Italian NLP r...
+
+--- Query: What are the five criteria for the final grade attribution in the SIIA course syllabus? ---
+[32m2025-11-30 18:25:49.307[0m | [1mINFO    [0m | [36mstudy_buddy.utils.retriever[0m:[36m_get_relevant_documents[0m:[36m58[0m - [1mHybrid Retrieval for query: 'What are the five criteria for the final grade attribution in the SIIA course syllabus?'[0m
+Batches:   0%|          | 0/1 [00:00<?, ?it/s]
+Batches: 100%|██████████| 1/1 [00:00<00:00, 37.26it/s]
+[32m2025-11-30 18:25:49.340[0m | [1mINFO    [0m | [36mstudy_buddy.utils.retriever[0m:[36m_get_relevant_documents[0m:[36m62[0m - [1mVector search returned 20 docs.[0m
+[32m2025-11-30 18:25:49.345[0m | [1mINFO    [0m | [36mstudy_buddy.utils.retriever[0m:[36m_get_relevant_documents[0m:[36m70[0m - [1mBM25 search returned 4 docs.[0m
+[32m2025-11-30 18:25:49.345[0m | [1mINFO    [0m | [36mstudy_buddy.utils.retriever[0m:[36m_get_relevant_documents[0m:[36m83[0m - [1mCombined unique docs: 22[0m
+[32m2025-11-30 18:25:49.345[0m | [1mINFO    [0m | [36mstudy_buddy.utils.retriever[0m:[36m_get_relevant_documents[0m:[36m89[0m - [1mRe-ranking documents...[0m
+[32m2025-11-30 18:25:50.276[0m | [1mINFO    [0m | [36mstudy_buddy.utils.retriever[0m:[36m_get_relevant_documents[0m:[36m115[0m - [1mRe-ranking complete. Returning top 5 docs.[0m
+Retrieved 5 documents.
+[1] Source: Unknown | Score: 2.1582183762802742e-05
+    Content snippet: identify the most important: representational, organisational, 
+conative, interactional, productive and preservative. Different roles 
+are associated with each of these functions among the elements in...
+[2] Source: Unknown | Score: 2.0491972463787533e-05
+    Content snippet: initial pilot studies of their Phase 1 evaluations. Full Phase 1 system evaluations are expected in November 2018.At the end of the program, the final delivery will be a toolkit library consisting of ...
+[3] Source: Unknown | Score: 1.8895916582550853e-05
+    Content snippet: important operational problem areas for the DoD (intelligence analysis and autonomous systems).In addition, researchers are examining the psychology of explanation.XAI research prototypes are tested a...
+[4] Source: Unknown | Score: 1.844438520492986e-05
+    Content snippet: #### Our Evaluation Set
+
+We curate an evaluation set, encompassing the [Vicuna Benchmark](https://lmsys.org/blog/2023-03-30-vicuna/) and additional 300 questions and instructions generated by GPT-4. T...
+[5] Source: Unknown | Score: 1.8419128537061624e-05
+    Content snippet: The third and fourth steps are to divide the scores by 8 (the square root of the dimension of the key vectors used in the paper – 64. This leads to having more stable gradients. There could be other p...

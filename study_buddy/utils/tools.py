@@ -14,9 +14,8 @@ from PIL import Image
 from textblob import TextBlob
 
 from pydantic import BaseModel, Field
-from langchain_core.tools import Tool
-from langchain.tools import StructuredTool
-from langchain.chains.summarize import load_summarize_chain
+from langchain_core.tools import StructuredTool, Tool
+# from langchain.chains.summarize import load_summarize_chain
 from langchain_community.document_loaders import PyPDFLoader, TextLoader, CSVLoader
 from langchain_community.llms import Together
 from langchain_community.tools.google_lens import GoogleLensQueryRun
@@ -29,7 +28,7 @@ from langchain_community.tools.google_scholar import GoogleScholarQueryRun
 from langchain_community.utilities.google_scholar import GoogleScholarAPIWrapper
 from langchain_tavily import TavilySearch
 # from langchain_community.tools.arxiv.tool import ArxivQueryRun
-from langchain.text_splitter import CharacterTextSplitter
+from langchain_text_splitters import CharacterTextSplitter
 
 from e2b_code_interpreter import Sandbox
 from elevenlabs.client import ElevenLabs
@@ -39,6 +38,7 @@ from together import Together as TogetherClient
 
 from study_buddy.vectorstore_pipeline.vector_store_builder import get_vector_store
 from study_buddy.config import FAISS_INDEX_DIR
+from study_buddy.utils.retriever import HybridRetriever
 
 _code_interpreter_instance = None
 _data_visualizer_instance = None
@@ -189,20 +189,14 @@ class VectorStoreRetriever(BaseWrapper):
         if not os.path.exists(FAISS_INDEX_DIR):
             raise ValueError(f"FAISS index directory not found: {FAISS_INDEX_DIR}")
     
-    def retrieve(self, query: str, k: int = 4) -> tuple[str, list, list]:
-        """Retrieve information with validation and error handling."""
+    def retrieve(self, query: str, k: int = 5) -> tuple[str, list, list]:
+        """Retrieve information using Hybrid Search + Re-ranking."""
         try:
-            vector_store = get_vector_store(FAISS_INDEX_DIR)
+            # Initialize Hybrid Retriever
+            retriever = HybridRetriever(k=k, fetch_k=20)
             
-            # Validate embedding dimensions
-            embedding_dim = vector_store.index.d
-            test_embedding = vector_store.embeddings.embed_query("test")
-            if len(test_embedding) != embedding_dim:
-                raise ValueError(
-                    f"Embedding dimension mismatch: {len(test_embedding)} vs {embedding_dim}"
-                )
-            
-            retrieved_docs = vector_store.similarity_search(query, k=k)
+            # Retrieve documents
+            retrieved_docs = retriever.invoke(query)
             
             file_paths = []
             serialized_parts = []
@@ -213,10 +207,16 @@ class VectorStoreRetriever(BaseWrapper):
                     normalized_path = os.path.normpath(path)
                     file_paths.append(normalized_path)
                 
+                # Include relevance score if available
+                score_info = f" (Score: {doc.metadata.get('relevance_score', 'N/A'):.4f})" if 'relevance_score' in doc.metadata else ""
+                
                 serialized_parts.append(
-                    f"Source: {doc.metadata}\nContent: {doc.page_content}"
+                    f"Source: {doc.metadata}\nRelevance{score_info}\nContent: {doc.page_content}"
                 )
             
+            if not retrieved_docs:
+                return "No relevant documents found.", [], []
+
             return "\n\n".join(serialized_parts), retrieved_docs, file_paths
             
         except Exception as e:
@@ -909,6 +909,35 @@ def create_basic_tools() -> List[Tool]:
     retriever = VectorStoreRetriever()
     
     wikidata_searcher = WikidataSearcher()
+
+    # Wrapper functions to fix NameError: uuid not defined in langgraph inspection
+    def run_web_search(query: str) -> str:
+        """Search the web."""
+        return web_search.run(query)
+
+    def run_youtube_search(query: str) -> str:
+        """Search YouTube."""
+        return youtube_search.run(query)
+
+    def run_wikipedia_search(query: str) -> str:
+        """Search Wikipedia."""
+        return wikipedia.run(query)
+
+    def run_google_scholar_search(query: str) -> str:
+        """Search Google Scholar."""
+        return google_scholar.run(query)
+
+    def run_google_books_search(query: str) -> str:
+        """Search Google Books."""
+        if google_books:
+            return google_books.run(query)
+        return "Google Books not available"
+
+    def run_google_lens(query: str) -> str:
+        """Analyze image with Google Lens."""
+        if google_lens:
+            return google_lens.run(query)
+        return "Google Lens not available"
     
     tools = [
         Tool(
@@ -919,17 +948,17 @@ def create_basic_tools() -> List[Tool]:
         Tool(
             name="web_search",
             description="Search the web for current information and news",
-            func=web_search.run
+            func=run_web_search
         ),
         Tool(
             name="youtube_search",
             description="Search for educational videos on YouTube",
-            func=youtube_search.run
+            func=run_youtube_search
         ),
         Tool(
             name="wikipedia_search",
             description="Search Wikipedia for encyclopedic information",
-            func=wikipedia.run
+            func=run_wikipedia_search
         ),
         # Tool(
         #     name="arxiv_search",
@@ -939,7 +968,7 @@ def create_basic_tools() -> List[Tool]:
         Tool(
             name="google_scholar_search",
             description="Search academic literature on Google Scholar",
-            func=google_scholar.run
+            func=run_google_scholar_search
         ),
         Tool(
             name="wikidata_search",
@@ -952,14 +981,14 @@ def create_basic_tools() -> List[Tool]:
         tools.append(Tool(
             name="google_books_search",
             description="Search for books on Google Books",
-            func=google_books.run
+            func=run_google_books_search
         ))
     
     if google_lens:
         tools.append(Tool(
             name="google_lens_analyze",
             description="Analyze images using Google Lens",
-            func=google_lens.run
+            func=run_google_lens
         ))
     
     return tools

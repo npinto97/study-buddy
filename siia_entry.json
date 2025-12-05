@@ -1,0 +1,6 @@
+{
+    "path": "C:\\Users\\Utente\\OneDrive - Universit\u00e0 degli Studi di Bari\\Universita\\Magistrale\\II Anno\\I Semestre\\Semantics\\Project\\study-buddy\\data\\raw\\syllabuses\\SIIA_syllabus.txt",
+    "type": "syllabus",
+    "course_name": "Semantic Intelligent Information Access (SIIA)",
+    "course_description": "This course focuses on semantics and content representation, exploring foundational concepts, advanced techniques, and practical applications. Students will learn to analyze both implicit (endogenous) and explicit (exogenous) semantics, leveraging structured knowledge sources and linking content to knowledge graphs. Additionally, the course delves into semantics-aware systems for intelligent information access, including recommendation systems, social media analysis, and advanced challenges like deep learning, explainability, conversational systems, and serendipity. The program combines theoretical lessons with hands-on classroom exercises to provide a comprehensive understanding of semantic technologies and their applications."
+}
