@@ -202,3 +202,4 @@ conversations/
 tests/performance/logs/
 
 study_buddy/evaluation/chunked_documents/
+faiss_index/
