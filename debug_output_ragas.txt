@@ -1,0 +1,25 @@
+2025-12-06T10:51:55.146247+0100 INFO Project root path resolved to: C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy
+[32m2025-12-06 10:51:55.149[0m | [1mINFO    [0m | [36mstudy_buddy.config[0m:[36m<module>[0m:[36m134[0m - [1mLangSmith Tracing: False[0m
+[32m2025-12-06 10:51:55.151[0m | [1mINFO    [0m | [36mstudy_buddy.config[0m:[36m<module>[0m:[36m135[0m - [1mLangSmith Endpoint: None[0m
+[32m2025-12-06 10:51:55.258[0m | [1mINFO    [0m | [36mstudy_buddy.utils.embeddings[0m:[36minitialize_gpu_embeddings[0m:[36m8[0m - [1mInitializing Embeddings with model: BAAI/bge-m3[0m
+[32m2025-12-06 10:51:55.314[0m | [1mINFO    [0m | [36mstudy_buddy.utils.embeddings[0m:[36minitialize_gpu_embeddings[0m:[36m14[0m - [1mGPU detected: NVIDIA GeForce RTX 3060 (12.9 GB)[0m
+[32m2025-12-06 10:51:55.314[0m | [1mINFO    [0m | [36mstudy_buddy.utils.embeddings[0m:[36minitialize_gpu_embeddings[0m:[36m15[0m - [1mUsing GPU for embeddings...[0m
+[32m2025-12-06 10:52:10.675[0m | [1mINFO    [0m | [36mstudy_buddy.utils.embeddings[0m:[36minitialize_gpu_embeddings[0m:[36m38[0m - [1mEmbeddings with model BAAI/bge-m3 successfully initialized on CUDA.[0m
+[32m2025-12-06 10:52:11.204[0m | [1mINFO    [0m | [36mstudy_buddy.utils.llm[0m:[36m<module>[0m:[36m4[0m - [1mInitializing LLM with model: meta-llama/Llama-3.3-70B-Instruct-Turbo[0m
+[32m2025-12-06 10:52:11.641[0m | [1mINFO    [0m | [36mstudy_buddy.utils.llm[0m:[36m<module>[0m:[36m12[0m - [1mLLM with model meta-llama/Llama-3.3-70B-Instruct-Turbo successfully initialized.[0m
+Loading test set...
+Initializing HybridRetriever...
+Traceback (most recent call last):
+  File "C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\evaluate_ragas.py", line 141, in <module>
+    evaluate_ragas()
+  File "C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\evaluate_ragas.py", line 32, in evaluate_ragas
+    retriever = HybridRetriever(k=5, fetch_k=20)
+  File "C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\study_buddy\utils\retriever.py", line 34, in __init__
+    self._vector_store = get_vector_store(FAISS_INDEX_DIR)
+  File "C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\study_buddy\vectorstore_pipeline\vector_store_builder.py", line 496, in get_vector_store
+    vector_store = FAISS.load_local(
+  File "C:\Users\Utente\AppData\Local\Programs\Python\Python310\lib\site-packages\langchain_community\vectorstores\faiss.py", line 1205, in load_local
+    index = faiss.read_index(str(path / f"{index_name}.faiss"))
+  File "C:\Users\Utente\AppData\Local\Programs\Python\Python310\lib\site-packages\faiss\swigfaiss_avx2.py", line 12378, in read_index
+    return _swigfaiss_avx2.read_index(*args)
+RuntimeError: Error in __cdecl faiss::FileIOReader::FileIOReader(const char *) at D:\a\faiss-wheels\faiss-wheels\third-party\faiss\faiss\impl\io.cpp:70: Error: 'f' failed: could not open C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\faiss_index\index.faiss for reading: No such file or directory

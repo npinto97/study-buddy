@@ -98,8 +98,45 @@ def evaluate_ragas():
     # Try to print scores directly if possible
     try:
         print("Scores:", results)
-    except:
-        pass
+        
+        # Save detailed scores to CSV
+        output_df = results.to_pandas()
+        os.makedirs("study_buddy/evaluation", exist_ok=True)
+        output_df.to_csv("study_buddy/evaluation/ragas_scores.csv", index=False)
+        print("Saved detailed scores to study_buddy/evaluation/ragas_scores.csv")
+
+        # Save summary to JSON
+        # Calculate averages from the dataframe for the summary
+        scores = output_df.mean(numeric_only=True).to_dict()
+        with open("evaluation_results_final.json", "w", encoding="utf-8") as f:
+            json.dump(scores, f, indent=4)
+        print("Saved summary to evaluation_results_final.json")
+
+        # Generate and save Markdown Report
+        from datetime import datetime
+        date_str = datetime.now().strftime("%Y-%m-%d")
+        report = f"""# RAGAS Evaluation Report (Final)
+
+**Date:** {date_str}
+**Status:** Success (Re-run)
+
+## Metrics
+| Metric | Score | Interpretation |
+| :--- | :--- | :--- |
+| **Faithfulness** | **{scores.get('faithfulness', 0):.2f}** | Measures how well the generated answer is grounded in the retrieved context. |
+| **Answer Relevancy** | **{scores.get('answer_relevancy', 0):.2f}** | Measures how relevant the answer is to the question. |
+| **Context Recall** | **{scores.get('context_recall', 0):.2f}** | Measures if the retrieved context contains the answer. |
+| **Context Precision** | **{scores.get('context_precision', 0):.2f}** | Measures if relevant documents are ranked highly. |
+
+## Conclusion
+Evaluation run completed successfully.
+"""
+        with open("ragas_report.md", "w", encoding="utf-8") as f:
+            f.write(report)
+        print("Saved report to ragas_report.md")
+
+    except Exception as e:
+        print(f"Error saving results: {e}")
 
 if __name__ == "__main__":
     evaluate_ragas()

@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "C:\Users\Utente\OneDrive - Università degli Studi di Bari\Universita\Magistrale\II Anno\I Semestre\Semantics\Project\study-buddy\study_buddy\vectorstore_pipeline\vector_store_builder.py", line 16, in <module>
+    from study_buddy.utils.embeddings import embeddings
+ModuleNotFoundError: No module named 'study_buddy'
