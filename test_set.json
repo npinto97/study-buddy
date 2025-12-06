@@ -1,22 +1,282 @@
 [
     {
-        "question": "Quali differenze significative sono emerse nella conoscenza degli studenti svedesi riguardo alla mortalità infantile rispetto a quella attesa, e quale conclusione il docente ha tratto da tale comparazione?",
-        "expected_answer": "Gli studenti svedesi sapevano statisticamente significativamente meno sul mondo rispetto agli scimpanzé, ottenendo una media di 1,8 risposte corrette su cinque in un test sulla mortalità infantile. Il docente ha concluso che c'era una necessità di comunicare le reali informazioni globali, poiché gli studenti avevano idee preconcette distorte sulla situazione mondiale.",
-        "filename": "2006-hans-rosling-005-fallback-c3d98a9ebcba77e543774e749251147a-1200k.json"
+        "question": "According to the MRI_syllabus.pdf, who is the professor for the 'Metodi per il Ritrovamento dell'Informazione' course?",
+        "expected_answer": "The professor for the course is Pasquale Lops."
     },
     {
-        "question": "Qual è la principale frustrazione dell'autore riguardo all'uso delle informazioni e dei dati durante la sua esperienza con la creazione del World Wide Web?",
-        "expected_answer": "L'autore esprime la sua frustrazione principale riguardo all'uso delle informazioni e dei dati durante la creazione del World Wide Web perché si trovava a dover affrontare una grande diversità di formati di dati e sistemi di documentazione incompatibili, il che rendeva difficile costruire qualcosa, dato che doveva sempre connettersi a nuove macchine, imparare nuovi programmi e cercare dati nei formati nuovi. Questa situazione era molto frustrante e rappresentava un potenziale inespresso.",
-        "filename": "2009-tim-berners-lee-009-fallback-84ea51342ae313c2e49f86da9b59d564-1200k.json"
+        "question": "Find the email address for Professor Giovanni Semeraro in the SIIA_syllabus.pdf.",
+        "expected_answer": "Professor Giovanni Semeraro's email address is giovanni.semeraro@uniba.it."
     },
     {
-        "question": "Quali esempi vengono forniti nel testo per dimostrare come l'apertura dei dati possa generare impatti significativi nelle comunità e nei governi?",
-        "expected_answer": "Nel testo vengono forniti diversi esempi per dimostrare come l'apertura dei dati possa generare impatti significativi nelle comunità e nei governi. Un esempio è quello di Paul Clark del governo del Regno Unito, che ha pubblicato dati sugli incidenti ciclistici, portando a una mappa interattiva realizzata dal Times online. Un altro esempio è relativo a Zanesville, Ohio, dove un avvocato ha utilizzato dati sulla rete idrica e confrontandoli con informazioni demografiche ha portato a una sentenza di 10,9 milioni di dollari per la correlazione tra le case occupate da bianchi e l'accesso all'acqua. Inoltre, è stata menzionata una piattaforma nel Regno Unito che permette ai cittadini di esplorare i dati di spesa pubblica e un sito in California dedicato alla spesa per il recupero. Infine, l'esempio del mapping collaborativo durante il terremoto ad Haiti illustra come i dati aperti possano migliorare la risposta umanitaria attraverso mappe in tempo reale create da volontari.",
-        "filename": "2010u-tim-berners-lee-003-fallback-2ac11ea6fd5b0a64ff2388b9ca79cc60-1200k.json"
+        "question": "From the provided document 'Book_on_introduction_to_Information_Retrieval.pdf', what are the main topics it covers?",
+        "expected_answer": "The book covers topics like Boolean and vector space models, index construction, evaluation methods, text classification, clustering, and web search concepts."
     },
     {
-        "question": "Quali sono le principali limitazioni del modello BLOOM in relazione alle lingue supportate, e come viene affrontata la questione dell'adattamento linguistico nel caso dell'italiano nel contesto di questo studio?",
-        "expected_answer": "Il modello BLOOM ha limitazioni significative riguardo il numero di lingue supportate, poiché non include l'italiano tra le lingue disponibili. Questa mancanza rende difficile l'uso del modello in contesti italiani. Nel contesto di questo studio, la questione dell'adattamento linguistico viene affrontata attraverso una strategia di adattamento della lingua basata sul continuo addestramento su dati specifici per la lingua. Inoltre, i modelli BLOOM e adattati vengono affinati su diversi set di istruzioni e compiti di classificazione basati su dati EV ALITA. Si è osservato che l'adattamento linguistico seguito da un affinamento basato su istruzioni è efficace nel trattare compiti mai visti dal modello in una nuova lingua appresa su dati specifici per la lingua.",
-        "filename": "Adapting_BLOOM_to_a_new_language_A_case_study_for_the_Italian.json"
+        "question": "What are the office hours for Professor Pasquale Lops as listed in the MRI syllabus?",
+        "expected_answer": "Professor Pasquale Lops's office hours are on Tuesday from 10:00 to 12:00, or by appointment via email."
+    },
+    {
+        "question": "Under the 'Prerequisites/requirements' section of the SIIA_syllabus.pdf, what are the main subject areas listed?",
+        "expected_answer": "The main subject areas listed as prerequisites are Natural Language Processing, Fundamentals of Artificial Intelligence, and Machine Learning."
+    },
+    {
+        "question": "Describe the exam regulations for the MRI course based on the syllabus.",
+        "expected_answer": "The MRI exam is a 90-minute written test. No materials can be consulted, but a calculator is permitted. The evaluation is out of 30, and results are communicated on the esse3 platform."
+    },
+    {
+        "question": "In the book 'Semantics in Adaptive and Personalized Systems', what is the key difference between exogenous and endogenous approaches?",
+        "expected_answer": "The key difference is their dependency: exogenous approaches rely on external knowledge bases, while endogenous approaches require large corpora of textual data."
+    },
+    {
+        "question": "According to the introductory slides of the MRI course, what problem do Information Filtering and Recommender Systems solve?",
+        "expected_answer": "Information Filtering and Recommender Systems are presented as solutions to the problem of Information Overload."
+    },
+    {
+        "question": "What are the five criteria for the final grade attribution in the SIIA course syllabus?",
+        "expected_answer": "The five criteria for the final grade are: correctness of the solution, completeness of the solution, the logic followed, the use of appropriate formalism, and the degree of innovation."
+    },
+    {
+        "question": "List the three authors of the book 'Introduction to Information Retrieval'.",
+        "expected_answer": "The three authors are Christopher D. Manning, Prabhakar Raghavan, and Hinrich Schütze."
+    },
+    {
+        "question": "What is the main topic of the reference 'Knowledge Discovery in Textual Databases (KDT)' from lesson 1 of the MRI course?",
+        "expected_answer": "The main topic is knowledge discovery, which is defined as the nontrivial extraction of implicit, previously unknown, and potentially useful information from data. The paper discusses two main approaches: one using machine learning and statistical analysis, and another focused on providing user-efficient tools."
+    },
+    {
+        "question": "What are the three main reference books for the MRI course?",
+        "expected_answer": "The three main reference books for the MRI course are: 'Modern Information Retrieval' by Baeza-Yates and Ribeiro-Neto, 'Introduction to Information Retrieval' by Manning, Raghavan and Schütz, and 'Recommender Systems An Introduction' by Jannach, Zanker, Felferning, and Friedrich."
+    },
+    {
+        "question": "Compare the teaching methods used in the MRI and SIIA courses.",
+        "expected_answer": "Both courses utilize lectures with slides and guided exercises. However, their practical components are described differently: the MRI course has guided exercises for creating simple search and filtering systems, while the SIIA course explicitly includes laboratory sessions focused on using tools for semantic processing."
+    },
+    {
+        "question": "What does the 'prova intermedia' for the MRI course entail?",
+        "expected_answer": "The 'prova intermedia' for the MRI course is an optional, 90-minute written test for currently enrolled students that covers a specific part of the program. Passing it provides an exemption for that part of the final exam, provided the exam is taken in the first session. The final grade is then calculated as the average of the two tests."
+    },
+    {
+        "question": "What are some of the key topics listed in the 'Information Retrieval (IR)' section of the MRI course program?",
+        "expected_answer": "Key topics include the Boolean Model, Vector Space Model, Relevance Feedback and the Rocchio algorithm, and Link Analysis with Page Rank."
+    },
+    {
+        "question": "What Machine Learning methods for Text Categorization are listed in the MRI syllabus?",
+        "expected_answer": "The Machine Learning methods for Text Categorization listed in the syllabus are the Rocchio method, k-Nearest Neighbor (k-NN), and Naive Bayes."
+    },
+    {
+        "question": "According to the text, what is the trade-off between precision and recall, and how can a classifier be tuned to favor one over the other?",
+        "expected_answer": "According to the text, precision and recall do not make sense in isolation from each other, as higher levels of recall can be obtained at the price of low precision. A classifier can be tuned to be more 'liberal' to improve recall at the detriment of precision, or more 'conservative' to improve precision at the detriment of recall."
+    },
+    {
+        "question": "What was a key limitation of early approaches using LOD-based features in recommender systems, and how was this problem later addressed?",
+        "expected_answer": "A key limitation of early approaches using LOD-based features was that the features were selected manually, often using simple heuristics such as their popularity. This problem was later addressed by research focused on automatically selecting the best subset of LOD features, for example by empirically comparing different feature selection techniques."
+    },
+    {
+        "question": "What were the limitations of the Co-occurrence technique for implicit aspect identification in the study by Feng et al.?",
+        "expected_answer": "The study by Feng et al. on the Co-occurrence technique had two main limitations. First, it could not cover diverse domains as it was limited to only mobile phone reviews. Second, some aspect terms and their sentiments were not effectively detected due to the limited features that were selected."
+    },
+    {
+        "question": "What is the two-step strategy described in the paper for adapting a language model to a new language?",
+        "expected_answer": "The strategy for adapting a language model to a new language involves two steps. First, the model's vocabulary is modified using techniques such as a language mapping-based technique or an Entropy-based approach. Second, the model is then further trained to adapt to this new, modified vocabulary."
+    },
+    {
+        "question": "What is the general effect of iterative correction, and how many rounds are typically needed to see the most benefit?",
+        "expected_answer": "Iterative correction generally leads to continuous improvement, although the marginal benefits diminish with multiple corrections. Typically, 2-3 rounds of corrections are sufficient to yield the most significant improvements."
+    },
+    {
+        "question": "What are the key limitations of the Normalized Recall (NR) measure in Information Retrieval evaluation?",
+        "expected_answer": "The Normalized Recall (NR) measure has two key limitations. First, it does not take the degree of a document's relevance into account. Second, it is highly sensitive to the last relevant document being found late in the ranked list of results."
+    },
+    {
+        "question": "According to the paper, how can an explanation interface give a user feedback on the quality of their profile?",
+        "expected_answer": "An explanation interface can give a user feedback on their profile's quality, especially when they have not provided enough information for high-quality recommendations. For example, the paper describes an interface designed to identify which of the user's movie ratings had the most significant effect on a particular prediction."
+    },
+    {
+        "question": "According to the paper, how have food recommender systems evolved from their early examples to modern applications?",
+        "expected_answer": "According to the paper, early food recommender systems, such as CHEF from 1986, presented recipes to users. Modern applications have evolved to use Machine Learning (ML) techniques to automatically generate recipes that match user preferences."
+    },
+    {
+        "question": "What are the main advantages of the AMIE 3 rule mining system compared to systems like OP and RuDiK?",
+        "expected_answer": "Compared to systems like OP and RuDiK, AMIE 3 outperformed them in both runtime and the number of rules it discovered. A key advantage of AMIE 3 is that its method is exact and complete."
+    },
+    {
+        "question": "According to the text, what is the main limitation of using word embedding methods to analyze gender bias across different languages?",
+        "expected_answer": "The main limitation is that word embeddings for different languages are trained on language-specific word distributions. Consequently, they cannot be used to make unified comparisons of gender bias across these languages."
+    },
+    {
+        "question": "What were the performance results of the RID, TID, and IID indexing methods when compared to the baselines?",
+        "expected_answer": "When compared to the baselines, the RID and TID indexing methods underperformed. The IID method offered minor gains, but this came at the cost of introducing more learnable tokens because each item is treated as an independent new token. As a result, these indexing methods are considered suboptimal."
+    },
+    {
+        "question": "What is the Text REtrieval Conference (TREC), and what evaluation paradigm does it use?",
+        "expected_answer": "The Text REtrieval Conference (TREC) is a large Information Retrieval test bed that has been run by the National Institute of Standards and Technology (NIST) since 1992. For its evaluations, TREC utilizes the Cranfield paradigm."
+    },
+    {
+        "question": "What are the two main benefits of breaking down the reasoning process into a chain of rounds for question answering, as described in the paper?",
+        "expected_answer": "Breaking down the reasoning process into a chain of rounds forms an explicit reasoning path which provides two main benefits: it augments the Large Language Model with domain-specific external knowledge, and it increases the model's explainability."
+    },
+    {
+        "question": "What is the false dichotomy in Natural Language Processing that arose from the success of n-gram models?",
+        "expected_answer": "The success of n-gram models led to the false dichotomy that there are only two approaches to Natural Language Processing: a 'deep approach' that relies on hand-coded grammars and ontologies, and a 'statistical approach' that relies on learning n-gram statistics from large corpora."
+    },
+    {
+        "question": "According to Chapter 1 of 'Introduction to Information Retrieval', what is the time complexity of the intersection algorithm for two postings lists of length x and y?",
+        "expected_answer": "The intersection takes O(x + y) operations. Formally, the complexity of querying is Θ(N), where N is the number of documents in the collection."
+    },
+    {
+        "question": "What is the 'Cluster Hypothesis' as defined in Chapter 16 regarding information retrieval?",
+        "expected_answer": "The Cluster Hypothesis states that documents in the same cluster behave similarly with respect to relevance to information needs."
+    },
+    {
+        "question": "In the context of vector space scoring (Chapter 6), what is the purpose of Inverse Document Frequency (idf)?",
+        "expected_answer": "The idf is used to attenuate the effect of terms that occur too often in the collection to be meaningful for relevance determination, essentially scaling down the weight of terms with high collection frequency."
+    },
+    {
+        "question": "According to Chapter 19, what are the three broad categories into which common web search queries can be grouped?",
+        "expected_answer": "The three broad categories are informational queries, navigational queries, and transactional queries."
+    },
+    {
+        "question": "What is 'Heaps' law' as described in Chapter 5, and what does it estimate?",
+        "expected_answer": "Heaps' law estimates vocabulary size as a function of collection size. It is expressed as M = kT^b, where M is the vocabulary size and T is the number of tokens in the collection."
+    },
+    {
+        "question": "In the context of Support Vector Machines (Chapter 15), what are 'support vectors'?",
+        "expected_answer": "Support vectors are the subset of data points that define the position of the decision separator. They are the points right up against the margin of the classifier."
+    },
+    {
+        "question": "What is the difference between 'hard clustering' and 'soft clustering' as explained in Chapter 16?",
+        "expected_answer": "In hard clustering, each document is a member of exactly one cluster. In soft clustering, a document's assignment is a distribution over all clusters, meaning it has fractional membership in several clusters."
+    },
+    {
+        "question": "According to Chapter 9, what is the Rocchio algorithm used for?",
+        "expected_answer": "The Rocchio algorithm is the classic algorithm for implementing relevance feedback. It models a way of incorporating relevance feedback information into the vector space model to refine a query."
+    },
+    {
+        "question": "What is the 'channing effect' in hierarchical clustering, and which algorithm does it affect?",
+        "expected_answer": "The chaining effect is the production of long, straggly clusters where points are linked via a chain of intermediate points. It is a characteristic disadvantage of single-link clustering."
+    },
+    {
+        "question": "In the context of probabilistic information retrieval (Chapter 11), what is the 'Probability Ranking Principle'?",
+        "expected_answer": "The Probability Ranking Principle states that if a system ranks documents in order of decreasing probability of relevance to the user, the overall effectiveness of the system to its user will be the best obtainable based on the available data."
+    },
+    {
+        "question": "What is the purpose of a 'skip list' in an inverted index as described in Chapter 2?",
+        "expected_answer": "A skip list augments postings lists with skip pointers to allow for faster postings list intersection by skipping over parts of the list that will not figure in the search results."
+    },
+    {
+        "question": "According to Chapter 13, why is the Naive Bayes classification method considered 'naive'?",
+        "expected_answer": "It is called naive because it makes the conditional independence assumption, assuming that attribute values (terms) are independent of each other given the class, which is rarely true in real text data."
+    },
+    {
+        "question": "What is 'PageRank' as described in Chapter 21?",
+        "expected_answer": "PageRank is a link analysis technique that assigns a numerical score between 0 and 1 to every node in the web graph, representing its importance based on the link structure and a model of a random surfer."
+    },
+    {
+        "question": "In index compression (Chapter 5), what is 'Variable Byte (VB) encoding'?",
+        "expected_answer": "Variable byte encoding uses an integral number of bytes to encode a gap. The last 7 bits of a byte are the payload, and the first bit is a continuation bit set to 1 for the last byte of the encoded gap and 0 otherwise."
+    },
+    {
+        "question": "What is the 'bias-variance tradeoff' in text classification discussed in Chapter 14?",
+        "expected_answer": "The bias-variance tradeoff captures the insight that learning error has two components: bias (consistent error due to model assumptions, e.g., linearity) and variance (error due to sensitivity to specific training sets). Generally, one cannot minimize both simultaneously; complex models have low bias but high variance, while simple models have high bias but low variance."
+    },
+    {
+        "question": "According to the book 'Semantics in Adaptive and Personalized Systems', what is the main difference between 'Endogenous' and 'Exogenous' semantic representation approaches?",
+        "expected_answer": "Endogenous approaches infer semantics by analyzing the distribution of words in large corpora of textual data (e.g., Word2Vec, LSA) without external knowledge. Exogenous approaches rely on external structured knowledge sources (e.g., WordNet, DBpedia) to explicitly map features to concepts."
+    },
+    {
+        "question": "In the context of Distributional Semantics Models described in Chapter 3, what is the 'Distributional Hypothesis'?",
+        "expected_answer": "The Distributional Hypothesis states that words that occur in the same contexts tend to have similar meanings. Algorithms exploit this to infer meaning based on usage patterns in large corpora."
+    },
+    {
+        "question": "What is the 'enhanced Vector Space Model' (eVSM) described in Chapter 5, and how does it handle negative user preferences?",
+        "expected_answer": "eVSM is a content-based recommendation framework that represents items and user profiles in a semantic vector space using Random Indexing. It handles negative user preferences (disliked items) using a quantum negation-inspired approach, modeling the user profile as the projection of the positive preferences vector onto the subspace orthogonal to the negative preferences vector."
+    },
+    {
+        "question": "According to Chapter 4, what are the main differences between DBpedia and Wikidata?",
+        "expected_answer": "DBpedia is static (updated periodically) and automatically extracts information from Wikipedia infoboxes. Wikidata is collaboratively edited, continuously updated, and identifies items with unique 'QID' numbers rather than URIs, serving as a document-oriented semantic database."
+    },
+    {
+        "question": "What was the goal of the 'Italian Hate Map' project described in Chapter 5?",
+        "expected_answer": "The goal was to analyze social media content (Tweets) to measure and localize the spread of hate speech in Italy across five intolerance dimensions (homophobia, racism, violence against women, anti-semitism, disability) using a semantics-aware pipeline (CrowdPulse) for extraction, sentiment analysis, and geolocation."
+    },
+    {
+        "question": "In Chapter 3, how does 'Random Indexing' (RI) reduce the dimensionality of the vector space?",
+        "expected_answer": "Random Indexing assigns a sparse, high-dimensional, ternary random vector (index vector) to each context. The vector for a term is then obtained by summing the index vectors of all the contexts in which the term appears, avoiding the need to build a full co-occurrence matrix."
+    },
+    {
+        "question": "What is 'Explicit Semantic Analysis' (ESA) as described in Chapter 3, and what is its main output representation?",
+        "expected_answer": "ESA represents text as a vector of weights corresponding to Wikipedia concepts. It uses the entire Wikipedia corpus, where each article represents a concept. The output is a semantic interpretation vector where entries quantify the affinity of the input text with specific Wikipedia concepts."
+    },
+    {
+        "question": "According to the section on 'Conversational Recommender Systems' (CoRS), what are the four main components required for a natural-language based interaction?",
+        "expected_answer": "The four main components are: (i) an Intent Recognizer (to understand what the user wants to do), (ii) an Entity Recognizer (to link text to concepts/items), (iii) a Sentiment Analyzer (to understand user opinion), and (iv) a Recommendation Algorithm."
+    },
+    {
+        "question": "What is the 'Serendipity problem' or 'Overspecialization' in recommender systems mentioned in Chapter 5?",
+        "expected_answer": "It is the tendency of recommender systems (especially content-based ones) to suggest items very similar to what the user already knows or likes, creating a self-referential loop and failing to provide unexpected or novel suggestions."
+    },
+    {
+        "question": "In the Appendix A regarding 'Available Tools and Resources', what is 'TAGME' used for?",
+        "expected_answer": "TAGME is a tool used for on-the-fly text annotation (Entity Linking) that identifies meaningful short phrases in unstructured text and links them to pertinent Wikipedia pages. It is particularly effective for short and poorly composed texts like tweets or search snippets."
+    },
+    {
+        "question": "According to the MRI syllabus, what specific practical skills will students acquire regarding Search Engines?",
+        "expected_answer": "Students will acquire skills to design and implement a search engine, specifically focusing on the indexing and retrieval phases."
+    },
+    {
+        "question": "In the SIIA syllabus, what is the primary learning objective regarding 'semantic technologies'?",
+        "expected_answer": "The objective is to learn methodologies for representing content semantics using structured knowledge sources (Lexicons, Thesauri, Ontologies) and to integrate semantics into intelligent systems for information access."
+    },
+    {
+        "question": "Based on the book 'Introduction to Information Retrieval', what is the 'bag of words' model?",
+        "expected_answer": "The 'bag of words' model is a representation where the exact ordering of terms in a document is ignored, and only the number of occurrences of each term is material."
+    },
+    {
+        "question": "According to the paper 'A content-collaborative recommender that exploits WordNet-based user profiles', what is the main problem with traditional collaborative filtering that the authors aim to solve?",
+        "expected_answer": "The main problem is the sparsity problem, specifically that similarity values between users are only computable if they have rated common items. The authors propose using content-based profiles to compute similarity even without co-rated items."
+    },
+    {
+        "question": "In the survey on Knowledge Graph-Based Recommender Systems, what are the three categories of current KG-based recommendation approaches mentioned?",
+        "expected_answer": "The three categories are: ontology-based recommendation, linked open data-based recommendation, and knowledge graph embeddings-based recommendation."
+    },
+    {
+        "question": "What is the 'cold-start problem' mentioned in the context of Collaborative Filtering in the survey paper?",
+        "expected_answer": "The cold-start problem occurs when there is a new user or a new item, making it difficult to provide recommendations due to a lack of historical interactions or ratings."
+    },
+    {
+        "question": "In the LLM Enhanced Conversational Recommender System paper, what are the four stages of the proposed LLMCRS workflow?",
+        "expected_answer": "The four stages are: sub-task detection, model matching, sub-task execution, and response generation."
+    },
+    {
+        "question": "According to the paper on Spatiotemporal Convolutions for Action Recognition, what is the 'R(2+1)D' convolutional block?",
+        "expected_answer": "The 'R(2+1)D' block explicitly factorizes a 3D convolution into two separate and successive operations: a 2D spatial convolution followed by a 1D temporal convolution."
+    },
+    {
+        "question": "In the 'Semantics in Adaptive and Personalized Systems' book, what is 'distributional semantics' based on?",
+        "expected_answer": "Distributional semantics is based on the 'Distributional Hypothesis,' which states that words occurring in similar contexts tend to have similar meanings."
+    },
+    {
+        "question": "What tool mentioned in the SIIA course materials is used for 'Entity Linking' to Wikipedia pages?",
+        "expected_answer": "TAGME is the tool mentioned for on-the-fly text annotation (Entity Linking) that identifies phrases in unstructured text and links them to Wikipedia pages."
+    },
+    {
+        "question": "According to the MRI syllabus, how is the final grade calculated if a student takes the 'prova intermedia'?",
+        "expected_answer": "The final grade is calculated as the average of the grade obtained in the 'prova intermedia' and the grade obtained in the final exam (which covers the remainder of the program)."
+    },
+    {
+        "question": "What is the specific focus of the 'Item Recommender' system described in the paper regarding WordNet-based profiles?",
+        "expected_answer": "The 'Item Recommender' (ITR) is a content-based system that uses a Naive Bayes classifier to classify documents (like movie descriptions) as interesting or uninteresting for a user based on specific categories (genres)."
+    },
+    {
+        "question": "In the context of the LLMCRS paper, what is the purpose of 'Reinforcement Learning from CRSs Performance Feedback' (RLPF)?",
+        "expected_answer": "RLPF is used to fine-tune the Large Language Model to adapt to conversational recommendation tasks by using recommendation performance and conversation feedback as reward signals."
+    },
+    {
+        "question": "According to the 'Introduction to Information Retrieval' book, what is the primary difference between 'stemming' and 'lemmatization'?",
+        "expected_answer": "Stemming is a crude heuristic process that chops off the ends of words to achieve a common base, while lemmatization uses a vocabulary and morphological analysis to return the base or dictionary form of a word (the lemma)."
+    },
+    {
+        "question": "In the paper about Spatiotemporal Convolutions, why is the R(2+1)D architecture considered easier to optimize than full 3D CNNs?",
+        "expected_answer": "The decomposition into spatial and temporal components simplifies the learning process, yielding lower training loss compared to full 3D convolutions of the same capacity."
     }
 ]
