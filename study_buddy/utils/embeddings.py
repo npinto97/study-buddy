@@ -2,9 +2,14 @@ from langchain_huggingface import HuggingFaceEmbeddings
 from study_buddy.config import CONFIG, logger
 import torch
 
-def initialize_gpu_embeddings():
-    """Initializes embeddings with GPU support optimized for RTX 5080."""
-    
+_embeddings_instance = None
+
+def get_embeddings():
+    """Initializes embeddings with GPU support optimized for RTX 5080 (Lazy Loading)."""
+    global _embeddings_instance
+    if _embeddings_instance is not None:
+        return _embeddings_instance
+
     logger.info(f"Initializing Embeddings with model: {CONFIG.embeddings.model}")
     
     if torch.cuda.is_available():
@@ -28,7 +33,7 @@ def initialize_gpu_embeddings():
         'convert_to_numpy': True
     }
     
-    embeddings = HuggingFaceEmbeddings(
+    _embeddings_instance = HuggingFaceEmbeddings(
         model_name=CONFIG.embeddings.model,
         model_kwargs=model_kwargs,
         encode_kwargs=encode_kwargs,
@@ -36,6 +41,4 @@ def initialize_gpu_embeddings():
     )
     
     logger.info(f"Embeddings with model {CONFIG.embeddings.model} successfully initialized on {device.upper()}.")
-    return embeddings
-
-embeddings = initialize_gpu_embeddings()
+    return _embeddings_instance

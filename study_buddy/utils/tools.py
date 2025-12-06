@@ -98,7 +98,10 @@ except Exception:
                 "Install the 'langchain-tavily' package or set up an alternative web search provider."
             )
 # from langchain_community.tools.arxiv.tool import ArxivQueryRun
-from langchain.text_splitter import CharacterTextSplitter
+try:
+    from langchain.text_splitter import CharacterTextSplitter
+except ImportError:
+    from langchain_text_splitters import CharacterTextSplitter
 
 from e2b_code_interpreter import Sandbox
 from elevenlabs.client import ElevenLabs
@@ -1182,7 +1185,11 @@ class SpotifySearcher(BaseWrapper):
 
     def __init__(self):
         super().__init__()
-        self.access_token = self._get_access_token()
+        self.access_token = None
+        
+    def _ensure_token(self):
+        if self.access_token is None:
+            self.access_token = self._get_access_token()
 
     def _get_access_token(self) -> str:
         """Get Spotify access token."""
@@ -1198,6 +1205,7 @@ class SpotifySearcher(BaseWrapper):
     def search(self, query: str, search_type: str = "track", limit: int = 5) -> str:
         """Search for music on Spotify."""
         try:
+            self._ensure_token()
             url = "https://api.spotify.com/v1/search"
             params = {"q": query, "type": search_type, "limit": limit}
             headers = {"Authorization": f"Bearer {self.access_token}"}
@@ -1225,18 +1233,21 @@ class CodeInterpreter:
     """Code interpreter with E2B sandbox management."""
 
     def __init__(self):
-        self._initialize_sandbox()
+        self.sandbox = None
+    
+    def _ensure_sandbox(self):
+        """Lazy initialization of E2B sandbox."""
+        if self.sandbox is None:
+            try:
+                self.sandbox = Sandbox.create()
+            except Exception as e:
+                raise RuntimeError(f"Failed to initialize E2B sandbox: {e}")
 
-    def _initialize_sandbox(self):
-        """Initialize E2B sandbox with error handling."""
-        try:
-            self.sandbox = Sandbox.create()
-        except Exception as e:
-            raise RuntimeError(f"Failed to initialize E2B sandbox: {e}")
 
     def run_code(self, code: str) -> dict:
         """Execute code in sandbox with basic error handling."""
         try:
+            self._ensure_sandbox()
             execution = self.sandbox.run_code(code)
             return {
                 "results": getattr(execution, "results", []),
@@ -1298,12 +1309,17 @@ class DataVisualizer:
     def __init__(self, output_dir: str = "./visualizations"):
         self.output_dir = os.path.abspath(output_dir)
         os.makedirs(self.output_dir, exist_ok=True)
-        self.sandbox = Sandbox.create()
+        self.sandbox = None
         self.llm = TogetherClient(api_key=Config.TOGETHER_API_KEY)
+        
+    def _ensure_sandbox(self):
+        if self.sandbox is None:
+            self.sandbox = Sandbox.create()
 
     def create_visualization(self, csv_path: str, query: str) -> dict:
         """Generate visualizations from natural language query."""
         try:
+            self._ensure_sandbox()
             resolved_path = os.path.abspath(csv_path)
             with open(resolved_path, "rb") as f:
                 sandbox_path = self.sandbox.files.write("dataset.csv", f).path
@@ -1582,9 +1598,25 @@ def create_basic_tools() -> List[Tool]:
 
     web_search = TavilySearch(**tavily_kwargs)
     
-    youtube_search = YouTubeSearchTool()
-    wikipedia = WikipediaQueryRun(api_wrapper=WikipediaAPIWrapper())
-    google_scholar = GoogleScholarQueryRun(api_wrapper=GoogleScholarWrapper())
+    def run_web_search(query: str) -> str:
+        """Wrapper for web search to avoid type hint issues in the library."""
+        return web_search.run(query)
+    
+    youtube_tool = YouTubeSearchTool()
+    def run_youtube_search(query: str) -> str:
+        """Wrapper for YouTube search."""
+        return youtube_tool.run(query)
+
+    wikipedia_tool = WikipediaQueryRun(api_wrapper=WikipediaAPIWrapper())
+    def run_wikipedia(query: str) -> str:
+        """Wrapper for Wikipedia search."""
+        return wikipedia_tool.run(query)
+
+    scholar_tool = GoogleScholarQueryRun(api_wrapper=GoogleScholarWrapper())
+    def run_scholar(query: str) -> str:
+        """Wrapper for Google Scholar search."""
+        return scholar_tool.run(query)
+
     retriever = VectorStoreRetriever()
     wikidata_searcher = WikidataSearcher()
     
@@ -1800,22 +1832,22 @@ def create_basic_tools() -> List[Tool]:
         Tool(
             name="web_search",
             description="Search the web for current information, news, and real-time updates.",
-            func=web_search.run
+            func=run_web_search
         ),
         Tool(
             name="youtube_search",
             description="Search for educational videos on YouTube",
-            func=youtube_search.run
+            func=run_youtube_search
         ),
         Tool(
             name="wikipedia_search",
             description="Search Wikipedia for encyclopedic information",
-            func=wikipedia.run
+            func=run_wikipedia
         ),
         Tool(
             name="google_scholar_search",
             description="Search academic literature on Google Scholar",
-            func=google_scholar.run
+            func=run_scholar
         ),
         Tool(
             name="wikidata_search",
@@ -1823,7 +1855,6 @@ def create_basic_tools() -> List[Tool]:
             func=wikidata_searcher.search
         )
     ]
-    
     if google_lens:
         tools.append(google_lens)
     

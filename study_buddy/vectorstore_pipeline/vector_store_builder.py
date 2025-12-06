@@ -11,7 +11,7 @@ from faiss import IndexFlatL2
 from langchain_community.docstore.in_memory import InMemoryDocstore
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
-from study_buddy.utils.embeddings import embeddings
+from study_buddy.utils.embeddings import get_embeddings
 from study_buddy.vectorstore_pipeline.document_loader import scan_directory_for_new_documents
 from study_buddy.config import logger, PROCESSED_DOCS_FILE, FAISS_INDEX_DIR, PARSED_COURSES_DATA_FILE, TEMP_DOCS_FILE
 
@@ -105,7 +105,7 @@ def initialize_faiss_store() -> Optional[FAISS]:
         try:
             vector_store = FAISS.load_local(
                 str(faiss_file_path), 
-                embeddings, 
+                get_embeddings(), 
                 allow_dangerous_deserialization=True
             )
             logger.info("FAISS vector store loaded successfully.")
@@ -153,9 +153,9 @@ def initialize_faiss_store() -> Optional[FAISS]:
 
         save_temp_docs(new_docs, new_hashes)
 
-        embedding_dim = get_embedding_dimensions(embeddings)
+        embedding_dim = get_embedding_dimensions(get_embeddings())
         vector_store = FAISS(
-            embedding_function=embeddings,
+            embedding_function=get_embeddings(),
             index=IndexFlatL2(embedding_dim),
             docstore=InMemoryDocstore(),
             index_to_docstore_id={}
@@ -304,7 +304,7 @@ def get_vector_store(faiss_file_path) -> Optional[FAISS]:
     """Retrieve the FAISS vector store."""
     vector_store = FAISS.load_local(
         str(faiss_file_path), 
-        embeddings, 
+        get_embeddings(), 
         allow_dangerous_deserialization=True
     )
     logger.info("FAISS vector store loaded successfully.")

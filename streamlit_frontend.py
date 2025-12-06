@@ -20,6 +20,7 @@ from streamlit_extras.bottom_container import bottom
 from study_buddy.agent import compiled_graph
 from study_buddy.utils.tools import AudioProcessor
 import yaml
+from loguru import logger
 
 # Fix per classi torch su Windows/alcuni ambienti
 torch.classes.__path__ = [os.path.join(torch.__path__[0], torch.classes.__file__)]
@@ -48,27 +49,8 @@ def update_llm_provider(provider: str):
 # Setup session log file
 log_dir = Path("logs")
 log_dir.mkdir(exist_ok=True)
-session_log = log_dir / f"streamlit_session_{datetime.now().strftime('%Y-%m-%d_%H-%M-%S')}.log"
 
-class SessionLogger:
-    """Logs only non-loguru messages to avoid duplication"""
-    def __init__(self, file_path, original_stream):
-        self.file = open(file_path, 'a', encoding='utf-8')
-        self.original = original_stream
-    
-    def write(self, data):
-        if data and data.strip():
-            if not ('[0m' in data or '[32m' in data or '[34m' in data or '[1m' in data):
-                timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-                self.file.write(f"[{timestamp}] {data}")
-                self.file.flush()
-        self.original.write(data)
-    
-    def flush(self):
-        self.file.flush()
-        self.original.flush()
-
-sys.stdout = SessionLogger(session_log, sys.stdout)
+# Conversation log setup
 conversation_log = log_dir / f"conversation_{datetime.now().strftime('%Y-%m-%d')}.log"
 
 def log_conversation(question: str, answer: str, sources: list = None, retrieved_docs: list = None):
@@ -89,6 +71,18 @@ def log_conversation(question: str, answer: str, sources: list = None, retrieved
                 f.write(f"  {i}. {doc_preview}...\n")
         
         f.write(f"\n💬 RISPOSTA:\n{answer}\n{'='*80}\n\n")
+
+    # Console Logging (Loguru) - Replicating file log for terminal visibility
+    console_msg = f"\n❓ QUESTION:\n{question}\n"
+    
+    if sources:
+        console_msg += "\n📚 SOURCES:\n" + "\n".join([f"  {i}. {s}" for i, s in enumerate(sources, 1)]) + "\n"
+    
+    if retrieved_docs:
+        console_msg += "\n📄 RETRIEVED DOCS:\n" + "\n".join([f"  {i}. {d.replace(chr(10), ' ').strip()[:150]}..." for i, d in enumerate(retrieved_docs, 1)]) + "\n"
+        
+    console_msg += f"\n💬 ANSWER:\n{answer}\n"
+    logger.info(console_msg)
 
 st.set_page_config(page_title="AI Assistant", page_icon="🤖", layout="wide", initial_sidebar_state="expanded")
 
@@ -455,6 +449,7 @@ def enhance_user_input(config_chat, user_input, file_path):
         instr.append(f"User uploaded file: uploaded_files{rel_path}")
     
     instr.append("Use LaTeX for math.")
+    instr.append("IMPORTANT: For analyzing images (png, jpg, jpeg), use 'google_lens_analyze' to describe the visual content.")
     instr.append("IMPORTANT: For summaries use 'summarize_document'. For reading text use 'extract_text'.")
     
     return "\n".join(f"• {i}" for i in instr) + f"\n\nQuery: {user_input}"

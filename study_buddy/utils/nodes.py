@@ -392,6 +392,8 @@ def execute_tool(tool_input: Dict):
 
     with LogContext(f"tool_execution_{tool_name}", logger):
         logger.info(f"🔧 Executing {tool_name}")
+        if arguments:
+            logger.info(f"   Args: {str(arguments)[:500]}") # Log arguments, truncated for sanity
         metrics.increment('tool_calls')
         
         tools = get_all_tools()
@@ -431,5 +433,6 @@ def process_state(state):
     logger.info("🔄 Processing agent state")
     return state
 
+# Initialize tool node
 # Initialize tool node
 tool_node = ToolNode(get_all_tools())

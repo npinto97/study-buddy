@@ -24,17 +24,7 @@ logger.add(
 logs_dir = Path(__file__).parent.parent.parent / "logs"
 logs_dir.mkdir(exist_ok=True)
 
-logger.add(
-    str(logs_dir / "univox_{time:YYYY-MM-DD}.log"),
-    level="DEBUG",
-    format="{time:YYYY-MM-DD HH:mm:ss.SSS} | {level: <8} | {process} | {thread} | {name}:{function}:{line} | {extra[context]}: {message}",
-    rotation="00:00",  # New file at midnight
-    retention="30 days",
-    compression="zip",
-    enqueue=True,  # Thread-safe logging
-    backtrace=True,  # Include full stack trace
-    diagnose=True    # Include variable values in tracebacks
-)
+
 
 class LogContext:
     """Context manager for tracking operation timing and logging."""
