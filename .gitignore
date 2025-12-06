@@ -200,3 +200,4 @@ visualizations/
 conversations/
 
 tests/performance/logs/
+faiss_index/
