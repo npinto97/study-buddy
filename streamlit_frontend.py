@@ -37,24 +37,25 @@ STUDY_LOG_DIR.mkdir(parents=True, exist_ok=True)
 STUDY_RES_DIR.mkdir(parents=True, exist_ok=True)
 
 # --- SCENARI DI STUDIO ---
+# --- SCENARI DI STUDIO (DOMANDE VERIFICATE DA EVALUATION) ---
 SCENARIOS = {
     "1": {
         "title": "The Exam Prep",
-        "role": "Sei uno studente di Informatica che deve preparare l'esame di 'Semantics' in 3 giorni.",
-        "context": "Hai perso le lezioni sui Knowledge Graphs e ti senti impreparato. Hai il materiale ma ti serve un riassunto rapido e affidabile.",
-        "goal": "Usa Study Buddy per:\n1. Capire la definizione di Knowledge Graph.\n2. Scoprire chi ha introdotto il termine e quando.\n3. Ottenere una lista di tecnologie chiave (es. RDF, SPARQL)."
+        "role": "Sei uno studente che ripassa le slide introduttive.",
+        "context": "Devi capire le motivazioni alla base dei Recommender Systems.",
+        "goal": "Usa Study Buddy per:\n1. Chiedere (in Italiano o Inglese): 'Secondo le slide introduttive del corso MRI, quale problema risolvono i sistemi di Information Filtering e Recommender Systems?' (Originale: 'According to the introductory slides of the MRI course, what problem do Information Filtering and Recommender Systems solve?')\n2. Verificare se la risposta corrisponde a: 'Information Overload'"
     },
     "2": {
-        "title": "The Project Blocker",
-        "role": "Sei uno sviluppatore che lavora al progetto del corso.",
-        "context": "Stai cercando di implementare un motore di ricerca semantico in Python. Hai i dati ma non sai come interrogarli con SPARQL.",
-        "goal": "Usa Study Buddy per:\n1. Chiedere un esempio Python con `rdflib`.\n2. Verificare se il codice proposto è corretto.\n3. Farti spiegare il codice riga per riga."
+        "title": "The Practical Student",
+        "role": "Devi contattare il Prof. Lops.",
+        "context": "Non sai quando è disponibile per il ricevimento.",
+        "goal": "Usa Study Buddy per:\n1. Chiedere (in Italiano o Inglese): 'Quali sono gli orari di ricevimento del Professor Pasquale Lops elencati nel programma MRI?' (Originale: 'What are the office hours for Professor Pasquale Lops as listed in the MRI syllabus?')\n2. Verificare se la risposta corrisponde a: 'Martedì 10:00-12:00'"
     },
     "3": {
-        "title": "The Skeptic",
-        "role": "Sei uno studente diligente che controlla tutto.",
-        "context": "Hai letto un concetto ma non ti fidi. Vuoi vedere la fonte originale per evitare allucinazioni.",
-        "goal": "Usa Study Buddy per:\n1. Fare una domanda complessa sulla 'Semantics'.\n2. Controllare le fonti fornite.\n3. Cercare la frase esatta nel documento originale per verificare la veridicità."
+        "title": "The Curriculum Analyst",
+        "role": "Stai decidendo quale corso frequentare.",
+        "context": "Vuoi confrontare lo stile di insegnamento di due corsi.",
+        "goal": "Usa Study Buddy per:\n1. Chiedere (in Italiano o Inglese): 'Confronta i metodi di insegnamento usati nei corsi MRI e SIIA.' (Originale: 'Compare the teaching methods used in the MRI and SIIA courses.')\n2. Verificare se la risposta spiega che: 'MRI ha esercitazioni guidate vs SIIA ha sessioni di laboratorio.'"
     }
 }
 
@@ -503,33 +504,46 @@ def process_tool_messages_for_images(tool_messages):
     return list(dict.fromkeys([os.path.abspath(p.replace("\\\\", "\\").strip("'\"")) for p in all_file_paths]))
 
 async def handle_streaming_events(events_generator):
+    print("DEBUG: Entered handle_streaming_events")
     full_response = ""
     tool_msgs = []
     srcs, docs = [], []
     placeholder = st.empty()
     
-    async for event in events_generator:
-        for node, output in event.items():
-            if node == "tools" and "messages" in output:
-                for msg in output["messages"]:
-                    if hasattr(msg, 'name'):
-                        tool_msgs.append(msg)
-                        info = f"Tool: {msg.name}"
-                        if msg.name == "retrieve_knowledge":
-                            docs.append(str(msg.content)[:500])
-                            info += f" ({len(docs)} docs)"
-                        if info not in srcs: srcs.append(info)
-            
-            elif node == "agent" and "messages" in output:
-                for msg in output["messages"]:
-                    if hasattr(msg, 'content') and msg.content:
-                        text = msg.content
-                        if isinstance(text, list): text = "".join([x.get('text','') for x in text if x.get('type')=='text'])
-                        for char in str(text):
-                            full_response += char
-                            placeholder.markdown(full_response + "▌")
-                            await asyncio.sleep(0.005)
+    try:
+        async for event in events_generator:
+            print(f"DEBUG: Streaming event received: {type(event)} - Keys: {event.keys() if isinstance(event, dict) else 'N/A'}")
+            for node, output in event.items():
+                print(f"DEBUG: Processing node: {node}")
+                if node == "tools" and "messages" in output:
+                    for msg in output["messages"]:
+                        if hasattr(msg, 'name'):
+                            tool_msgs.append(msg)
+                            info = f"Tool: {msg.name}"
+                            if msg.name == "retrieve_knowledge":
+                                docs.append(str(msg.content)[:500])
+                                info += f" ({len(docs)} docs)"
+                            if info not in srcs: srcs.append(info)
+                
+                elif node == "agent" and "messages" in output:
+                    for msg in output["messages"]:
+                        if hasattr(msg, 'content') and msg.content:
+                            text = msg.content
+                            if isinstance(text, list): text = "".join([x.get('text','') for x in text if x.get('type')=='text'])
+                            for char in str(text):
+                                full_response += char
+                                placeholder.markdown(full_response + "▌")
+                                await asyncio.sleep(0.005)
+    except Exception as e:
+        print(f"DEBUG: Error in streaming loop: {e}")
+        st.error(f"Errore nello streaming: {e}")
     
+    print(f"DEBUG: Streaming finished. Full response length: {len(full_response)}")
+    print(f"DEBUG: RESPONSE CONTENT: {repr(full_response)}")
+    if not full_response:
+        print("DEBUG: WARNING - No response text generated!")
+        st.warning("Nessuna risposta generata dal modello.")
+
     placeholder.markdown(full_response)
     valid_files = process_tool_messages_for_images(tool_msgs)
     if valid_files:
@@ -540,12 +554,15 @@ async def handle_streaming_events(events_generator):
     return full_response, valid_files, srcs, docs
 
 def handle_non_streaming_events(events):
+    print("DEBUG: Entered handle_non_streaming_events")
     full_response = ""
     tool_msgs = []
     srcs, docs = [], []
     
     for event in events:
+        print(f"DEBUG: Processing event: {type(event)}")
         for node, output in event.items():
+            print(f"DEBUG: Node: {node}")
             if node == "tools" and "messages" in output:
                 for msg in output["messages"]:
                     if hasattr(msg, 'name'):
@@ -561,8 +578,13 @@ def handle_non_streaming_events(events):
                         text = msg.content
                         if isinstance(text, list): text = "".join([x.get('text','') for x in text if x.get('type')=='text'])
                         full_response += str(text)
+                        print(f"DEBUG: Accumulated response length: {len(full_response)}")
     
-    if full_response: st.markdown(full_response, unsafe_allow_html=True)
+    if full_response: 
+        print(f"DEBUG: Final response: {full_response[:50]}...")
+        st.markdown(full_response, unsafe_allow_html=True)
+    else:
+        print("DEBUG: No full_response generated!")
     
     valid_files = process_tool_messages_for_images(tool_msgs)
     if valid_files:
@@ -741,14 +763,11 @@ def handle_chatbot_response(user_input, thread_id, config_chat, user_files=None)
         config = {"configurable": {"thread_id": thread_id}}
         
         if st.session_state.streaming_enabled:
-            try: loop = asyncio.get_event_loop()
-            except: loop = asyncio.new_event_loop(); asyncio.set_event_loop(loop)
-            
             async def run():
                 gen = compiled_graph.astream({"messages": [{"role": "user", "content": enhanced}]}, config=config)
                 return await handle_streaming_events(gen)
             
-            resp, imgs, srcs, docs = loop.run_until_complete(run())
+            resp, imgs, srcs, docs = asyncio.run(run())
         else:
             events = list(compiled_graph.stream({"messages": [{"role": "user", "content": enhanced}]}, config, stream_mode="values"))
             resp, imgs, srcs, docs = handle_non_streaming_events(events)

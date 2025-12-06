@@ -338,7 +338,7 @@ class VectorStoreRetriever(BaseWrapper):
         if not os.path.exists(FAISS_INDEX_DIR):
             raise ValueError(f"FAISS index directory not found: {FAISS_INDEX_DIR}")
     
-    def retrieve(self, query: str, k: int = 4, min_score: float = 0.3) -> tuple[str, list, list]:
+    def retrieve(self, query: str, k: int = 6, min_score: float = 0.1) -> tuple[str, list, list]:
         """
         Retrieve information with validation, enhanced logging, and quality filtering.
         
