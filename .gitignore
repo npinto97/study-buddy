@@ -201,3 +201,6 @@ conversations/
 
 tests/performance/logs/
 faiss_index/
+
+
+!logs/*.log

@@ -338,7 +338,7 @@ class VectorStoreRetriever(BaseWrapper):
         if not os.path.exists(FAISS_INDEX_DIR):
             raise ValueError(f"FAISS index directory not found: {FAISS_INDEX_DIR}")
     
-    def retrieve(self, query: str, k: int = 4, min_score: float = 0.3) -> tuple[str, list, list]:
+    def retrieve(self, query: str, k: int = 6, min_score: float = 0.1) -> tuple[str, list, list]:
         """
         Retrieve information with validation, enhanced logging, and quality filtering.
         
@@ -1826,7 +1826,7 @@ def create_basic_tools() -> List[Tool]:
     tools = [
         Tool(
             name="retrieve_knowledge",
-            description="Retrieve information from local knowledge base using semantic search",
+            description="PRIMARY TOOL for answering questions. Search the local knowledge base (slides, syllabus, docs) for information about courses, professors, exams, etc. ALWAYS use this first for any question not about a specific file path.",
             func=retriever.retrieve # Assumendo che retrieve restituisca una stringa
         ),
         Tool(
@@ -1876,7 +1876,7 @@ def create_document_tools() -> List[Tool]:
         StructuredTool.from_function(
             func=processor.extract_text,
             name="extract_text",
-            description="Estrai il TESTO GREZZO da un file quando l'utente vuole VEDERE o LEGGERE il contenuto completo. NON usare questo per riassunti - usa summarize_document invece.",
+            description="Extract RAW TEXT from a specific file path ONLY when the user explicitly asks to READ/VIEW a file by name. DO NOT use for general questions -> use retrieve_knowledge instead.",
             args_schema=FilePathInput
         ),
         Tool(

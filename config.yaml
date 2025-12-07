@@ -3,7 +3,7 @@ embeddings:
 llm:
   gemini:
     model: gemini-2.5-flash
-  provider: gemini
+  provider: together
   together:
     model: meta-llama/Llama-3.3-70B-Instruct-Turbo
 vector_store:

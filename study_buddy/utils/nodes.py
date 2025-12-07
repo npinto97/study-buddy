@@ -35,33 +35,28 @@ system_prompt = """
 4. **SPECIFICITY**: When answering about a professor or course, look for the specific details in the retrieved text.
 
 CRITICAL INSTRUCTION FOR TOOL USAGE:
-- For CASUAL CONVERSATION (greetings like "ciao", "hello", "come stai", small talk): respond directly with text, DO NOT use tools
-- For QUESTIONS requiring information (course content, research, analysis): MUST use tools to gather information
-- NEVER respond using only base knowledge for academic/research questions
+- **retrieve_knowledge**: USE THIS FIRST for ANY question about course content.
+  - To invoke a tool, simply generate the appropriate tool call.
+  - Do not output the call as raw text or code blocks.
 
-### CRITICAL INSTRUCTION FOR TOOL USAGE ###
-- ONLY skip tools for VERY SHORT standalone greetings: "ciao", "hello", "hi", "buongiorno" (no questions attached)
-- For EVERYTHING ELSE (any question, explanation, or information request): ALWAYS use tools first
-- ANY question starting with "mi sai dire", "cos'è", "come funziona", "spiegami", "che cosa", "perché" = MUST use retrieve_knowledge
-   EXCEPTION: If the user asks for "news", "current events", "latest information", "current information and news", or explicitly requests a web search, you may skip this step and use 'web_search' directly.
-2. ONLY IF no relevant local information is found, then:
-For questions requiring information:
-- Start with 'retrieve_knowledge' - NO EXCEPTIONS
+- **Handling Uploaded Files**:
+  - When a NEW file is uploaded (indicated in the message like "uploaded_files/filename.ext"), IMMEDIATELY analyze that specific file.
+  - Do NOT confuse it with previously uploaded files.
+  - Use `google_lens_analyze` for images and `analyze_csv` for CSVs, explicitly passing the NEW file path.
 
-For casual greetings ONLY (standalone "ciao", "hello", "hi", "buongiorno" with NO questions):
-- Respond naturally and directly in Italian
-- Be friendly and helpful
-- Do NOT use text_to_speech or any other tool unless explicitly requested
+- **Casual Conversation**: (greetings like "ciao", "hello", "come stai", small talk): respond directly with text.
+- **Exceptions**: If the user asks for "news", "current events", or explicitly requests a web search, use 'web_search'.
 
 For course-related questions:
 - You MUST rely on the syllabus from local knowledge
 - Only use external sources for supplementary information
 
 Response Format:
-1. State which tools you're using and why
-2. Show the information sources
-3. Provide your synthesized answer
-4. Include all relevant references
+1. DIRECTLY answer the question using the retrieved information.
+2. YOU MUST CITE the source document for every relevant piece of information (e.g. "According to `slides.pdf`...", "As stated in `syllabus.pdf`...").
+3. DO NOT just list references at the end. Mention them IN THE TEXT where you use the information.
+4. NO META-COMMENTARY about tools (e.g. DO NOT say "Sto usando tool X").
+5. Include a "Riferimenti:" section at the end with the full list of files used.
 
 Use LaTeX notation for mathematical formulas: inline with $formula$ and display with $$formula$$.
 If no reliable sources are found, clearly state limitations rather than guessing.
@@ -265,6 +260,60 @@ def call_model(state, config):
     logger.info("🔄 Invoking LLM")
     try:
         response = model.invoke(full_messages)
+        
+        # MANUAL PARSER FIX FOR LLAMA 3 RAW OUTPUTS
+        # The model sometimes outputs <|python_tag|>tool_name(args) instead of structured tool_calls
+        content = response.content if hasattr(response, 'content') else ""
+        if isinstance(content, str) and '<|python_tag|>' in content:
+            logger.warning(f"⚠️ Detected raw python tag in response: {content}")
+            
+            # Regex to extract tool name and args
+            # Matches: <|python_tag|>tool_name("arg") or tool_name(arg="val")
+            match = re.search(r'<\|python_tag\|>([\w_]+)\((.*)\)', content, re.DOTALL)
+            if match:
+                tool_name = match.group(1)
+                args_str = match.group(2)
+                
+                # Clean up args string
+                args = {}
+                
+                # Simple heuristic for single string arg (common case)
+                single_arg_match = re.search(r'^["\'](.+)["\']$', args_str.strip())
+                if single_arg_match:
+                    # If it's just a string, try to map it to the first arg of the tool via inspection if needed
+                    # Or just assume "query" or "file_path" based on tool name
+                    val = single_arg_match.group(1)
+                    if 'lens' in tool_name or 'csv' in tool_name or 'extract' in tool_name:
+                        args = {'file_path': val}
+                    elif 'search' in tool_name or 'retrieve' in tool_name:
+                        args = {'query': val}
+                    else:
+                        args = {'input': val} # Generic fallback
+                
+                # Handle key=value case
+                elif '=' in args_str:
+                    try:
+                        # Very simple parsing for arg="value"
+                        # This isn't a full python parser but covers basic cases
+                        pairs = args_str.split(',')
+                        for pair in pairs:
+                            if '=' in pair:
+                                k, v = pair.split('=', 1)
+                                v = v.strip().strip('"').strip("'")
+                                args[k.strip()] = v
+                    except:
+                        pass
+                
+                # Inject constructed tool call
+                logger.info(f"🔧 Manually parsed tool call: {tool_name} with args {args}")
+                response.tool_calls = [{
+                    'name': tool_name,
+                    'args': args,
+                    'id': f"call_{uuid.uuid4()}",
+                    'type': 'tool_call'
+                }]
+                response.content = "" # Clear content so it doesn't look like text
+                
     except Exception as e:
         logger.error(f"❌ MODEL INVOKE FAILED: {e}")
         raise
