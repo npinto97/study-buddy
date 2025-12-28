@@ -12,13 +12,13 @@ from PIL import Image
 
 from langchain_community.document_loaders import (TextLoader,
                                                   UnstructuredMarkdownLoader,
-                                                  UnstructuredPDFLoader,
+                                                  PyPDFLoader,
                                                   UnstructuredCSVLoader,
                                                   UnstructuredExcelLoader,
                                                   UnstructuredPowerPointLoader,
                                                   UnstructuredHTMLLoader,
                                                   UnstructuredEPubLoader,
-                                                  UnstructuredWordDocumentLoader)
+                                                  Docx2txtLoader)
 
 
 def image_loader(filepath: str):
@@ -30,10 +30,10 @@ def image_loader(filepath: str):
 
 # Define a mapping for file loaders
 FILE_LOADERS = {
-    ".pdf": UnstructuredPDFLoader,
+    ".pdf": PyPDFLoader,
     ".txt": TextLoader,
     ".md": UnstructuredMarkdownLoader,
-    ".docx": UnstructuredWordDocumentLoader,
+    ".docx": Docx2txtLoader,
     ".csv": UnstructuredCSVLoader,
     ".xlsx": UnstructuredExcelLoader,
     ".pptx": UnstructuredPowerPointLoader,

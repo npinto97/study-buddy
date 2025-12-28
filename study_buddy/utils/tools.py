@@ -301,9 +301,10 @@ class FilePathInput(BaseModel):
     file_path: str = Field(description="Path to the input file")
 
 
-class QueryInput(BaseModel):
-    """Base model for tools that require queries."""
+class KnowledgeRetrievalInput(BaseModel):
+    """Input schema for knowledge retrieval."""
     query: str = Field(description="Search or analysis query")
+    course: Optional[str] = Field(None, description="Optional course name to filter results (e.g. 'Linguaggi di programmazione (LP)')")
 
 
 class CodeInterpreterInput(BaseModel):
@@ -338,14 +339,15 @@ class VectorStoreRetriever(BaseWrapper):
         if not os.path.exists(FAISS_INDEX_DIR):
             raise ValueError(f"FAISS index directory not found: {FAISS_INDEX_DIR}")
     
-    def retrieve(self, query: str, k: int = 6, min_score: float = 0.1) -> tuple[str, list, list]:
+    def retrieve(self, query: str, k: int = 10, min_score: float = 1.3, course: Optional[str] = None) -> tuple[str, list, list]:
         """
         Retrieve information with validation, enhanced logging, and quality filtering.
         
         Args:
             query: Search query text
-            k: Number of results to retrieve (default: 4)
-            min_score: Minimum similarity score threshold (default: 0.3)
+            k: Number of results to retrieve (default: 10)
+            min_score: Maximum distance threshold for L2 (default: 1.3). Lower values = stricter matches.
+            course: Optional course name to filter results (e.g. 'Linguaggi di programmazione (LP)')
             
         Returns:
             tuple of (formatted_results, doc_objects, file_paths)
@@ -354,8 +356,9 @@ class VectorStoreRetriever(BaseWrapper):
             logger.info(f"""
 🔍 RAG Retrieval Process:
    Query: {query}
+   Course Filter: {course}
    Requested Results: {k}
-   Min Score Threshold: {min_score}
+   Max Distance Threshold: {min_score}
 """)
             
             try:
@@ -390,26 +393,54 @@ class VectorStoreRetriever(BaseWrapper):
                 # Perform enhanced similarity search
                 search_start = time.time()
                 # Fetch more candidates for better filtering
+                # Use a larger k for initial search if we need to filter by course
+                initial_search_k = k * 15 if course else min(k * 2, 20)
+                
                 retrieved_docs = vector_store.similarity_search_with_score(
                     query, 
-                    k=min(k * 2, 20)  # Fetch extra for quality filtering
+                    k=initial_search_k  # Fetch extra for quality filtering
                 )
                 search_time = time.time() - search_start
                 
-                # Quality-based filtering
+                # Quality-based filtering (For L2 distance, lower is better)
+                # If score is distance, we want score <= threshold.
+                # Here min_score acts as a maximum distance threshold.
                 filtered_docs = []
                 for doc, score in retrieved_docs:
-                    if score >= min_score:
+                    # Logic was reversed: score >= min_score was keeping FAR documents.
+                    # Fixed: score <= min_score keeps CLOSE documents.
+                    # We increase the default threshold for L2 distance (e.g. 1.5 is reasonable for BGE-M3)
+                    if score <= min_score:
                         filtered_docs.append((doc, score))
                     else:
-                        logger.debug(f"Filtered out document with low score: {score:.4f}")
+                        logger.debug(f"Filtered out document with high distance: {score:.4f}")
                 
-                # Sort by score and take top k
-                filtered_docs.sort(key=lambda x: x[1], reverse=True)
+                # Course-based filtering if requested - APPLY BEFORE SLICING
+                if course and course != "None":
+                    logger.info(f"Applying course filter: {course}")
+                    course_matches = []
+                    other_matches = []
+                    
+                    for doc, score in filtered_docs:
+                        doc_course = doc.metadata.get("course_name", "")
+                        if course.lower() in doc_course.lower():
+                            course_matches.append((doc, score))
+                        else:
+                            other_matches.append((doc, score))
+                    
+                    # Prioritize course matches
+                    filtered_docs = course_matches + other_matches
+                
+                # Sort by score ascending (lowest distance first) - this is already sorted but prioritized
+                # final slicing
                 final_docs = filtered_docs[:k]
                 
                 # HYBRID SEARCH: Detect contact-related queries and add keyword search
                 contact_keywords = ['mail', 'email', 'e-mail', 'telefono', 'phone', 'contatto', 'contact']
+                is_contact_query = any(keyword in query.lower() for keyword in contact_keywords)
+
+                # HYBRID SEARCH: Detect contact-related queries and add keyword search
+                # Still useful if the semantic search missed something or to prioritize contact docs.
                 is_contact_query = any(keyword in query.lower() for keyword in contact_keywords)
                 
                 if is_contact_query:
@@ -453,26 +484,25 @@ class VectorStoreRetriever(BaseWrapper):
                             
                             if has_email or has_phone:
                                 # Calculate a synthetic score based on relevance
-                                score = 1.5  # Higher than semantic search to prioritize
+                                # Low score (close to 0) for L2 distance to ensure high priority
+                                score = 0.05 
                                 keyword_matches.append((doc, score))
                                 logger.info(f"   ✓ Found contact info for {person_name} in {doc.metadata.get('file_path', 'Unknown')}")
                     
-                    # Merge keyword matches with semantic results
+                    # Merge keyword matches with current results
                     if keyword_matches:
                         logger.success(f"   Found {len(keyword_matches)} documents via keyword search")
                         # Add keyword matches at the beginning (higher priority)
-                        all_docs = keyword_matches + final_docs
-                        # Remove duplicates (keep first occurrence)
+                        all_matches = keyword_matches + final_docs
+                        # Remove duplicates
                         seen_ids = set()
-                        unique_docs = []
-                        for doc, score in all_docs:
-                            doc_id = id(doc)
-                            if doc_id not in seen_ids:
-                                seen_ids.add(doc_id)
-                                unique_docs.append((doc, score))
-                        final_docs = unique_docs[:k]
-                        logger.info(f"   Hybrid results: {len(final_docs)} documents (keyword + semantic)")
-                
+                        unique_final = []
+                        for d, s in all_matches:
+                            did = id(d)
+                            if did not in seen_ids:
+                                seen_ids.add(did)
+                                unique_final.append((d, s))
+                        final_docs = unique_final[:k]
                 logger.info(f"""
 🎯 Search Performance:
    Time: {search_time:.3f}s
@@ -1824,10 +1854,11 @@ def create_basic_tools() -> List[Tool]:
         )
     
     tools = [
-        Tool(
+        StructuredTool.from_function(
+            func=retriever.retrieve,
             name="retrieve_knowledge",
-            description="PRIMARY TOOL for answering questions. Search the local knowledge base (slides, syllabus, docs) for information about courses, professors, exams, etc. ALWAYS use this first for any question not about a specific file path.",
-            func=retriever.retrieve # Assumendo che retrieve restituisca una stringa
+            description="PRIMARY TOOL for answering questions. Search the local knowledge base (slides, syllabus, docs). If the query is about a specific course, provide the 'course' parameter.",
+            args_schema=KnowledgeRetrievalInput
         ),
         Tool(
             name="web_search",

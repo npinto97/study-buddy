@@ -694,7 +694,7 @@ def sidebar_configuration():
                     st.toast("Provider aggiornato! Ricarica pagina.")
 
             config_complexity = st.selectbox("Livello", ('None', 'Base', 'Intermediate', 'Advanced'))
-            config_course = st.selectbox("Corso", ("None", "Semantics in Intelligent Information Access", "Metodi per il Ritrovamento dell'Informazione"))
+            config_course = st.selectbox("Corso", ("None", "Semantics in Intelligent Information Access", "Metodi per il Ritrovamento dell'Informazione", "Linguaggi di programmazione (LP)"))
             st.session_state.streaming_enabled = st.checkbox("Streaming", value=st.session_state.streaming_enabled)
             
             config_chat = ConfigChat(complexity_level=config_complexity, course=config_course)

@@ -17,7 +17,7 @@ logger.add(
     sys.stderr,
     level="INFO",
     format="<green>{time:YYYY-MM-DD HH:mm:ss}</green> | <level>{level: <8}</level> | {extra[context]} | <level>{message}</level>",
-    filter=lambda record: record.levelno >= 20  # INFO and above
+    filter=lambda record: record["level"].no >= 20  # INFO and above
 )
 
 # Detailed file logging with process info and call stack
