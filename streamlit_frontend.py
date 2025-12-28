@@ -129,8 +129,9 @@ def log_conversation(question: str, answer: str, sources: list = None, retrieved
         if retrieved_docs:
             f.write(f"\n📄 DOCUMENTI RECUPERATI:\n")
             for i, doc in enumerate(retrieved_docs, 1):
-                doc_preview = doc.replace('\n', ' ').strip()[:200]
-                f.write(f"  {i}. {doc_preview}...\n")
+                # Preserva la struttura ma limita la lunghezza del contenuto
+                # doc è già formattato con newlines da tools.py
+                f.write(f"  {i}. {doc.strip()[:600]}...\n")
         
         f.write(f"\n💬 RISPOSTA:\n{answer}\n{'='*80}\n\n")
 
@@ -139,7 +140,8 @@ def log_conversation(question: str, answer: str, sources: list = None, retrieved
     if sources:
         console_msg += "\n📚 SOURCES:\n" + "\n".join([f"  {i}. {s}" for i, s in enumerate(sources, 1)]) + "\n"
     if retrieved_docs:
-        console_msg += "\n📄 RETRIEVED DOCS:\n" + "\n".join([f"  {i}. {d.replace(chr(10), ' ').strip()[:150]}..." for i, d in enumerate(retrieved_docs, 1)]) + "\n"
+        # Anche qui aumentiamo il limite per vedere il path
+        console_msg += "\n📄 RETRIEVED DOCS:\n" + "\n".join([f"  {i}. {d.strip()[:600]}..." for i, d in enumerate(retrieved_docs, 1)]) + "\n"
     console_msg += f"\n💬 ANSWER:\n{answer}\n"
     logger.info(console_msg)
 

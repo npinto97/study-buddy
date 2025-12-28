@@ -541,6 +541,7 @@ class VectorStoreRetriever(BaseWrapper):
 Document {i}:
 • Score: {score:.4f}
 • Source: {filename}
+• Path: {path}
 • Page/Section: {page}
 • Type: {doc_type}
 • Length: {len(doc.page_content)} chars
@@ -554,6 +555,7 @@ Document {i}:
                     # Format for return - using filename only for portability
                     serialized_parts.append(
                         f"[Source {i}] {filename} (Page {page})\n"
+                        f"Path: {path}\n"
                         f"Relevance: {score:.4f}\n"
                         f"{doc.page_content}\n"
                         f"{'-' * 80}"

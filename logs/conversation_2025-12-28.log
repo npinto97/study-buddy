@@ -1,0 +1,50 @@
+
+================================================================================
+[2025-12-28 17:36:36]
+
+❓ DOMANDA:
+secondo le slide del corso LP, cos'e il pumping lemma?
+
+📚 FONTI UTILIZZATE:
+  1. Tool: retrieve_knowledge (1 docs)
+
+📄 DOCUMENTI RECUPERATI:
+  1. ('[Source 1] Capitolo 4 Semeraro.pdf (Page N/A)\nRelevance: 0.7095\n31/48Linguaggi di Programmazione \n◼\nDimostrazione Pumping Lemma\nywxuvuwy 00=\nywxuvuvvwxxy 22=\n---------------------------------...
+
+💬 RISPOSTA:
+Il pumping lemma è un concetto fondamentale nella teoria dei linguaggi formali e automi, utilizzato per dimostrare che un linguaggio non è libero da contesto. Secondo le slide del corso LP, il pumping lemma afferma che se un linguaggio $L$ è libero da contesto, allora esiste un numero intero $p \geq 1$ tale che ogni parola $z \in L$ con $|z| \geq p$ può essere scritta come $z = uvw$, dove $|uv| \leq p$, $|v| \geq 1$ e $uv^iw \in L$ per ogni $i \geq 0$. 
+
+In altre parole, il pumping lemma afferma che se un linguaggio è libero da contesto, allora ogni parola sufficientemente lunga può essere "pompata" in una parola più lunga che è ancora nel linguaggio, mantenendo una certa struttura. 
+
+Questo lemma è spesso utilizzato per dimostrare che un linguaggio è non libero da contesto, mostrando che non esiste un numero $p$ che soddisfi la proprietà del pumping lemma per tutte le parole del linguaggio.
+
+Riferimenti:
+- Capitolo 4 Semeraro.pdf
+- Capitolo7 Semeraro.pdf
+- Esercizi guidati Cap.7.pdf
+================================================================================
+
+
+================================================================================
+[2025-12-28 17:42:22]
+
+❓ DOMANDA:
+secondo le slide del corso LP, cos'e il pumping lemma?
+
+📚 FONTI UTILIZZATE:
+  1. Tool: retrieve_knowledge (1 docs)
+
+📄 DOCUMENTI RECUPERATI:
+  1. ('[Source 1] Capitolo 4 Semeraro.pdf (Page N/A)\nPath: C:\\Users\\Utente\\OneDrive - Università degli Studi di Bari\\Universita\\Magistrale\\II Anno\\I Semestre\\Semantics\\Project\\study-buddy\\data\\raw\\references\\Capitolo 4 Semeraro.pdf\nRelevance: 0.7095\n31/48Linguaggi di Programmazione \n◼\nDimostrazione Pumping Lemma\nywxuvuwy 00=\nywxuvuvvwxxy 22=\n--------------------------------------------------------------------------------\n\n[Source 2] Capitolo 4 Semeraro.pdf (Page N/A)\nPath: C:...
+
+💬 RISPOSTA:
+Il Pumping Lemma è un lemma utilizzato nella teoria dei linguaggi formali per dimostrare che un linguaggio non è libero da contesto. Secondo le slide del corso LP, il Pumping Lemma afferma che se un linguaggio $L$ è libero da contesto, allora esiste un numero intero $p$ tale che per ogni stringa $z$ in $L$ con lunghezza maggiore o uguale a $p$, $z$ può essere scritta come $z = uvw$, dove $|uv| \leq p$, $|v| \geq 1$ e $uv^iw$ è in $L$ per ogni $i \geq 0$. 
+
+In altre parole, il Pumping Lemma afferma che se un linguaggio è libero da contesto, allora ogni stringa sufficientemente lunga può essere "pompata" in una stringa più lunga che è ancora nel linguaggio, mantenendo una parte fissa all'inizio e una parte variabile al centro.
+
+Riferimenti:
+- Capitolo 4 Semeraro.pdf
+- Capitolo7 Semeraro.pdf
+- Esercizi guidati Cap.7.pdf
+================================================================================
+
