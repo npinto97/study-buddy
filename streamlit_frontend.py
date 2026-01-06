@@ -271,21 +271,27 @@ def initialize_session():
     os.makedirs(os.path.join(os.getcwd(), "uploaded_files", "audio"), exist_ok=True)
 
 def show_consent_screen():
-    st.subheader("📋 Consenso Informato")
+    st.subheader("Modulo di Consenso Informato")
     st.markdown("""
     **Benvenuto allo studio di valutazione di "Study Buddy".**
     
-    Prima di iniziare, ti chiediamo di leggere e accettare quanto segue:
+    Prima di procedere, è necessario prendere visione e accettare le seguenti condizioni:
     
-    1.  **Obiettivo**: Valutare l'efficacia di un assistente AI per lo studio.
-    2.  **Privacy**: Le tue conversazioni saranno registrate in forma **anonima** solo a fini di ricerca. Nessun dato personale identificativo verrà associato alle chat. I tuoi dati sono isolati e non visibili ad altri utenti.
-    3.  **Durata**: Circa 10-15 minuti.
-    4.  **Volontarietà**: Puoi abbandonare in qualsiasi momento.
-    5.  **Premio**: Al termine, riceverai un codice per confermare la tua partecipazione.
-    
-    Cliccando su "Accetto e Inizio", confermi di aver letto e compreso le condizioni, di avere almeno 18 anni e acconsenti all'uso dei dati anonimi.
+    1.  **Obiettivo dello Studio**: Valutare l'efficacia e l'usabilità di un assistente AI di supporto allo studio.
+    2.  **Privacy e Trattamento Dati**: Le interazioni con il sistema saranno registrate in forma **strettamente anonima** ed esclusivamente per fini di ricerca accademica. Nessun dato personale identificativo verrà associato alle sessioni di chat. I dati sono isolati e non accessibili ad altri partecipanti.
+    3.  **Durata Stimata**: La sessione ha una durata di circa 5-10 minuti.
+    4.  **Partecipazione Volontaria**: La partecipazione è facoltativa ed è possibile interrompere lo studio in qualsiasi momento senza alcuna conseguenza.
+    5.  **Attestato di Partecipazione**: Al termine della sessione, verrà generato un codice univoco per confermare l'avvenuta partecipazione.
     """)
-    if st.button("✅ Accetto e Inizio", type="primary"):
+    
+    st.markdown("### Dichiarazione di Consenso")
+    
+    consent_privacy = st.checkbox("Dichiaro di aver letto l'informativa sulla privacy (in conformità al GDPR - Reg. UE 2016/679) e comprendo le modalità di trattamento dei dati.")
+    consent_participation = st.checkbox("Acconsento volontariamente a partecipare allo studio e autorizzo l'uso dei dati anonimi prodotti durante la sessione.")
+    
+    btn_disabled = not (consent_privacy and consent_participation)
+    
+    if st.button("Accetto e Inizio Sessione", type="primary", disabled=btn_disabled):
         st.session_state.consent_given = True
         st.rerun()
 
