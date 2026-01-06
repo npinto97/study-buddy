@@ -441,8 +441,8 @@ def save_questionnaire_results(data):
         if not file_exists:
             writer.writerow([
                 'timestamp', 'session_id', 
-                'sus_q1', 'sus_q2', 'sus_q3', 'sus_q4', 'sus_q5', 
-                'qual_completeness', 'qual_clarity', 'qual_utility',
+                'sus_q1', 'sus_q2', 'sus_q3', 'sus_q4', 'sus_q5', 'sus_q6', 'sus_q7', 'sus_q8', 'sus_q9', 'sus_q10',
+                'qual_completeness', 'qual_clarity', 'qual_utility', 'qual_trust', 'qual_sources',
                 'nps_score',
                 'comments'
             ])
@@ -450,8 +450,10 @@ def save_questionnaire_results(data):
         writer.writerow([
             datetime.now().isoformat(),
             st.session_state.study_id,
-            data['sus_q1'], data['sus_q2'], data['sus_q3'], data['sus_q4'], data['sus_q5'],
-            data['qual_completeness'], data['qual_clarity'], data['qual_utility'],
+            data['sus_q1'], data['sus_q2'], data['sus_q3'], data['sus_q4'], data['sus_q5'], 
+            data['sus_q6'], data['sus_q7'], data['sus_q8'], data['sus_q9'], data['sus_q10'],
+            data['qual_completeness'], data['qual_clarity'], data['qual_utility'], 
+            data['qual_trust'], data['qual_sources'],
             data['nps_score'],
             data['comments']
         ])
@@ -480,18 +482,33 @@ def show_questionnaire_screen():
     with st.form("study_evaluation_form"):
         st.markdown("### 1. Esperienza Utente (SUS)")
         st.caption("Valuta da 1 (Per nulla d'accordo) a 5 (Completamente d'accordo)")
-        sus_q1 = st.slider("1. Penso che userei frequentemente questo sistema.", 1, 5, 3)
-        sus_q2 = st.slider("2. Ho trovato il sistema inutilmente complesso.", 1, 5, 3)
-        sus_q3 = st.slider("3. Ho trovato il sistema facile da usare.", 1, 5, 3)
-        sus_q4 = st.slider("4. Penso che la maggior parte delle persone imparerebbe a usare questo sistema molto rapidamente.", 1, 5, 3)
-        sus_q5 = st.slider("5. Mi sono sentito molto sicuro usando il sistema.", 1, 5, 3)
         
+        col1, col2 = st.columns(2)
+        with col1:
+            sus_q1 = st.slider("1. Penso che userei frequentemente questo sistema.", 1, 5, 3)
+            sus_q2 = st.slider("2. Ho trovato il sistema inutilmente complesso.", 1, 5, 3)
+            sus_q3 = st.slider("3. Ho trovato il sistema facile da usare.", 1, 5, 3)
+            sus_q4 = st.slider("4. Penso che avrei bisogno del supporto di una persona tecnica per usare questa app.", 1, 5, 3)
+            sus_q5 = st.slider("5. Ho trovato le varie funzioni dell'app ben integrate tra loro.", 1, 5, 3)
+        with col2:
+            sus_q6 = st.slider("6. Ho trovato troppa incoerenza in questa app.", 1, 5, 3)
+            sus_q7 = st.slider("7. Immagino che la maggior parte delle persone imparerebbe a usare questa app molto rapidamente.", 1, 5, 3)
+            sus_q8 = st.slider("8. Ho trovato l'app molto macchinosa da usare.", 1, 5, 3)
+            sus_q9 = st.slider("9. Mi sono sentito molto sicuro nell'usare l'app.", 1, 5, 3)
+            sus_q10 = st.slider("10. Ho dovuto imparare molte cose prima di poter iniziare a usare l'app.", 1, 5, 3)
+
         st.divider()
         st.markdown("### 2. Qualità delle Risposte")
         st.caption("Valuta la qualità delle risposte fornite dall'IA (1=Scarso, 5=Eccellente)")
-        qual_completeness = st.slider("Completezza: La risposta ha coperto tutti i punti richiesti?", 1, 5, 3)
-        qual_clarity = st.slider("Fluidità: Il linguaggio era chiaro e comprensibile?", 1, 5, 3)
-        qual_utility = st.slider("Utilità: Il tono era appropriato per l'apprendimento?", 1, 5, 3)
+        
+        qc1, qc2 = st.columns(2)
+        with qc1:
+            qual_completeness = st.slider("Completezza: La risposta ha coperto tutti i punti richiesti?", 1, 5, 3)
+            qual_clarity = st.slider("Fluidità: Il linguaggio era chiaro e comprensibile?", 1, 5, 3)
+            qual_utility = st.slider("Utilità: Il tono era appropriato per l'apprendimento?", 1, 5, 3)
+        with qc2:
+            qual_trust = st.slider("Fiducia: Ti fideresti per un esame reale?", 1, 5, 3)
+            qual_sources = st.slider("Fonti: I riferimenti erano chiari e corretti?", 1, 5, 3)
 
         st.divider()
         st.markdown("### 3. Conclusione")
@@ -504,9 +521,12 @@ def show_questionnaire_screen():
         if submitted:
             save_questionnaire_results({
                 'sus_q1': sus_q1, 'sus_q2': sus_q2, 'sus_q3': sus_q3, 'sus_q4': sus_q4, 'sus_q5': sus_q5,
+                'sus_q6': sus_q6, 'sus_q7': sus_q7, 'sus_q8': sus_q8, 'sus_q9': sus_q9, 'sus_q10': sus_q10,
                 'qual_completeness': qual_completeness,
                 'qual_clarity': qual_clarity, 
                 'qual_utility': qual_utility,
+                'qual_trust': qual_trust,
+                'qual_sources': qual_sources,
                 'nps_score': nps_score,
                 'comments': comments
             })
