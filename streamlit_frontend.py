@@ -439,12 +439,20 @@ def save_questionnaire_results(data):
     with open(file_path, 'a', newline='', encoding='utf-8') as f:
         writer = csv.writer(f)
         if not file_exists:
-            writer.writerow(['timestamp', 'session_id', 'q1', 'q2', 'q3', 'q4', 'q5', 'comments'])
+            writer.writerow([
+                'timestamp', 'session_id', 
+                'sus_q1', 'sus_q2', 'sus_q3', 'sus_q4', 'sus_q5', 
+                'qual_completeness', 'qual_clarity', 'qual_utility',
+                'nps_score',
+                'comments'
+            ])
         
         writer.writerow([
             datetime.now().isoformat(),
             st.session_state.study_id,
-            data['q1'], data['q2'], data['q3'], data['q4'], data['q5'],
+            data['sus_q1'], data['sus_q2'], data['sus_q3'], data['sus_q4'], data['sus_q5'],
+            data['qual_completeness'], data['qual_clarity'], data['qual_utility'],
+            data['nps_score'],
             data['comments']
         ])
 
@@ -467,21 +475,40 @@ def generate_completion_code(session_id):
 
 def show_questionnaire_screen():
     st.subheader("🎓 Questionario Finale")
-    st.write("Grazie per aver provato Study Buddy! Rispondi a queste brevi domande per ricevere il tuo codice.")
+    st.write("Grazie per aver provato Study Buddy! Rispondi a queste domande per ricevere il tuo codice.")
     
-    with st.form("sus_form"):
-        q1 = st.slider("1. Penso che userei frequentemente questo sistema.", 1, 5, 3)
-        q2 = st.slider("2. Ho trovato il sistema inutilmente complesso.", 1, 5, 3)
-        q3 = st.slider("3. Ho trovato il sistema facile da usare.", 1, 5, 3)
-        q4 = st.slider("4. Penso che la maggior parte delle persone imparerebbe a usare questo sistema molto rapidamente.", 1, 5, 3)
-        q5 = st.slider("5. Mi sono sentito molto sicuro usando il sistema.", 1, 5, 3)
+    with st.form("study_evaluation_form"):
+        st.markdown("### 1. Esperienza Utente (SUS)")
+        st.caption("Valuta da 1 (Per nulla d'accordo) a 5 (Completamente d'accordo)")
+        sus_q1 = st.slider("1. Penso che userei frequentemente questo sistema.", 1, 5, 3)
+        sus_q2 = st.slider("2. Ho trovato il sistema inutilmente complesso.", 1, 5, 3)
+        sus_q3 = st.slider("3. Ho trovato il sistema facile da usare.", 1, 5, 3)
+        sus_q4 = st.slider("4. Penso che la maggior parte delle persone imparerebbe a usare questo sistema molto rapidamente.", 1, 5, 3)
+        sus_q5 = st.slider("5. Mi sono sentito molto sicuro usando il sistema.", 1, 5, 3)
+        
+        st.divider()
+        st.markdown("### 2. Qualità delle Risposte")
+        st.caption("Valuta la qualità delle risposte fornite dall'IA (1=Scarso, 5=Eccellente)")
+        qual_completeness = st.slider("Completezza: La risposta ha coperto tutti i punti richiesti?", 1, 5, 3)
+        qual_clarity = st.slider("Fluidità: Il linguaggio era chiaro e comprensibile?", 1, 5, 3)
+        qual_utility = st.slider("Utilità: Il tono era appropriato per l'apprendimento?", 1, 5, 3)
+
+        st.divider()
+        st.markdown("### 3. Conclusione")
+        nps_score = st.slider("Consiglieresti Study Buddy a un collega universitario? (0=No, 10=Assolutamente sì)", 0, 10, 5)
+        
         comments = st.text_area("Eventuali commenti o suggerimenti:")
         
         submitted = st.form_submit_button("Invia e Ottieni Codice")
         
         if submitted:
             save_questionnaire_results({
-                'q1': q1, 'q2': q2, 'q3': q3, 'q4': q4, 'q5': q5, 'comments': comments
+                'sus_q1': sus_q1, 'sus_q2': sus_q2, 'sus_q3': sus_q3, 'sus_q4': sus_q4, 'sus_q5': sus_q5,
+                'qual_completeness': qual_completeness,
+                'qual_clarity': qual_clarity, 
+                'qual_utility': qual_utility,
+                'nps_score': nps_score,
+                'comments': comments
             })
             st.session_state.study_completed = True
             st.rerun()
