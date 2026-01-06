@@ -180,6 +180,8 @@ Thumbs.db
 data/processed/
 data/raw/
 data/temp/
+data/study_logs/
+data/study_results/
 
 history/
 
@@ -203,4 +205,4 @@ tests/performance/logs/
 faiss_index/
 
 
-!logs/*.log
+
