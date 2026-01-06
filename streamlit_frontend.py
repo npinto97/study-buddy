@@ -15,6 +15,7 @@ from datetime import datetime
 import uuid 
 import hashlib
 import csv
+import random
 
 from streamlit_float import *
 from streamlit_extras.bottom_container import bottom
@@ -25,7 +26,10 @@ import yaml
 from loguru import logger
 
 # Fix per classi torch su Windows/alcuni ambienti
-torch.classes.__path__ = [os.path.join(torch.__path__[0], torch.classes.__file__)]
+try:
+    torch.classes.__path__ = [os.path.join(torch.__path__[0], torch.classes.__file__)]
+except:
+    pass
 
 # Set up the environment
 os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
@@ -40,22 +44,109 @@ STUDY_RES_DIR.mkdir(parents=True, exist_ok=True)
 # --- SCENARI DI STUDIO (DOMANDE VERIFICATE DA EVALUATION) ---
 SCENARIOS = {
     "1": {
-        "title": "The Exam Prep",
-        "role": "Sei uno studente che ripassa le slide introduttive.",
-        "context": "Devi capire le motivazioni alla base dei Recommender Systems.",
-        "goal": "Usa Study Buddy per:\n1. Chiedere (in Italiano o Inglese): 'Secondo le slide introduttive del corso MRI, quale problema risolvono i sistemi di Information Filtering e Recommender Systems?' (Originale: 'According to the introductory slides of the MRI course, what problem do Information Filtering and Recommender Systems solve?')\n2. Verificare se la risposta corrisponde a: 'Information Overload'"
+        "title": "RecSys Fundamentals (MRI)",
+        "subject": "MRI",
+        "role": "Sei uno studente del corso MRI che sta studiando i Recommender Systems.",
+        "context": "Hai bisogno di chiarire il problema fondamentale che questi sistemi risolvono.",
+        "goal": "Usa Study Buddy per:\n1. Chiedere: 'Secondo le slide introduttive del corso MRI, quale problema principale risolvono i sistemi di Information Filtering e Recommender Systems?'\n2. Verificare se la risposta menziona l'**Information Overload**."
     },
     "2": {
-        "title": "The Practical Student",
-        "role": "Devi contattare il Prof. Lops.",
-        "context": "Non sai quando è disponibile per il ricevimento.",
-        "goal": "Usa Study Buddy per:\n1. Chiedere (in Italiano o Inglese): 'Quali sono gli orari di ricevimento del Professor Lops?' (Originale: 'What are the office hours for Professor Lops?')\n2. Verificare se la risposta corrisponde a: 'Martedì 10:00-12:00'"
+        "title": "Content-Based Filtering (MRI)",
+        "subject": "MRI",
+        "role": "Stai approfondendo i metodi di raccomandazione Content-Based.",
+        "context": "Vuoi capire come vengono rappresentati gli item in questo approccio.",
+        "goal": "Usa Study Buddy per:\n1. Chiedere: 'In un sistema Content-Based, come viene tipicamente rappresentato il profilo di un item?'\n2. Verificare se la risposta fa riferimento a **feature** o **attributi** (es. keyword, metadati)."
     },
     "3": {
-        "title": "The Curriculum Analyst",
-        "role": "Stai decidendo quale corso frequentare.",
-        "context": "Vuoi confrontare lo stile di insegnamento di due corsi.",
-        "goal": "Usa Study Buddy per:\n1. Chiedere (in Italiano o Inglese): 'Confronta i metodi di insegnamento usati nei corsi MRI e SIIA.' (Originale: 'Compare the teaching methods used in the MRI and SIIA courses.')\n2. Verificare se la risposta spiega che: 'MRI ha esercitazioni guidate vs SIIA ha sessioni di laboratorio.'"
+        "title": "Evaluation Metrics (MRI)",
+        "subject": "MRI",
+        "role": "Devi valutare le performance di un sistema di raccomandazione.",
+        "context": "Ti serve sapere quali metriche usare per misurare l'accuratezza.",
+        "goal": "Usa Study Buddy per:\n1. Chiedere: 'Quali sono le principali metriche di errore utilizzate per valutare l'accuratezza di predizione nei Recommender Systems?'\n2. Verificare se la risposta include **MAE** (Mean Absolute Error) o **RMSE** (Root Mean Squared Error)."
+    },
+    "4": {
+        "title": "Semantic Web Vision (SIIA)",
+        "subject": "SIIA",
+        "role": "Sei uno studente del corso SIIA che inizia a studiare il Semantic Web.",
+        "context": "Vuoi comprendere la visione originale di Tim Berners-Lee.",
+        "goal": "Usa Study Buddy per:\n1. Chiedere: 'Qual è l'idea centrale del Semantic Web secondo la visione di Tim Berners-Lee?'\n2. Verificare se la risposta parla di estendere il Web per rendere i dati **leggibili e processabili dalle macchine**."
+    },
+    "5": {
+        "title": "RDF Triples (SIIA)",
+        "subject": "SIIA",
+        "role": "Stai studiando il modello dei dati RDF.",
+        "context": "Hai bisogno di un esempio concreto di come sono strutturate le informazioni.",
+        "goal": "Usa Study Buddy per:\n1. Chiedere: 'Spiegami la struttura di una tripla RDF e fammi un esempio.'\n2. Verificare se la risposta descrive la struttura **Soggetto-Predicato-Oggetto**."
+    },
+    "6": {
+        "title": "Python Typing (LP)",
+        "subject": "LP",
+        "role": "Sei uno studente di Linguaggi di Programmazione interessato a Python.",
+        "context": "Vuoi capire come Python gestisce i tipi rispetto a linguaggi come Java.",
+        "goal": "Usa Study Buddy per:\n1. Chiedere: 'Che tipo di tipizzazione utilizza Python e in cosa differisce dalla tipizzazione statica?'\n2. Verificare se la risposta menziona la **tipizzazione dinamica** o **duck typing**."
+    },
+    "7": {
+        "title": "Java Interfaces vs Abstract Classes (LP)",
+        "subject": "LP",
+        "role": "Stai ripassando i concetti di OOP in Java.",
+        "context": "Ti serve chiarire quando usare un'interfaccia o una classe astratta.",
+        "goal": "Usa Study Buddy per:\n1. Chiedere: 'Qual è la differenza principale tra una classe astratta e un'interfaccia in Java (pre-Java 8)?'\n2. Verificare se la risposta spiega che una classe può implementare **molteplici interfacce** ma estendere **una sola classe**."
+    },
+    "8": {
+        "title": "Haskell Functions (LP)",
+        "subject": "LP",
+        "role": "Sei curioso riguardo alla programmazione funzionale in Haskell.",
+        "context": "Hai sentito parlare di funzioni di ordine superiore.",
+        "goal": "Usa Study Buddy per:\n1. Chiedere: 'Cos'è una funzione di ordine superiore (Higher-Order Function) in Haskell?'\n2. Verificare se la risposta dice che è una funzione che prende **altre funzioni come argomenti** o restituisce una funzione."
+    },
+    "9": {
+        "title": "Collaborative Filtering (MRI)",
+        "subject": "MRI",
+        "role": "Stai studiando i metodi di filtraggio collaborativo.",
+        "context": "Vuoi capire la differenza tra User-Based e Item-Based.",
+        "goal": "Usa Study Buddy per:\n1. Chiedere: 'Qual è la differenza principale tra User-Based e Item-Based Collaborative Filtering?'\n2. Verificare se la risposta menziona la **similarità tra utenti** vs **similarità tra item**."
+    },
+    "10": {
+        "title": "Matrix Factorization (MRI)",
+        "subject": "MRI",
+        "role": "Sei interessato alle tecniche avanzate di Recommender Systems.",
+        "context": "Hai letto di SVD e fattorizzazione di matrici.",
+        "goal": "Usa Study Buddy per:\n1. Chiedere: 'In che modo la Matrix Factorization aiuta a risolvere il problema della scarsità dei dati (sparsity) nei Recommender Systems?'\n2. Verificare se la risposta spiega che riduce la dimensionalità catturando **feature latenti**."
+    },
+    "11": {
+        "title": "SPARQL Queries (SIIA)",
+        "subject": "SIIA",
+        "role": "Devi estrarre dati da un knowledge graph.",
+        "context": "Stai imparando il linguaggio di query per RDF.",
+        "goal": "Usa Study Buddy per:\n1. Chiedere: 'A cosa serve la keyword OPTIONAL in una query SPARQL?'\n2. Verificare se la risposta dice che permette di recuperare dati anche se un **pattern (tripla) non corrisponde** (gestione dati mancanti)."
+    },
+    "12": {
+        "title": "OWL Ontologies (SIIA)",
+        "subject": "SIIA",
+        "role": "Stai progettando un'ontologia per il Web Semantico.",
+        "context": "Ti serve capire la differenza tra le varie versioni di OWL.",
+        "goal": "Usa Study Buddy per:\n1. Chiedere: 'Qual è la differenza principale tra OWL Lite, OWL DL e OWL Full?'\n2. Verificare se la risposta menziona il trade-off tra **espressività** e **decidibilità/efficienza computazionale**."
+    },
+    "13": {
+        "title": "Linked Data Principles (SIIA)",
+        "subject": "SIIA",
+        "role": "Vuoi pubblicare dati aperti sul Web.",
+        "context": "Devi seguire i principi dei Linked Data.",
+        "goal": "Usa Study Buddy per:\n1. Chiedere: 'Quali sono i 4 principi dei Linked Data definiti da Tim Berners-Lee?'\n2. Verificare se la risposta li elenca, incluso l'uso di **URI** per identificare cose e **link RDF** per collegarle."
+    },
+    "14": {
+        "title": "Prolog Unification (LP)",
+        "subject": "LP",
+        "role": "Stai studiando la programmazione logica.",
+        "context": "Il concetto di unificazione non ti è chiaro.",
+        "goal": "Usa Study Buddy per:\n1. Chiedere: 'Spiega il processo di unificazione in Prolog.'\n2. Verificare se la risposta lo descrive come il meccanismo per rendere **identici due termini** trovando le sostituzioni per le variabili."
+    },
+    "15": {
+        "title": "Polymorphism Types (LP)",
+        "subject": "LP",
+        "role": "Approfondisci i sistemi di tipi nei linguaggi moderni.",
+        "context": "Vuoi distinguere tra polimorfismo parametrico e ad-hoc.",
+        "goal": "Usa Study Buddy per:\n1. Chiedere: 'Qual è la differenza tra polimorfismo parametrico (es. Generics in Java) e polimorfismo ad-hoc (es. Overloading)?'\n2. Verificare se la risposta spiega che il parametrico usa lo **stesso codice per tipi diversi**, mentre l'ad-hoc usa **codice diverso** per ogni tipo."
     }
 }
 
@@ -296,20 +387,50 @@ def show_consent_screen():
         st.rerun()
 
 def show_scenario_selection():
-    st.subheader("🎯 Seleziona la tua Missione")
-    st.write("Per testare il sistema in un contesto realistico, scegli uno dei seguenti scenari:")
-    
-    cols = st.columns(3)
-    
-    for i, (sid, scen) in enumerate(SCENARIOS.items()):
-        with cols[i]:
-            with st.container(border=True):
-                st.markdown(f"### {scen['title']}")
-                st.info(f"**Ruolo**: {scen['role']}")
-                st.caption(scen['context'])
-                if st.button(f"Scegli {scen['title']}", key=f"btn_scen_{sid}", use_container_width=True):
-                    st.session_state.selected_scenario = sid
+    # 1. Subject Selection Phase
+    if "selected_study_subject" not in st.session_state:
+        st.subheader("Selezione Materia")
+        st.write("Per iniziare, seleziona la materia su cui vuoi verta la sessione di studio:")
+        
+        cols = st.columns(3)
+        subjects = ["MRI", "SIIA", "LP"]
+        
+        for i, subj in enumerate(subjects):
+            with cols[i]:
+                if st.button(subj, key=f"btn_subj_{subj}", use_container_width=True, type="primary"):
+                    st.session_state.selected_study_subject = subj
                     st.rerun()
+        return
+
+    # 2. Random Scenario Assignment Phase
+    st.subheader("Scenario di Studio Assegnato")
+    st.write("Il sistema ha assegnato il seguente scenario per la sessione corrente:")
+    
+    if "proposed_scenario_id" not in st.session_state:
+        subj = st.session_state.selected_study_subject
+        # Filter scenarios by subject
+        candidates = [k for k, v in SCENARIOS.items() if v.get("subject") == subj]
+        
+        if not candidates:
+             st.error(f"Nessuno scenario trovato per {subj}")
+             return
+             
+        st.session_state.proposed_scenario_id = random.choice(candidates)
+    
+    sid = st.session_state.proposed_scenario_id
+    scen = SCENARIOS[sid]
+    
+    with st.container(border=True):
+        st.markdown(f"### {scen['title']}")
+        st.caption(f"Materia: {scen.get('subject', 'N/A')}")
+        st.info(f"**Ruolo**: {scen['role']}")
+        st.markdown(f"**Contesto**: {scen['context']}")
+        st.success(f"**Obiettivo**:\n{scen['goal']}")
+        
+        st.write("") # Spacer
+        if st.button("Avvia Sessione", type="primary", use_container_width=True):
+            st.session_state.selected_scenario = sid
+            st.rerun()
 
 def save_questionnaire_results(data):
     file_path = STUDY_RES_DIR / "results.csv"
@@ -614,17 +735,17 @@ def sidebar_configuration():
             
         # MODALITÀ STUDIO: Niente lista chat globale
         if st.session_state.app_mode == "study":
-            st.header("🔬 Studio Utente")
+            st.header("Sessione di Studio")
             
             # MOSTRA OBIETTIVO SCENARIO
             if "selected_scenario" in st.session_state:
                 scen = SCENARIOS.get(st.session_state.selected_scenario)
                 if scen:
-                    with st.expander("🎯 La tua Missione", expanded=True):
+                    with st.expander("Dettagli Scenario", expanded=True):
                         st.markdown(f"**{scen['title']}**")
-                        st.success(scen['goal'])
+                        st.info(scen['goal'])
             
-            if st.button("📝 Concludi e Valuta", type="primary", use_container_width=True):
+            if st.button("Concludi e Compila Questionario", type="primary", use_container_width=True):
                 st.session_state.show_questionnaire = True
                 st.rerun()
             st.divider()
@@ -727,6 +848,7 @@ def enhance_user_input(config_chat, user_input, file_path):
     instr.append("Use LaTeX for math.")
     instr.append("IMPORTANT: For analyzing images (png, jpg, jpeg), use 'google_lens_analyze' to describe the visual content.")
     instr.append("IMPORTANT: For summaries use 'summarize_document'. For reading text use 'extract_text'.")
+    instr.append("IMPORTANT: Do NOT mention absolute file paths in your response. Reference documents by filename or title only.")
     
     return "\n".join(f"• {i}" for i in instr) + f"\n\nQuery: {user_input}"
 
