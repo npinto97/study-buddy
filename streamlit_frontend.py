@@ -780,22 +780,35 @@ def sidebar_configuration():
             st.session_state.clear()
             st.rerun()
             
-        # MODALITÀ STUDIO: Niente lista chat globale
         if st.session_state.app_mode == "study":
             st.header("Sessione di Studio")
             
             # MOSTRA OBIETTIVO SCENARIO
+            course_for_chat = "None"
             if "selected_scenario" in st.session_state:
                 scen = SCENARIOS.get(st.session_state.selected_scenario)
                 if scen:
                     with st.expander("Dettagli Scenario", expanded=True):
                         st.markdown(f"**{scen['title']}**")
                         st.info(scen['goal'])
+                    
+                    # Map subject code to full course name for the agent
+                    subj_map = {
+                        "SIIA": "Semantics in Intelligent Information Access",
+                        "MRI": "Metodi per il Ritrovamento dell'Informazione",
+                        "LP": "Linguaggi di programmazione (LP)"
+                    }
+                    course_for_chat = subj_map.get(scen.get("subject"), "None")
             
             if st.button("Concludi e Compila Questionario", type="primary", use_container_width=True):
                 st.session_state.show_questionnaire = True
                 st.rerun()
             st.divider()
+            
+            # Initialize config for Student Mode
+            config_thread_id = st.session_state.get("active_thread_id")
+            config_chat = ConfigChat(complexity_level="Intermediate", course=course_for_chat)
+            return config_thread_id, config_chat
         
         # MODALITÀ DEV: Lista chat normale + Nuova Chat
         else:
@@ -850,38 +863,38 @@ def sidebar_configuration():
             else:
                 st.info("Nessuna chat esistente.")
         
-        # --- CONFIG COMUNE ---
-        config_thread_id = st.session_state.get("active_thread_id")
+            # --- CONFIG COMUNE ---
+            config_thread_id = st.session_state.get("active_thread_id")
 
-        with st.expander("Configurazione Avanzata"):
-            config_path = Path("config.yaml")
-            current_provider = "together"
-            try:
-                with open(config_path, 'r', encoding='utf-8') as f:
-                    config_data = yaml.safe_load(f)
-                    current_provider = config_data.get('llm', {}).get('provider', 'together')
-            except: pass
-            
-            provider_map = {"Together AI": "together", "Google Gemini": "gemini"}
-            llm_provider = st.selectbox("Provider", list(provider_map.keys()), index=list(provider_map.values()).index(current_provider) if current_provider in provider_map.values() else 0)
-            
-            if provider_map[llm_provider] != current_provider:
-                if update_llm_provider(provider_map[llm_provider]):
-                    st.toast("Provider aggiornato! Ricarica pagina.")
+            with st.expander("Configurazione Avanzata"):
+                config_path = Path("config.yaml")
+                current_provider = "together"
+                try:
+                    with open(config_path, 'r', encoding='utf-8') as f:
+                        config_data = yaml.safe_load(f)
+                        current_provider = config_data.get('llm', {}).get('provider', 'together')
+                except: pass
+                
+                provider_map = {"Together AI": "together", "Google Gemini": "gemini"}
+                llm_provider = st.selectbox("Provider", list(provider_map.keys()), index=list(provider_map.values()).index(current_provider) if current_provider in provider_map.values() else 0)
+                
+                if provider_map[llm_provider] != current_provider:
+                    if update_llm_provider(provider_map[llm_provider]):
+                        st.toast("Provider aggiornato! Ricarica pagina.")
 
-            config_complexity = st.selectbox("Livello", ('None', 'Base', 'Intermediate', 'Advanced'))
-            config_course = st.selectbox("Corso", ("None", "Semantics in Intelligent Information Access", "Metodi per il Ritrovamento dell'Informazione", "Linguaggi di programmazione (LP)"))
-            st.session_state.streaming_enabled = st.checkbox("Streaming", value=st.session_state.streaming_enabled)
-            
-            config_chat = ConfigChat(complexity_level=config_complexity, course=config_course)
-            
-        st.divider()
-        with st.expander("Info"):
-            st.markdown(f"**UNIVOX** Assistant v2.1")
-            if st.session_state.app_mode == "study":
-                st.code(f"Study ID: {st.session_state.get('study_id', '')[:8]}")
+                config_complexity = st.selectbox("Livello", ('None', 'Base', 'Intermediate', 'Advanced'))
+                config_course = st.selectbox("Corso", ("None", "Semantics in Intelligent Information Access", "Metodi per il Ritrovamento dell'Informazione", "Linguaggi di programmazione (LP)"))
+                st.session_state.streaming_enabled = st.checkbox("Streaming", value=st.session_state.streaming_enabled)
+                
+                config_chat = ConfigChat(complexity_level=config_complexity, course=config_course)
+                
+            st.divider()
+            with st.expander("Info"):
+                st.markdown(f"**UNIVOX** Assistant v2.1")
+                if st.session_state.app_mode == "study":
+                    st.code(f"Study ID: {st.session_state.get('study_id', '')[:8]}")
 
-    return config_thread_id, config_chat
+            return config_thread_id, config_chat
 
 def enhance_user_input(config_chat, user_input, file_path):
     instr = []

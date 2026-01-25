@@ -63,7 +63,7 @@ if ($LASTEXITCODE -eq 0) {
 
 # Install other dependencies
 Write-Host ""
-Write-Host "Installing other dependencies..." -ForegroundColor Yellow
+Write-Host "Installing dependencies from requirements.txt..." -ForegroundColor Yellow
 pip install -r requirements.txt
 
 if ($LASTEXITCODE -eq 0) {
@@ -72,11 +72,6 @@ if ($LASTEXITCODE -eq 0) {
     Write-Host "✗ Dependency installation failed" -ForegroundColor Red
     exit 1
 }
-
-# Install additional packages that might be missing
-Write-Host ""
-Write-Host "Installing additional packages..." -ForegroundColor Yellow
-pip install ffmpeg-python youtube-transcript-api wikipedia google-search-results
 
 # Verify installation
 Write-Host ""
