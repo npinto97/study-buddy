@@ -300,3 +300,4 @@ yarl==1.22.0
 youtube-search-python==1.6.6
 youtube-transcript-api==1.2.3
 zstandard==0.25.0
+pyngrok==7.1.0
