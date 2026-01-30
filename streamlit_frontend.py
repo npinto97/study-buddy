@@ -675,36 +675,45 @@ def format_tool_calls(message):
 def display_images_and_files(content, file_paths_list=None, message_index=0):
     if not file_paths_list: return
     
-    download_counter = 0
-    processed_files = set()
+    unique_files = list(dict.fromkeys([os.path.abspath(p.replace("\\\\", "\\").replace("\\", "/").strip("'\"")) for p in file_paths_list]))
     
-    for raw_path in file_paths_list:
-        abs_path = os.path.abspath(raw_path.replace("\\\\", "\\").replace("\\", "/").strip("'\""))
-        if abs_path in processed_files: continue
-        processed_files.add(abs_path)
-        
-        if os.path.exists(abs_path):
-            file_name = os.path.basename(abs_path)
-            ext = abs_path.lower()
+    # 1. Images - Show directly
+    images = [p for p in unique_files if p.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.webp'))]
+    for img_path in images:
+        if os.path.exists(img_path):
+            try: st.image(img_path, caption=os.path.basename(img_path), width='content')
+            except Exception as e: st.error(f"Error image: {e}")
             
-            if ext.endswith((".png", ".jpg", ".jpeg", ".gif", ".webp")):
-                try: st.image(abs_path, caption=file_name, width='content')
-                except Exception as e: st.error(f"Error image: {e}")
+    # 2. Documents - Lazy Load via Selectbox
+    docs = [p for p in unique_files if p not in images and os.path.exists(p)]
+    
+    if docs:
+        label = "📂 File allegati" if len(docs) > 1 else f"📂 File: {os.path.basename(docs[0])}"
+        with st.expander(f"{label} ({len(docs)})", expanded=False):
+            # Selectbox for lazy loading
+            options = sorted(docs, key=lambda x: os.path.basename(x))
+            selected_doc = st.selectbox(
+                "Scegli un file da scaricare:",
+                options=options,
+                format_func=lambda x: os.path.basename(x),
+                key=f"sel_msg_{message_index}"
+            )
             
-            mime_type = mimetypes.guess_type(abs_path)[0] or "application/octet-stream"
-            try:
-                with open(abs_path, "rb") as f:
-                    icon = "🖼️" if ext.endswith((".png", ".jpg")) else "📊" if ext.endswith(".csv") else "📄" if ext.endswith(".pdf") else "📥"
-                    st.download_button(
-                        label=f"{icon} Scarica {file_name}",
-                        data=f.read(),
-                        file_name=file_name,
-                        mime=mime_type,
-                        key=f"dl_{message_index}_{download_counter}",
-                        width='content'
-                    )
-                    download_counter += 1
-            except Exception as e: st.error(f"Error file: {e}")
+            if selected_doc:
+                try:
+                    mime_type = mimetypes.guess_type(selected_doc)[0] or "application/octet-stream"
+                    file_name = os.path.basename(selected_doc)
+                    with open(selected_doc, "rb") as f:
+                        icon = "📊" if file_name.endswith(".csv") else "📄" if file_name.endswith(".pdf") else "📥"
+                        st.download_button(
+                            label=f"{icon} Scarica {file_name}",
+                            data=f.read(),
+                            file_name=file_name,
+                            mime=mime_type,
+                            key=f"dl_msg_{message_index}_{file_name}",
+                            width='content'
+                        )
+                except Exception as e: st.error(f"Error reading file: {e}")
 
 def display_chat_history(thread_id):
     chat_history = get_chat_history(thread_id)
@@ -847,6 +856,171 @@ def handle_non_streaming_events(events):
     
     return full_response, valid_files, srcs, docs
 
+def show_documents_sidebar():
+    """Mostra una sezione nella sidebar per scaricare i documenti del corso, filtrati per materia attiva."""
+    st.sidebar.divider()
+    st.sidebar.header("📚 Materiale Didattico")
+    
+    docs_root = Path("data/raw")
+    if not docs_root.exists():
+        st.sidebar.info("Nessun documento trovato.")
+        return
+
+    # Categories (Folders)
+    categories = {
+        "Syllabus": "syllabuses",
+        "Slides": "slides", 
+        "Libri": "books",
+        "Materiale Integrativo": "supplementary_materials",
+        "Esercizi": "exercises",
+        "Riferimenti": "references",
+        "Multimedia": "multimedia"
+    }
+
+    # Classification Rules (Heuristic)
+    subject_keywords = {
+        "LP": ["LP", "Compilatore", "Analizzatore", "Lezione 1-Presentazione", "1. Introduzione"],
+        "MRI": [
+            "MRI", "InformationRetrieval", "InformationFiltering", "Lucene", "Page_Rank", 
+            "Information Retrieval", "Information Filtering", "Information_Retrieval", "Information_Extraction", "Information_Filtering",
+            "Text_Categorization", "Text Categorization", "Collaborative", "Content-Based", "Vector_Space", 
+            "Relevance_Feedback", "Valutation", "Evaluation"
+        ],
+        "SIIA": [
+            "SIIA", "Lesson_", "Semantics", "Linked_Data", "RecSys", "Recommender", "Knowledge", 
+            "LLM", "Learning", "WEB", "NETFLIX", "Neuro-symbolic", "Ontology"
+        ],
+    }
+    
+    # Files to exclude globally
+    excluded_files = [
+        "en_2025_10_15_PINTO_807348.pdf", 
+        "SIIA_syllabus.txt"
+    ]
+
+    # Helper to classify file
+    def get_subject(filename, specific_keywords):
+        for subj, keywords in specific_keywords.items():
+            for kw in keywords:
+                if kw.lower() in filename.lower():
+                    return subj
+        return "Altro"
+
+    # --- DETERMINE ACTIVE SUBJECT ---
+    # User Request: Always show ALL subjects (Folders for Subjects)
+    active_subjects = list(subject_keywords.keys())
+    
+    # Pre-load and organize all files
+    # buckets for active subjects + Altro
+    categorized_files = {subj: {cat: [] for cat in categories} for subj in active_subjects}
+    categorized_files["Altro"] = {cat: [] for cat in categories}
+
+    total_files = 0
+    
+    # Scan files
+    for cat_label, folder_name in categories.items():
+        folder_path = docs_root / folder_name
+        if folder_path.exists():
+            for f in folder_path.glob("*.pdf"):
+                if f.name in excluded_files: continue
+                
+                # Check against ALL keywords to find its true subject first
+                true_subj = "Altro"
+                for s_key, kw_list in subject_keywords.items():
+                    for kw in kw_list:
+                        if kw.lower() in f.name.lower():
+                            true_subj = s_key
+                            break
+                    if true_subj != "Altro": break
+                
+                # Logic:
+                # If matches active subject -> Add to Subject
+                # Else -> Add to Altro (so it's accessible)
+                if true_subj in active_subjects:
+                    categorized_files[true_subj][cat_label].append(f)
+                    total_files += 1
+                else:
+                    # It matches another subject OR is generic Altro.
+                    # We put it in Altro so user can find it if they really want.
+                    categorized_files["Altro"][cat_label].append(f)
+                    total_files += 1
+
+    if total_files == 0:
+        st.sidebar.info("Nessun documento trovato.")
+        return
+
+    # Display in Sidebar
+    # 1. Active Subjects
+    for subj in active_subjects:
+        files_map = categorized_files[subj]
+        has_files = any(files_map.values())
+        
+        if has_files:
+            container = st.sidebar
+            if len(active_subjects) > 1:
+                container = st.sidebar.expander(f"📘 {subj}", expanded=False)
+            else:
+                st.sidebar.markdown(f"### 📘 {subj}")
+            
+            with container:
+                for cat_label in categories.keys():
+                    files = files_map[cat_label]
+                    if files:
+                        with st.expander(f"📂 {cat_label} ({len(files)})", expanded=False):
+                            # Optimization: Use selectbox to avoid loading ALL files into memory
+                            file_options = sorted(files, key=lambda x: x.name)
+                            selected_file_path = st.selectbox(
+                                "Seleziona un file da scaricare:",
+                                options=file_options,
+                                format_func=lambda x: x.name,
+                                key=f"sel_{subj}_{cat_label}"
+                            )
+                            
+                            if selected_file_path:
+                                try:
+                                    with open(selected_file_path, "rb") as pdf_file:
+                                        st.download_button(
+                                            label=f"⬇️ Scarica {selected_file_path.name}",
+                                            data=pdf_file,
+                                            file_name=selected_file_path.name,
+                                            mime="application/pdf",
+                                            key=f"dl_{subj}_{cat_label}"
+                                        )
+                                except Exception as e:
+                                    st.error(f"Errore caricamento file: {e}")
+            if len(active_subjects) == 1:
+                st.sidebar.divider()
+
+    # 2. Others / Remaining Files (Always show if populated)
+    # This catches "missed" files or files from other subjects
+    has_other = any(categorized_files["Altro"].values())
+    if has_other:
+        with st.sidebar.expander("📂 Altri Documenti", expanded=False):
+            st.caption("Documenti non classificati o di altre materie")
+            for cat_label in categories.keys():
+                files = categorized_files["Altro"][cat_label]
+                if files:
+                    with st.expander(f"📂 {cat_label} ({len(files)})", expanded=False):
+                        file_options = sorted(files, key=lambda x: x.name)
+                        selected_file_path = st.selectbox(
+                            "Seleziona un file:",
+                            options=file_options,
+                            format_func=lambda x: x.name,
+                            key=f"sel_Altro_{cat_label}"
+                        )
+                        
+                        if selected_file_path:
+                             try:
+                                with open(selected_file_path, "rb") as pdf_file:
+                                    st.download_button(
+                                        label=f"⬇️ Scarica {selected_file_path.name}",
+                                        data=pdf_file,
+                                        file_name=selected_file_path.name,
+                                        mime="application/pdf",
+                                        key=f"dl_Altro_{cat_label}"
+                                    )
+                             except: pass
+
 def sidebar_configuration():
     with st.sidebar:
         # BOTTONE RICARICA (utile in Dev)
@@ -880,6 +1054,10 @@ def sidebar_configuration():
             if st.button("Concludi e Compila Questionario", type="primary", use_container_width=True):
                 st.session_state.show_questionnaire = True
                 st.rerun()
+            
+            # Show shared documents
+            show_documents_sidebar()
+            
             st.divider()
             
             # Initialize config for Student Mode

@@ -17,6 +17,9 @@ def start_public_server():
     logger.info("Initializing ngrok tunnel...")
     
     try:
+        # Force the new auth token to ensure we bypass the bandwidth limit
+        ngrok.set_auth_token("38zAoaD3SJp4WVe7RF3od3e6knp_4Auo8qniYsnwQJB74oXJt")
+        
         # Open a HTTP tunnel on the default Streamlit port 8501
         public_url = ngrok.connect(8501).public_url
         logger.success(f"Tunnel established successfully!")
