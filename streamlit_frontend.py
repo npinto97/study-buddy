@@ -371,18 +371,85 @@ def show_consent_screen():
     1.  **Obiettivo dello Studio**: Valutare l'efficacia e l'usabilità di un assistente AI di supporto allo studio.
     2.  **Privacy e Trattamento Dati**: Le interazioni con il sistema saranno registrate in forma **strettamente anonima** ed esclusivamente per fini di ricerca accademica. Nessun dato personale identificativo verrà associato alle sessioni di chat. I dati sono isolati e non accessibili ad altri partecipanti.
     3.  **Durata Stimata**: La sessione ha una durata di circa 5-10 minuti.
-    4.  **Partecipazione Volontaria**: La partecipazione è facoltativa ed è possibile interrompere lo studio in qualsiasi momento senza alcuna conseguenza.
-    5.  **Attestato di Partecipazione**: Al termine della sessione, verrà generato un codice univoco per confermare l'avvenuta partecipazione.
+    4.  **Partecipazione Volontaria**: La partecipazione è interamente facoltativa e non prevede alcuna valutazione o beneficio ai fini dell'esame. È possibile interrompere lo studio in qualsiasi momento.
     """)
     
     st.markdown("### Dichiarazione di Consenso")
+
+    # Download Informativa
+    privacy_pdf_path = Path("doc_privacy/Informativa trattamento dati personali StudyBuddy.pdf")
+    if privacy_pdf_path.exists():
+        with open(privacy_pdf_path, "rb") as pdf_file:
+            st.download_button(
+                label="📄 Scarica Informativa completa (PDF)",
+                data=pdf_file,
+                file_name="Informativa_Privacy_StudyBuddy.pdf",
+                mime="application/pdf",
+                use_container_width=True
+            )
+    else:
+        st.warning("File informativa non trovato.")
     
-    consent_privacy = st.checkbox("Dichiaro di aver letto l'informativa sulla privacy (in conformità al GDPR - Reg. UE 2016/679) e comprendo le modalità di trattamento dei dati.")
-    consent_participation = st.checkbox("Acconsento volontariamente a partecipare allo studio e autorizzo l'uso dei dati anonimi prodotti durante la sessione.")
+    st.write("") # Spacer
+
+    # --- INTRO TEXT ---
+    st.markdown("""
+    ai sensi delle disposizioni del Regolamento (UE) 2016/679 e del Decreto Legislativo 196/2003 e 
+    successive modifiche e integrazioni e avendo letto le “Informazioni sul trattamento dei dati personali”.
+    """)
     
-    btn_disabled = not (consent_privacy and consent_participation)
+    # --- CONSENT 1 (MANDATORY) ---
+    # User specified: "acconsento al primo blocco obbligatorio"
+    q1 = st.radio(
+        "q1_label_hidden",
+        options=["acconsento", "non acconsento"],
+        index=None,
+        horizontal=True,
+        label_visibility="collapsed",
+        key="consent_q1"
+    )
+
+    st.write("") # Spacer
+
+    # --- TEXT 1 (NECESSARY) ---
+    # User specified: "si presenta dopo acconsento"
+    st.markdown("""
+    al trattamento - **necessario** ai fini della partecipazione alla ricerca in questione - dei miei dati personali 
+    per scopi di ricerca scientifica e statistica nel modo e per i motivi descritti nella sezione intitolata 
+    “Finalità e modalità del trattamento”.
+    """)
+
+    # --- CONSENT 2 (OPTIONAL) ---
+    # User specified: "acconsento al secondo blocco che non e obbligatorio"
+    q2 = st.radio(
+        "q2_label_hidden",
+        options=["acconsento", "non acconsento"],
+        index=None,
+        horizontal=True,
+        label_visibility="collapsed",
+        key="consent_q2"
+    )
+
+    st.write("") # Spacer
+
+    # --- TEXT 2 (NON NECESSARY) ---
+    # User specified: "si presenta dopo acconsento"
+    st.markdown("""
+    alla conservazione e ulteriore utilizzo – **non necessario** ai fini della partecipazione allo studio in questione - 
+    dei miei dati personali per successive attività di ricerca e per essere eventualmente ricontattato per studi ulteriori.
+    """)
     
-    if st.button("Accetto e Inizio Sessione", type="primary", disabled=btn_disabled):
+    # Blocking logic: Only Q1 (First Block) is mandatory as per user instruction
+    # "primo blocco obbligatorio", "secondo blocco non obbligatorio"
+    consent_given = (q1 == "acconsento")
+    
+    # Log Q2 (Optional re-contact)
+    if q2 == "acconsento":
+        st.session_state.consent_recontact = True
+    else:
+        st.session_state.consent_recontact = False
+
+    if st.button("Accetto e Inizio Sessione", type="primary", disabled=not consent_given, use_container_width=True):
         st.session_state.consent_given = True
         st.rerun()
 
@@ -441,6 +508,7 @@ def save_questionnaire_results(data):
         if not file_exists:
             writer.writerow([
                 'timestamp', 'session_id', 
+                'age', 'gender', 'enrollment',
                 'sus_q1', 'sus_q2', 'sus_q3', 'sus_q4', 'sus_q5', 'sus_q6', 'sus_q7', 'sus_q8', 'sus_q9', 'sus_q10',
                 'qual_completeness', 'qual_clarity', 'qual_utility', 'qual_trust', 'qual_sources',
                 'nps_score',
@@ -450,6 +518,7 @@ def save_questionnaire_results(data):
         writer.writerow([
             datetime.now().isoformat(),
             st.session_state.study_id,
+            data.get('age', ''), data.get('gender', ''), data.get('enrollment', ''),
             data['sus_q1'], data['sus_q2'], data['sus_q3'], data['sus_q4'], data['sus_q5'], 
             data['sus_q6'], data['sus_q7'], data['sus_q8'], data['sus_q9'], data['sus_q10'],
             data['qual_completeness'], data['qual_clarity'], data['qual_utility'], 
@@ -477,9 +546,19 @@ def generate_completion_code(session_id):
 
 def show_questionnaire_screen():
     st.subheader("🎓 Questionario Finale")
-    st.write("Grazie per aver provato Study Buddy! Rispondi a queste domande per ricevere il tuo codice.")
+    st.write("Grazie per aver provato Study Buddy! La tua opinione è fondamentale per la nostra ricerca.")
     
     with st.form("study_evaluation_form"):
+        st.markdown("### 0. Profilazione (Opzionale ma gradita)")
+        col_p1, col_p2, col_p3 = st.columns(3)
+        with col_p1:
+            age = st.number_input("Età", min_value=18, max_value=100, step=1, value=None)
+        with col_p2:
+            gender = st.selectbox("Genere", ["Seleziona...", "Uomo", "Donna", "Non binario", "Preferisco non specificare", "Altro"])
+        with col_p3:
+            enrollment = st.selectbox("Iscrizione", ["Seleziona...", "Triennale", "Magistrale", "Dottorato", "Altro"])
+
+        st.divider()
         st.markdown("### 1. Esperienza Utente (SUS)")
         st.caption("Valuta da 1 (Per nulla d'accordo) a 5 (Completamente d'accordo)")
         
@@ -516,10 +595,13 @@ def show_questionnaire_screen():
         
         comments = st.text_area("Eventuali commenti o suggerimenti:")
         
-        submitted = st.form_submit_button("Invia e Ottieni Codice")
+        submitted = st.form_submit_button("Invia Risposte")
         
         if submitted:
             save_questionnaire_results({
+                'age': age,
+                'gender': gender,
+                'enrollment': enrollment,
                 'sus_q1': sus_q1, 'sus_q2': sus_q2, 'sus_q3': sus_q3, 'sus_q4': sus_q4, 'sus_q5': sus_q5,
                 'sus_q6': sus_q6, 'sus_q7': sus_q7, 'sus_q8': sus_q8, 'sus_q9': sus_q9, 'sus_q10': sus_q10,
                 'qual_completeness': qual_completeness,
@@ -535,18 +617,13 @@ def show_questionnaire_screen():
 
 def show_completion_screen():
     st.balloons()
-    if "final_code" not in st.session_state:
-        st.session_state.final_code = generate_completion_code(st.session_state.study_id)
-        
-    code = st.session_state.final_code
+    
     st.success("🎉 Studio Completato con Successo!")
-    st.markdown(f"""
-    ### Il tuo codice di completamento è:
-    # `{code}`
+    st.markdown("""
+    ### Grazie per la tua partecipazione!
     
-    **Copia questo codice e invialo al responsabile della ricerca per ricevere il tuo premio.**
-    
-    Il codice è stato registrato nel sistema. Puoi chiudere questa pagina.
+    I tuoi dati sono stati registrati in forma anonima.
+    Puoi chiudere questa pagina.
     """)
     st.info(f"Session ID: {st.session_state.study_id}")
     if st.button("Riavvia (Nuovo Utente)"):
