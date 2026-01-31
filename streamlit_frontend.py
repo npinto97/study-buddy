@@ -182,6 +182,37 @@ def update_llm_provider(provider: str):
         st.error(f"Errore nell'aggiornamento del provider: {e}")
         return False
 
+def render_provider_selector():
+    """Renders the UI for selecting the LLM provider."""
+    # Read current config
+    config_path = Path("config.yaml")
+    current_provider = "together"
+    try:
+        with open(config_path, 'r', encoding='utf-8') as f:
+            config_data = yaml.safe_load(f)
+            current_provider = config_data.get('llm', {}).get('provider', 'together')
+    except: pass
+    
+    provider_map = {"Together AI": "together", "Google Gemini": "gemini"}
+    
+    # Determine index
+    try:
+        curr_idx = list(provider_map.values()).index(current_provider)
+    except ValueError:
+        curr_idx = 0
+
+    llm_provider = st.selectbox(
+        "Seleziona Modello AI", 
+        list(provider_map.keys()), 
+        index=curr_idx,
+        key="llm_provider_shared_selector"
+    )
+    
+    if provider_map[llm_provider] != current_provider:
+        if update_llm_provider(provider_map[llm_provider]):
+            st.toast(f"Provider impostato su {llm_provider}. Ricarica...", icon="✅")
+            # Optional: st.rerun()
+
 # Setup session log file
 log_dir = Path("logs")
 log_dir.mkdir(exist_ok=True)
@@ -1060,6 +1091,13 @@ def sidebar_configuration():
             
             st.divider()
             
+            # --- MODEL SELECTION (STUDY MODE) ---
+            with st.expander("⚙️ Impostazioni Modello"):
+                render_provider_selector()
+                st.info("Modificare il provider solo se necessario.")
+
+            st.divider()
+            
             # Initialize config for Student Mode
             config_thread_id = st.session_state.get("active_thread_id")
             config_chat = ConfigChat(complexity_level="Intermediate", course=course_for_chat)
@@ -1122,20 +1160,7 @@ def sidebar_configuration():
             config_thread_id = st.session_state.get("active_thread_id")
 
             with st.expander("Configurazione Avanzata"):
-                config_path = Path("config.yaml")
-                current_provider = "together"
-                try:
-                    with open(config_path, 'r', encoding='utf-8') as f:
-                        config_data = yaml.safe_load(f)
-                        current_provider = config_data.get('llm', {}).get('provider', 'together')
-                except: pass
-                
-                provider_map = {"Together AI": "together", "Google Gemini": "gemini"}
-                llm_provider = st.selectbox("Provider", list(provider_map.keys()), index=list(provider_map.values()).index(current_provider) if current_provider in provider_map.values() else 0)
-                
-                if provider_map[llm_provider] != current_provider:
-                    if update_llm_provider(provider_map[llm_provider]):
-                        st.toast("Provider aggiornato! Ricarica pagina.")
+                render_provider_selector() # Replaced inline logic with helper
 
                 config_complexity = st.selectbox("Livello", ('None', 'Base', 'Intermediate', 'Advanced'))
                 config_course = st.selectbox("Corso", ("None", "Semantics in Intelligent Information Access", "Metodi per il Ritrovamento dell'Informazione", "Linguaggi di programmazione (LP)"))
