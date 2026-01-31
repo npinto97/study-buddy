@@ -1094,13 +1094,14 @@ def sidebar_configuration():
             # --- MODEL SELECTION (STUDY MODE) ---
             with st.expander("⚙️ Impostazioni Modello"):
                 render_provider_selector()
+                config_complexity = st.selectbox("Livello", ('None', 'Base', 'Intermediate', 'Advanced'), index=2, key="study_complexity")
                 st.info("Modificare il provider solo se necessario.")
 
             st.divider()
             
             # Initialize config for Student Mode
             config_thread_id = st.session_state.get("active_thread_id")
-            config_chat = ConfigChat(complexity_level="Intermediate", course=course_for_chat)
+            config_chat = ConfigChat(complexity_level=config_complexity, course=course_for_chat)
             return config_thread_id, config_chat
         
         # MODALITÀ DEV: Lista chat normale + Nuova Chat
