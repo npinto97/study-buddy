@@ -5,6 +5,11 @@ import time
 from pyngrok import ngrok
 from loguru import logger
 
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
+
 # Configure logging
 logger.remove()
 logger.add(sys.stderr, format="<green>{time:YYYY-MM-DD HH:mm:ss}</green> | <level>{level: <8}</level> | <level>{message}</level>")
@@ -18,7 +23,12 @@ def start_public_server():
     
     try:
         # Force the new auth token to ensure we bypass the bandwidth limit
-        ngrok.set_auth_token("38zAoaD3SJp4WVe7RF3od3e6knp_4Auo8qniYsnwQJB74oXJt")
+        auth_token = os.getenv("NGROK_AUTH_TOKEN")
+        if not auth_token:
+            logger.error("NGROK_AUTH_TOKEN not found in environment variables.")
+            return
+
+        ngrok.set_auth_token(auth_token)
         
         # Open a HTTP tunnel on the default Streamlit port 8501
         public_url = ngrok.connect(8501).public_url
