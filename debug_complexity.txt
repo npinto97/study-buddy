@@ -1,0 +1,12 @@
+Timestamp,Source,Complexity
+2026-02-12 15:59:54,frontend sending,Base
+2026-02-12 15:59:54,nodes.py received,Base
+2026-02-12 16:00:08,nodes.py received,Base
+2026-02-12 16:00:39,frontend sending,Advanced
+2026-02-12 16:00:39,nodes.py received,Advanced
+2026-02-12 16:05:09,frontend sending,Base
+2026-02-12 16:05:09,nodes.py received,Base
+2026-02-12 16:05:21,nodes.py received,Base
+2026-02-12 16:07:53,frontend sending,Advanced
+2026-02-12 16:07:53,nodes.py received,Advanced
+2026-02-12 16:07:56,nodes.py received,Advanced

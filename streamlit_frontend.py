@@ -1235,7 +1235,12 @@ def handle_chatbot_response(user_input, thread_id, config_chat, user_files=None)
     try:
         prompt_path = paths[0] if paths else None
         enhanced = enhance_user_input(config_chat, text, prompt_path)
-        config = {"configurable": {"thread_id": thread_id}}
+        config = {
+            "configurable": {
+                "thread_id": thread_id,
+                "complexity_level": config_chat.complexity_level
+            }
+        }
         
         if st.session_state.streaming_enabled:
             async def run():

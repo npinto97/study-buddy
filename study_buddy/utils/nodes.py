@@ -51,8 +51,9 @@ Reply: "Non ho trovato informazioni pertinenti su questo argomento nei documenti
 **DO NOT include a "Riferimenti" section or list any files when refusing.**
 
 **FORBIDDEN:**
-- NEVER answer "How to make Carbonara" using your internal training data.
+- NEVER answer "How to make Carbonara", "Recipes", or "General Trivia" using your internal training data.
 - NEVER cite an irrelevant document just to satisfy a "must cite" rule. If it's not there, say it's not there.
+- **RESTRICTION**: You are strictly forbidden from answering questions about cooking, recipes, sports, entertainment, or general knowledge unless they are explicitly covered in the uploaded academic documents. If asked, REFUSE politely.
 
 
 CRITICAL INSTRUCTION FOR TOOL USAGE:
@@ -267,9 +268,82 @@ def call_model(state, config):
                 tool_call_counts_pre[key] = tool_call_counts_pre.get(key, 0) + 1
 
     # Serialize messages for LLM
-    system_message = {"role": "system", "content": system_prompt}
+    system_message_content = system_prompt
+
+    # --- DYNAMIC SYSTEM PROMPT INJECTION (COMPLEXITY) ---
+    complexity = config.get("configurable", {}).get("complexity_level", "None")
+    logger.info(f"🔍 [DEBUG] Selected Complexity Level: '{complexity}'")
+    
+    if complexity == "Base":
+        system_message_content += (
+            "\n\n[COMPLEXITY: BASE - FOR ABSOLUTE BEGINNERS]\n"
+            "- TARGET AUDIENCE: A 5-year-old or someone completely new to the topic.\n"
+            "- LENGTH CONSTRAINT: Keep the answer SHORT (max 100-150 words).\n"
+            "- VOCABULARY: Use extremely simple, non-technical language. NO JARGON.\n"
+            "- STYLE: Use analogies from real life (e.g., 'imagine a library' instead of 'database').\n"
+            "- FORMAT: Simple paragraphs. No complex lists or formulas unless absolutely necessary."
+        )
+    elif complexity == "Intermediate":
+        system_message_content += (
+            "\n\n[COMPLEXITY: INTERMEDIATE - UNIVERSITY STUDENT]\n"
+            "- TARGET AUDIENCE: A university student studying for an exam.\n"
+            "- LENGTH CONSTRAINT: Medium length (200-300 words). Balanced detail.\n"
+            "- VOCABULARY: Use proper academic terminology, but define complex terms briefly if they are crucial.\n"
+            "- STYLE: Educational and clear. Focus on 'how' and 'why'.\n"
+            "- FORMAT: Use bullet points for lists and clear structure."
+        )
+    elif complexity == "Advanced":
+        system_message_content += (
+            "\n\n[COMPLEXITY: ADVANCED - POSTGRADUATE RESEARCHER/EXPERT]\n"
+            "- TARGET AUDIENCE: A PhD student, researcher, or industry expert.\n"
+            "- LENGTH CONSTRAINT: Long and detailed (400+ words if needed). Comprehensive.\n"
+            "- VOCABULARY: Use highly technical, precise, and formal language. Assume deep prior knowledge.\n"
+            "- STYLE: Rigorous and theoretical. Discuss implications, limitations, and state-of-the-art context.\n"
+            "- FORMAT: Structured, dense, and potentially including formulas or code snippets."
+        )
+    else: # None / Standard
+        system_message_content += (
+            "\n\n[COMPLEXITY: STANDARD - BALANCED]\n"
+            "- TARGET AUDIENCE: General educated audience.\n"
+            "- LENGTH CONSTRAINT: Balanced (approx. 200 words). Concise but informative.\n"
+            "- VOCABULARY: Professional and clear. Avoid overly simplistic or excessively obscure jargon.\n"
+            "- STYLE: Direct and helpful.\n"
+            "- FORMAT: Natural conversation style."
+        )
+        
+    system_message = {"role": "system", "content": system_message_content}
     serialized_messages = [_serialize_message(m) for m in messages]
+    
+    # --- HISTORY PRUNING (CONTEXT PROTECTION) ---
+    # Keep System Prompt + Last N messages to avoid >130k context error
+    MAX_HISTORY = 10
+    if len(serialized_messages) > MAX_HISTORY:
+        # Always keep the very last message (user query) and the surrounding context
+        # But we must ensure specific logic:
+        # If we just cut, we might lose the "System" instruction which is separately added below via `full_messages`.
+        # So we just slice the history list.
+        # We try to preserve the last tool output if it exists to avoid "loss of memory" mid-processing
+        pruned_history = serialized_messages[-MAX_HISTORY:]
+        logger.info(f"✂️ Pruned history from {len(serialized_messages)} to {len(pruned_history)} messages.")
+        serialized_messages = pruned_history
+
     full_messages = [system_message] + serialized_messages
+
+    # --- REINFORCEMENT INJECTION ---
+    # Append a final system reminder to ensure complexity instruction isn't lost in context
+    if complexity in ["Base", "Intermediate", "Advanced", "None"]:
+        reminder = ""
+        if complexity == "Base":
+            reminder = "REMINDER: You are speaking to a BEGINNER (5 years old). Use analogies, NO jargon, simple words. Keep it SHORT (max 150 words)."
+        elif complexity == "Intermediate":
+            reminder = "REMINDER: You are speaking to a STUDENT. Use academic terms but explain them. Be balanced."
+        elif complexity == "Advanced":
+            reminder = "REMINDER: You are speaking to an EXPERT. Use technical language, skip basics, focus on nuance. Be DETAILED."
+        else:
+            reminder = "REMINDER: Keep the response BALANCED and professional. Not too short, not too long."
+            
+        full_messages.append({"role": "system", "content": reminder})
+        logger.info(f"💉 Injected complexity reminder: {reminder}")
     
     # Bind tools
     tools = get_all_tools()

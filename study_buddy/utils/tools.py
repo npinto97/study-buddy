@@ -339,13 +339,13 @@ class VectorStoreRetriever(BaseWrapper):
         if not os.path.exists(FAISS_INDEX_DIR):
             raise ValueError(f"FAISS index directory not found: {FAISS_INDEX_DIR}")
     
-    def retrieve(self, query: str, k: int = 10, min_score: float = 1.3, course: Optional[str] = None) -> tuple[str, list, list]:
+    def retrieve(self, query: str, k: int = 5, min_score: float = 1.3, course: Optional[str] = None) -> tuple[str, list, list]:
         """
         Retrieve information with validation, enhanced logging, and quality filtering.
         
         Args:
             query: Search query text
-            k: Number of results to retrieve (default: 10)
+            k: Number of results to retrieve (default: 5)
             min_score: Maximum distance threshold for L2 (default: 1.3). Lower values = stricter matches.
             course: Optional course name to filter results (e.g. 'Linguaggi di programmazione (LP)')
             
@@ -394,7 +394,8 @@ class VectorStoreRetriever(BaseWrapper):
                 search_start = time.time()
                 # Fetch more candidates for better filtering
                 # Use a larger k for initial search if we need to filter by course
-                initial_search_k = k * 15 if course else min(k * 2, 20)
+                # MODIFIED: Reduced multiplier from 15 to 5 to prevent massive context retrieval
+                initial_search_k = k * 5 if course else min(k * 2, 20)
                 
                 retrieved_docs = vector_store.similarity_search_with_score(
                     query, 
@@ -1860,7 +1861,8 @@ def create_basic_tools() -> List[Tool]:
             func=retriever.retrieve,
             name="retrieve_knowledge",
             description="PRIMARY TOOL for answering questions. Search the local knowledge base (slides, syllabus, docs). If the query is about a specific course, provide the 'course' parameter.",
-            args_schema=KnowledgeRetrievalInput
+            args_schema=KnowledgeRetrievalInput,
+            # DEFAULTS: k=5 (reduced from 10 to prevent context overflow)
         ),
         Tool(
             name="web_search",
